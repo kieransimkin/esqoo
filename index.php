@@ -11,7 +11,7 @@ function __autoload($class_name) {
 	$files = Array(
 		dirname(__FILE__)."/models/model.{$class_name}.php",
 		dirname(__FILE__)."/controllers/controller.{$class_name}.php",
-		dirname(__FILE__)."/include/class.{$class_name}.php",
+		dirname(__FILE__)."/classes/class.{$class_name}.php",
 	);
 	foreach ($files as $file)
 		if (file_exists($file))

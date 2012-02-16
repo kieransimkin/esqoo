@@ -1,0 +1,3 @@
+[submodule "classes/dbsq"]
+	path = classes/dbsq
+	url = git://github.com/kieransimkin/dbsq.git
