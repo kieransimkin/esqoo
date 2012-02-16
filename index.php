@@ -4,7 +4,7 @@ date_default_timezone_set('UTC');
 error_reporting(E_ALL);
 ob_start(); // so we can chuck the output when doing AJAX JSON responses
 
-
+require_once(dirname(__FILE__)."/classes/dbsq/dbsq.class.php");
 ini_set('include_path',dirname(__FILE__)."/libraries/");
 
 function __autoload($class_name) {
