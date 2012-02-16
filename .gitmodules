@@ -1,3 +1,12 @@
 [submodule "classes/dbsq"]
 	path = classes/dbsq
 	url = git://github.com/kieransimkin/dbsq.git
+[submodule "javascripts/mediaslide"]
+	path = javascripts/mediaslide
+	url = git://github.com/kieransimkin/jquery.ui.mediaslide
+[submodule "javascripts/fadeover"]
+	path = javascripts/fadeover
+	url = git://github.com/kieransimkin/jquery.ui.fadeover
+[submodule "javascripts/paginajax"]
+	path = javascripts/paginajax
+	url = git://github.com/kieransimkin/jquery.ui.paginajax
