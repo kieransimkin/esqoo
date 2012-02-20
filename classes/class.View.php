@@ -34,9 +34,9 @@ class View {
 	}
 	function header($title) {
 		$this->title = $title;
-		$this->partial("partials/header.phtml");
+		$this->partial("partials/view.header.php");
 	}
 	function footer() {
-		$this->partial("partials/footer.phtml");
+		$this->partial("partials/view.footer.php");
 	}
 } 
