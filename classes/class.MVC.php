@@ -38,7 +38,6 @@ class MVC {
 		if (!method_exists($new_controller, $funcname)) { 
 			self::throw404($controller_class, $funcname);
 		}
-		Site::get()
 		$res=$new_controller->$funcname($arg,$_REQUEST);
 		if (!is_array($res)) {
 			$res=(array)@$res;

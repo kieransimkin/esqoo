@@ -21,8 +21,7 @@ class View {
 		}
 	}
 	function partial($name) {
-		$site = Site::get();
-		$file = $site->approot . "/views/" . $name;
+		$file = Site::$approot . "/views/" . $name;
 		if(file_exists($file)) {
 			include($file);
 		} else {
