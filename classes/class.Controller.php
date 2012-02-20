@@ -54,6 +54,8 @@ class Controller {
 			$this->view->head .= "<script src=\"/js/{$action}.js\"></script>";
 		}
 	}
-
+	function __toString() { 
+		return get_called_class();
+	}
 
 }
