@@ -30,16 +30,20 @@ class MVC {
 			self::throw404($controller_class,$funcname);
 		}
 		$new_controller = new $controller_class($controller, $action);
-		$new_controller->setView($controller.'/view.'.$action.".php");
 		$new_controller->action = $action;
 		$new_controller->controller = strtolower($controller);
-		$new_controller->autoloadJS();
 
 		if (!method_exists($new_controller, $funcname)) { 
 			self::throw404($controller_class, $funcname);
 		}
-		$new_controller->$funcname($arg);
-		$new_controller->render();
+		$res=$new_controller->$funcname($arg);
+		if (!$api) { 
+			$new_controller->setView($controller.'/view.'.$action.".php");
+			$new_controller->autoloadJS();
+			$new_controller->render();
+		} else { 
+			$new_controller->api_response($res);
+		}
 	}
 
 	function throw404($controller_class=null, $funcname=null) {
