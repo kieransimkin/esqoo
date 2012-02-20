@@ -21,7 +21,11 @@ class MVC {
 			}
 		}
 		$controller_class = ucwords($controller).'Controller';
-		$funcname = strtolower(str_replace('-','',$action)).'Action';
+		if ($api) { 
+			$funcname = strtolower(str_replace('-','',$action)).'API';
+		} else { 
+			$funcname = strtolower(str_replace('-','',$action)).'UI';
+		}
 		if (!class_exists($controller_class)) { 
 			self::throw404($controller_class,$funcname);
 		}
