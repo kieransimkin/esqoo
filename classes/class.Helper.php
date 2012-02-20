@@ -12,7 +12,7 @@ class Helper {
 		}
 		return $string;
 	}
-	static function function gobble() {
+	static function gobble() {
 		$consonants = array ("b","c","d","f","g","h","j","k","m","n","p","q","r","s","t","v","w","x","z" );
 		$vowels = array ("a","e","u");
 		$length=mt_rand(3,4);
