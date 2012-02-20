@@ -47,7 +47,7 @@ class MVC {
 			$new_controller->autoloadCSS();
 			$new_controller->render();
 		} else { 
-			if (!$new_controller->validation_success()) { 
+			if (!$new_controller->api_validation_success()) { 
 				$res['ErrorCount']=count($new_controller->api_errors);
 				$res['Errors']=$new_controller->api_errors;
 			}

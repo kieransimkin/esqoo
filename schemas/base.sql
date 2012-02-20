@@ -19,6 +19,43 @@ create table `user` (
 	unique key (username),
 	index (country_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `user_salt`;
+create table `user_salt` ( 
+	id int not null auto_increment,
+	user_id int not null,
+	salt varchar(64) NOT NULL,
+	createdate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+	primary key (id),
+	index (user_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `user_token`;
+create table `user_token` (
+	id int not null auto_increment,
+	user_id int not null,
+	token varchar(255) not null,
+	createdate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+	deletedate datetime default null,
+	expires enum('false','true') not null default 'false',
+	primary key (id),
+	index (user_id),
+	index (deletedate,user_id,token)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `group`;
+create table `group` (
+	id int not null auto_increment,
+	tag varchar(255) NOT NULL,
+	description text not null,
+	primary key (id),
+	unique key (tag)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `user_group`;
+create table `user_group` ( 
+	id int not null auto_increment,
+	user_id int NOT NULL,
+	group_id int not null,
+	primary key (id),
+	unique key (user_id,group_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
