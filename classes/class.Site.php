@@ -1,4 +1,8 @@
 <?php
+function _($s) { 
+	return $s;
+}
+
 class Site { 
    private static $instance;
    public static $approot;
