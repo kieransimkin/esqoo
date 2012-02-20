@@ -1,6 +1,6 @@
 <?php
 class DashboardController { 
-	function indexUI { 
+	function indexUI() { 
 		print "Hello";
 	}
 }
