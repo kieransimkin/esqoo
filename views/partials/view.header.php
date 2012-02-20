@@ -7,8 +7,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<?php
-	$this->cssManager->add("themes/base/jquery.ui.base","themes/base/jquery.ui.core","themes/base/jquery.ui.dialog");
+//	$this->cssManager->add("query.ui.base","themes/base/jquery.ui.core","themes/base/jquery.ui.dialog");
 	$this->cssManager->display();
+	$theme=@$this->options['theme'];
+	if (strlen($theme)<1) { 
+		$theme='darkness';
+	}
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$this->options['theme']?>/jquery.ui.all.css" />
 	<?php
