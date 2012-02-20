@@ -41,6 +41,7 @@ class MVC {
 			$new_controller->setView($controller.'/view.'.$action.".php");
 			header('X-UA-Compatible: IE=edge,chrome=1');
 			$new_controller->autoloadJS();
+			$new_controller->autoloadCSS();
 			$new_controller->render();
 		} else { 
 			if (strlen($_REQUEST['ResponseFormat'])<1) { 
