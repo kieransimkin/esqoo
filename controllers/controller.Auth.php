@@ -7,7 +7,7 @@ class AuthController extends OpenController {
 			$salt=User_salt::create(array('user'=>$user,'salt'=>Helper::randomAlphaNumString(64)));
 			$ret['Salt']=$salt->salt;
 			$ret['UserID']=$salt->user_id;
-			var_dump($salt->user_id);
+			//var_dump($salt->user_id);
 		}
 		return $ret;
 	}
