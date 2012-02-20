@@ -45,3 +45,6 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 
 </head>
 <body class="<?=strtolower($this->controller);?> <?=strtolower($this->controller).'-'.strtolower($this->controller->action);?>">
+<header>
+<?php $this->partial('partials/view.nav.php'); ?>
+</header>
