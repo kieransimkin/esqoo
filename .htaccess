@@ -1,8 +1,6 @@
 RewriteEngine on
 RewriteBase /
 
-RewriteRule .*\.yml - [F]
-RewriteRule ^(cache|schemas|models|views|controllers|libraries|include)/ - [F]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
