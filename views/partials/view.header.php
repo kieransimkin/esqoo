@@ -11,7 +11,7 @@
 	$this->cssManager->display();
 	$theme=@$this->options['theme'];
 	if (strlen($theme)<1) { 
-		$theme='darkness';
+		$theme='ui-darkness';
 	}
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />
