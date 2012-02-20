@@ -3,7 +3,6 @@
 date_default_timezone_set('UTC');
 
 ini_set('include_path',dirname(__FILE__)."/libraries/");
-require_once(dirname(__FILE__)."/classes/dbsq/dbsq.class.php");
 
 function __autoload($class_name) {
 	$files = Array(
