@@ -8,7 +8,7 @@ class JSManager extends ResourceManager {
 	}
 
 	function getTag($path) {
-		return '<script src="'.$path.'"></script>';
+		return "\t".'<script src="'.$path.'"></script>'."\n";
 	}
 
 	function minify($file) {

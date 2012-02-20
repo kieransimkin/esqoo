@@ -14,9 +14,9 @@ class CSSManager extends ResourceManager {
 
 	function getTag($path) {
 		if ($this->media == 'print') {
-			return '<link href="'.$path.'" rel="stylesheet" media="'.$this->media.'"/>';
+			return "\t".'<link href="'.$path.'" rel="stylesheet" media="'.$this->media.'"/>'."\n";
 		} else {
-			return '<link href="'.$path.'" rel="stylesheet" />';
+			return "\t".'<link href="'.$path.'" rel="stylesheet" />'."\n";
 		}
 	}
 
