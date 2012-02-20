@@ -1,5 +1,5 @@
 <?php
-static class Helper { 
+class Helper { 
 	static function randomAlphaNumString($length=8,$includecaps=true) { 
 		if ($includecaps) {
 			$characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
