@@ -19,6 +19,7 @@ create table `user` (
 	unique key (username),
 	index (country_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into user set username='slinq',email='kieran@slinq.com',password='testpass',firstname='Kieran',lastname='Simkin';
 drop table if exists `user_salt`;
 create table `user_salt` ( 
 	id int not null auto_increment,
