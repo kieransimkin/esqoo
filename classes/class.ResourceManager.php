@@ -104,43 +104,6 @@ class ResourceManager {
 		return file_get_contents($path);
 	}
 
-	/*
-	static function getServerNumber($file) {
-		if (!$this)
-			$this->config = Aurora_Config::get();
-		else
-			$this->config =& $this->config;
-		if (!$n = @$this->config['static_server_number'])
-			return "";
-
-		$ord = self::stringhash($file);
-		mt_srand($ord);
-		return mt_rand(0, $n-1);
-	}
-	 */
-
-	/*
-	static function getHostname($file) {
-		if (!@$this->config['parallelise_resources'])
-			return "";
-		if (!$n = @$this->config['static_server_number'])
-			return "";
-
-		$host = @$_SERVER['HTTP_HOST'];
-		if (!$host)
-			return "";
-
-		if (substr($host, 0, 4) == "www.")
-			$host = substr($host, 4);
-
-		$i = self::getServerNumber($file);
-		
-		$host = "http://static{$i}.{$host}";
-
-		return $host;
-	}
-	 */
-
 	function stringhash($string) {
 		$strlen = strlen($string);
 		$ord = 0;
