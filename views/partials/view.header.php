@@ -23,7 +23,7 @@
 	foreach ($this->jsFiles as $file)
 		$this->jsManager->add($file);
 	$this->jsManager->display();?>
-	<?=isset($this->head)?$this->head:''?>
+<?=isset($this->head)?$this->head:''?>
 <?
 if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnloads)) { ?>
 	<script type="text/javascript">
