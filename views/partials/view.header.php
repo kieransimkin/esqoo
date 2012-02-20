@@ -15,7 +15,7 @@
 	$this->jsManager->display();
 	foreach ($this->jsFiles as $file)
 		$this->jsManager->add($file);
-	$this->jsManager->display();
+	$this->jsManager->display();?>
 	<?=isset($this->head)?$this->head:''?>
 <?
 if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnloads)) { ?>
