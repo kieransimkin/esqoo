@@ -20,11 +20,11 @@ create table `user` (
 	index (country_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 insert into user set username='slinq',email='kieran@slinq.com',password='testpass',firstname='Kieran',lastname='Simkin';
-drop table if exists `user_salt`;
-create table `user_salt` ( 
+drop table if exists `user_challenge`;
+create table `user_challenge` ( 
 	id int not null auto_increment,
 	user_id int not null,
-	salt varchar(64) NOT NULL,
+	challenge varchar(64) NOT NULL,
 	createdate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	primary key (id),
 	index (user_id)
