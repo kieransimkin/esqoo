@@ -37,6 +37,9 @@ class MVC {
 			self::throw404($controller_class, $funcname);
 		}
 		$res=$new_controller->$funcname($arg,$_REQUEST);
+		if (!is_array($res)) {
+			$res=(array)$res;
+		}
 		if (!$api) { 
 			$new_controller->setView($controller.'/view.'.$action.".php");
 			header('X-UA-Compatible: IE=edge,chrome=1');
@@ -44,6 +47,10 @@ class MVC {
 			$new_controller->autoloadCSS();
 			$new_controller->render();
 		} else { 
+			if (!$new_controller->validation_success()) { 
+				$res['ErrorCount']=count($new_controller->api_errors);
+				$res['Errors']=$new_controller->api_errors;
+			}
 			if (strlen($_REQUEST['ResponseFormat'])<1) { 
 				$_REQUEST['ResponseFormat']='xml';
 			}
