@@ -10,9 +10,13 @@ class Site {
    static function loadAndConnect() { 
 	self::$approot=realpath(dirname(__FILE__).'/../');
 	self::loadINI();
+	self::connectDB();
    }
-    function loadINI() { 
+   static function loadINI() { 
 	self::$config=parse_ini_file(self::$approot.'/config.ini', INI_SCANNER_RAW);
-    }
+   }
+   static function connectDB() { 
+	DBSQL::setMySQLCredentials(self::$config['mysql_user'],self::$config['mysql_pass'],self::$config['mysql_db'],self::$config['mysql_host']);
+   }
 
 } 

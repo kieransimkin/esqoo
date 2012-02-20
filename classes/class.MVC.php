@@ -21,7 +21,6 @@ class MVC {
 			}
 		}
 		Site::loadAndConnect();
-		var_dump(Site::$config);
 		$controller_class = ucwords($controller).'Controller';
 		if ($api) { 
 			$funcname = strtolower(str_replace('-','',$action)).'API';
