@@ -1,5 +1,5 @@
 <?php
-class DashboardController { 
+class DashboardController extends OpenController { 
 	function indexUI() { 
 		print "Hello";
 	}
