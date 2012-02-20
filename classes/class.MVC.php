@@ -20,10 +20,6 @@ class MVC {
 				$arg=$bits[2];
 			}
 		}
-		print "Controller: $controller<br>\n";
-		print "Action: $action<br>\n";
-		print "Arg: $arg<br>\n";
-		print "Api: ".print_r($api,true)."<br>\n";
 		$controller_class = ucwords($controller).'Controller';
 		$funcname = strtolower(str_replace('-','',$action)).'Action';
 		if (!class_exists($controller_class)) { 
@@ -38,7 +34,7 @@ class MVC {
 		if (!method_exists($new_controller, $funcname)) { 
 			self::throw404($controller_class, $funcname);
 		}
-		$new_controller->$funcname();
+		$new_controller->$funcname($arg);
 		$new_controller->render();
 	}
 
