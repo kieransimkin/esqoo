@@ -44,4 +44,4 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 <?php } ?>
 
 </head>
-<body class="<?=$this->controller;?> <?=$this->controller.'-'.$this->controller->action;?>">
+<body class="<?=strtolower($this->controller);?> <?=strtolower($this->controller).'-'.strtolower($this->controller->action);?>">
