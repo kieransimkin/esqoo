@@ -36,14 +36,17 @@ class MVC {
 		if (!method_exists($new_controller, $funcname)) { 
 			self::throw404($controller_class, $funcname);
 		}
-		$res=$new_controller->$funcname($arg);
+		$res=$new_controller->$funcname($arg,$_REQUEST);
 		if (!$api) { 
 			$new_controller->setView($controller.'/view.'.$action.".php");
 			header('X-UA-Compatible: IE=edge,chrome=1');
 			$new_controller->autoloadJS();
 			$new_controller->render();
 		} else { 
-			$new_controller->api_response($res);
+			if (strlen($_REQUEST['ResponseFormat'])<1) { 
+				$_REQUEST['ResponseFormat']='xml';
+			}
+			$new_controller->api_response($res,$_REQUEST['ResponseFormat']);
 		}
 	}
 
@@ -55,7 +58,7 @@ class MVC {
 	function render404($controller_class=null, $funcname=null) {
 		header("HTTP/1.1 404 Not Found");
 		?>
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!DOCTYPE html>
 <html><head>
 <title>404 Not Found</title>
 </head><body>

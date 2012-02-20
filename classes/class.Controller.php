@@ -19,6 +19,29 @@ class Controller {
 		foreach(func_get_args() as $file)
 			$this->jsFiles[] = $file;
 	}
+	function api_response($res,$responseformat) { 
+		switch ($responseformat) { 
+			case 'xml':
+				require_once('XML/Serializer.php');
+				$options = array(
+					"indent"     => "    ",
+					"linebreak"  => "\n",
+					"addDecl"    => true,
+					"defaultTagName"  => "Item",
+					"encoding" => "UTF-8",
+					"rootName" => "APIResponse"
+				);
+				$serializer=new XML_Serializer($options);
+				$serializer->serialize($res);
+				echo $serializer->getSerializedData();
+				die;
+					
+			case 'json':
+			default:
+				echo json_encode($res);
+				die;
+		}
+	}
 	function autoloadJS() {
 		$action = $this->action;
 		if(strpos($action,'..')!== false || strpos($action,'/')!==false) {
