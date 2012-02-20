@@ -28,7 +28,7 @@
 if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnloads)) { ?>
 	<script type="text/javascript">
 	<!--
-	<?php 
+<?php 
 	foreach ($this->js as $js) echo $js."\n\n";
 
 	if ($this->jsOnloads) { ?>
