@@ -4,7 +4,7 @@ class AuthController extends OpenController {
 		$ret=array();
 		$user=$this->ensure_api_user($input);
 		if ($this->api_validation_success()) { 
-			$salt=User_salt::create(array('user_id'=>$user,'salt'=>Helper::randomAlphaNumString(64)));
+			$salt=User_salt::create(array('user'=>$user,'salt'=>Helper::randomAlphaNumString(64)));
 			var_dump($salt);
 		}
 		return $ret;
