@@ -8,9 +8,12 @@ require_once(dirname(__FILE__)."/classes/dbsq/dbsq.class.php");
 function __autoload($class_name) {
 	$files = Array(
 		dirname(__FILE__)."/models/model.{$class_name}.php",
-		dirname(__FILE__)."/controllers/controller.{$class_name}.php",
-		dirname(__FILE__)."/classes/class.{$class_name}.php",
+		dirname(__FILE__)."/classes/class.{$class_name}.php"
 	);
+	if (substr($class_name,-10)=='Controller') { 
+		$controllerlessname=substr($class_name,0,strlen($class_name)-10);
+		$files[]=dirname(__FILE__)."/controllers/controller.{$controllerlessname}.php";
+	}
 	foreach ($files as $file)
 		if (file_exists($file))
 			return include_once($file);

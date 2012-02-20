@@ -1,7 +1,7 @@
 <?php
 class MVC { 
 	public static function dispatch($uri) { 
-		if ($uri=='/') { 
+		if ($uri=='/' || $uri=='') { 
 			$controller='dashboard';
 			$action='index';
 			$arg=null;
