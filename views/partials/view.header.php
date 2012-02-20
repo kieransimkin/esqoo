@@ -44,7 +44,12 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 	<?php foreach ($this->css as $css) echo $css."\n\n"; ?>
 	</style>
 <?php } ?>
-
+	<script>
+	WebFontConfig = {
+		google: { families: [ 'Tangerine', 'Cantarell' ] }
+	};
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
 <body class="<?=strtolower($this->controller);?> <?=strtolower($this->controller).'-'.strtolower($this->controller->action);?>">
 <header>

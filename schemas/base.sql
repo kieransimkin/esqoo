@@ -4,6 +4,7 @@ create table `user` (
 	id int not null auto_increment,
 	username varchar(255) default null,
 	email varchar(512) not null,
+	password varchar(512) not null,
 	firstname varchar(512) default null,
 	lastname varchar(512) default null,
 	addr1 varchar(512) default null,
