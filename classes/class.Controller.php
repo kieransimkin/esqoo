@@ -69,7 +69,7 @@ class Controller {
 	}
 	function ensure_api_user($input) {
 		$user=null;
-		if (strlen(@$input['UserID'])<1 && strlen(@$input['Username'])<1 || strlen(@$input['Email'])<1) { 
+		if (strlen(@$input['UserID'])<1 && strlen(@$input['Username'])<1 && strlen(@$input['Email'])<1) { 
 			$this->api_error(1,"Username, Email, or UserID field is required");
 		} else { 
 			if (strlen(@$input['UserID'])>0) { 
