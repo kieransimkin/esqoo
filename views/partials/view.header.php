@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>
-	<?=$this->title?$this->title:'Dashboard'?> - Esqoo
-	</title>
+	<title><?=$this->title?$this->title:'Dashboard'?> - Esqoo</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 <?php

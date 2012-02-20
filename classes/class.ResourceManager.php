@@ -58,7 +58,7 @@ class ResourceManager {
 
 				$r[] = $this->getTag("{$this->webdir}/{$filename}");
 			}
-			echo implode("\n", $r);
+			echo implode("", $r);
             $this->files = Array();
 			return;
 		}
