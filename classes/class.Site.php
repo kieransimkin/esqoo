@@ -6,15 +6,13 @@ function _($s) {
 class Site { 
    private static $instance;
    public static $approot;
-   function __construct() { 
-	$this->approot=realpath(dirname(__FILE__).'/../');
+   public static $config;
+   static function loadAndConnect() { 
+	self::$approot=realpath(dirname(__FILE__).'/../');
+	self::loadINI();
    }
-   static function get() {
-        if (self::$instance)
-            return self::$instance;
-        self::$instance = new Site;
-	
-        return self::$instance;
+    function loadINI() { 
+	$this->config=parse_ini_file($this->approot.'config.ini', INI_SCANNER_RAW);
     }
 
 } 

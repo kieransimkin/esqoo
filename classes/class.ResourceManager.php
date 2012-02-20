@@ -8,8 +8,7 @@ class ResourceManager {
 			"resources_version" => false, // XXX this should be part of the codebase
 			"parallelise_resources" => false,
 		);
-		$site = Site::get();
-		$this->approot = $site->approot;
+		$this->approot = Site::$approot;
 
 		$this->dir = $this->approot . "/compiled-resources";
 		$this->webdir = "/compiled-resources";
@@ -33,7 +32,6 @@ class ResourceManager {
 	}
 
 	public function display() {
-		$site = Site::get();
 		$ext = (@$this->config['resources_version'] ? "-".$this->config['resources_version'] : '') . '.' . $this->ext;
 		if (!$this->config['concat']) {
 			$r = Array();

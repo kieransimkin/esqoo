@@ -20,6 +20,8 @@ class MVC {
 				$arg=$bits[2];
 			}
 		}
+		Site::loadAndConnect();
+		var_dump(Site::$config);
 		$controller_class = ucwords($controller).'Controller';
 		if ($api) { 
 			$funcname = strtolower(str_replace('-','',$action)).'API';
@@ -36,6 +38,7 @@ class MVC {
 		if (!method_exists($new_controller, $funcname)) { 
 			self::throw404($controller_class, $funcname);
 		}
+		Site::get()
 		$res=$new_controller->$funcname($arg,$_REQUEST);
 		if (!is_array($res)) {
 			$res=(array)@$res;
