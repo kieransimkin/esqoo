@@ -7,10 +7,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<?php
-	$this->cssManager->add("reset-fonts-grids", "base-min");
+	$this->cssManager->add("themes/base/jquery.ui.base.css");
 	$this->cssManager->display();
 	?>
-	<link rel="stylesheet" href="/jquery-ui-themes/<?=$this->options['theme']?>/jquery.ui.all.css" />
+	<link rel="stylesheet" href="/css/themes/<?=$this->options['theme']?>/jquery.ui.all.css" />
 	<?php
 	$this->cssManager->display();
 	$this->jsManager->add("jquery-1.7.1.min", "jquery-ui-1.8.17.custom");
