@@ -4,6 +4,8 @@
 	<title>
 	<?=$this->title?$this->title:'Dashboard'?> - Esqoo
 	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
 	<?php
 	$this->cssManager->add("reset-fonts-grids", "base-min");
 	$this->cssManager->display();

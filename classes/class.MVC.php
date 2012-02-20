@@ -39,6 +39,7 @@ class MVC {
 		$res=$new_controller->$funcname($arg);
 		if (!$api) { 
 			$new_controller->setView($controller.'/view.'.$action.".php");
+			header('X-UA-Compatible: IE=edge,chrome=1');
 			$new_controller->autoloadJS();
 			$new_controller->render();
 		} else { 
