@@ -14,7 +14,7 @@
 		$theme='darkness';
 	}
 	?>
-	<link rel="stylesheet" href="/css/themes/<?=$this->options['theme']?>/jquery.ui.all.css" />
+	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />
 	<?php
 	$this->cssManager->display();
 	$this->jsManager->add("jquery-1.7.1.min", "jquery-ui-1.8.17.custom");
