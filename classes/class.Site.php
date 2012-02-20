@@ -12,7 +12,7 @@ class Site {
 	self::loadINI();
    }
     function loadINI() { 
-	self::$config=parse_ini_file(self::$approot.'config.ini', INI_SCANNER_RAW);
+	self::$config=parse_ini_file(self::$approot.'/config.ini', INI_SCANNER_RAW);
     }
 
 } 
