@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<?php
-	$this->cssManager->add("themes/base/jquery.ui.base.css");
+	$this->cssManager->add("themes/base/jquery.ui.base");
 	$this->cssManager->display();
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$this->options['theme']?>/jquery.ui.all.css" />
