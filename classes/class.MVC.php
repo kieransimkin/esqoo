@@ -38,7 +38,7 @@ class MVC {
 		}
 		$res=$new_controller->$funcname($arg,$_REQUEST);
 		if (!is_array($res)) {
-			$res=(array)$res;
+			$res=(array)@$res;
 		}
 		if (!$api) { 
 			$new_controller->setView($controller.'/view.'.$action.".php");
