@@ -68,7 +68,7 @@ class Controller {
 		}
 	}
 	function api_error($id,$str) { 
-		$this->api_errors[$id]=$str;
+		$this->api_errors[$id]=_($str);
 	}
 	function api_error_array() {
 		$ret=array();
