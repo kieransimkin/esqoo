@@ -32,7 +32,7 @@ function esqoo_generate_password_hash(challenge,password) {
 function esqoo_format_api_errors(errors) { 
 	var ret='';
 	$.each(errors,function(i,o) { 
-		ret=ret+o.String;
+		ret=ret+o.String+"\n";
 	});
 	return ret;
 }
