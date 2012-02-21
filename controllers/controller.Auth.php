@@ -61,7 +61,7 @@ class AuthController extends OpenController {
 			return null;
 		}
 		if ($challenge->user_id != $user->id) { 
-			var_dump($challenge->user_id);
+			var_dump($challenge->user->id);
 			var_dump($user->id);
 			$this->api_error(4,"ChallengeID not found 2");
 			return null;
