@@ -70,6 +70,13 @@ class Controller {
 	function api_error($id,$str) { 
 		$this->api_errors[$id]=$str;
 	}
+	function api_error_array() {
+		$ret=array();
+		foreach ($this->api_errors as $id => $str) { 
+			$ret[]=array('Code'=>$id,'String'=>$str);
+		}
+		return $ret;
+	}
 	function api_validation_success() { 
 		if (count($this->api_errors)>0) { 
 			return false;

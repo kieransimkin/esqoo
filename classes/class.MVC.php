@@ -50,7 +50,7 @@ class MVC {
 		} else { 
 			if (!$new_controller->api_validation_success()) { 
 				$res['ErrorCount']=count($new_controller->api_errors);
-				$res['Errors']=$new_controller->api_errors;
+				$res['Errors']=$new_controller->api_error_array();
 			}
 			if (strlen($_REQUEST['ResponseFormat'])<1) { 
 				$_REQUEST['ResponseFormat']='xml';
