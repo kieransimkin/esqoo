@@ -43,6 +43,7 @@ esqoo_login.login = function (c) {
 	);
 }
 esqoo_login.form_keypress = function(e) { 
+	console.log('got here');
 	if (e.which == 13) { 
 		esqoo_login.login();
 	}
