@@ -11,6 +11,8 @@ function esqoo_login() {
 			'Response': esqoo_generate_password_hash($('#login-challenge').val(),$('#login-password').val())
 		}, function(data) { 
 			var d=$.parseJSON(data);
+			console.log(d.ErrorCount);
+			console.log(d.Token.length);
 			if (d.ErrorCount==0 && d.Token.length) { 
 				console.log('Login successful');
 			} else { 
