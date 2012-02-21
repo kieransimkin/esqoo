@@ -91,7 +91,6 @@ class AuthController extends OpenController {
 			} catch (DBSQ_Exception $e) { 
 				$user=null;
 			}
-			var_dump($user);
 			if (is_null($user)) { 
 				$this->api_error(2,"Username, Email or UserID not found");
 			}
