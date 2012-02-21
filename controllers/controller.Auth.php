@@ -29,7 +29,7 @@ class AuthController extends OpenController {
 			$this->api_error(5,"Response field is required");
 			return null;
 		}
-		if (strlen(@$input['ResponseHashType')<1) { 
+		if (strlen(@$input['ResponseHashType'])<1) { 
 			$this->api_error(6,"ResponseHashType field is required");
 			return null;
 		}
