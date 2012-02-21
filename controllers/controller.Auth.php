@@ -16,7 +16,9 @@ class AuthController extends OpenController {
 		$user=$this->ensure_api_user($input);
 		$challenge=$this->ensure_api_challenge($user,$input);
 		$this->ensure_response_authorized($user,$challenge,$input);
-		$challenge->delete();
+		if (!is_null($challenge)) { 
+			$challenge->delete();
+		}
 		if ($this->api_validation_success()) { 
 			$token=User_token::create(array('user'=>$user,'token'=>Helper::randomAlphaNumString(255)));
 			$ret['UserID']=$user->id;
