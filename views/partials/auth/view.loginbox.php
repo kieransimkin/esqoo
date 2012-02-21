@@ -10,4 +10,8 @@
 	<noscript>
 		You will need JavaScript enabled past this point.
 	</noscript>
+	<script>
+	$('#login-identity').keypress(esqoo_login.form_keypress);
+	$('#login-password').keypress(esqoo_login.form_keypress);
+	</script>
 </section>

@@ -42,6 +42,11 @@ esqoo_login.login = function (c) {
 		}
 	);
 }
+esqoo_login.form_keypress = function(e) { 
+	if (e.which == 13) { 
+		esqoo_login.login();
+	}
+}
 esqoo_login.generate_password_hash = function(challenge,password) { 
 	return Sha256.hash(challenge+password);
 }
