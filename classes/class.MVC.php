@@ -37,12 +37,14 @@ class MVC {
 		if (!method_exists($new_controller, $funcname)) { 
 			self::throw404($controller_class, $funcname);
 		}
+		if (!$api) { 
+			$new_controller->setView($controller.'/view.'.$action.".php");
+		}
 		$res=$new_controller->$funcname($arg,$_REQUEST);
 		if (!is_array($res)) {
 			$res=(array)@$res;
 		}
 		if (!$api) { 
-			$new_controller->setView($controller.'/view.'.$action.".php");
 			header('X-UA-Compatible: IE=edge,chrome=1');
 			$new_controller->autoloadJS();
 			$new_controller->autoloadCSS();
