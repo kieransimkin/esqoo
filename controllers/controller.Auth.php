@@ -24,7 +24,7 @@ class AuthController extends OpenController {
 			setcookie('UserID',$user->id,time()+31556926,'/');
 			setcookie('TokenID',$token->id,time()+31556926,'/');
 			setcookie('Token',$token->token,time()+31556926,'/');
-		} else if (!is_null($user)) { 
+		} else { 
 			// Auth failed, generate a new challenge
 			$challenge=User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
 			$ret['Challenge']=$challenge->challenge;
