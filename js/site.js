@@ -13,7 +13,7 @@ function esqoo_login() {
 			var d=$.parseJSON(data);
 			console.log(d.ErrorCount);
 			console.log(d.Token.length);
-			if (d.ErrorCount==0 && d.Token.length) { 
+			if (d.ErrorCount==0 && typeof(d.Token) != 'undefined') { 
 				console.log('Login successful');
 			} else { 
 				$('#login-challenge').val(d.Challenge);
