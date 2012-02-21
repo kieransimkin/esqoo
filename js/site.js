@@ -17,5 +17,5 @@ function esqoo_login() {
 	);
 }
 function esqoo_generate_password_hash(challenge,password) { 
-	return challenge+password;
+	return Sha256.hash(challenge+password);
 }
