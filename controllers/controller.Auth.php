@@ -20,9 +20,10 @@ class AuthController extends OpenController {
 			$ret['UserID']=$user->id;
 			$ret['TokenID']=$token->id;
 			$ret['Token']=$token->token;
-			setcookie('UserID',$user->id,time()+31556926);
-			setcookie('TokenID',$token->id,time()+31556926);
-			setcookie('Token',$token->token,time()+31556926);
+			// These setcookie()s are redundant because browsers don't read cookies from AJAX requests - we have to set them in Javascript anyway
+			setcookie('UserID',$user->id,time()+31556926,'/');
+			setcookie('TokenID',$token->id,time()+31556926,'/');
+			setcookie('Token',$token->token,time()+31556926,'/');
 		} else if (!is_null($user)) { 
 			// Auth failed, generate a new challenge
 			$challenge=User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));

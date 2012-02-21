@@ -1,6 +1,7 @@
 <?php
 ?>
 <section class="login-box">
+	<div id="login-errors" style="display: none;"></div>
 	<label for="login-identity"><?=_('Username or Email:')?></label><input type="email" name="identity" id="login-identity" placeholder="<?=_('you@yourdomain.com');?>">
 	<label for="login-password"><?=_('Password:')?></label><input type="password" name="password" id="login-password" placeholder="<?=_('******');?>">
 	<input type="hidden" id="login-challenge" value="<?=$this->challenge['Challenge'];?>">
