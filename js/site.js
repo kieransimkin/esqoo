@@ -3,7 +3,7 @@ function esqoo_login() {
 	if ($('#login-identity').indexOf('@')) { 
 		fieldname='Email';
 	}
-	$.getJSON({ 
+	$.getJSON( 
 		url: '/auth/authenticate/api',
 		{ 
 			'ResponseFormat': 'json',
@@ -14,7 +14,7 @@ function esqoo_login() {
 		}, function(data) { 
 			console.log(data);
 		}
-	});
+	);
 }
 function esqoo_generate_password_hash(challenge,password) { 
 	return challenge+password;
