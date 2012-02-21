@@ -11,18 +11,28 @@ function esqoo_login() {
 			'Response': esqoo_generate_password_hash($('#login-challenge').val(),$('#login-password').val())
 		}, function(data) { 
 			var d=$.parseJSON(data);
-			console.log(d.ErrorCount);
-			console.log(typeof(d.Token));
 			if (d.ErrorCount==0 && typeof(d.Token) != 'undefined') { 
-				console.log('Login successful');
+				if ($('#login-forward').val().length) { 
+					document.location=$('#login-forward').val();
+					return;
+				} else {
+					document.location='/';
+				}
 			} else { 
 				$('#login-challenge').val(d.Challenge);
 				$('#login-challenge-id').val(d.ChallengeID);
-				console.log('Login failed');
+				console.log(esqoo_format_api_errors(d.Errors));
 			}
 		}
 	);
 }
 function esqoo_generate_password_hash(challenge,password) { 
 	return Sha256.hash(challenge+password);
+}
+function esqoo_format_api_errors(errors) { 
+	var ret='';
+	$.each(errors,function(o,i) { 
+		console.log('o: '+o+' i: '+i);
+	}
+	return ret;
 }
