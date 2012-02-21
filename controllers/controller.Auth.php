@@ -20,7 +20,6 @@ class AuthController extends OpenController {
 			$ret['UserID']=$user->id;
 			$ret['TokenID']=$token->id;
 			$ret['Token']=$token->token;
-			// These setcookie()s are redundant because browsers don't read cookies from AJAX requests - we have to set them in Javascript anyway
 			setcookie('UserID',$user->id,time()+31556926,'/');
 			setcookie('TokenID',$token->id,time()+31556926,'/');
 			setcookie('Token',$token->token,time()+31556926,'/');

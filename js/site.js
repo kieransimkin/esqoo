@@ -8,6 +8,9 @@ esqoo_login.login = function (c) {
 	if (c>10) { 
 		return;
 	}
+	if ($('#login-errors').css('display')=='block') { 
+		$('#login-errors').slideUp('fast');
+	}
 	var fieldname='Username';
 	if ($('#login-identity').val().indexOf('@')!==-1) { 
 		fieldname='Email';
@@ -22,9 +25,6 @@ esqoo_login.login = function (c) {
 	$.post('/auth/authenticate/api', opts, function(data) { 
 			var d=$.parseJSON(data);
 			if (d.ErrorCount==0 && typeof(d.Token) != 'undefined') { 
-//				$.cookie('UserID',d.UserID,{expires: 365, path: '/'});
-//				$.cookie('TokenID',d.TokenID,{expires: 365, path: '/'});
-//				$.cookie('Token',d.Token,{expires: 365, path: '/'});
 				if ($('#login-forward').val().length) { 
 					document.location=$('#login-forward').val();
 					return;
@@ -37,7 +37,8 @@ esqoo_login.login = function (c) {
 				if (esqoo_helpers.errors_contains(4,d.Errors)) { 
 					esqoo_login.login(c++);
 				} else { 
-					console.log(esqoo_helpers.format_api_errors(d.Errors));
+					$('#login-errors').html(esqoo_helpers.format_api_errors(d.Errors));
+					$('#login-errors').slideDown('fast');
 				}
 			}
 		}
