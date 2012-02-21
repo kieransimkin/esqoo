@@ -42,6 +42,7 @@ function esqoo_format_api_errors(errors) {
 }
 function esqoo_errors_contains(needle,haystack) { 
 	$.each(haystack,function(i,o) { 
+		console.log(o.Code);
 		if (o.Code==needle) { 
 			return true;
 		}
