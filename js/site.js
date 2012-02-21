@@ -33,6 +33,6 @@ function esqoo_format_api_errors(errors) {
 	var ret='';
 	$.each(errors,function(o,i) { 
 		console.log('o: '+o+' i: '+i);
-	}
+	});
 	return ret;
 }
