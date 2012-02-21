@@ -27,7 +27,7 @@ class AuthController extends OpenController {
 			setcookie('UserID',$user->id);
 			setcookie('TokenID',$token->id);
 			setcookie('Token',$token->token);
-		} else if (!is_null($user) && !is_null($challenge)) { 
+		} else if (!is_null($user)) { 
 			// Auth failed, generate a new challenge
 			$challenge=User_challenge::create(array('user'=>$user,'challenge'=>Helper::randomAlphaNumString(64)));
 			$ret['Challenge']=$challenge->challenge;
@@ -43,8 +43,12 @@ class AuthController extends OpenController {
 		if (strlen(@$input['ResponseHashType'])<1) { 
 			$this->api_error(6,"ResponseHashType field is required");
 		}
-		if (@$input['ResponseHashType']!='SHA1' && @$input['ResponseHashType']!='SHA256' && @$input['ResponseHashType']!='SHA384' && @$input['ResponseHashType']!='SHA512' && @$input['ResponseHashType']!='MD5') { 
-			$this->api_error(7,"ResponseHashType must be either 'SHA1', 'SHA256', 'SHA384', 'SHA512' or 'MD5'");
+		if (	@$input['ResponseHashType']!='SHA1' && 
+			@$input['ResponseHashType']!='SHA256' && 
+			@$input['ResponseHashType']!='SHA384' && 
+			@$input['ResponseHashType']!='SHA512' && 
+			@$input['ResponseHashType']!='MD5') { 
+				$this->api_error(7,"ResponseHashType must be either 'SHA1', 'SHA256', 'SHA384', 'SHA512' or 'MD5'");
 		}
 		return $this->ensure_hash_match($user,$challenge,$input);
 	}
