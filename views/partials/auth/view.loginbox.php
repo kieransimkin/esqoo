@@ -4,4 +4,5 @@
 <label for="login-password"><?=_('Password:')?></label><input type="password" name="password" id="login-password" placeholder="******">
 <input type="hidden" id="login-challenge" value="<?=$this->challenge['Challenge'];?>">
 <input type="hidden" id="login-challenge-id" value="<?=$this->challenge['ChallengeID'];?>">
+<input type="button" id="login-button" value="<?=_('Login');?>">
 </section>
