@@ -1,6 +1,6 @@
 function esqoo_login() { 
 	var fieldname='Username';
-	if ($('#login-identity').indexOf('@')) { 
+	if ($('#login-identity').val().indexOf('@')) { 
 		fieldname='Email';
 	}
 	$.getJSON( 
