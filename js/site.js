@@ -12,7 +12,8 @@ function esqoo_login() {
 			'ResponseHashType': 'SHA256',
 			'Response': esqoo_generate_password_hash($('#login-challenge').val(),$('#login-password').val())
 		}, function(data) { 
-			console.log(data);
+			var d=$.parseJSON(data);
+			console.log(d);
 		}
 	);
 }
