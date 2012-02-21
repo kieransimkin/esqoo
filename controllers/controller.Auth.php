@@ -44,9 +44,6 @@ class AuthController extends OpenController {
 	}
 	private function ensure_hash_match($user,$challenge,$input) { 
 		$hash=hash(strtolower($input['ResponseHashType']),$challenge->challenge.$user->password);
-		var_dump($challenge->challenge.$user->password);
-		var_dump($hash);
-		var_dump($input['Response']);
 		if (strtolower(@$input['Response'])!=$hash) { 
 			$this->api_error(8,"Authentication failed");
 			return null;
