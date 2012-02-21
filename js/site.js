@@ -1,9 +1,16 @@
-function esqoo_login() { 
+function esqoo_login(c) { 
+	// Prevent infinite loops:
+	if (typeof(c)=='undefined') { 
+		c=1;
+	}
+	if (c>10) { 
+		return;
+	}
 	var fieldname='Username';
 	if ($('#login-identity').val().indexOf('@')) { 
 		fieldname='Email';
 	}
-	$.post('/auth/authenticate/api/', { 
+	$.post('/auth/authenticate/api', { 
 			'ResponseFormat': 'json',
 			fieldname: $('#login-identity').val(),
 			'ChallengeID': $('#login-challenge-id').val(),
@@ -22,7 +29,7 @@ function esqoo_login() {
 				$('#login-challenge').val(d.Challenge);
 				$('#login-challenge-id').val(d.ChallengeID);
 				if (esqoo_errors_contains(4,d.Errors)) { 
-					esqoo_login();
+					esqoo_login(c++);
 				} else { 
 					console.log(esqoo_format_api_errors(d.Errors));
 				}
@@ -50,7 +57,7 @@ function esqoo_errors_contains(needle,haystack) {
 		}
 	});
 	if (found) { 
-		return true;
+
 	} else { 
 		return false;
 	}
