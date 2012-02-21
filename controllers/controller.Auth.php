@@ -11,7 +11,7 @@ class AuthController extends OpenController {
 		}
 		return $ret;
 	}
-	function authAPI($arg,$input) { 
+	function authenticateAPI($arg,$input) { 
 		$ret=array();
 		$user=$this->ensure_api_user($input);
 		$challenge=$this->ensure_api_challenge($user,$input);
@@ -21,6 +21,9 @@ class AuthController extends OpenController {
 			$ret['UserID']=$user->id;
 			$ret['TokenID']=$token->id;
 			$ret['Token']=$token->token;
+			setcookie('UserID',$user->id);
+			setcookie('TokenID',$token->id);
+			setcookie('Token',$token->token);
 		}
 		return $ret;
 	}
