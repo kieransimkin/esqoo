@@ -81,12 +81,12 @@ class AuthController extends OpenController {
 			$this->api_error(1,"Username, Email, or UserID field is required");
 		} else { 
 			try {
-				if (strlen(@$input['UserID'])>0) { 
-					$user=User::get($input['UserID'],'id','col',true);
-				} else if (strlen(@$input['Username'])>0) { 
+				if (strlen(@$input['Username'])>0) { 
 					$user=User::get($input['Username'],'username','col',true);
 				} else if (strlen(@$input['Email'])>0) { 
 					$user=User::get($input['Email'],'email','col',true);
+				} else if (strlen(@$input['UserID'])>0) { 
+					$user=User::get($input['UserID'],'id','col',true);
 				}
 			} catch (DBSQ_Exception $e) { 
 				$user=null;

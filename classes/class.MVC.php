@@ -40,7 +40,7 @@ class MVC {
 		if (!$api) { 
 			$new_controller->setView($controller.'/view.'.$action.".php");
 		}
-		$res=$new_controller->$funcname($arg,$_REQUEST);
+		$res=$new_controller->$funcname($arg,array_merge($_GET,$_POST));
 		if (!is_array($res)) {
 			$res=(array)@$res;
 		}
