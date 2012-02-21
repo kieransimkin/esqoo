@@ -12,13 +12,14 @@ esqoo_login.login = function (c) {
 	if ($('#login-identity').val().indexOf('@')) { 
 		fieldname='Email';
 	}
-	$.post('/auth/authenticate/api', { 
+	var opts = {
 			'ResponseFormat': 'json',
-			fieldname: $('#login-identity').val(),
 			'ChallengeID': $('#login-challenge-id').val(),
 			'HashType': 'SHA256',
 			'Response': esqoo_login.generate_password_hash($('#login-challenge').val(),$('#login-password').val())
-		}, function(data) { 
+	};
+	opts[fieldname]=$('#login-identity').val();
+	$.post('/auth/authenticate/api', opts, function(data) { 
 			var d=$.parseJSON(data);
 			if (d.ErrorCount==0 && typeof(d.Token) != 'undefined') { 
 //				$.cookie('UserID',d.UserID,{expires: 365, path: '/'});
