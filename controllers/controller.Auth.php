@@ -70,6 +70,7 @@ class AuthController extends OpenController {
 		} catch (DBSQ_Exception $e) { 
 			$challenge=null;
 		}
+		var_dump($challenge);
 		if (is_null($challenge)) { 
 			$this->api_error(4,"ChallengeID not found");
 			return null;
