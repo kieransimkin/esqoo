@@ -44,6 +44,8 @@ class AuthController extends OpenController {
 	}
 	private function ensure_hash_match($user,$challenge,$input) { 
 		$hash=hash(strtolower($input['ResponseHashType']),$challenge->challenge.$user->password);
+		var_dump($hash);
+		var_dump($input['Response']);
 		if (strtolower(@$input['Response'])!=$hash) { 
 			$this->api_error(8,"Authentication failed");
 			return null;
@@ -57,13 +59,13 @@ class AuthController extends OpenController {
 		}
 		$challenge=User_challenge::get($input['ChallengeID']);
 		if (is_null($challenge)||PEAR::isError($challenge)) { 
-			$this->api_error(4,"ChallengeID not found 1");
+			$this->api_error(4,"ChallengeID not found");
 			return null;
 		}
 		if ($challenge->user_id != $user->id) { 
 			var_dump($challenge->user_id);
 			var_dump($user->id);
-			$this->api_error(4,"ChallengeID not found 2");
+			$this->api_error(4,"ChallengeID not found");
 			return null;
 		}
 		return $challenge;
