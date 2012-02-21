@@ -21,9 +21,9 @@ esqoo_login.login = function (c) {
 		}, function(data) { 
 			var d=$.parseJSON(data);
 			if (d.ErrorCount==0 && typeof(d.Token) != 'undefined') { 
-				$.cookie('UserID',d.UserID,{expires: 365});
-				$.cookie('TokenID',d.TokenID,{expires: 365});
-				$.cookie('Token',d.Token,{expires: 365});
+				$.cookie('UserID',d.UserID,{expires: 365, path: '/'});
+				$.cookie('TokenID',d.TokenID,{expires: 365, path: '/'});
+				$.cookie('Token',d.Token,{expires: 365, path: '/'});
 				if ($('#login-forward').val().length) { 
 					document.location=$('#login-forward').val();
 					return;
