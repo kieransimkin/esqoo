@@ -3,9 +3,7 @@ function esqoo_login() {
 	if ($('#login-identity').val().indexOf('@')) { 
 		fieldname='Email';
 	}
-	$.post( 
-		'/auth/authenticate/api/',
-		{ 
+	$.post('/auth/authenticate/api/', { 
 			'ResponseFormat': 'json',
 			fieldname: $('#login-identity').val(),
 			'ChallengeID': $('#login-challenge-id').val(),
