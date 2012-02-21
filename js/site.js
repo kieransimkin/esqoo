@@ -21,7 +21,11 @@ function esqoo_login() {
 			} else { 
 				$('#login-challenge').val(d.Challenge);
 				$('#login-challenge-id').val(d.ChallengeID);
-				console.log(esqoo_format_api_errors(d.Errors));
+				if (esqoo_errors_contains(4,d.Errors)) { 
+					esqoo_login();
+				} else { 
+					console.log(esqoo_format_api_errors(d.Errors));
+				}
 			}
 		}
 	);
@@ -32,7 +36,15 @@ function esqoo_generate_password_hash(challenge,password) {
 function esqoo_format_api_errors(errors) { 
 	var ret='';
 	$.each(errors,function(i,o) { 
-		ret=ret+o.String+"\n";
+		ret=ret+o.String+"<br />\n";
 	});
 	return ret;
+}
+function esqoo_errors_contains(needle,haystack) { 
+	$.each(haystack,function(i,o) { 
+		if (o.Code==needle) { 
+			return true;
+		}
+	});
+	return false;
 }
