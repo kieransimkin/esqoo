@@ -1,7 +1,6 @@
 <?php
 class AuthController extends OpenController {
 	function getchallengeAPI($arg,$input) { 
-	var_dump($input);
 		$ret=array();
 		$challenge=User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
 		$ret['Challenge']=$challenge->challenge;
