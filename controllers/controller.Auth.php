@@ -67,15 +67,14 @@ class AuthController extends OpenController {
 		}
 		try { 
 			$challenge=User_challenge::get($input['ChallengeID']);
+			if ($challenge->user_id != $user->id) { 
+				$this->api_error(4,"ChallengeID not found");
+				return null;
+			}
 		} catch (DBSQ_Exception $e) { 
 			$challenge=null;
 		}
-		var_dump($challenge);
 		if (is_null($challenge)) { 
-			$this->api_error(4,"ChallengeID not found");
-			return null;
-		}
-		if ($challenge->user_id != $user->id) { 
 			$this->api_error(4,"ChallengeID not found");
 			return null;
 		}
@@ -88,11 +87,11 @@ class AuthController extends OpenController {
 		} else { 
 			try {
 				if (strlen(@$input['UserID'])>0) { 
-					$user=User::get($input['UserID']);
+					$user=User::get($input['UserID'],'id',false,true);
 				} else if (strlen(@$input['Username'])>0) { 
-					$user=User::get($input['Username'],'username');
+					$user=User::get($input['Username'],'username',false,true);
 				} else if (strlen(@$input['Email'])>0) { 
-					$user=User::get($input['Email'],'email');
+					$user=User::get($input['Email'],'email',false,true);
 				}
 			} catch (DBSQ_Exception $e) { 
 				$user=null;
