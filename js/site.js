@@ -4,7 +4,7 @@ function esqoo_login() {
 		fieldname='Email';
 	}
 	$.getJSON( 
-		url: '/auth/authenticate/api',
+		'/auth/authenticate/api',
 		{ 
 			'ResponseFormat': 'json',
 			fieldname: $('#login-identity').val(),
