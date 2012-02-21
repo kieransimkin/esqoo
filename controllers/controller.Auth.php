@@ -57,11 +57,11 @@ class AuthController extends OpenController {
 		}
 		$challenge=User_challenge::get($input['ChallengeID']);
 		if (is_null($challenge)||PEAR::isError($challenge)) { 
-			$this->api_error(4,"ChallengeID not found");
+			$this->api_error(4,"ChallengeID not found 1");
 			return null;
 		}
 		if ($challenge->user_id != $user->id) { 
-			$this->api_error(4,"ChallengeID not found");
+			$this->api_error(4,"ChallengeID not found 2");
 			return null;
 		}
 		return $challenge;
