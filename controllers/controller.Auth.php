@@ -32,7 +32,6 @@ class AuthController extends OpenController {
 		return $ret;
 	}
 	function loginUI($arg,$input) { 
-	var_dump($this);
 		$this->view->challenge=$this->getchallengeAPI('',array());
 	}
 	private function ensure_response_authorized($user,$challenge,$input) { 
