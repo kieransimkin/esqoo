@@ -1,4 +1,5 @@
 <?php
+var_dump($this->challenge);
 ?>
 <section class="login-box">
 	<div id="login-errors" style="display: none;"></div>
