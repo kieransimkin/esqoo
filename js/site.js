@@ -41,11 +41,17 @@ function esqoo_format_api_errors(errors) {
 	return ret;
 }
 function esqoo_errors_contains(needle,haystack) { 
+	var found=false;
 	$.each(haystack,function(i,o) { 
 		console.log(o.Code);
 		if (o.Code==needle) { 
-			return true;
+			found=true;	
+			return false;
 		}
 	});
-	return false;
+	if (found) { 
+		return true;
+	} else { 
+		return false;
+	}
 }
