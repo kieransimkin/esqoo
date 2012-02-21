@@ -65,7 +65,11 @@ class AuthController extends OpenController {
 			$this->api_error(3,"ChallengeID field is required");
 			return null;
 		}
-		$challenge=User_challenge::get($input['ChallengeID']);
+		try { 
+			$challenge=User_challenge::get($input['ChallengeID']);
+		} catch (DBSQ_Exception $e) { 
+			$challenge=null;
+		}
 		if (is_null($challenge)) { 
 			$this->api_error(4,"ChallengeID not found");
 			return null;
@@ -81,12 +85,16 @@ class AuthController extends OpenController {
 		if (strlen(@$input['UserID'])<1 && strlen(@$input['Username'])<1 && strlen(@$input['Email'])<1) { 
 			$this->api_error(1,"Username, Email, or UserID field is required");
 		} else { 
-			if (strlen(@$input['UserID'])>0) { 
-				$user=User::get($input['UserID']);
-			} else if (strlen(@$input['Username'])>0) { 
-				$user=User::get($input['Username'],'username');
-			} else if (strlen(@$input['Email'])>0) { 
-				$user=User::get($input['Email'],'email');
+			try {
+				if (strlen(@$input['UserID'])>0) { 
+					$user=User::get($input['UserID']);
+				} else if (strlen(@$input['Username'])>0) { 
+					$user=User::get($input['Username'],'username');
+				} else if (strlen(@$input['Email'])>0) { 
+					$user=User::get($input['Email'],'email');
+				}
+			} catch (DBSQ_Exception $e) { 
+				$user=null;
 			}
 			if (is_null($user)) { 
 				$this->api_error(2,"Username, Email or UserID not found");
