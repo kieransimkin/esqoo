@@ -1,5 +1,5 @@
 <?php
-class DashboardController extends OpenController { 
+class DashboardController extends LockedController { 
 	function indexUI() { 
 	}
 }
