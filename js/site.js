@@ -9,7 +9,7 @@ function esqoo_login() {
 			'ResponseFormat': 'json',
 			fieldname: $('#login-identity').val(),
 			'ChallengeID': $('#login-challenge-id').val(),
-			'ResponseHashType': 'SHA256',
+			'HashType': 'SHA256',
 			'Response': esqoo_generate_password_hash($('#login-challenge').val(),$('#login-password').val())
 		}, function(data) { 
 			var d=$.parseJSON(data);

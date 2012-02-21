@@ -39,20 +39,20 @@ class AuthController extends OpenController {
 		if (strlen(@$input['Response'])<1) { 
 			$this->api_error(5,"Response field is required");
 		}
-		if (strlen(@$input['ResponseHashType'])<1) { 
-			$this->api_error(6,"ResponseHashType field is required");
+		if (strlen(@$input['HashType'])<1) { 
+			$this->api_error(6,"HashType field is required");
 		}
-		if (	@$input['ResponseHashType']!='SHA1' && 
-			@$input['ResponseHashType']!='SHA256' && 
-			@$input['ResponseHashType']!='SHA384' && 
-			@$input['ResponseHashType']!='SHA512' && 
-			@$input['ResponseHashType']!='MD5') { 
-				$this->api_error(7,"ResponseHashType must be either 'SHA1', 'SHA256', 'SHA384', 'SHA512' or 'MD5'");
+		if (	@$input['HashType']!='SHA1' && 
+			@$input['HashType']!='SHA256' && 
+			@$input['HashType']!='SHA384' && 
+			@$input['HashType']!='SHA512' && 
+			@$input['HashType']!='MD5') { 
+				$this->api_error(7,"HashType must be either 'SHA1', 'SHA256', 'SHA384', 'SHA512' or 'MD5'");
 		}
 		return $this->ensure_hash_match($user,$challenge,$input);
 	}
 	private function ensure_hash_match($user,$challenge,$input) { 
-		$hash=hash(strtolower($input['ResponseHashType']),$challenge->challenge.$user->password);
+		$hash=hash(strtolower($input['HashType']),$challenge->challenge.$user->password);
 		if (strtolower(@$input['Response'])!=$hash) { 
 			$this->api_error(8,"Authentication failed");
 			return null;
