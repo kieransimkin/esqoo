@@ -36,6 +36,9 @@ class AuthController extends OpenController {
 		}
 		return $ret;
 	}
+	function loginUI($arg,$input) { 
+
+	}
 	private function ensure_response_authorized($user,$challenge,$input) { 
 		if (strlen(@$input['Response'])<1) { 
 			$this->api_error(5,"Response field is required");
@@ -67,7 +70,7 @@ class AuthController extends OpenController {
 		}
 		try { 
 			$challenge=User_challenge::get($input['ChallengeID']);
-			if ($challenge->user_id != $user->id) { 
+			if (@$challenge->user_id != $user->id) { 
 				$this->api_error(4,"ChallengeID not found");
 				return null;
 			}
