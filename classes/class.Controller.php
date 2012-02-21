@@ -68,7 +68,7 @@ class Controller {
 		}
 	}
 	function api_error($id,$str) { 
-		$this->api_errors[]=array('Code'=>$id,'String'=>$str);
+		$this->api_errors[$id]=$str;
 	}
 	function api_validation_success() { 
 		if (count($this->api_errors)>0) { 
