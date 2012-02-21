@@ -15,7 +15,7 @@ class AuthController extends OpenController {
 	/**
 	 * This function takes your hashed password response, and if it matches
 	 * the password stored on file, returns an authentication token. This 
-	 * authentication token then becomes your pass to execute privilidged
+	 * authentication token then becomes your pass to execute privileged
 	 * functions via the API.
 	 */
 	function authenticateAPI($arg,$input) { 
