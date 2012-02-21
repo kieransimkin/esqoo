@@ -67,24 +67,6 @@ class Controller {
 			$this->view->head .= "\t<link rel=\"stylesheet\" href=\"/css/{$action}.css\" />\n";
 		}
 	}
-	function ensure_api_user($input) {
-		$user=null;
-		if (strlen(@$input['UserID'])<1 && strlen(@$input['Username'])<1 && strlen(@$input['Email'])<1) { 
-			$this->api_error(1,"Username, Email, or UserID field is required");
-		} else { 
-			if (strlen(@$input['UserID'])>0) { 
-				$user=User::get($input['UserID']);
-			} else if (strlen(@$input['Username'])>0) { 
-				$user=User::get($input['Username'],'username');
-			} else if (strlen(@$input['Email'])>0) { 
-				$user=User::get($input['Email'],'email');
-			}
-			if (is_null($user) || PEAR::isError($user)) { 
-				$this->api_error(2,"Username, Email or UserID not found");
-			}
-		}
-		return $user;
-	}
 	function api_error($id,$str) { 
 		$this->api_errors[]=array($id,$str);
 	}
