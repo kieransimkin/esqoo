@@ -24,6 +24,14 @@ class AuthController extends OpenController {
 			setcookie('UserID',$user->id);
 			setcookie('TokenID',$token->id);
 			setcookie('Token',$token->token);
+			$challenge->delete();
+		} else { 
+			// Auth failed, still invalidate their challenge and generate a new one
+			$challenge->delete();
+			$challenge=User_challenge::create(array('user'=>$user,'challenge'=>Helper::randomAlphaNumString(64)));
+			$ret['Challenge']=$challenge->challenge;
+			$ret['UserID']=$user->id;
+			$ret['ChallengeID']=$challenge->id;
 		}
 		return $ret;
 	}
