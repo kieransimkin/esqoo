@@ -9,7 +9,7 @@ esqoo_login.login = function (c) {
 		return;
 	}
 	var fieldname='Username';
-	if ($('#login-identity').val().indexOf('@')) { 
+	if ($('#login-identity').val().indexOf('@')!==-1) { 
 		fieldname='Email';
 	}
 	var opts = {
