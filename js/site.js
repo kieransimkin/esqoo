@@ -13,7 +13,13 @@ function esqoo_login() {
 			'Response': esqoo_generate_password_hash($('#login-challenge').val(),$('#login-password').val())
 		}, function(data) { 
 			var d=$.parseJSON(data);
-			console.log(d);
+			if (d.ErrorCount==0 && d.Token.length) { 
+				console.log('Login successful');
+			} else { 
+				$('#login-challenge').val(d.Challenge);
+				$('#login-challenge-id').val(d.ChallengeID);
+				console.log('Login failed');
+			}
 		}
 	);
 }
