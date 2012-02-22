@@ -12,7 +12,7 @@ $(document).ready(function() {
 		}
 		$(this).button({icons: {primary: primary, secondary: secondary}});
 	});
-	$('input[type=text]').livequery(function() { 
+	$('input:text, input:email, input:password, input:url, input:number, input:search, input:tel').livequery(function() { 
 		$(this).button().addClass('esqoo-text-field');
 	});
 });
