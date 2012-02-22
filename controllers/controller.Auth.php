@@ -44,7 +44,7 @@ class AuthController extends OpenController {
 	}
 	function loginUI($arg='',$input=array()) { 
 		$this->view->challenge=$this->getchallengeAPI('',array());
-		$this->view->forward=@$input['Forward'];
+		$this->view->forward=@$input['forward'];
 	}
 	private function ensure_response_authorized($user,$challenge,$input) { 
 		if (strlen(@$input['Response'])<1) { 
