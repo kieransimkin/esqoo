@@ -5,7 +5,7 @@ class AuthController extends OpenController {
 	 * with your password before calling authenticate with the generated
 	 * hash.
 	 */
-	function getchallengeAPI($arg,$input) { 
+	function getchallengeAPI($arg='',$input=array()) { 
 		$ret=array();
 		$challenge=User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
 		$ret['Challenge']=$challenge->challenge;
@@ -18,7 +18,7 @@ class AuthController extends OpenController {
 	 * authentication token then becomes your pass to execute privileged
 	 * functions via the API.
 	 */
-	function authenticateAPI($arg,$input) { 
+	function authenticateAPI($arg='',$input=array()) { 
 		$ret=array();
 		$user=$this->ensure_api_user($input);
 		$challenge=$this->ensure_api_challenge($user,$input);
@@ -42,7 +42,7 @@ class AuthController extends OpenController {
 		}
 		return $ret;
 	}
-	function loginUI($arg,$input) { 
+	function loginUI($arg='',$input=array()) { 
 		$this->view->challenge=$this->getchallengeAPI('',array());
 		$this->view->forward=@$input['Forward'];
 	}

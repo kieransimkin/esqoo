@@ -1,5 +1,5 @@
 <?php
 class DashboardController extends LockedController { 
-	function indexUI() { 
+	function indexUI($arg='',$input=array()) { 
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 class AccountController extends LockedController { 
-	public function logoutAPI($arg,$input) { 
+	public function logoutAPI($arg='',$input=array()) { 
 		$this->user_token->delete();
 		/*
 		setcookie('UserID','',time()-3600,'/');
@@ -9,7 +9,7 @@ class AccountController extends LockedController {
 		*/
 		return array();
 	}
-	public function logoutUI($arg,$input) { 
+	public function logoutUI($arg='',$input=array()) { 
 		$this->logoutAPI();
 		$this->redirect('/auth/login/');
 	}
