@@ -12,6 +12,9 @@ $(document).ready(function() {
 		}
 		$(this).button({icons: {primary: primary, secondary: secondary}});
 	});
+	$('input[type=text]').livequery(function() { 
+		$(this).button().addClass('esqoo-text-field');
+	});
 });
 esqoo_login.login = function (c) { 
 	// Prevent infinite loops:

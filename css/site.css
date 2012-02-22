@@ -4,3 +4,10 @@
 .ui-button {
 	font-size: 0.8em !important;
 }
+input .esqoo-text-field {
+	font: inherit;
+	color: inherit;
+	text-align: inherit;
+	outline: none;
+	cursor: text;
+}
