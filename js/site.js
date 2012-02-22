@@ -25,7 +25,7 @@ esqoo_login.login = function (c) {
 	$.post('/auth/authenticate/api', opts, function(data) { 
 			var d=$.parseJSON(data);
 			if (d.ErrorCount==0 && typeof(d.Token) != 'undefined') { 
-				if ($('#login-forward').val().length) { 
+				if ($('#login-forward').val().length && $('#login-forward').val().indexOf('/account/logout') == -1) { 
 					document.location=$('#login-forward').val();
 					return;
 				} else {
