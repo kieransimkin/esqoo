@@ -12,7 +12,7 @@ class LockedController extends Controller {
 		try { 
 			$user=User::get($input['UserID']);
 			$usertoken=User_token::get($input['TokenID']);
-			if ($token->user_id!=$user->id) { 
+			if ($usertoken->user_id!=$user->id) { 
 				print "got here 2";
 				$this->_redirectAuthFail();
 			}
