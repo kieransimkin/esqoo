@@ -8,6 +8,7 @@ class Controller {
 	public function setView($view) {
 		$this->view = new View($view);
 		$this->view->controller = $this;
+		$this->view->user = @$this->user;
 	}
 
 	public function render() {

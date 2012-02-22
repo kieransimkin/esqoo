@@ -21,6 +21,7 @@ class LockedController extends Controller {
 			$this->_redirectAuthFail();
 		}
 		$this->user=$user;
+		$this->user_token=$usertoken;
 	}
 	private function _redirectAuthFail() { 
 		$this->redirect('/auth/login/?forward='.urlencode($_SERVER['REQUEST_URI']));
