@@ -1,5 +1,10 @@
 var esqoo_login = {};
 var esqoo_helpers = {};
+$(document).ready(function() { 
+	$('button').livequery(function() { 
+		$(this).button({});
+	});
+});
 esqoo_login.login = function (c) { 
 	// Prevent infinite loops:
 	if (typeof(c)=='undefined') { 
