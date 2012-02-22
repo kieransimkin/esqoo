@@ -7,7 +7,7 @@
 	<input type="hidden" id="login-challenge" value="<?=$this->challenge['Challenge'];?>">
 	<input type="hidden" id="login-forward" value="<?=$this->forward;?>">
 	<input type="hidden" id="login-challenge-id" value="<?=$this->challenge['ChallengeID'];?>">
-	<button id="login-button" onclick="esqoo_login.login(); return false;"><?=_('Login');?></button>
+	<button id="login-button" onclick="esqoo_login.login(); return false;" data-icon-primary="ui-icon-key"><?=_('Login');?></button>
 	<noscript>
 		<?=_('You will need JavaScript enabled past this point.');?>
 	</noscript>

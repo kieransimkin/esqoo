@@ -2,7 +2,15 @@ var esqoo_login = {};
 var esqoo_helpers = {};
 $(document).ready(function() { 
 	$('button').livequery(function() { 
-		$(this).button({});
+		var primary = null;
+		var secondary = null;
+		if ($(this).attr('data-icon-primary')) { 
+			primary=$(this).attr('data-icon-primary');
+		}
+		if ($(this).attr('data-icon-secondary')) { 
+			secondary=$(this).attr('data-icon-secondary');
+		}
+		$(this).button({icons: {primary: primary, secondary: secondary}});
 	});
 });
 esqoo_login.login = function (c) { 
