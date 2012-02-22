@@ -1,6 +1,10 @@
 <?php
 class Controller { 
 	public $api_errors=array();
+	function __construct($controller,$action) { 
+		$this->action=$action;
+		$this->controller=$controller;
+	}
 	public function setView($view) {
 		$this->view = new View($view);
 		$this->view->controller = $this;

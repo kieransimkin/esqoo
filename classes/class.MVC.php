@@ -31,8 +31,6 @@ class MVC {
 			self::throw404($controller_class,$funcname);
 		}
 		$new_controller = new $controller_class($controller, $action);
-		$new_controller->action = $action;
-		$new_controller->controller = strtolower($controller);
 
 		if (!method_exists($new_controller, $funcname)) { 
 			self::throw404($controller_class, $funcname);
