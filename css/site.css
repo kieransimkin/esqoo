@@ -9,5 +9,5 @@ input.esqoo-text-field {
 	text-align: inherit;
 	outline: none;
 	cursor: text;
-	padding-left: 1em !important;
+	padding-left: 0.2em !important;
 }
