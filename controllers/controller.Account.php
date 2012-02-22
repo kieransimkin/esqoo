@@ -1,5 +1,5 @@
 <?php
-class Account extends LockedController { 
+class AccountController extends LockedController { 
 	public function logoutAPI($arg,$input) { 
 		$this->user_token->delete();
 		/*
