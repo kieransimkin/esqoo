@@ -91,5 +91,8 @@ class Controller {
 	function __toString() { 
 		return get_called_class();
 	}
-
+	function redirect($url) { 
+		header("Location: $url");
+		die;
+	}
 }
