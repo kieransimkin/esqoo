@@ -16,7 +16,7 @@ class LockedController extends Controller {
 				print "got here 2";
 				$this->_redirectAuthFail();
 			}
-			if ($token->token!=$input['Token']) { 
+			if ($usertoken->token!=$input['Token']) { 
 				print "got here 3";
 				$this->_redirectAuthFail();
 			}
