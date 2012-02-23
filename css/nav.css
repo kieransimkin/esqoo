@@ -16,7 +16,7 @@ ul#nav-one li ul {
 	padding-right: 0.5%;
 }
 ul#nav-one li ul li {
-	width: 90%;
+	width: 90% !important;
 	padding-left: 5%;
 	padding-right: 5%;
 }
