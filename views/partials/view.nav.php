@@ -15,7 +15,7 @@ $nav=array(
 	)
 );?>
 <nav>
-<ul id="nav-one" class="nav">
+<ul id="nav-one" class="nav ui-tabs-nav ui-helper-clearfix ui-widget-header ui-corner-all inner-padded">
 <?php
 function render_nav_element($url,$item,$user) {
 	$content='';
