@@ -18,7 +18,7 @@ $(document).ready(function() {
             maxWidth:    15,   // maximum width of sub-menus in em units 
             extraWidth:  1     // extra width can ensure lines don't sometimes turn over 
                                // due to slight rounding differences and font-family 
-        }).superfish({ hidingspeed: 250, animation:   {opacity:'show',height:'show'},  // fade-in and slide-down animation 
+        }).superfish({ hidingspeed: 250, animation:   {opacity:'show',height:'show',hoverClass: 'ui-state-highlight'},  // fade-in and slide-down animation 
                  speed:       150, delay: 500}).find('ul');
 
 });
