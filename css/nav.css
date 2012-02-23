@@ -12,8 +12,12 @@ ul#nav-one li {
 	padding-right: 0.7%;
 }
 ul#nav-one li ul { 
-	padding-left: 1%;
-	padding-right: 1%;
+	padding-left: 0.5%;
+	padding-right: 0.5%;
+}
+ul#nav-one li ul li { 
+	padding-left: 5%;
+	padding-right: 5%;
 }
 ul#nav-one li a { 
 	text-decoration: none;
