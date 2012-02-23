@@ -22,7 +22,7 @@ function render_nav_element($url,$item,$user) {
 	if (strpos($url,'submenu:')===0) { 
 		list($submenu,$title)=explode(':',$url,2);
 		$content .= "<li class=\"ui-menubar-default\"><a href=\"#\" onclick=\"return false;\">$title</a>";
-		$content .= "<ul class=\"ui-state-highlight ui-corner-all\">";
+		$content .= "<ul class=\"ui-state-default ui-corner-all\">";
 		$count=0;
 		foreach($item as $turl => $titem) {
 			$thiscontent=render_nav_element($turl,$titem,$user);	
@@ -85,7 +85,7 @@ foreach($nav as $heading => $menu) {
 		?>
 		<li class="ui-menubar-heading-default">
 			<a href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false"><?=$heading?></a>
-			<ul class="ui-state-highlight">
+			<ul class="ui-state-default">
 			<?=$content?>
 			</ul>
 		</li>
