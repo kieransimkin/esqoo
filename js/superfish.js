@@ -20,7 +20,6 @@
 				var $$ = $(this), menu = getMenu($$);
 				clearTimeout(menu.sfTimer);
 				$$.showSuperfishUl().siblings().hideSuperfishUl();
-				console.log($$);
 			},
 			out = function(){
 				var $$ = $(this), menu = getMenu($$), o = sf.op;
@@ -30,7 +29,6 @@
 					$$.hideSuperfishUl();
 					if (o.$path.length && $$.parents(['li.',o.hoverClass].join('')).length<1){over.call(o.$path);}
 				},o.delay);	
-				console.log($$);
 			},
 			getMenu = function($menu){
 				var menu = $menu.parents(['ul.',c.menuClass,':first'].join(''))[0];
@@ -51,6 +49,7 @@
 			$('li:has(ul)',this)[($.fn.hoverIntent && !o.disableHI) ? 'hoverIntent' : 'hover'](over,out).each(function() {
 				if (o.autoArrows) addArrow( $('>a:first-child',this) );
 			})
+			console.log($('li:!has(ul)',this));
 			.not('.'+c.bcClass)
 				.hideSuperfishUl();
 			
