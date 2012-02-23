@@ -8,6 +8,8 @@ ul#nav-one ul {
 ul#nav-one li { 
 	float: left;
 	list-style-type: none;
+}
+ul#nav-one li a { 
 	text-decoration: none;
 }
  
