@@ -22,7 +22,7 @@ function render_nav_element($url,$item,$user) {
 	$content='';
 	if (strpos($url,'submenu:')===0) { 
 		list($submenu,$title)=explode(':',$url,2);
-		$content .= "<li class=\"ui-menubar-default\"><a href=\"#\" onclick=\"return false;\">$title &raquo;</a>";
+		$content .= "<li class=\"ui-menubar-default\"><a href=\"#\" onclick=\"return false;\">$title <aside style=\"float: right;\">&raquo;</aside></a>";
 		$content .= "<ul class=\"ui-state-default ui-corner-all\">";
 		$count=0;
 		foreach($item as $turl => $titem) {
