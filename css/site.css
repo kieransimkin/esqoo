@@ -7,18 +7,6 @@ body,html {
 .ui-button {
 	font-size: 0.9em !important;
 }
-ul#nav-one { 
-	padding-left: 0px;
-	padding-right: 0px;
-	margin: 0px;
-	float: left;
-	line-height: 1;
-	list-style: none outside none;
-}
-ul#nav-one li { 
-	float: left;
-	position: relative;
-}
 input.esqoo-text-field {
 	font: inherit;
 	text-align: inherit;
