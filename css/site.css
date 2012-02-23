@@ -12,6 +12,7 @@ ul#nav-one ul {
 }
 ul#nav-one li { 
 	float: left;
+	list-style-type: none;
 }
 input.esqoo-text-field {
 	font: inherit;
