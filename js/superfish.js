@@ -53,10 +53,10 @@
 				.hideSuperfishUl();
 			
 			$('li:not(:has(ul))',this).hover(function() {
-				this.addClass(o.hoverClass);
+				$(this).addClass(o.hoverClass);
 			},
 			function() { 
-				this.removeClass(o.hoverClass);
+				$(this).removeClass(o.hoverClass);
 			});
 			var $a = $('a',this);
 			$a.each(function(i){
