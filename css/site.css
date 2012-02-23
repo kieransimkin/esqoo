@@ -7,6 +7,10 @@ body,html {
 .ui-button {
 	font-size: 0.9em !important;
 }
+ul#nav-one { 
+	margin-top: 0px;
+	padding-left: 0px;
+}
 ul#nav-one ul {
 	position: absolute;
 }
