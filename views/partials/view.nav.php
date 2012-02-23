@@ -83,7 +83,7 @@ foreach($nav as $heading => $menu) {
 	}
 	if($content) {
 		?>
-		<li class="ui-menubar-heading-default" style="border-left:1px solid #333; border-right: 0px; border-bottom: 0px; border-top: 0px;">
+		<li class="ui-menubar-heading-default">
 			<a href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false" style="cursor: default; position: relative; top: -4px;">&nbsp;&nbsp;&nbsp;&nbsp;<?=$heading?></a>
 			<ul class="ui-state-highlight">
 			<?=$content?>
