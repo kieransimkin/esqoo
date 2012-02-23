@@ -20,7 +20,7 @@
 				var $$ = $(this), menu = getMenu($$);
 				clearTimeout(menu.sfTimer);
 				$$.showSuperfishUl().siblings().hideSuperfishUl();
-				$(this).addClass(o.hoverClass);
+				console.log(this);
 			},
 			out = function(){
 				var $$ = $(this), menu = getMenu($$), o = sf.op;
@@ -30,7 +30,7 @@
 					$$.hideSuperfishUl();
 					if (o.$path.length && $$.parents(['li.',o.hoverClass].join('')).length<1){over.call(o.$path);}
 				},o.delay);	
-				$(this).removeClass(o.hoverClass);
+				console.log(this);
 			},
 			getMenu = function($menu){
 				var menu = $menu.parents(['ul.',c.menuClass,':first'].join(''))[0];
