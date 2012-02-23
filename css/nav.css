@@ -1,0 +1,12 @@
+ul#nav-one { 
+	margin-top: 0px;
+	padding-left: 0px;
+}
+ul#nav-one ul {
+	position: absolute;
+}
+ul#nav-one li { 
+	float: left;
+	list-style-type: none;
+}
+ 
