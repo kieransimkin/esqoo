@@ -1,6 +1,7 @@
 ul#nav-one { 
 	margin-top: 0px;
-	padding-left: 0px;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 ul#nav-one ul {
 	position: absolute;
