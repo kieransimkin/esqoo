@@ -22,7 +22,7 @@ function render_nav_element($url,$item,$user) {
 	if (strpos($url,'submenu:')===0) { 
 		list($submenu,$title)=explode(':',$url,2);
 		$content .= "<li class=\"ui-menubar-default\"><a href=\"#\" onclick=\"return false;\">&nbsp;&nbsp;&nbsp;$title</a>";
-		$content .= "<ul class=\"ui-state-highlight ui-corner-all\" style=\"position: relative; top: -30px;\">";
+		$content .= "<ul class=\"ui-state-highlight ui-corner-all\">";
 		$count=0;
 		foreach($item as $turl => $titem) {
 			$thiscontent=render_nav_element($turl,$titem,$user);	
@@ -84,7 +84,7 @@ foreach($nav as $heading => $menu) {
 	if($content) {
 		?>
 		<li class="ui-menubar-heading-default">
-			<a href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false" style="cursor: default; position: relative; top: -4px;">&nbsp;&nbsp;&nbsp;&nbsp;<?=$heading?></a>
+			<a href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false">&nbsp;&nbsp;&nbsp;&nbsp;<?=$heading?></a>
 			<ul class="ui-state-highlight">
 			<?=$content?>
 			</ul>
