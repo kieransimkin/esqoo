@@ -5,6 +5,7 @@ ul#nav-one {
 }
 ul#nav-one ul {
 	position: absolute;
+	padding-top: 1%;
 }
 ul#nav-one li { 
 	float: left;
