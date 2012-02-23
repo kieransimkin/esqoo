@@ -1,6 +1,9 @@
 * {
 	font-family: 'Cantarell';
 }
+body,html { 
+	padding: 0;
+}
 .ui-button {
 	font-size: 0.9em !important;
 }
