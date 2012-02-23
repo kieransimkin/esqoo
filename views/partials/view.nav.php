@@ -4,7 +4,8 @@ $nav=array(
 		"/file/upload" => _('Upload')
 	),
 	_('Account') => array(
-		"popup:"._('Account Details').":save,cancel:/account/details" => _('Account Details')
+		"popup:"._('Account Details').":save,cancel:/account/details" => _('Account Details'),
+		"/account/logout" => _('Logout')
 	),
 	_('Help') => array(
 		"/help/about" => _('About Esqoo'),
