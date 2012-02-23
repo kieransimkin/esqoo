@@ -25,8 +25,8 @@ ul#nav-one li ul li {
 	padding-right: 5%;
 }
 ul#nav-one li ul li ul { 
-	padding-left: 0.5%;
-	padding-right: 0.5%;
+	padding-left: 5%;
+	padding-right: 5%;
 }
 ul#nav-one li ul li ul li { 
 	width: 90% !important;
