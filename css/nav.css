@@ -10,6 +10,8 @@ ul#nav-one li {
 	list-style-type: none;
 	padding-left: 0.7%;
 	padding-right: 0.7%;
+}
+ul#nav-one li:not(.ui-state-hover) { 
 	border: 1px solid transparent;
 }
 ul#nav-one li ul { 
