@@ -10,6 +10,9 @@ body,html {
 ul#nav-one ul {
 	position: absolute;
 }
+ul#nav-one li { 
+	float: left;
+}
 input.esqoo-text-field {
 	font: inherit;
 	text-align: inherit;
