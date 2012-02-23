@@ -10,7 +10,7 @@ ul#nav-one li {
 	list-style-type: none;
 	padding-left: 0.7%;
 	padding-right: 0.7%;
-	border 1px solid transparent;
+	border: 1px solid transparent;
 }
 ul#nav-one li ul { 
 	padding-left: 0.5%;
