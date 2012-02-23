@@ -52,7 +52,12 @@
 			.not('.'+c.bcClass)
 				.hideSuperfishUl();
 			
-			console.log($('li:not(:has(ul))',this));
+			$('li:not(:has(ul))',this).hover(function() {
+				console.log('over');
+			},
+			function() { 
+				console.log('out');
+			});
 			var $a = $('a',this);
 			$a.each(function(i){
 				var $li = $a.eq(i).parents('li');
