@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 <?php
-	$this->cssManager->add("site");
+	$this->cssManager->add("site","superfish","superfish-navbar");
 //	$this->cssManager->add("query.ui.base","themes/base/jquery.ui.core","themes/base/jquery.ui.dialog");
 	$this->cssManager->display();
 	$theme=@$this->options['theme'];
