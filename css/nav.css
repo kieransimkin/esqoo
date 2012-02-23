@@ -26,4 +26,6 @@ ul#nav-one li ul li {
 ul#nav-one li a { 
 	text-decoration: none;
 }
- 
+div.nav-float-right { 
+	float: right;
+}
