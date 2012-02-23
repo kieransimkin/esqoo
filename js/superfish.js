@@ -49,10 +49,10 @@
 			$('li:has(ul)',this)[($.fn.hoverIntent && !o.disableHI) ? 'hoverIntent' : 'hover'](over,out).each(function() {
 				if (o.autoArrows) addArrow( $('>a:first-child',this) );
 			})
-			console.log($('li:!has(ul)',this));
 			.not('.'+c.bcClass)
 				.hideSuperfishUl();
 			
+			console.log($('li:not(:has(ul))',this));
 			var $a = $('a',this);
 			$a.each(function(i){
 				var $li = $a.eq(i).parents('li');
