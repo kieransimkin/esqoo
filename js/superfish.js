@@ -58,6 +58,12 @@
 			function() { 
 				$(this).removeClass(o.hoverClass);
 			});
+			$('li',this).mousedown(function() { 
+				$(this).addClass('ui-state-active');
+			});
+			$('li',this).mouseup(function() { 
+				$(this).removeClass('ui-state-active');
+			});
 			var $a = $('a',this);
 			$a.each(function(i){
 				var $li = $a.eq(i).parents('li');
