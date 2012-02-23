@@ -12,6 +12,9 @@ ul#nav-one {
 	padding-right: 0px;
 	margin: 0px;
 }
+ul#nav-one li { 
+	display: inline;
+}
 input.esqoo-text-field {
 	font: inherit;
 	text-align: inherit;
