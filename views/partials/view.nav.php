@@ -15,6 +15,7 @@ $nav=array(
 	)
 );?>
 <nav>
+<ul id="nav-one" class="nav">
 <?php
 function render_nav_element($url,$item,$user) {
 	$content='';
@@ -93,4 +94,5 @@ foreach($nav as $heading => $menu) {
 }
 
 ?>
+</ul>
 </nav>
