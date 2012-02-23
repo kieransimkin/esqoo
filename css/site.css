@@ -7,6 +7,11 @@ body,html {
 .ui-button {
 	font-size: 0.9em !important;
 }
+ul.nav-one { 
+	padding-left: 0px;
+	padding-right: 0px;
+	margin: 0px;
+}
 input.esqoo-text-field {
 	font: inherit;
 	text-align: inherit;
