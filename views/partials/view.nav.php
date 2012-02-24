@@ -84,6 +84,7 @@ function render_nav_element($url,$item,$user) {
 	}
 	return $content;
 }
+$first=' lambda';
 foreach($nav as $heading => $menu) {
     	$content = '';
 	foreach($menu as $url => $item) {
@@ -91,7 +92,7 @@ foreach($nav as $heading => $menu) {
 	}
 	if($content) {
 		?>
-		<li class="ui-menubar-heading-default">
+		<li class="ui-menubar-heading-default<?=$first;?>">
 			<a href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false"><?=$heading?></a>
 			<ul class="ui-state-default">
 			<?=$content?>
@@ -99,6 +100,7 @@ foreach($nav as $heading => $menu) {
 		</li>
 		<?
 	}
+	$first='';
 }
 
 ?>
