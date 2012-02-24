@@ -13,6 +13,11 @@ ul#nav-one li {
 	padding-left: 0.7%;
 	padding-right: 0.7%;
 }
+ul#nav-one:first-child li {
+	position: absolute;
+	font-size: 2em;
+	border: 1px solid black;
+}
 ul#nav-one li:not(.ui-state-hover) { 
 	border: 1px solid transparent;
 }
