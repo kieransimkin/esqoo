@@ -11,8 +11,8 @@
 	$this->cssManager->display();
 	$theme=@$this->options['theme'];
 	if (strlen($theme)<1) { 
-		$theme='sunny';
-		//$theme='vader';
+		//$theme='sunny';
+		$theme='vader';
 		//$theme='ui-darkness';
 	}
 	?>
