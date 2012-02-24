@@ -10,7 +10,6 @@ ul#nav-one ul {
 ul#nav-one li { 
 	float: left;
 	list-style-type: none;
-	padding-left: 0.7%;
 	padding-right: 0.7%;
 }
 ul#nav-one li.lambda { 
