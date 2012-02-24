@@ -11,9 +11,9 @@
 	$this->cssManager->display();
 	$theme=@$this->options['theme'];
 	if (strlen($theme)<1) { 
-		//$theme='sunny';
+		$theme='sunny';
 		//$theme='vader';
-		$theme='ui-darkness';
+		//$theme='ui-darkness';
 	}
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />
