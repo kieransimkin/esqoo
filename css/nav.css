@@ -13,8 +13,8 @@ ul#nav-one li {
 	margin-right: 1%;
 }
 ul#nav-one li:not(.lambda) a.menubar-title-heading { 
-	margin-left: 0.6em;
-	margin-right: 0.6em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
 }
 ul#nav-one li.lambda { 
 	font-size: 30px;
