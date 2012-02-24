@@ -6,6 +6,9 @@ ul#nav-one {
 ul#nav-one ul {
 	position: absolute;
 	padding-top: 0.3em;
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 ul#nav-one li { 
 	float: left;
