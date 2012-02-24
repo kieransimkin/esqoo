@@ -11,7 +11,7 @@ ul#nav-one li {
 	float: left;
 	list-style-type: none;
 }
-ul#nav-one a.menubar-title-heading { 
+ul#nav-one li:not(.lambda) a.menubar-title-heading { 
 	margin-left: 0.8em;
 	margin-right: 0.8em;
 }
