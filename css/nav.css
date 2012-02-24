@@ -40,8 +40,8 @@ ul#nav-one li:not(.ui-state-hover):not(.lambda) {
 	border: 1px solid transparent;
 }
 ul#nav-one li ul { 
-	padding-left: 5%;
-	padding-right: 5%;
+	padding-left: 0.5%;
+	padding-right: 0.7%;
 }
 ul#nav-one li ul li {
 	width: 90% !important;
