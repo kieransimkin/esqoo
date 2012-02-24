@@ -1,6 +1,9 @@
 * {
 	font-family: 'Cantarell';
 }
+section, article, header, footer, nav, aside, hgroup {
+  display: block;
+} 
 body,html { 
 	margin: 0;
 }
