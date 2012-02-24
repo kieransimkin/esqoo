@@ -84,7 +84,7 @@ function render_nav_element($url,$item,$user) {
 	}
 	return $content;
 }
-$first=' lambda ui-widget-header';
+$first=' lambda ui-widget-header ui-corner-all';
 foreach($nav as $heading => $menu) {
     	$content = '';
 	foreach($menu as $url => $item) {
@@ -100,7 +100,11 @@ foreach($nav as $heading => $menu) {
 		</li>
 		<?
 	}
-	$first='';
+	if (strpos($first,'lambda')!==FALSE) { 
+		$first=' second';
+	} else {
+		$first='';
+	}
 }
 
 ?>
