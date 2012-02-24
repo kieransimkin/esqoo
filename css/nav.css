@@ -33,7 +33,8 @@ ul#nav-one li.lambda ul li {
 	padding-right: 2%;
 	width: 90% !important;
 }
-ul#nav-one li:hover { 
+ul#nav-one li:hover,
+ul#nav-one { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
