@@ -1,5 +1,6 @@
 <?php
 class View { 
+	public $template='normal';
 	function __construct($view_name) {
 		$this->view_name = $view_name;
 	}
@@ -20,6 +21,9 @@ class View {
 			$this->partial($this->view_name);
 		}
 	}
+	function setTemplate($template) { 
+		$this->template=$template;
+	}
 	function partial($name) {
 		$file = Site::$approot . "/views/" . $name;
 		if(file_exists($file)) {
@@ -34,8 +38,10 @@ class View {
 	function header($title) {
 		$this->title = $title;
 		$this->partial("partials/view.header.php");
+		$this->partial("partials/templates/template.".$this->template.".header.php");
 	}
 	function footer() {
+		$this->partial("partials/templates/template.".$this->template.".footer.php");
 		$this->partial("partials/view.footer.php");
 	}
 } 
