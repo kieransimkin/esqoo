@@ -27,7 +27,7 @@ ul#nav-one li:hover {
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 ul#nav-one li.second { 
-	margin-left: 50px;
+	margin-left: 48px;
 }
 ul#nav-one li:not(.ui-state-hover):not(.lambda) { 
 	border: 1px solid transparent;
