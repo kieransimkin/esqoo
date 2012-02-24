@@ -30,6 +30,7 @@ ul#nav-one li.lambda {
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	top: 0px;
 }
 ul#nav-one li.lambda:hover { 
 	-moz-box-shadow: inset 2px 2px 4px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.5);
