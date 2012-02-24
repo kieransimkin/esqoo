@@ -84,7 +84,7 @@ function render_nav_element($url,$item,$user) {
 	}
 	return $content;
 }
-$first=' lambda';
+$first=' lambda ui-widget-header';
 foreach($nav as $heading => $menu) {
     	$content = '';
 	foreach($menu as $url => $item) {
