@@ -16,6 +16,7 @@ ul#nav-one li {
 ul#nav-one li.lambda { 
 	font-size: 30px;
 	position: absolute;
+	border-top: none;
 	left: 0px;
 	padding-left: 15px;
 	padding-right: 15px;
