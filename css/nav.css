@@ -26,8 +26,8 @@ ul#nav-one li.lambda ul {
 	padding-right: 2%;
 }
 ul#nav-one li.lambda ul li { 
-	padding-left: 2%;
-	padding-right: 2%;
+	padding-left: 15px;
+	width: 100% !important;
 }
 ul#nav-one li:hover { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
