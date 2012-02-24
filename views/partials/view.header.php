@@ -48,7 +48,7 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 <?php } ?>
 	<script>
 	WebFontConfig = {
-		google: { families: [ 'Tangerine', 'Cantarell' ] }
+		google: { families: [ 'Cantarell' ] }
 	};
 	</script>
 	<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
