@@ -19,7 +19,7 @@ ul#nav-one li.lambda {
 	position: absolute;
 }
 ul#nav-one li.second { 
-	margin-left: 4em;
+	margin-left: 3em;
 }
 ul#nav-one li:not(.ui-state-hover) { 
 	border: 1px solid transparent;
