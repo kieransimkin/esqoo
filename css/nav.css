@@ -12,6 +12,9 @@ ul#nav-one li {
 	list-style-type: none;
 	padding-right: 0.7%;
 }
+ul#nav-one li.menubar-top-level { 
+	padding-left: 10%;
+}
 ul#nav-one li.lambda { 
 	font-size: 30px;
 	position: absolute;
