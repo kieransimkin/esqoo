@@ -114,7 +114,8 @@
 				not = (o.retainPath===true) ? o.$path : '';
 			o.retainPath = false;
 			var $ul = $(['li.',o.hoverClass].join(''),this).add(this).not(not).removeClass(o.hoverClass)
-					.find('>ul').hide().css('visibility','hidden');
+					.find('>ul').fadeOut('fast');
+					//.hide().css('visibility','hidden');
 			o.onHide.call($ul);
 			return this;
 		},
