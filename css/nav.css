@@ -18,6 +18,9 @@ ul#nav-one li.lambda {
 	border: 1px solid black;
 	position: absolute;
 }
+ul#nav-one li.second { 
+	padding-left: 4em;
+}
 ul#nav-one li:not(.ui-state-hover) { 
 	border: 1px solid transparent;
 }
