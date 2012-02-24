@@ -1,9 +1,10 @@
 <?php
 $nav=array(
 	'&lambda;' => array(
+		"/" => _('Dashboard'),
 		"/file/upload" => _('Upload Media'),
 		"/blog/post" => _('Write Blog Post'),
-		"/website" => _('My Website'),
+		"/website" => _('Visit My Website'),
 		"/lightswitch/flick" => ('Flick Light Switch')
 	),
 	_('File') => array(
