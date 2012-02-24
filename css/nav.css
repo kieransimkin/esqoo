@@ -14,12 +14,13 @@ ul#nav-one li {
 	padding-right: 0.7%;
 }
 ul#nav-one li.lambda { 
-	font-size: 28px;
+	font-size: 30px;
 	border: 1px solid black;
 	position: absolute;
+	left: 0px;
 }
 ul#nav-one li.second { 
-	margin-left: 20px;
+	margin-left: 30px;
 }
 ul#nav-one li:not(.ui-state-hover) { 
 	border: 1px solid transparent;
