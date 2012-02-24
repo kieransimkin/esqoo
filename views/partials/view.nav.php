@@ -1,5 +1,11 @@
 <?php
 $nav=array(
+	'&lambda;' => array(
+		"/file/upload" => _('Upload Media'),
+		"/blog/post" => _('Write Blog Post'),
+		"/website" => _('My Website'),
+		"/lightswitch/flick" => ('Flick Light Switch')
+	),
 	_('File') => array(
 		"/file/upload" => _('Upload')
 	),
