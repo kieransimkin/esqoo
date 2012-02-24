@@ -22,9 +22,9 @@ ul#nav-one li.lambda {
 	padding-right: 15px;
 }
 ul#nav-one li:hover { 
-	-moz-box-shadow: 2px 2px 4px #000000;
-	-webkit-box-shadow: 2px 2px 4px #000000;
-	box-shadow: 2px 2px 4px #000000;
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 ul#nav-one li.second { 
 	margin-left: 50px;
