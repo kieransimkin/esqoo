@@ -12,7 +12,8 @@
 	$theme=@$this->options['theme'];
 	if (strlen($theme)<1) { 
 		//$theme='sunny';
-		$theme='ui-darkness';
+		$theme='vader';
+		//$theme='ui-darkness';
 	}
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />
