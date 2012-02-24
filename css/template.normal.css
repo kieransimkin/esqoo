@@ -1,4 +1,6 @@
 div.normal-page-container { 
 	position: relative;
-	margin: 10%;
+	top: 0px;
+	width: 80%;
+	margin: auto auto;
 }
