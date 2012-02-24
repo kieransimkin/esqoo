@@ -10,7 +10,7 @@ ul#nav-one ul {
 ul#nav-one li { 
 	float: left;
 	list-style-type: none;
-	margin-right: 0.5em;
+	margin-right: 1%;
 }
 ul#nav-one li:not(.lambda) a.menubar-title-heading { 
 	margin-left: 0.6em;
