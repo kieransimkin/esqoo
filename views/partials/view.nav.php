@@ -30,7 +30,7 @@ function render_nav_element($url,$item,$user) {
 	$content='';
 	if (strpos($url,'submenu:')===0) { 
 		list($submenu,$title)=explode(':',$url,2);
-		$content .= "<li class=\"ui-menubar-default\"><a href=\"#\" onclick=\"return false;\">$title <div class=\"nav-float-right\">&raquo;</div></a>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"return false;\">$title <div class=\"nav-float-right\">&raquo;</div></a>";
 		$content .= "<ul class=\"ui-state-default ui-corner-all\">";
 		$count=0;
 		foreach($item as $turl => $titem) {
@@ -71,17 +71,17 @@ function render_nav_element($url,$item,$user) {
 			$buttonstring.="cancelbutton: 1, ";
 		}
 
-		$content .= "<li class=\"ui-menubar-default\"><a href=\"$realurl\" onclick=\"makeDialog({ helpid: 'navbar-dialog-$action', title: '$title', $buttonstring open_event_handler: ".$controller."_".str_replace('-','_',$action)."_open_event_handler, post_event_handler: ".$controller."_".str_replace('-','_',$action)."_post_event_handler, close: function() { reloadMessages(); $('#search_results').flexReload(); $(this).dialog('destroy').remove();}},'$realurl')(); return false;\">$item...</a></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"makeDialog({ helpid: 'navbar-dialog-$action', title: '$title', $buttonstring open_event_handler: ".$controller."_".str_replace('-','_',$action)."_open_event_handler, post_event_handler: ".$controller."_".str_replace('-','_',$action)."_post_event_handler, close: function() { reloadMessages(); $('#search_results').flexReload(); $(this).dialog('destroy').remove();}},'$realurl')(); return false;\">$item...</a></li>";
 
 	} else if (strpos($url,"targetblank:")===0) {
 		list($tgtblank,$realurl)=explode(':',$url,2);
 		list($controller, $action) = explode("/", substr($realurl, 1));
-		$content .= "<li class=\"ui-menubar-default\"><div style=\"z-index: 6000; position: relative; left: -8px; top: 2px; width: 20px; float: right;\"><div style=\"position: absolute; top: 0px; left: 0px;\"><span class=\"ui-icon ui-icon-extlink\"></span></div></div><a href=\"$realurl\" target=\"_blank\">$item... </a></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><div style=\"z-index: 6000; position: relative; left: -8px; top: 2px; width: 20px; float: right;\"><div style=\"position: absolute; top: 0px; left: 0px;\"><span class=\"ui-icon ui-icon-extlink\"></span></div></div><a href=\"$realurl\" target=\"_blank\">$item... </a></li>";
 
 	} else {
 		list($controller, $action) = explode("/", substr($url, 1));
 		$unopened=0;
-		$content .= "<li class=\"ui-menubar-default\"><a href=\"$url\" onclick=\"create_page_loading_overlay();\">$item</a></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$url\" onclick=\"create_page_loading_overlay();\">$item</a></li>";
 	}
 	return $content;
 }
@@ -93,7 +93,7 @@ foreach($nav as $heading => $menu) {
 	}
 	if($content) {
 		?>
-		<li class="ui-menubar-heading-default<?=$first;?>">
+		<li class="ui-menubar-heading-default<?=$first;?> ui-corner-top">
 			<a class="menubar-title-heading" href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false"><?=$heading?></a>
 			<ul class="ui-state-default">
 			<?=$content?>
