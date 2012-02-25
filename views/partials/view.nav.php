@@ -95,7 +95,7 @@ foreach($nav as $heading => $menu) {
 		?>
 		<li class="ui-menubar-heading-default<?=$first;?>">
 			<a class="menubar-title-heading" href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false"><?=$heading?></a>
-			<ul class="ui-state-default">
+			<ul class="ui-state-default ui-corner-bottom ui-corner-tr">
 			<?=$content?>
 			</ul>
 		</li>
