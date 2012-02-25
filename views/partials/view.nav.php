@@ -12,6 +12,7 @@ $nav=array(
 	),
 	_('Account') => array(
 		"popup:"._('Account Details').":save,cancel:/account/details" => _('Account Details'),
+		"popup:"._('Settings').":save,cancel:/account/settings" => _('Settings'),
 		"/account/logout" => _('Logout')
 	),
 	_('Help') => array(
