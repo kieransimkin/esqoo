@@ -93,7 +93,7 @@ foreach($nav as $heading => $menu) {
 	}
 	if($content) {
 		?>
-		<li class="ui-menubar-heading-default<?=$first;?> ui-corner-top">
+		<li class="ui-menubar-heading-default<?=$first;?>">
 			<a class="menubar-title-heading" href="#<?=str_replace(' ','-',strtolower($heading))?>" onclick="return false"><?=$heading?></a>
 			<ul class="ui-state-default">
 			<?=$content?>
@@ -102,9 +102,9 @@ foreach($nav as $heading => $menu) {
 		<?
 	}
 	if (strpos($first,'lambda')!==FALSE) { 
-		$first=' second';
+		$first=' second ui-corner-top';
 	} else {
-		$first='';
+		$first=' ui-corner-top';
 	}
 }
 
