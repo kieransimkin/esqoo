@@ -71,7 +71,7 @@ function render_nav_element($url,$item,$user) {
 			$buttonstring.="cancelbutton: 1, ";
 		}
 
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"makeDialog({ helpid: 'navbar-dialog-$action', title: '$title', $buttonstring open_event_handler: ".$controller."_".str_replace('-','_',$action)."_open_event_handler, post_event_handler: ".$controller."_".str_replace('-','_',$action)."_post_event_handler, close: function() { reloadMessages(); $('#search_results').flexReload(); $(this).dialog('destroy').remove();}},'$realurl')(); return false;\">$item...</a></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"esqoo_ui.make_dialog({ title: '$title', $buttonstring close: function() {}},'$realurl'); return false;\">$item...</a></li>";
 
 	} else if (strpos($url,"targetblank:")===0) {
 		list($tgtblank,$realurl)=explode(':',$url,2);
@@ -85,7 +85,7 @@ function render_nav_element($url,$item,$user) {
 	}
 	return $content;
 }
-$first=' lambda ui-widget-header ui-corner-bottom';
+$first=' lambda ui-widget-header ui-corner-br';
 foreach($nav as $heading => $menu) {
     	$content = '';
 	foreach($menu as $url => $item) {
