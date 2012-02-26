@@ -25,6 +25,9 @@ div.ui-dialog {
 div.ui-dialog div.ui-dialog-titlebar { 
 	padding: 0px 0px 0px 0.4em;
 }
+div.ui-dialog div.ui-dialog-titlebar span.ui-dialog-title { 
+	font-size: 0.90em;
+}
 div.ui-dialog div.ui-dialog-buttonpane { 
 	padding: 0px 0px 0px 0px;
 }
