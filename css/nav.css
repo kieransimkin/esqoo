@@ -86,6 +86,7 @@ ul#nav-one li ul li ul li {
 }
 ul#nav-one li a { 
 	text-decoration: none;
+	font-weight: bold;
 }
 ul#nav-one div.nav-float-right { 
 	float: right;
