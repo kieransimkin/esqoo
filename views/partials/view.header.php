@@ -14,13 +14,14 @@
 		//$theme='sunny';
 		//$theme='vader';
 		//$theme='ui-darkness';
+		$theme='ui-lightness';
 		//$theme='humanity';
 		//$theme='le-frog';
 		//$theme='swanky-purse';
 		//$theme='mint-choc';
 		//$theme='south-street';
 		//$theme='cupertino';
-		$theme='start';
+		//$theme='start';
 		//$theme='hot-sneaks';
 		//$theme='dot-luv';
 	}
