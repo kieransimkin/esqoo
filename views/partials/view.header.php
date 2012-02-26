@@ -13,9 +13,16 @@
 	if (strlen($theme)<1) { 
 		//$theme='sunny';
 		//$theme='vader';
-		$theme='ui-darkness';
+		//$theme='ui-darkness';
 		//$theme='humanity';
 		//$theme='le-frog';
+		//$theme='swanky-purse';
+		//$theme='mint-choc';
+		//$theme='south-street';
+		//$theme='cupertino';
+		$theme='start';
+		//$theme='hot-sneaks';
+		//$theme='dot-luv';
 	}
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />

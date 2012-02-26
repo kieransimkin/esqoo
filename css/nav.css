@@ -16,6 +16,7 @@ ul#nav-one li {
 	float: left;
 	list-style-type: none;
 	margin-right: 1%;
+	cursor: pointer;
 }
 ul#nav-one li:not(.lambda) a.menubar-title-heading { 
 	margin-left: 0.5em;
@@ -32,6 +33,8 @@ ul#nav-one li.lambda {
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	top: 1px;
+	border-bottom-right-radius: 0.5em;
+	border-bottom-left-radius: 0.5em;
 }
 ul#nav-one li.lambda:hover { 
 	-moz-box-shadow: inset 2px 2px 4px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.5);
