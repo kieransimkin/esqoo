@@ -44,6 +44,9 @@ esqoo_ui.make_dialog = function(options,url,params,modal) {
 }
 esqoo_ui.setup_dialog_html = function(d) { 
 	esqoo_ui.buttonify_dialog(d);
+	if (d.parent().find('input[type=text]:first').val()=='') { 
+		d.parent().find('input[type=text]:first').focus();
+	}
 }
 esqoo_ui.buttonify_button = function(b,icon,submitbutton) { 
 	// Really kludgey way of hacking icons into jQuery's dialog
@@ -88,7 +91,4 @@ esqoo_ui.buttonify_dialog = function(d) {
 	btnDone.each(function() { 
 		esqoo_ui.buttonify_button($(this),'ui-icon-check');
 	});
-	if (d.parent().find('input[type=text]:first').val()=='') { 
-		d.parent().find('input[type=text]:first').focus();
-	}
 }
