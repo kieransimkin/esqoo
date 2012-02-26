@@ -27,3 +27,8 @@ div.ui-dialog button.ui-button {
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
+span.esqoo-ui-dialog-button-icon { 
+	float: left;
+	margin-top: 0.6em;
+	margin-left: 1em;
+}
