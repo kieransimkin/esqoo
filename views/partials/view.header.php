@@ -14,8 +14,8 @@
 		//$theme='sunny';
 		//$theme='vader';
 		//$theme='ui-darkness';
-		$theme='ui-lightness';
-		//$theme='humanity';
+		//$theme='ui-lightness';
+		$theme='humanity';
 		//$theme='le-frog';
 		//$theme='swanky-purse';
 		//$theme='mint-choc';

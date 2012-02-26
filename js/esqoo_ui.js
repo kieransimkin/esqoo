@@ -46,85 +46,48 @@ esqoo_ui.make_dialog = function(options,url,params,modal) {
 esqoo_ui.setup_dialog_html = function(d) { 
 	esqoo_ui.buttonify_dialog(d);
 }
+esqoo_ui.buttonify_button = function(b,icon,submitbutton) { 
+	// Really kludgey way of hacking icons into jQuery's dialog
+	if (b.attr('data-done-iconify')=='true') {
+		return;
+	}
+	b.attr('data-done-iconify','true');
+	if (typeof(submitbutton)!='undefined' && submitbutton===true) { 
+		b.attr('data-submit-button','true');
+	}
+	b.find('.ui-button-text').css('position','relative');
+	b.find('.ui-button-text').css('left','4px');
+	b.prepend('<span class="esqoo-ui-dialog-button-icon ui-icon '+icon+'"></span> ');
+	var newwidth=b.width()+30;
+	b.width(newwidth);
+
+}
 esqoo_ui.buttonify_dialog = function(d) { 
 	// Really kludgey way of hacking icons into jQuery's dialog
 	var btnCancel=d.parent().find('.ui-dialog-buttonpane').find('button:contains("Close"),button:contains("Cancel")');
 	console.log(btnCancel);
 	btnCancel.each(function() { 
-		if ($(this).attr('data-done-iconify')=='true') {
-			return;
-		}
-		$(this).attr('data-done-iconify','true');
-		$(this).find('.ui-button-text').css('position','relative');
-		$(this).find('.ui-button-text').css('left','4px');
-		$(this).prepend('<span class="esqoo-ui-dialog-button-icon ui-icon ui-icon-closethick"></span> ');
-		var newwidth=$(this).width()+30;
-		$(this).width(newwidth);
+		esqoo_ui.buttonify_button($(this),'ui-icon-closethick');
 	});
 	var btnOk=d.parent().find('.ui-dialog-buttonpane').find('button:contains("Ok")');
 	btnOk.each(function() { 
-		if ($(this).attr('data-done-iconify')=='true') {
-			return;
-		}
-		$(this).attr('data-done-iconify','true');
-		$(this).attr('data-submit-button','true');
-		$(this).find('.ui-button-text').css('position','relative');
-		$(this).find('.ui-button-text').css('left','4px');
-		$(this).prepend('<span class="esqoo-ui-dialog-button-icon ui-icon ui-icon-check"></span> ');
-		var newwidth=$(this).width()+30;
-		$(this).width(newwidth);
+		esqoo_ui.buttonify_button($(this),'ui-icon-check',true);
 	});
 	var btnSave=d.parent().find('.ui-dialog-buttonpane').find('button:contains("Save")');
 	btnSave.each(function() { 
-		if ($(this).attr('data-done-iconify')=='true') {
-			return;
-		}
-		$(this).attr('data-done-iconify','true');
-		$(this).attr('data-submit-button','true');
-		$(this).find('.ui-button-text').css('position','relative');
-		$(this).find('.ui-button-text').css('left','4px');
-		$(this).prepend('<span class="esqoo-ui-dialog-button-icon ui-icon ui-icon-disk"></span> ');
-		var newwidth=$(this).width()+30;
-		$(this).width(newwidth);
+		esqoo_ui.buttonify_button($(this),'ui-icon-disk',true);
 	});
 	var btnContinue=d.parent().find('.ui-dialog-buttonpane').find('button:contains("Continue")');
 	btnContinue.each(function() { 
-		if ($(this).attr('data-done-iconify')=='true') {
-			return;
-		}
-		$(this).attr('data-done-iconify','true');
-		$(this).attr('data-submit-button','true');
-		$(this).find('.ui-button-text').css('position','relative');
-		$(this).find('.ui-button-text').css('left','4px');
-		$(this).prepend('<span class="esqoo-ui-dialog-button-icon ui-icon ui-icon-circle-arrow-e"></span> ');
-		var newwidth=$(this).width()+30;
-		$(this).width(newwidth);
+		esqoo_ui.buttonify_button($(this),'ui-icon-circle-arrow-e',true);
 	});
 	var btnPost=d.parent().find('.ui-dialog-buttonpane').find('button:contains("Post")');
 	btnPost.each(function() { 
-		if ($(this).attr('data-done-iconify')=='true') {
-			return;
-		}
-		$(this).attr('data-done-iconify','true');
-		$(this).attr('data-submit-button','true');
-		$(this).find('.ui-button-text').css('position','relative');
-		$(this).find('.ui-button-text').css('left','4px');
-		$(this).prepend('<span class="esqoo-ui-dialog-button-icon ui-icon ui-icon-mail-closed"></span> ');
-		var newwidth=$(this).width()+30;
-		$(this).width(newwidth);
+		esqoo_ui.buttonify_button($(this),'ui-icon-mail-closed',true);
 	});
 	var btnDone=d.parent().find('.ui-dialog-buttonpane').find('button:contains("Done")');
 	btnDone.each(function() { 
-		if ($(this).attr('data-done-iconify')=='true') {
-			return;
-		}
-		$(this).attr('data-done-iconify','true');
-		$(this).find('.ui-button-text').css('position','relative');
-		$(this).find('.ui-button-text').css('left','4px');
-		$(this).prepend('<span class="esqoo-ui-dialog-button-icon ui-icon ui-icon-check"></span> ');
-		var newwidth=$(this).width()+30;
-		$(this).width(newwidth);
-
+		esqoo_ui.buttonify_button($(this),'ui-icon-check');
 	});
 	if (d.parent().find('input[type=text]:first').val()=='') { 
 		d.parent().find('input[type=text]:first').focus();
