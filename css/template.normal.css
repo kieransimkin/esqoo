@@ -1,6 +1,34 @@
-div.normal-page-container { 
+section.normal-template-body { 
 	position: relative;
 	top: 0px;
+	width: 80%;
+	margin: auto auto;
+}
+header.normal-template-header { 
+	width: 100%;
+	background-color: gray;
+	border: none;
+}
+header.normal-template-header nav { 
+	width: 80%;
+	margin: auto auto;
+	position: relative;
+}
+header.normal-template-header h1 { 
+	width: 80%;
+	margin: auto auto;
+}
+footer.normal-template-footer { 
+	width: 100%;
+	background-color: gray;
+	margin-top: 1em;
+	border: none;
+}
+footer.normal-template-footer nav { 
+	width: 80%;
+	margin: auto auto;
+}
+footer.normal-template-footer aside { 
 	width: 80%;
 	margin: auto auto;
 }
