@@ -6,8 +6,16 @@ section.normal-template-body {
 }
 header.normal-template-header { 
 	width: 100%;
-	background-color: gray;
 	border: none;
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+}
+header.normal-template-nav {
+	width: 80%;
+	margin: auto auto;
+	position: relative;
 }
 header.normal-template-header nav { 
 	width: 80%;
@@ -20,9 +28,11 @@ header.normal-template-header h1 {
 }
 footer.normal-template-footer { 
 	width: 100%;
-	background-color: gray;
 	margin-top: 1em;
 	border: none;
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 footer.normal-template-footer nav { 
 	width: 80%;
