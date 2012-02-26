@@ -5,6 +5,14 @@ esqoo_ui.make_dialog = function(options,url,params,modal) {
 		buttons[bname]=function() {
 		};
 	}
+	if (options['cancelbutton']==1) { 
+		buttons['Cancel']=function() { 
+			$(this).dialog("close");
+		};
+	}
+	if (options['closebutton']==1 || typeof options['closebutton'] == "undefined") { 
+		buttons['Close']=function() { $(this).dialog("close") };	
+	}
 	if (options['savebutton']==1 || typeof options['savebutton'] == "undefined") { 
 		createButtonFunc('Save');
 	}
@@ -22,15 +30,6 @@ esqoo_ui.make_dialog = function(options,url,params,modal) {
 			$(this).dialog("close");
 		};
 	}
-	if (options['cancelbutton']==1) { 
-		buttons['Cancel']=function() { 
-			$(this).dialog("close");
-		};
-	}
-	if (options['closebutton']==1 || typeof options['closebutton'] == "undefined") { 
-		buttons['Close']=function() { $(this).dialog("close") };	
-	}
-
 	var dialog=$("<div></div>").dialog($.extend({
 		autoOpen: true,
 		modal: modal,
