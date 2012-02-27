@@ -40,6 +40,6 @@ class AccountController extends LockedController {
 		return $this->user;
 	}
 	function setdetailsAPI($arg='',$input=array()) { 
-		if (isset($input['FirstName']
+	//	if (isset($input['FirstName']
 	}
 }
