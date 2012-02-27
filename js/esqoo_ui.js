@@ -97,14 +97,27 @@ esqoo_ui.update_dialog_html = function(d,data) {
 	if (data.rettype===null || data.rettype==='failure') { 
 		esqoo_ui.unset_dialog_loading_state(d);
 		$(d).html(data.html);
-		esqoo_ui.prepare_dialog_html(d);
+		esqoo_ui.prepare_dialog_html(d,data);
 	} else if (data.rettype==='success') { 
 		$(d).dialog("close");
 	} else { 
 		alert('Invalid return type');
 	}
 }
-esqoo_ui.prepare_dialog_html = function(d) { 
+esqoo_ui.prepare_dialog_html = function(d,data) { 
+	if (typeof(data.height)!='undefined') && data.height !== null) { 
+		d.dialog('height',data.height);
+	}
+	if (typeof(data.width)!='undefined') && data.width !== null) { 
+		d.dialog('width',data.width);
+	}
+	if (typeof(data.minheight)!='undefined') && data.minheight !== null) { 
+		d.dialog('minHeight',data.minheight);
+	}
+	if (typeof(data.minwidth)!='undefined') && data.minwidth !== null) { 
+		d.dialog('minWidth',data.minwidth);
+	}
+	$(dialog).dialog('option','position','center');
 	// Dunno if we really wanna do this
 	if (d.parent().find('input[type=text]:first').val()=='') { 
 		d.parent().find('input[type=text]:first').focus();
