@@ -123,16 +123,16 @@ esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) {
 	return viewport_height*(val/100);
 }
 esqoo_ui.prepare_dialog_html = function(d,data) { 
-	if (typeof(data.height)!='undefined') && data.height !== null) { 
+	if (data.height !== null) { 
 		d.dialog('height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
 	}
-	if (typeof(data.width)!='undefined') && data.width !== null) { 
+	if (data.width !== null) { 
 		d.dialog('width',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.width));
 	}
-	if (typeof(data.minheight)!='undefined') && data.minheight !== null) { 
+	if (data.minheight !== null) { 
 		d.dialog('minHeight',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.minheight));
 	}
-	if (typeof(data.minwidth)!='undefined') && data.minwidth !== null) { 
+	if (data.minwidth !== null) { 
 		d.dialog('minWidth',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.minwidth));
 	}
 	$(dialog).dialog('option','position','center');
