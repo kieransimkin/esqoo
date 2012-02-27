@@ -61,6 +61,7 @@ div.ui-dialog div.ui-dialog-content div.error span.error {
 	width: 100%;
 	clear: both;
 	color: #FF0000;
+	text-align: center;
 }
 div.ui-dialog div.ui-dialog-content div.error input { 
 	width: 100%;
