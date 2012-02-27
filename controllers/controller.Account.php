@@ -31,8 +31,6 @@ class AccountController extends LockedController {
 	private function get_details_form($input,$user) { 
 		$form=new Form('details');
 		$form->setDataSources(array(new Array_DataSource($input), new DBSQL_DataSource($user)));
-		var_dump($input);
-		var_dump($user);
 		//$form->setDataSources(array(new DBSQL_DataSource($input)));
 		$form->addElement('text','FirstName',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
 		$form->addElement('text','LastName',array())->setLabel(_('Last Name'))->addRule('required',_('Required'));
@@ -41,6 +39,7 @@ class AccountController extends LockedController {
 		$form->addElement('text','Address2',array())->setLabel(_('Address Line 2'));
 		$form->addElement('text','Town',array())->setLabel(_('Town/City'))->addRule('required',_('Required'));
 		$form->addElement('text','County',array())->setLabel(_('County/State'));
+		var_dump($form->isSubmitted());
 		return $form;
 	}
 	function getdetailsAPI($arg='',$input=array()) { 
