@@ -96,7 +96,7 @@ class Controller {
 		header("Location: $url");
 		die;
 	}
-	function formFail($form,$width=null,$minwidth=null) { 
+	function formFail($form,$width=null,$minwidth=null,$height=null,$minheight=null) { 
 		$ret=array();
 		$ret['rettype']='failure';
 		if (!is_null($width)) { 
@@ -104,6 +104,12 @@ class Controller {
 		} 
 		if (!is_null($minwidth)) { 
 			$ret['minwidth']=$minwidth;
+		}
+		if (!is_null($height)) { 
+			$ret['height']=$height;
+		} 
+		if (!is_null($minheight)) { 
+			$ret['minheight']=$minheight;
 		}
 		echo $form;
 		return $ret;

@@ -86,6 +86,13 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 		$(d).dialog('close');
 	});
 }
+esqoo_ui.send_dialog_ajax_request = function(d,form) { 
+	$.ajax({url: form.attr('action'), dataType: 'json', type: 'post', data: form.serialize()+"&source=dialog", success: function(data) { 
+		esqoo_ui.update_dialog_html(d,data);
+	}}).error(function() { 
+		alert('Unable to parse dialog JSON');
+	});
+}
 esqoo_ui.update_dialog_html = function(d,data) { 
 	if (data.rettype===null || data.rettype==='failure') { 
 		esqoo_ui.unset_dialog_loading_state(d);
@@ -96,13 +103,6 @@ esqoo_ui.update_dialog_html = function(d,data) {
 	} else { 
 		alert('Invalid return type');
 	}
-}
-esqoo_ui.send_dialog_ajax_request = function(d,form) { 
-	$.ajax({url: form.attr('action'), dataType: 'json', type: 'post', data: form.serialize()+"&source=dialog", success: function(data) { 
-		esqoo_ui.update_dialog_html(d,data);
-	}}).error(function() { 
-		alert('Unable to parse dialog JSON');
-	});
 }
 esqoo_ui.prepare_dialog_html = function(d) { 
 	// Dunno if we really wanna do this
