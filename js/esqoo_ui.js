@@ -2,7 +2,7 @@ var esqoo_ui = {};
 esqoo_ui.dialog_singletons = [];
 esqoo_ui.make_dialog = function(options,url,params) { 
 	var parameters = {
-		action : "form"
+		action : "dialog"
 	};
 	if (typeof(params) == "object")
 		parameters = $.extend(parameters, params);
