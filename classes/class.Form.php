@@ -10,9 +10,9 @@ class Form extends HTML_QuickForm2 {
 		}
 		parent::__construct($id,$method,$attributes,true);
 	}
-	public function setAPIDataSources($input,$object) { 
+	public function setAPIDataSources($input,$object,$forcesubmit=false) { 
 		$id=$this->getId();
-		if (isset($input['_qf__'.$id])) { 
+		if (isset($input['_qf__'.$id]) || $forcesubmit) { 
 			$this->setDataSources(array(new Submit_Array_DataSource($input), new DBSQL_DataSource($object)));
 		} else { 
 			$this->setDataSources(array(new DBSQL_DataSource($object)));

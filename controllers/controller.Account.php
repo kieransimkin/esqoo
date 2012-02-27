@@ -28,9 +28,9 @@ class AccountController extends LockedController {
 			return $this->formFail($form);
 		}
 	}
-	private function get_details_form($input,$user) { 
+	private function get_details_form($input,$user,$forcesubmit=false) { 
 		$form=new Form('details');
-		$form->setAPIDataSources($input,$user);
+		$form->setAPIDataSources($input,$user,$forcesubmit);
 		$form->addElement('text','FirstName',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
 		$form->addElement('text','LastName',array())->setLabel(_('Last Name'))->addRule('required',_('Required'));
 		$form->addElement('text','Email',array())->setLabel(_('Email'))->addRule('required',_('Required'));
@@ -46,7 +46,7 @@ class AccountController extends LockedController {
 	function setdetailsAPI($arg='',$input=array()) { 
 		$ret=array();
 		$user=$this->getdetailsAPI();
-		$form=$this->get_details_form($input,$user);
+		$form=$this->get_details_form($input,$user,$forcesubmit);
 		if (!$form->validate()) { 
 
 		}
