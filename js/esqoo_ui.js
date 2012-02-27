@@ -5,7 +5,7 @@ $(document).ready(function() {
 });
 esqoo_ui.make_dialog = function(options,url,params) { 
 	var parameters = {
-		action : "dialog"
+		source : "dialog"
 	};
 	if (typeof(params) == "object")
 		parameters = $.extend(parameters, params);

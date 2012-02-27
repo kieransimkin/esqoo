@@ -25,7 +25,11 @@ class MVC {
 		if ($api) { 
 			$funcname = strtolower(str_replace('-','',$action)).'API';
 		} else { 
-			$funcname = strtolower(str_replace('-','',$action)).'UI';
+			if ($_POST['source']==='dialog') { 
+				$funcname = strtolower(str_replace('-','',$action)).'Dialog';
+			} else { 
+				$funcname = strtolower(str_replace('-','',$action)).'UI';
+			}
 		}
 		if (!class_exists($controller_class)) { 
 			self::throw404($controller_class,$funcname);
@@ -42,7 +46,9 @@ class MVC {
 		if (!is_array($res)) {
 			$res=(array)@$res;
 		}
-		if (!$api) { 
+		if ($_POST['source']==='dialog') { 
+			die;
+		} else if (!$api) { 
 			header('X-UA-Compatible: IE=edge,chrome=1');
 			$new_controller->autoloadJS();
 			$new_controller->autoloadCSS();
