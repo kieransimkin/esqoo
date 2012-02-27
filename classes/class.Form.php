@@ -27,7 +27,7 @@ class Array_DataSource extends HTML_QuickForm2_DataSource_Array implements HTML_
 		$this->values=$input;
 	}
 	public function getValue($name) { 
-		return $this->values[$name];
+		return (array_key_exists($name,$this->values)) ? $this->values[$name] : null;
 	}
 	public function getUpload($name) { 
 		return null;
