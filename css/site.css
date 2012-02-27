@@ -61,6 +61,9 @@ div.ui-dialog div.ui-dialog-content div.error span.error {
 	width: 100%;
 	clear: both;
 }
+div.ui-dialog div.ui-dialog-content div.error input { 
+	width: auto;
+}
 button.ui-button,
 input.ui-button { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
