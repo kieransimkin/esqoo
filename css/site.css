@@ -44,7 +44,7 @@ div.ui-dialog div.ui-dialog-content label {
 	display: block;
 	float: left;
 }
-div.ui-dialog div.ui-dialog-content input.textfield { 
+div.ui-dialog div.ui-dialog-content input.esqoo-text-field { 
 	width: 50%;
 }
 button.ui-button,
