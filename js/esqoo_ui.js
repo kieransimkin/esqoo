@@ -47,7 +47,7 @@ esqoo_ui.make_dialog = function(options,url,params) {
 		buttons: buttons,
 		open: function() {
 			if (options.singleton) { 
-				esqoo_ui.dialog_singletons[url]=$(this).parent()[0];
+				esqoo_ui.dialog_singletons[url]=$(this);
 			}
 			esqoo_ui.setup_dialog_html($(this));
 		}	
