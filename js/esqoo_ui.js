@@ -102,7 +102,7 @@ esqoo_ui.prepare_dialog_html = function(d) {
 	}
 	d.find('form').submit(function() { 
 		console.log($(this).serialize());
-		$.ajax({url: $(this).attr('action'), type: 'post', data: $(this).serialize()+"&source=dialog", success: function(data) { 
+		$.ajax({url: $(this).attr('action'), type: 'post', data: "source=dialog", success: function(data) { 
 			esqoo_ui.update_dialog_html(d,data);
 		}}).error(function() { 
 			alert('Unable to parse dialog JSON');
