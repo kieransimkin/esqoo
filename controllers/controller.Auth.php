@@ -63,7 +63,7 @@ class AuthController extends OpenController {
 		return $this->ensure_hash_match($user,$challenge,$input);
 	}
 	private function ensure_hash_match($user,$challenge,$input) { 
-		$hash=hash(strtolower($input['HashType']),$challenge->challenge.$user->password);
+		$hash=hash(strtolower($input['HashType']),$challenge->challenge.$user->Password);
 		if (strtolower(@$input['Response'])!=$hash) { 
 			$this->api_error(8,"Authentication failed");
 			return null;
@@ -93,9 +93,9 @@ class AuthController extends OpenController {
 		} else { 
 			try {
 				if (strlen(@$input['Username'])>0) { 
-					$user=User::get($input['Username'],'username','col',true);
+					$user=User::get($input['Username'],'Username','col',true);
 				} else if (strlen(@$input['Email'])>0) { 
-					$user=User::get($input['Email'],'email','col',true);
+					$user=User::get($input['Email'],'Email','col',true);
 				} else if (strlen(@$input['UserID'])>0) { 
 					$user=User::get($input['UserID'],'id','col',true);
 				}

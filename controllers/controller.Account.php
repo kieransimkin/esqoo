@@ -15,13 +15,13 @@ class AccountController extends LockedController {
 		$form=new Form('details');
 		$user=$this->getdetailsAPI();
 		$form->addDataSource(new DBSQL_DataSource($user));
-		$form->addElement('text','firstname',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
-		$form->addElement('text','lastname',array())->setLabel(_('Last Name'))->addRule('required',_('Required'));
-		$form->addElement('text','email',array())->setLabel(_('Email'))->addRule('required',_('Required'));
-		$form->addElement('text','addr1',array())->setLabel(_('Address Line 1'))->addRule('required',_('Required'));
-		$form->addElement('text','addr2',array())->setLabel(_('Address Line 2'));
-		$form->addElement('text','town',array())->setLabel(_('Town/City'))->addRule('required',_('Required'));
-		$form->addElement('text','county',array())->setLabel(_('County/State'));
+		$form->addElement('text','FirstName',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
+		$form->addElement('text','LastName',array())->setLabel(_('Last Name'))->addRule('required',_('Required'));
+		$form->addElement('text','Email',array())->setLabel(_('Email'))->addRule('required',_('Required'));
+		$form->addElement('text','Address1',array())->setLabel(_('Address Line 1'))->addRule('required',_('Required'));
+		$form->addElement('text','Address2',array())->setLabel(_('Address Line 2'));
+		$form->addElement('text','Town',array())->setLabel(_('Town/City'))->addRule('required',_('Required'));
+		$form->addElement('text','County',array())->setLabel(_('County/State'));
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
@@ -40,6 +40,6 @@ class AccountController extends LockedController {
 		return $this->user;
 	}
 	function setdetailsAPI($arg='',$input=array()) { 
-
+		if (isset($input['FirstName']
 	}
 }
