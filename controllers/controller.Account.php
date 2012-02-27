@@ -12,6 +12,14 @@ class AccountController extends LockedController {
 		$this->redirect('/auth/login/');
 	}
 	public function detailsDialog($arg='',$input=array()) { 
+		$form=new Form('hello');
+		$form->addElement('text','name',array('size'=>'20','label'=>'hello'));
+		if ($form->validate) { 
+			return 'success';
+		} else { 
+			echo $form;
+			return 'failure';
+		}
 		print "Foo";
 	}
 	public function settingsDialog($arg='',$input=array()) { 
