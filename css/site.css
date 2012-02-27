@@ -38,6 +38,9 @@ div.ui-dialog .ui-resizable-se {
 div.ui-dialog div.ui-dialog-content div.element { 
 	display: inline;
 }
+div.ui-dialog div.ui-dialog-content label { 
+	width: 50%;
+}
 button.ui-button,
 input.ui-button { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
