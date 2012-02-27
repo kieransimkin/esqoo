@@ -105,6 +105,7 @@ esqoo_ui.send_dialog_ajax_request = function(d,form) {
 	});
 }
 esqoo_ui.prepare_dialog_html = function(d) { 
+	// Dunno if we really wanna do this
 	if (d.parent().find('input[type=text]:first').val()=='') { 
 		d.parent().find('input[type=text]:first').focus();
 	}
