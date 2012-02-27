@@ -17,7 +17,7 @@ class AccountController extends LockedController {
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
-			return $this->formFail($form);
+			return $this->formFail($form,'50%','500');
 		}
 	}
 	public function settingsDialog($arg='',$input=array()) { 
