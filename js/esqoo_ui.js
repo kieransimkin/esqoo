@@ -37,6 +37,7 @@ esqoo_ui.make_dialog = function(options,url,params) {
 		return;
 	}
 	esqoo_ui.dialog_singletons[url]=null;
+	console.log(esqoo_ui.dialog_singletons);
 	var dialog=$("<div></div>").dialog($.extend({
 		autoOpen: true,
 		modal: options['modal'],
@@ -44,6 +45,7 @@ esqoo_ui.make_dialog = function(options,url,params) {
 		position:'center',
 		buttons: buttons,
 		open: function() {
+			console.log($(this));
 			if (options.singleton) { 
 				esqoo_ui.dialog_singletons[url]=$(this);
 			}
