@@ -48,6 +48,9 @@ div.ui-dialog div.ui-dialog-content input.esqoo-text-field {
 	margin-bottom: 0.9em;
 	width: 50%;
 }
+div.ui-dialog div.ui-dialog-content label span.required { 
+	color: #FF0000;
+}
 button.ui-button,
 input.ui-button { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
