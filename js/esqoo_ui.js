@@ -51,7 +51,6 @@ esqoo_ui.make_dialog = function(options,url,params) {
 		return;
 	}
 	esqoo_ui.dialog_singletons[url]=null;
-	alert(url);
 	var dialog=$("<div></div>").dialog($.extend({
 		autoOpen: true,
 		modal: options['modal'],
@@ -59,7 +58,6 @@ esqoo_ui.make_dialog = function(options,url,params) {
 		position:'center',
 		buttons: buttons,
 		open: function() {
-			alert(url);
 			if (options.singleton) { 
 				esqoo_ui.dialog_singletons[url]=$(this);
 			}
@@ -68,13 +66,12 @@ esqoo_ui.make_dialog = function(options,url,params) {
 
 	},options || {}));
 }
-esqoo_ui.setup_dialog_html = function(d) { 
+esqoo_ui.setup_dialog_html = function(d,url,params) { 
 	esqoo_ui.buttonify_dialog(d);
 	esqoo_ui.set_dialog_loading_state(d);
-	esqoo_ui.populate_dialog(d);
+	esqoo_ui.populate_dialog(d,url,params);
 }
 esqoo_ui.populate_dialog = function(d,url,params) { 
-	console.log(url);
 	$(d).load(url,params,function() { 
 		esqoo_ui.unset_dialog_loading_state(d);
 		if (d.parent().find('input[type=text]:first').val()=='') { 
