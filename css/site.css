@@ -39,7 +39,10 @@ div.ui-dialog div.ui-dialog-content div.element {
 	display: inline;
 }
 div.ui-dialog div.ui-dialog-content label { 
-	width: 50%;
+	width: 40%;
+	clear: left;
+	display: block;
+	float: left;
 }
 button.ui-button,
 input.ui-button { 
