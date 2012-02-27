@@ -68,7 +68,9 @@ esqoo_ui.make_dialog = function(options,url,params) {
 			esqoo_ui.setup_dialog_html($(this),url,parameters);
 		},
 		close: function() { 
-			delete esqoo_ui.dialog_singletons[url];
+			if (options.singleton) { 
+				delete esqoo_ui.dialog_singletons[url];
+			}
 		}
 
 	},options || {}));
@@ -104,18 +106,34 @@ esqoo_ui.update_dialog_html = function(d,data) {
 		alert('Invalid return type');
 	}
 }
+esqoo_ui.convert_percentages_to_viewport_width_pixels = function(val) { 
+	if (val.substr(-1)!='%') { 
+		return val;
+	}
+	val=val.substr(0,val.length-1);
+	var viewport_width=$(window).width();
+	return viewport_width*(val/100);
+}
+esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) { 
+	if (val.substr(-1)!='%') { 
+		return val;
+	}
+	val=val.substr(0,val.length-1);
+	var viewport_height=$(window).height();
+	return viewport_height*(val/100);
+}
 esqoo_ui.prepare_dialog_html = function(d,data) { 
 	if (typeof(data.height)!='undefined') && data.height !== null) { 
-		d.dialog('height',data.height);
+		d.dialog('height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
 	}
 	if (typeof(data.width)!='undefined') && data.width !== null) { 
-		d.dialog('width',data.width);
+		d.dialog('width',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.width));
 	}
 	if (typeof(data.minheight)!='undefined') && data.minheight !== null) { 
-		d.dialog('minHeight',data.minheight);
+		d.dialog('minHeight',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.minheight));
 	}
 	if (typeof(data.minwidth)!='undefined') && data.minwidth !== null) { 
-		d.dialog('minWidth',data.minwidth);
+		d.dialog('minWidth',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.minwidth));
 	}
 	$(dialog).dialog('option','position','center');
 	// Dunno if we really wanna do this
