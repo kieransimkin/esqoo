@@ -107,6 +107,7 @@ esqoo_ui.prepare_dialog_html = function(d) {
 		}}).error(function() { 
 			alert('Unable to parse dialog JSON');
 		});
+		return false;
 	});
 }
 esqoo_ui.set_dialog_loading_state = function(d) { 
