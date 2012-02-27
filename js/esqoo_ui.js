@@ -65,7 +65,10 @@ esqoo_ui.make_dialog = function(options,url,params) {
 				esqoo_ui.dialog_singletons[url]=$(this);
 			}
 			esqoo_ui.setup_dialog_html($(this),url,parameters);
-		}	
+		},
+		close: function() { 
+			delete esqoo_ui.dialog_singletons[url];
+		}
 
 	},options || {}));
 }

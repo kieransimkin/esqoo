@@ -73,7 +73,7 @@ function render_nav_element($url,$item,$user) {
 		if (in_array('singleton',$buttonlist)) { 
 			$buttonstring.="singleton: true, ";
 		}
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"esqoo_ui.make_dialog({ title: '$title', $buttonstring close: function() {}},'$realurl'); return false;\">$item...</a></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"esqoo_ui.make_dialog({ $buttonstring title: $title },'$realurl'); return false;\">$item...</a></li>";
 
 	} else if (strpos($url,"targetblank:")===0) {
 		list($tgtblank,$realurl)=explode(':',$url,2);
