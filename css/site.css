@@ -45,7 +45,7 @@ div.ui-dialog div.ui-dialog-content label {
 	float: left;
 }
 div.ui-dialog div.ui-dialog-content input.esqoo-text-field { 
-	margin-bottom: 1em;
+	margin-bottom: 0.9em;
 	width: 50%;
 }
 button.ui-button,
