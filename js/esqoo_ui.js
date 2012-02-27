@@ -54,9 +54,16 @@ esqoo_ui.make_dialog = function(options,url,params) {
 }
 esqoo_ui.setup_dialog_html = function(d) { 
 	esqoo_ui.buttonify_dialog(d);
+	esqoo_ui.set_dialog_loading_state(d);
 	if (d.parent().find('input[type=text]:first').val()=='') { 
 		d.parent().find('input[type=text]:first').focus();
 	}
+}
+esqoo_ui.set_dialog_loading_state = function(d) { 
+
+}
+esqoo_ui.bring_to_front = function(d) { 
+	$(d).dialog('moveToTop');
 }
 esqoo_ui.buttonify_button = function(b,icon,submitbutton) { 
 	// Really kludgey way of hacking icons into jQuery's dialog
