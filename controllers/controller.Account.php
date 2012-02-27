@@ -13,7 +13,7 @@ class AccountController extends LockedController {
 	}
 	public function detailsDialog($arg='',$input=array()) { 
 		$form=new Form('details');
-		$form->addElement('text','name',array('size'=>'20'))->setLabel('hello');
+		$form->addElement('text','name',array('size'=>'20'))->setLabel('hello')->addRule('required','Required');
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
