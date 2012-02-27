@@ -1,6 +1,19 @@
 var esqoo_ui = {};
 esqoo_ui.dialog_singletons = [];
 esqoo_ui.make_dialog = function(options,url,params) { 
+	var parameters = {
+		action : "form"
+	};
+	if (typeof(params) == "object")
+		parameters = $.extend(parameters, params);
+	if (typeof(params) == "number")
+		parameters['id'] = params;
+	if (typeof url == "undefined") { 
+		url=String(document.location);
+	}
+	if (typeof options['params'] == "object") {
+		parameters = $.extend(parameters,options['params']);
+	}
 	var buttons={};
 	var createButtonFunc = function(bname) { 
 		buttons[bname]=function() {
@@ -49,7 +62,7 @@ esqoo_ui.make_dialog = function(options,url,params) {
 			if (options.singleton) { 
 				esqoo_ui.dialog_singletons[url]=$(this);
 			}
-			esqoo_ui.setup_dialog_html($(this));
+			esqoo_ui.setup_dialog_html($(this),url,parameters);
 		}	
 
 	},options || {}));
@@ -57,11 +70,20 @@ esqoo_ui.make_dialog = function(options,url,params) {
 esqoo_ui.setup_dialog_html = function(d) { 
 	esqoo_ui.buttonify_dialog(d);
 	esqoo_ui.set_dialog_loading_state(d);
-	if (d.parent().find('input[type=text]:first').val()=='') { 
-		d.parent().find('input[type=text]:first').focus();
-	}
+	esqoo_ui.populate_dialog(d);
+}
+esqoo_ui.populate_dialog = function(d,url,params) { 
+	$(d).load(url,params,function() { 
+		esqoo_ui.unset_dialog_loading_state(d);
+		if (d.parent().find('input[type=text]:first').val()=='') { 
+			d.parent().find('input[type=text]:first').focus();
+		}
+	});
 }
 esqoo_ui.set_dialog_loading_state = function(d) { 
+
+}
+esqoo_ui.unset_dialog_loading_state = function (d) { 
 
 }
 esqoo_ui.bring_to_front = function(d) { 
