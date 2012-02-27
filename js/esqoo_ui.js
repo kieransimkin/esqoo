@@ -1,5 +1,8 @@
 var esqoo_ui = {};
 esqoo_ui.dialog_singletons = [];
+$(document).ready(function() { 
+	esqoo_ui.dialog_singletons.length=0;
+});
 esqoo_ui.make_dialog = function(options,url,params) { 
 	var parameters = {
 		action : "dialog"
