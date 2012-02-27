@@ -85,7 +85,7 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 			d.parent().find('input[type=text]:first').focus();
 		}
 
-	});
+	}});
 }
 esqoo_ui.set_dialog_loading_state = function(d) { 
 
