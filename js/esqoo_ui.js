@@ -73,6 +73,10 @@ esqoo_ui.setup_dialog_html = function(d) {
 	esqoo_ui.populate_dialog(d);
 }
 esqoo_ui.populate_dialog = function(d,url,params) { 
+	console.log('got here');
+	console.log(d);
+	console.log(url);
+	console.log(params);
 	$(d).load(url,params,function() { 
 		esqoo_ui.unset_dialog_loading_state(d);
 		if (d.parent().find('input[type=text]:first').val()=='') { 
