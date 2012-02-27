@@ -79,13 +79,21 @@ esqoo_ui.setup_dialog_html = function(d,url,params) {
 }
 esqoo_ui.populate_dialog = function(d,url,params) { 
 	$.ajax({url: url, dataType: 'json', type: 'post', data: params, success: function(data) { 
+		esqoo_ui.update_dialog_html(d,data);
+	}});
+}
+esqoo_ui.update_dialog_html = function(d,data) { 
+	if (data.rettype===null || data.rettype==='null' || data.rettype==='failure') { 
 		$(d).html(data.html);
 		esqoo_ui.unset_dialog_loading_state(d);
 		if (d.parent().find('input[type=text]:first').val()=='') { 
 			d.parent().find('input[type=text]:first').focus();
 		}
-
-	}});
+	} else if (data.rettype==='success') { 
+		$(d).dialog("close");
+	} else { 
+		alert('Invalid return type');
+	}
 }
 esqoo_ui.set_dialog_loading_state = function(d) { 
 
