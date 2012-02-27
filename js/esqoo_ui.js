@@ -20,6 +20,7 @@ esqoo_ui.make_dialog = function(options,url,params) {
 	var buttons={};
 	var createButtonFunc = function(bname) { 
 		buttons[bname]=function() {
+			esqoo_ui.send_dialog_ajax_request(d,$(this).find('form'));
 		};
 	}
 	if (options['cancelbutton']==1) { 
@@ -96,16 +97,19 @@ esqoo_ui.update_dialog_html = function(d,data) {
 		alert('Invalid return type');
 	}
 }
+esqoo_ui.send_dialog_ajax_request = function(d,form) { 
+	$.ajax({url: form.attr('action'), dataType: 'json', type: 'post', data: form.serialize()+"&source=dialog", success: function(data) { 
+		esqoo_ui.update_dialog_html(d,data);
+	}}).error(function() { 
+		alert('Unable to parse dialog JSON');
+	});
+}
 esqoo_ui.prepare_dialog_html = function(d) { 
 	if (d.parent().find('input[type=text]:first').val()=='') { 
 		d.parent().find('input[type=text]:first').focus();
 	}
 	d.find('form').submit(function() { 
-		$.ajax({url: $(this).attr('action'), dataType: 'json', type: 'post', data: $(this).serialize()+"&source=dialog", success: function(data) { 
-			esqoo_ui.update_dialog_html(d,data);
-		}}).error(function() { 
-			alert('Unable to parse dialog JSON');
-		});
+		esqoo_ui.send_dialog_ajax_request(d,$(this));
 		return false;
 	});
 }
