@@ -127,6 +127,7 @@ esqoo_ui.prepare_dialog_html = function(d,data) {
 		d.dialog('height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
 	}
 	if (data.width !== null) { 
+		console.log('got here');
 		d.dialog('width',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.width));
 	}
 	if (data.minheight !== null) { 
