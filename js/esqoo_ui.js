@@ -20,7 +20,7 @@ esqoo_ui.make_dialog = function(options,url,params) {
 	var buttons={};
 	var createButtonFunc = function(bname) { 
 		buttons[bname]=function() {
-			esqoo_ui.send_dialog_ajax_request(d,$(this).find('form'));
+			esqoo_ui.send_dialog_ajax_request($(this),$(this).find('form'));
 		};
 	}
 	if (options['cancelbutton']==1) { 
