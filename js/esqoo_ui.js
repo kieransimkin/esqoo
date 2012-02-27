@@ -33,6 +33,7 @@ esqoo_ui.make_dialog = function(options,url,params) {
 	}
 	if (options.singleton && typeof(esqoo_ui.dialog_singletons[url])!='undefined' && esqoo_ui.dialog_singletons[url]!==null) { 
 		esqoo_ui.bring_to_front(esqoo_ui.dialog_singletons[url]);
+		return;
 	} else if (options.singleton && esqoo_ui.dialog_singletons[url]===null) { 
 		return;
 	}
