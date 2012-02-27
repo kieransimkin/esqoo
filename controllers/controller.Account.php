@@ -13,7 +13,14 @@ class AccountController extends LockedController {
 	}
 	public function detailsDialog($arg='',$input=array()) { 
 		$form=new Form('details');
-		$form->addElement('text','name',array('size'=>'20'))->setLabel('hello')->addRule('required','Required');
+		$user=$this->getdetailsAPI();
+		$form->addElement('text','firstname',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
+		$form->addElement('text','lastname',array())->setLabel(_('Last Name'))->addRule('required',_('Required'));
+		$form->addElement('text','email',array())->setLabel(_('Email'))->addRule('required',_('Required'));
+		$form->addElement('text','addr1',array())->setLabel(_('Address Line 1'))->addRule('required',_('Required'));
+		$form->addElement('text','addr2',array())->setLabel(_('Address Line 2'));
+		$form->addElement('text','town',array())->setLabel(_('Town/City'))->addRule('required',_('Required'));
+		$form->addElement('text','county',array())->setLabel(_('County/State'));
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
@@ -27,5 +34,11 @@ class AccountController extends LockedController {
 		} else { 
 			return $this->formFail($form);
 		}
+	}
+	function getdetailsAPI($arg='',$input=array()) { 
+		return $this->user;
+	}
+	function setdetailsAPI($arg='',$input=array()) { 
+
 	}
 }
