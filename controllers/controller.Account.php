@@ -14,7 +14,7 @@ class AccountController extends LockedController {
 	public function detailsDialog($arg='',$input=array()) { 
 		$form=new Form('details');
 		$user=$this->getdetailsAPI();
-		var_dump($user);
+		var_dump($user->email);
 		$form->addDataSource(new DBSQL_DataSource($user));
 		$form->addElement('text','firstname',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
 		$form->addElement('text','lastname',array())->setLabel(_('Last Name'))->addRule('required',_('Required'));
