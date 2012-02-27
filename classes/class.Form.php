@@ -22,5 +22,14 @@ class DBSQL_DataSource implements HTML_QuickForm2_DataSource {
 	}
 }
 class Array_DataSource extends HTML_QuickForm2_DataSource_Array implements HTML_QuickForm2_DataSource_Submit {
-
+	protected $values;
+	public function __construct($input) { 
+		$this->values=$input;
+	}
+	public function getValue($name) { 
+		return $this->values[$name];
+	}
+	public function getUpload($name) { 
+		return null;
+	}
 }
