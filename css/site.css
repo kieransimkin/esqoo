@@ -35,22 +35,32 @@ div.ui-dialog .ui-resizable-se {
 	bottom: 1px;
 	right: 1px;
 }
+div.ui-dialog div.ui-dialog-content { 
+	font-size: 0.9em;
+}
 div.ui-dialog div.ui-dialog-content div.element { 
 	display: inline;
 }
 div.ui-dialog div.ui-dialog-content label { 
-	width: 40%;
+	width: 38%;
 	clear: left;
 	display: block;
 	float: left;
+	margin-left: 1.5%;
 }
 div.ui-dialog div.ui-dialog-content input.esqoo-text-field { 
-	margin-bottom: 0.9em;
-	width: 50%;
+	margin-bottom: 0.8em;
+	width: 56%;
+	padding: 0.3em 1em;
+	font-weight: normal;
 }
 div.ui-dialog div.ui-dialog-content label span.required,
 div.ui-dialog div.ui-dialog-content div.reqnote em { 
 	color: #FF0000;
+}
+div.ui-dialog div.ui-dialog-content label span.required {
+	left: 1%;
+	position: absolute;
 }
 div.ui-dialog div.ui-dialog-content div.error {
 	float: left;
@@ -65,6 +75,9 @@ div.ui-dialog div.ui-dialog-content div.error span.error {
 }
 div.ui-dialog div.ui-dialog-content div.error input { 
 	width: 100%;
+}
+section.login-box div#login-errors { 
+	color: #FF0000;
 }
 button.ui-button,
 input.ui-button { 
