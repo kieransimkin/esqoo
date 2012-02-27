@@ -15,12 +15,10 @@ class AccountController extends LockedController {
 		$form=new Form('hello');
 		$form->addElement('text','name',array('size'=>'20'))->setLabel('hello');
 		if ($form->validate) { 
-			return 'success';
+			return $this->formSuccess();
 		} else { 
-			echo $form;
-			return 'failure';
+			return $this->formFail($form);
 		}
-		print "Foo";
 	}
 	public function settingsDialog($arg='',$input=array()) { 
 		print "Bar";

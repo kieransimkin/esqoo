@@ -96,4 +96,19 @@ class Controller {
 		header("Location: $url");
 		die;
 	}
+	function formFail($form,$width=null,$minwidth=null) { 
+		$ret=array();
+		$ret['rettype']='failure';
+		if (!is_null($width)) { 
+			$ret['width']=$width;
+		} 
+		if (!is_null($minwidth)) { 
+			$ret['minwidth']=$minwidth;
+		}
+		echo $form;
+		return $ret;
+	}
+	function formSuccess() { 
+		return array('rettype'=>'success');
+	}
 }
