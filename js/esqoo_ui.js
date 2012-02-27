@@ -135,7 +135,7 @@ esqoo_ui.prepare_dialog_html = function(d,data) {
 	if (data.minwidth !== null) { 
 		d.dialog('minWidth',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.minwidth));
 	}
-	$(dialog).dialog('option','position','center');
+	d.dialog('option','position','center');
 	// Dunno if we really wanna do this
 	if (d.parent().find('input[type=text]:first').val()=='') { 
 		d.parent().find('input[type=text]:first').focus();
