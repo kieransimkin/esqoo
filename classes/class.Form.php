@@ -10,5 +10,14 @@ class Form extends HTML_QuickForm2 {
 		}
 		parent::__construct($id,$method,$attributes,$trackSubmit);
 	}
+}
+class DBSQL_DataSource implements HTML_QuickForm2_DataSource { 
+	protected $values;
 
-} 
+	public function __construct($object) { 
+		$this->values=$object;
+	}
+	public function getValue($name) { 
+		return $values->$name;
+	}
+}
