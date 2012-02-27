@@ -81,7 +81,8 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 	$.ajax({url: url, dataType: 'json', type: 'post', data: params, success: function(data) { 
 		esqoo_ui.update_dialog_html(d,data);
 	}}).error(function() { 
-		console.log('error');	
+		alert('Unable to parse dialog JSON');
+		$(d).dialog('close');
 	});
 }
 esqoo_ui.update_dialog_html = function(d,data) { 
