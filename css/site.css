@@ -52,6 +52,15 @@ div.ui-dialog div.ui-dialog-content label span.required,
 div.ui-dialog div.ui-dialog-content div.reqnote em { 
 	color: #FF0000;
 }
+div.ui-dialog div.ui-dialog-content div.error {
+	float: left;
+	width: 50%;
+}
+div.ui-dialog div.ui-dialog-content div.error span.error {
+	display: block;
+	width: 100%;
+	clear: both;
+}
 button.ui-button,
 input.ui-button { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
