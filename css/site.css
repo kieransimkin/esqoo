@@ -44,6 +44,9 @@ div.ui-dialog div.ui-dialog-content label {
 	display: block;
 	float: left;
 }
+div.ui-dialog div.ui-dialog-content input.textfield { 
+	width: 50%;
+}
 button.ui-button,
 input.ui-button { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
