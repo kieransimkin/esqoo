@@ -13,9 +13,9 @@ class Form extends HTML_QuickForm2 {
 	public function setAPIDataSources($input,$object) { 
 		$id=$this->getId();
 		if (isset($input['_qf__'.$id])) { 
-			$this->setDataSources(array(new Submit_Array_DataSource($input), new DBSQL_DataSource($user)));
+			$this->setDataSources(array(new Submit_Array_DataSource($input), new DBSQL_DataSource($object)));
 		} else { 
-			$this->setDataSources(array(new DBSQL_DataSource($user)));
+			$this->setDataSources(array(new DBSQL_DataSource($object)));
 		}
 	}
 }

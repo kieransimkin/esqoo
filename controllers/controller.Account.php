@@ -38,7 +38,6 @@ class AccountController extends LockedController {
 		$form->addElement('text','Address2',array())->setLabel(_('Address Line 2'));
 		$form->addElement('text','Town',array())->setLabel(_('Town/City'))->addRule('required',_('Required'));
 		$form->addElement('text','County',array())->setLabel(_('County/State'));
-		var_dump($form->isSubmitted());
 		return $form;
 	}
 	function getdetailsAPI($arg='',$input=array()) { 
