@@ -1,5 +1,6 @@
 var esqoo_ui = {};
-esqoo_ui.make_dialog = function(options,url,params,modal) { 
+esqoo_ui.dialog_singletons = [];
+esqoo_ui.make_dialog = function(options,url,params) { 
 	var buttons={};
 	var createButtonFunc = function(bname) { 
 		buttons[bname]=function() {
@@ -30,13 +31,22 @@ esqoo_ui.make_dialog = function(options,url,params,modal) {
 			$(this).dialog("close");
 		};
 	}
+	if (options.singleton && typeof(esqoo_ui.dialog_singletons[url])!='undefined' && esqoo_ui.dialog_singletons[url]!==null) { 
+		esqoo_ui.bring_to_front(esqoo_ui.dialog_singletons[url]);
+	} else if (options.singleton && esqoo_ui.dialog_singletons[url]===null) { 
+		return;
+	}
+	esqoo_ui.dialog_singletons[url]=null;
 	var dialog=$("<div></div>").dialog($.extend({
 		autoOpen: true,
-		modal: modal,
+		modal: options['modal'],
 		title: "",
 		position:'center',
 		buttons: buttons,
 		open: function() {
+			if (options.singleton) { 
+				esqoo_ui.dialog_singletons[url]=$(this);
+			}
 			esqoo_ui.setup_dialog_html($(this));
 		}	
 

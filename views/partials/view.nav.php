@@ -11,8 +11,8 @@ $nav=array(
 		"/file/upload" => _('Upload')
 	),
 	_('Account') => array(
-		"popup:"._('Account Details').":save,cancel:/account/details" => _('Account Details'),
-		"popup:"._('Settings').":save,cancel:/account/settings" => _('Settings'),
+		"popup:"._('Account Details').":save,cancel,singleton:/account/details" => _('Account Details'),
+		"popup:"._('Settings').":save,cancel,singleton:/account/settings" => _('Settings'),
 		"/account/logout" => _('Logout')
 	),
 	_('Help') => array(
@@ -70,7 +70,9 @@ function render_nav_element($url,$item,$user) {
 		if (in_array('cancel',$buttonlist)) { 
 			$buttonstring.="cancelbutton: 1, ";
 		}
-
+		if (in_array('singleton',$buttonlist)) { 
+			$buttonstring.="singleton: true, ";
+		}
 		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"esqoo_ui.make_dialog({ title: '$title', $buttonstring close: function() {}},'$realurl'); return false;\">$item...</a></li>";
 
 	} else if (strpos($url,"targetblank:")===0) {
