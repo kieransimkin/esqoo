@@ -101,7 +101,7 @@ esqoo_ui.prepare_dialog_html = function(d) {
 		d.parent().find('input[type=text]:first').focus();
 	}
 	d.find('form').submit(function() { 
-		console.log('got here');
+		console.log($(this).serialize());
 		$.ajax({url: $(this).attr('action'), type: 'post', data: $(this).serialize()+"&source=dialog", success: function(data) { 
 			esqoo_ui.update_dialog_html(d,data);
 		}}).error(function() { 
