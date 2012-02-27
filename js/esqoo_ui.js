@@ -87,16 +87,20 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 }
 esqoo_ui.update_dialog_html = function(d,data) { 
 	if (data.rettype===null || data.rettype==='failure') { 
-		$(d).html(data.html);
 		esqoo_ui.unset_dialog_loading_state(d);
-		if (d.parent().find('input[type=text]:first').val()=='') { 
-			d.parent().find('input[type=text]:first').focus();
-		}
+		$(d).html(data.html);
+		esqoo_ui.prepare_dialog_html(d);
 	} else if (data.rettype==='success') { 
 		$(d).dialog("close");
 	} else { 
 		alert('Invalid return type');
 	}
+}
+esqoo_ui.prepare_dialog_html = function(d) { 
+	if (d.parent().find('input[type=text]:first').val()=='') { 
+		d.parent().find('input[type=text]:first').focus();
+	}
+	console.log(d.find('form'));
 }
 esqoo_ui.set_dialog_loading_state = function(d) { 
 
