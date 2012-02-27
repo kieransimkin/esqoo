@@ -86,7 +86,6 @@ esqoo_ui.buttonify_button = function(b,icon,submitbutton) {
 esqoo_ui.buttonify_dialog = function(d) { 
 	// Really kludgey way of hacking icons into jQuery's dialog
 	var btnCancel=d.parent().find('.ui-dialog-buttonpane').find('button:contains("Close"),button:contains("Cancel")');
-	console.log(btnCancel);
 	btnCancel.each(function() { 
 		esqoo_ui.buttonify_button($(this),'ui-icon-closethick');
 	});
