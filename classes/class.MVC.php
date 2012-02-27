@@ -50,7 +50,13 @@ class MVC {
 		if ($_POST['source']==='dialog') { 
 			$html=ob_get_contents();
 			ob_end_clean();
-			echo json_encode(array('html'=>$html,'rettype'=>$res['rettype'],'width'=>@$res['width'],'minwidth'=>@$res['minwidth']));
+			echo json_encode(array(
+				'html'=>$html,
+				'rettype'=>$res['rettype'],
+				'width'=>@$res['width'],
+				'minwidth'=>@$res['minwidth'],
+				'height'=>@$res['height'],
+				'minheight'=>@$res['minheight']));
 			die;
 		} else if (!$api) { 
 			header('X-UA-Compatible: IE=edge,chrome=1');
