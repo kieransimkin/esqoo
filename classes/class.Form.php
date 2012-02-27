@@ -16,11 +16,9 @@ class DBSQL_DataSource implements HTML_QuickForm2_DataSource {
 
 	public function __construct($object) { 
 		$this->values=$object;
-		var_dump($object->email);
 	}
 	public function getValue($name) { 
-		var_dump($name);
-		var_dump($values->$name);
+		var_dump($object->email);
 		return $values->$name;
 	}
 }
