@@ -86,7 +86,6 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 	});
 }
 esqoo_ui.update_dialog_html = function(d,data) { 
-	console.log(data);
 	if (data.rettype===null || data.rettype==='failure') { 
 		esqoo_ui.unset_dialog_loading_state(d);
 		$(d).html(data.html);
@@ -102,7 +101,7 @@ esqoo_ui.prepare_dialog_html = function(d) {
 		d.parent().find('input[type=text]:first').focus();
 	}
 	d.find('form').submit(function() { 
-		$.ajax({url: $(this).attr('action'), type: 'post', data: $(this).serialize()+"&source=dialog", success: function(data) { 
+		$.ajax({url: $(this).attr('action'), dataType: 'json', type: 'post', data: $(this).serialize()+"&source=dialog", success: function(data) { 
 			esqoo_ui.update_dialog_html(d,data);
 		}}).error(function() { 
 			alert('Unable to parse dialog JSON');
