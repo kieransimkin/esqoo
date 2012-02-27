@@ -11,4 +11,12 @@ class AccountController extends LockedController {
 		$this->logoutAPI();
 		$this->redirect('/auth/login/');
 	}
+	public function detailsUI($arg='',$input=array()) { 
+		print "Foo";
+		die;
+	}
+	public function settingsUI($arg='',$input=array()) { 
+		print "Bar";
+		die;
+	}
 }
