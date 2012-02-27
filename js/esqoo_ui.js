@@ -100,7 +100,13 @@ esqoo_ui.prepare_dialog_html = function(d) {
 	if (d.parent().find('input[type=text]:first').val()=='') { 
 		d.parent().find('input[type=text]:first').focus();
 	}
-	console.log(d.find('form'));
+	d.find('form').submit(function() { 
+		$.ajax({url: $(this).attr('action'), type: 'post', data: $(this).serialize()+"&source=dialog", success: function(data) { 
+			esqoo_ui.update_dialog_html(d,data);
+		}}).error(function() { 
+			alert('Unable to parse dialog JSON');
+		});
+	});
 }
 esqoo_ui.set_dialog_loading_state = function(d) { 
 
