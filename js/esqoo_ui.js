@@ -78,7 +78,7 @@ esqoo_ui.setup_dialog_html = function(d,url,params) {
 	esqoo_ui.populate_dialog(d,url,params);
 }
 esqoo_ui.populate_dialog = function(d,url,params) { 
-	$.ajax({url: url, dataType: 'json', data: params, success: function(data) { 
+	$.ajax({url: url, dataType: 'json', type: 'post', data: params, success: function(data) { 
 		$(d).html(data.html);
 		esqoo_ui.unset_dialog_loading_state(d);
 		if (d.parent().find('input[type=text]:first').val()=='') { 
