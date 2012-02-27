@@ -30,6 +30,7 @@ class AccountController extends LockedController {
 	}
 	private function get_details_form($input,$user) { 
 		$form=new Form('details');
+		var_dump($form->getDataSources());
 		$form->setDataSources(array(new Array_DataSource($input), new DBSQL_DataSource($user)));
 		var_dump($form->getDataSources());
 		$form->addElement('text','FirstName',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
