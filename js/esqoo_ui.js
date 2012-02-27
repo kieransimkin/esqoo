@@ -112,7 +112,7 @@ esqoo_ui.convert_percentages_to_viewport_width_pixels = function(val) {
 	}
 	val=val.substr(0,val.length-1);
 	var viewport_width=$(window).width();
-	return viewport_width*(val/100);
+	return parseInt(viewport_width*(val/100));
 }
 esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) { 
 	if (val.substr(-1)!='%') { 
@@ -120,7 +120,7 @@ esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) {
 	}
 	val=val.substr(0,val.length-1);
 	var viewport_height=$(window).height();
-	return viewport_height*(val/100);
+	return parseInt(viewport_height*(val/100));
 }
 esqoo_ui.prepare_dialog_html = function(d,data) { 
 	if (data.height !== null) { 
