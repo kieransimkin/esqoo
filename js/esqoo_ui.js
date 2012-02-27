@@ -83,7 +83,7 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 	}});
 }
 esqoo_ui.update_dialog_html = function(d,data) { 
-	if (data.rettype===null || data.rettype==='null' || data.rettype==='failure') { 
+	if (data.rettype===null || data.rettype==='failure') { 
 		$(d).html(data.html);
 		esqoo_ui.unset_dialog_loading_state(d);
 		if (d.parent().find('input[type=text]:first').val()=='') { 
