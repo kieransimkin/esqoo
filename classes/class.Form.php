@@ -21,3 +21,6 @@ class DBSQL_DataSource implements HTML_QuickForm2_DataSource {
 		return $this->values->$name;
 	}
 }
+class Array_DataSource extends HTML_QuickForm2_DataSource_Array {
+
+}
