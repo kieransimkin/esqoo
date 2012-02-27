@@ -60,9 +60,10 @@ div.ui-dialog div.ui-dialog-content div.error span.error {
 	display: block;
 	width: 100%;
 	clear: both;
+	color: #FF0000;
 }
 div.ui-dialog div.ui-dialog-content div.error input { 
-	width: auto;
+	width: 100%;
 }
 button.ui-button,
 input.ui-button { 
