@@ -35,7 +35,7 @@ class Submit_Array_DataSource extends HTML_QuickForm2_DataSource_Array implement
 		$this->values=$input;
 	}
 	public function getValue($name) { 
-		return (array_key_exists($name,$this->values)) ? $this->values[$name] : null;
+		return $this->values[$name];
 	}
 	public function getUpload($name) { 
 		return null;
