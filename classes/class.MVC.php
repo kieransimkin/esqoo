@@ -26,6 +26,7 @@ class MVC {
 			$funcname = strtolower(str_replace('-','',$action)).'API';
 		} else { 
 			if ($_POST['source']==='dialog') { 
+				ob_start();
 				$funcname = strtolower(str_replace('-','',$action)).'Dialog';
 			} else { 
 				$funcname = strtolower(str_replace('-','',$action)).'UI';
@@ -47,6 +48,9 @@ class MVC {
 			$res=(array)@$res;
 		}
 		if ($_POST['source']==='dialog') { 
+			$html=ob_get_contents();
+			ob_end_clean();
+			echo json_encode(array('html'=>$html,'status'=>$res[0]));
 			die;
 		} else if (!$api) { 
 			header('X-UA-Compatible: IE=edge,chrome=1');

@@ -78,11 +78,13 @@ esqoo_ui.setup_dialog_html = function(d,url,params) {
 	esqoo_ui.populate_dialog(d,url,params);
 }
 esqoo_ui.populate_dialog = function(d,url,params) { 
-	$(d).load(url,params,function() { 
+	$.ajax({url: url, dataType: 'json', data: params, success: function(data) { 
+		$(d).html(data.html);
 		esqoo_ui.unset_dialog_loading_state(d);
 		if (d.parent().find('input[type=text]:first').val()=='') { 
 			d.parent().find('input[type=text]:first').focus();
 		}
+
 	});
 }
 esqoo_ui.set_dialog_loading_state = function(d) { 
