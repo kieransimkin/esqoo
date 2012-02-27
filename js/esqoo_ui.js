@@ -124,17 +124,16 @@ esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) {
 }
 esqoo_ui.prepare_dialog_html = function(d,data) { 
 	if (data.height !== null) { 
-		d.dialog('height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
+		d.dialog('option','height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
 	}
 	if (data.width !== null) { 
-		console.log(esqoo_ui.convert_percentages_to_viewport_width_pixels(data.width));
-		d.dialog('width',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.width));
+		d.dialog('option','width',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.width));
 	}
 	if (data.minheight !== null) { 
-		d.dialog('minHeight',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.minheight));
+		d.dialog('option','minHeight',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.minheight));
 	}
 	if (data.minwidth !== null) { 
-		d.dialog('minWidth',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.minwidth));
+		d.dialog('option','minWidth',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.minwidth));
 	}
 	d.dialog('option','position','center');
 	// Dunno if we really wanna do this
