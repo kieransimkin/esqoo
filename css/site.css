@@ -92,6 +92,7 @@ section.esqoo-dialog-tabs {
 }
 a.ui-selectmenu { 
 	font-weight: normal !important;
+	line-height: 1em !important;
 }
 div.ui-dialog .ui-tabs .ui-tabs-nav li a {
 	padding: 0.1em 1em;
