@@ -16,6 +16,9 @@ $(document).ready(function() {
 	$('section.esqoo-dialog-tabs').livequery(function() { 
 		$(this).tabs();
 	});
+	$('select').livequery(function() { 
+		$(this).selectmenu();
+	});
 	 $("#nav-one").supersubs({ 
             minWidth:    12,   // minimum width of sub-menus in em units 
             maxWidth:    15,   // maximum width of sub-menus in em units 
