@@ -90,6 +90,9 @@ section.esqoo-dialog-tabs {
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
+a.ui-selectmenu { 
+	font-weight: normal !important;
+}
 div.ui-dialog .ui-tabs .ui-tabs-nav li a {
 	padding: 0.1em 1em;
 }
