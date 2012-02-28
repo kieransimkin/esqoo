@@ -43,13 +43,13 @@ class AccountController extends LockedController {
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
 	private function get_theme_settings_form($input,$settings,$forcesubmit=false) { 
-		$form=new Form('settings');
+		$form=new Form('theme_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
 		$form->addElement("static","Hello",array())->setLabel('Hello');
 		return $form;
 	}
 	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
-		$form=new Form('settings');
+		$form=new Form('editor_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
 		$form->addElement("static","Hello2",array())->setLabel('Hello2');
 		return $form;
