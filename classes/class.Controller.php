@@ -79,7 +79,7 @@ class Controller {
 		$this->api_error($form->getId(),_('Form validation failure'));
 	}
 	function showMessage($string) { 
-
+		// XXX TODO
 	}
 	function api_error_array() {
 		$ret=array();
