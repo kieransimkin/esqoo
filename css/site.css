@@ -90,7 +90,7 @@ section.esqoo-dialog-tabs {
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
-a.ui-selectmenu { 
+a.ui-selectmenu, a.ui-selectmenu * { 
 	font-weight: normal !important;
 	line-height: 0.9em !important;
 }
