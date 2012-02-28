@@ -88,6 +88,9 @@ section.esqoo-dialog-tabs {
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
+div.ui-dialog .ui-tabs .ui-tabs-nav li a {
+	padding: 0.3em 1em;
+}
 span.esqoo-ui-dialog-button-icon { 
 	float: left;
 	margin-top: 0.6em;
