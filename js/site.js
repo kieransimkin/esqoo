@@ -13,7 +13,7 @@ $(document).ready(function() {
 	$('input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], input[type=search], input[type=tel]').livequery(function() { 
 		$(this).button().addClass('esqoo-text-field');
 	});
-	$('section.esqoo-dialog').livequery(function() { 
+	$('section.esqoo-dialog-tabs').livequery(function() { 
 		$(this).tabs();
 	});
 	 $("#nav-one").supersubs({ 
