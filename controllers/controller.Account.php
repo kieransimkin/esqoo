@@ -43,7 +43,7 @@ class AccountController extends LockedController {
 	 *********************/
 	private function get_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('settings');
-		$form->setAPIDataSources($input,$settings,$forcesubmit);
+		//$form->setAPIDataSources($input,$settings,$forcesubmit);
 		$form->addElement("text","Hello",array())->setLabel('Hello');
 		return $form;
 	}
