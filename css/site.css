@@ -93,6 +93,7 @@ section.esqoo-dialog-tabs {
 a.ui-selectmenu { 
 	font-weight: normal !important;
 	height: 1.8em;
+	margin-bottom: 0.8em;
 }
 a.ui-selectmenu span.ui-selectmenu-status { 
 	padding-top: 0.1em;
