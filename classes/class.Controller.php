@@ -75,6 +75,9 @@ class Controller {
 	function api_error($id,$str) { 
 		$this->api_errors[$id]=_($str);
 	}
+	function api_form_validation_error($form) { 
+		$this->api_error($form->getId(),_('Form validation failure'));
+	}
 	function api_error_array() {
 		$ret=array();
 		foreach ($this->api_errors as $id => $str) { 

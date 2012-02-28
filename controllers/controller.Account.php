@@ -86,16 +86,16 @@ class AccountController extends LockedController {
 		$settings=$this->getsettingsAPI();
 		$form=$this->get_theme_settings_form($input,$settings,true);
 		if (!$form->validate()) {
-			// Throw error
-			return $settings;
+			$this->api_form_validation_error($form);
 		}
 		$form=$this->get_editor_settings_form($input,$settings,true);
 		if (!$form->validate()) { 
-			// Throw error
-			return $settings;
+			$this->api_form_validation_error($form);
 		}
-		$settings->setFromFilteredArray($input,$this->get_settings_fields());
-		$settings->save();
+		if ($this->api_validation_success()) { 
+			$settings->setFromFilteredArray($input,$this->get_settings_fields());
+			$settings->save();
+		}
 		return $settings;
 	}
 	public function getdetailsAPI($arg='',$input=array()) { 
@@ -106,11 +106,12 @@ class AccountController extends LockedController {
 		$user=$this->getdetailsAPI();
 		$form=$this->get_details_form($input,$user,true);
 		if (!$form->validate()) { 
-			// Throw error
-			return $user;
+			$this->api_form_validation_error($form);
 		}
-		$user->setFromFilteredArray($input,$this->get_details_fields());
-		$user->save();
+		if ($this->api_validation_success()) { 
+			$user->setFromFilteredArray($input,$this->get_details_fields());
+			$user->save();
+		}
 		return $user;
 	}
 	/****************************
