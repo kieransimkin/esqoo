@@ -12,14 +12,62 @@ create table `user` (
 	Town varchar(512) default null,
 	County varchar(512) default null,
 	country_id int default null,
+	daytime__ui_theme_id int not null default 1,
+	nighttime__ui_theme_id int not null default 1,
+	rich_editor_id int not null default 1,
 	createdate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	modifydate datetime default null,
 	deletedate datetime default null,
 	primary key (id),
 	unique key (Username),
-	index (country_id)
+	index (country_id),
+	index (deletedate),
+	index (daytime__ui_theme_id),
+	index (nighttime__ui_theme_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 insert into user set Username='slinq',Email='kieran@slinq.com',Password='testpass',FirstName='Kieran',LastName='Simkin';
+drop table if exists `ui_theme`;
+create table `ui_theme` (
+	id int not null auto_increment,
+	Tag varchar(255) NOT NULL,
+	ui_state enum('day','night','both') not null default 'both',
+	primary key (id),
+	index (ui_state),
+	unique key (Tag)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into ui_theme set Tag='cupertino', ui_state='day';
+insert into ui_theme set Tag='black-tie', ui_state='both';
+insert into ui_theme set Tag='blitzer', ui_state='both';
+insert into ui_theme set Tag='dark-hive', ui_state='both';
+insert into ui_theme set Tag='dot-luv', ui_state='both';
+insert into ui_theme set Tag='eggplant', ui_state='both';
+insert into ui_theme set Tag='excite-bike', ui_state='both';
+insert into ui_theme set Tag='flick', ui_state='both';
+insert into ui_theme set Tag='hot-sneaks', ui_state='both';
+insert into ui_theme set Tag='humanity', ui_state='both';
+insert into ui_theme set Tag='le-frog', ui_state='both';
+insert into ui_theme set Tag='mint-choc', ui_state='both';
+insert into ui_theme set Tag='overcast', ui_state='both';
+insert into ui_theme set Tag='pepper-grinder', ui_state='both';
+insert into ui_theme set Tag='redmond', ui_state='both';
+insert into ui_theme set Tag='smoothness', ui_state='both';
+insert into ui_theme set Tag='south-street', ui_state='both';
+insert into ui_theme set Tag='start', ui_state='both';
+insert into ui_theme set Tag='sunny', ui_state='both';
+insert into ui_theme set Tag='swanky-purse', ui_state='both';
+insert into ui_theme set Tag='trontastic', ui_state='both';
+insert into ui_theme set Tag='ui-darkness', ui_state='both';
+insert into ui_theme set Tag='ui-lightness', ui_state='day';
+insert into ui_theme set Tag='vader', ui_state='both';
+drop table if exists `rich_editor`;
+create table `rich_editor` (
+	id int not null auto_increment,
+	Tag varchar(255) NOT NULL,
+	description text not null,
+	primary key (id),
+	unique key (Tag)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into rich_editor set Tag='TinyMCE',description='The TinyMCE WYSIWYG HTML editor.';
 drop table if exists `user_challenge`;
 create table `user_challenge` ( 
 	id int not null auto_increment,

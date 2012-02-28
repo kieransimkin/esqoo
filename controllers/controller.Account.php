@@ -51,7 +51,7 @@ class AccountController extends LockedController {
 	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('editor_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
-		$form->addElement("static","Hello2",array())->setLabel('Hello2');
+		$form->addElement("select","rich_editor_id",array())->setLabel(_('Rich Editor'));
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
@@ -122,6 +122,6 @@ class AccountController extends LockedController {
 		return array('FirstName','LastName','Email','Address1','Address2','Town','County','country_id');
 	}
 	private function get_settings_fields() { 
-		return array();
+		return array('rich_editor_id','daytime__ui_theme_id','nighttime__ui_theme_id');
 	}
 }

@@ -103,7 +103,7 @@ class Controller {
 	function formSuccess() { 
 		return array('rettype'=>'success');
 	}
-	function tabbedDialogFail($dialogs=array(),$width=null,$minwidth=null,$height=null,$minheight=null) { 
+	function tabbedDialogFail($dialogs=array(),$width=null,$minwidth=null,$height=null,$minheight=null,$defaulttab=null) { 
 		if (!is_array($dialogs)) { 
 			print $dialogs;
 		} else { 
@@ -127,9 +127,9 @@ class Controller {
 			}?>
 			</section><?php
 		}
-		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
+		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight,$defaulttab);
 	}
-	function formFailAjaxResponse($width=null,$minwidth=null,$height=null,$minheight=null) { 
+	function formFailAjaxResponse($width=null,$minwidth=null,$height=null,$minheight=null,$defaulttab=null) { 
 		$ret=array();
 		$ret['rettype']='failure';
 		if (!is_null($width)) { 
@@ -143,6 +143,9 @@ class Controller {
 		} 
 		if (!is_null($minheight)) { 
 			$ret['minheight']=$minheight;
+		}
+		if (!is_null($defaulttab)) { 
+			$ret['defaulttab']=$defaulttab;
 		}
 		return $ret;
 	}
