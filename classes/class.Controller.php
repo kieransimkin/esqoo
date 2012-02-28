@@ -97,6 +97,39 @@ class Controller {
 		die;
 	}
 	function formFail($form,$width=null,$minwidth=null,$height=null,$minheight=null) { 
+		echo $form;
+		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
+	}
+	function formSuccess() { 
+		return array('rettype'=>'success');
+	}
+	function tabbedDialogFail($dialogs=array(),$width=null,$minwidth=null,$height=null,$minheight=null) { 
+		if (!is_array($dialogs)) { 
+			print $dialogs;
+		} else { 
+			?>
+			<section id="esqoo-dialog-tabs">
+				<nav>
+					<ul>
+			<?php	
+			foreach ($dialogs as $title => $form) { 
+?>						<li><a href="#<?=$form->getId();?>"><?=$title;?></a></li>
+<?php
+			}
+			?>
+					</ul>
+				</nav>
+			<?php
+			foreach ($dialogs as $title => $form) { 
+?>
+				<div id="<?=$form->getId();?>"><?=$form;?></div>
+<?php
+			}?>
+			</section><?php
+		}
+		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
+	}
+	function formFailAjaxResponse($width=null,$minwidth=null,$height=null,$minheight=null) { 
 		$ret=array();
 		$ret['rettype']='failure';
 		if (!is_null($width)) { 
@@ -111,10 +144,6 @@ class Controller {
 		if (!is_null($minheight)) { 
 			$ret['minheight']=$minheight;
 		}
-		echo $form;
 		return $ret;
-	}
-	function formSuccess() { 
-		return array('rettype'=>'success');
 	}
 }

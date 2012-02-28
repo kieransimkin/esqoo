@@ -33,7 +33,7 @@ class AccountController extends LockedController {
 			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
 		} else { 
-			return $this->formFail($form);
+			return $this->tabbedDialogFail(array($form));
 		}
 	}
 	/*********************
@@ -76,7 +76,6 @@ class AccountController extends LockedController {
 	}
 	public function updatesettingsAPI($arg='',$input=array()) { 
 		$settings=$this->getsettingsAPI();
-		$settings->set_visible_api_fields($this->get_settings_fields());
 		$form=$this->get_settings_form($input,$settings,true);
 		if (!$form->validate()) {
 			// Throw error
@@ -92,7 +91,6 @@ class AccountController extends LockedController {
 	}
 	public function updatedetailsAPI($arg='',$input=array()) { 
 		$user=$this->getdetailsAPI();
-		$user->set_visible_api_fields($this->get_details_fields());
 		$form=$this->get_details_form($input,$user,true);
 		if (!$form->validate()) { 
 			// Throw error
