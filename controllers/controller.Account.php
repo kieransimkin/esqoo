@@ -71,29 +71,46 @@ class AccountController extends LockedController {
 		return array();
 	}
 	public function getsettingsAPI($arg='',$input=array()) { 
-		$this->user->set_visible_api_fields(array());
+		$this->user->set_visible_api_fields($this->get_settings_fields());
 		return $this->user;
 	}
 	public function updatesettingsAPI($arg='',$input=array()) { 
-		$ret=array();
 		$settings=$this->getsettingsAPI();
+		$settings->set_visible_api_fields($this->get_settings_fields());
 		$form=$this->get_settings_form($input,$settings,true);
-		if (!$form->validate()) { 
-
+		if (!$form->validate()) {
+			// Throw error
+			return $settings;
 		}
-		return $ret;
+		$settings->setFromFilteredArray($input,$this->get_settings_fields());
+		$settings->save();
+		return $settings;
 	}
 	public function getdetailsAPI($arg='',$input=array()) { 
-		$this->user->set_visible_api_fields(array('FirstName','LastName','Email','Address1','Address2','Town','County','country_id'));
+		$this->user->set_visible_api_fields($this->get_details_fields());
 		return $this->user;
 	}
 	public function updatedetailsAPI($arg='',$input=array()) { 
-		$ret=array();
 		$user=$this->getdetailsAPI();
+		$user->set_visible_api_fields($this->get_details_fields());
 		$form=$this->get_details_form($input,$user,true);
 		if (!$form->validate()) { 
-
+			// Throw error
+			return $user;
 		}
-		return $ret;
+		$user->setFromFilteredArray($input,$this->get_details_fields());
+		$user->save();
+		return $user;
+	}
+	/****************************
+	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
+	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
+	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
+	 ****************************/
+	private function get_details_fields() { 
+		return array('FirstName','LastName','Email','Address1','Address2','Town','County','country_id');
+	}
+	private function get_settings_fields() { 
+		return array();
 	}
 }
