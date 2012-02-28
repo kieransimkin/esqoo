@@ -80,7 +80,8 @@ section.login-box div#login-errors {
 	color: #FF0000;
 }
 button.ui-button,
-input.ui-button { 
+input.ui-button,
+a.ui-selectmenu { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
