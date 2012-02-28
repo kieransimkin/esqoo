@@ -94,6 +94,9 @@ a.ui-selectmenu {
 	font-weight: normal !important;
 	height: 1.8em;
 }
+a.ui-selectmenu span.ui-selectmenu-status { 
+	padding-top: 0.1em;
+}
 div.ui-dialog .ui-tabs .ui-tabs-nav li a {
 	padding: 0.1em 1em;
 }
