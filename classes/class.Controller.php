@@ -108,7 +108,7 @@ class Controller {
 			print $dialogs;
 		} else { 
 			?>
-			<section id="esqoo-dialog-tabs">
+			<section class="esqoo-dialog-tabs">
 				<nav>
 					<ul>
 			<?php	

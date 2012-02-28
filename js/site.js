@@ -13,6 +13,9 @@ $(document).ready(function() {
 	$('input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], input[type=search], input[type=tel]').livequery(function() { 
 		$(this).button().addClass('esqoo-text-field');
 	});
+	$('section.esqoo-dialog').livequery(function() { 
+		$(this).tabs();
+	});
 	 $("#nav-one").supersubs({ 
             minWidth:    12,   // minimum width of sub-menus in em units 
             maxWidth:    15,   // maximum width of sub-menus in em units 

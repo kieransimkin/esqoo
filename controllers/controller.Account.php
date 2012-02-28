@@ -33,7 +33,7 @@ class AccountController extends LockedController {
 			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
 		} else { 
-			return $this->tabbedDialogFail(array($form));
+			return $this->tabbedDialogFail(array('Theming'=>$form));
 		}
 	}
 	/*********************
@@ -44,6 +44,7 @@ class AccountController extends LockedController {
 	private function get_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
+		$form->addElement("text","Hello",array())->setLabel('Hello');
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
