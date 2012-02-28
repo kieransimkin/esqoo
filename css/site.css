@@ -81,7 +81,8 @@ section.login-box div#login-errors {
 }
 button.ui-button,
 input.ui-button,
-a.ui-selectmenu { 
+a.ui-selectmenu,
+section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
