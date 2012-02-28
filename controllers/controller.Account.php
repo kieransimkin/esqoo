@@ -29,12 +29,19 @@ class AccountController extends LockedController {
 		$settings=$this->getsettingsAPI($arg,$input);
 		$themesettingsform=$this->get_theme_settings_form($input,$settings);
 		$editorsettingsform=$this->get_editor_settings_form($input,$settings);
-		if ($themesettingsform->validate()) { 
+		$invalid=false;
+		if (!$themesettingsform->validate()) {
+			$invalid=$themesettingsform->getId();
+		}
+		if (!$editorsettingsform->validate()) { 
+			$invalid=$editorsettingsform->getId();
+		}
+		if (!$invalid) {
 			$this->updatesettingsAPI($arg,$input);
 			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
 		} else { 
-			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform),'30%','550');
+			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform),'30%','550',null,null,$invalid);
 		}
 	}
 	public function passwordDialog($arg='',$input=array()) { 
