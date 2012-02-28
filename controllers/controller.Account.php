@@ -51,7 +51,7 @@ class AccountController extends LockedController {
 	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('editor_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
-		$form->addElement("select","rich_editor_id",array())->setLabel(_('Rich Editor'));
+		$form->addElement("select","rich_editor_id",array('data'=>Rich_editor::get_menu()))->setLabel(_('Rich Editor'));
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
