@@ -71,6 +71,7 @@ insert into rich_editor set Tag='TinyMCE',description='The TinyMCE WYSIWYG HTML 
 insert into rich_editor set Tag='CKEditor',description='The CKEditor WYSIWYG HTML editor.';
 insert into rich_editor set Tag='EditArea',description='The EditArea code editor.';
 insert into rich_editor set Tag='Ace',description='The Ace code editor.';
+insert into rich_editor set Tag='markItUp',description='The markItUp code editor.';
 drop table if exists `user_challenge`;
 create table `user_challenge` ( 
 	id int not null auto_increment,
