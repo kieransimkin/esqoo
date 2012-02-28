@@ -28,7 +28,7 @@ class AccountController extends LockedController {
 	public function settingsDialog($arg='',$input=array()) { 
 		$settings=$this->getsettingsAPI($arg,$input);
 		$themesettingsform=$this->get_theme_settings_form($input,$settings);
-		$editorsettingsform=$this->get_theme_settings_form($input,$settings);
+		$editorsettingsform=$this->get_editor_settings_form($input,$settings);
 		if ($themesettingsform->validate()) { 
 			$this->updatesettingsAPI($arg,$input);
 			$this->showMessage(_('Account settings updated'));
