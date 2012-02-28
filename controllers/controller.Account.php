@@ -29,7 +29,7 @@ class AccountController extends LockedController {
 		$settings=$this->getsettingsAPI($arg,$input);
 		$themesettingsform=$this->get_theme_settings_form($input,$settings);
 		$editorsettingsform=$this->get_theme_settings_form($input,$settings);
-		if ($form->validate()) { 
+		if ($themesettingsform->validate()) { 
 			$this->updatesettingsAPI($arg,$input);
 			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
