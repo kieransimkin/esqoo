@@ -1,32 +1,50 @@
 <?php
 class AccountController extends LockedController { 
-	public function logoutAPI($arg='',$input=array()) { 
-		$this->user_token->delete();
-		setcookie('UserID','',time()-3600,'/');
-		setcookie('TokenID','',time()-3600,'/');
-		setcookie('Token','',time()-3600,'/');
-		return array();
-	}
+	/**********************************************
+	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
+	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
+	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
+	 **********************************************/
 	public function logoutUI($arg='',$input=array()) { 
 		$this->logoutAPI();
 		$this->redirect('/auth/login/');
 	}
+	/*************************
+	 *  ╺┳┓╻┏━┓╻  ┏━┓┏━╸┏━┓  *
+	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
+	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
+	 *************************/
 	public function detailsDialog($arg='',$input=array()) { 
 		$user=$this->getdetailsAPI();
 		$form=$this->get_details_form($input,$user);
-		if ($form->validate()) { 
+		if ($form->validate()) {
+			$this->updatedetailsAPI($arg,$input);
+			$this->showMessage(_('Account details updated'));
 			return $this->formSuccess();
 		} else { 
 			return $this->formFail($form,'30%','550');
 		}
 	}
 	public function settingsDialog($arg='',$input=array()) { 
-		$form=new Form('settings');
+		$settings=$this->getsettingsAPI($arg,$input);
+		$form=$this->get_settings_form($input,$settings);
 		if ($form->validate()) { 
+			$this->updatesettingsAPI($arg,$input);
+			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
 		} else { 
 			return $this->formFail($form);
 		}
+	}
+	/*********************
+	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
+	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
+	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
+	 *********************/
+	private function get_settings_form($input,$settings,$forcesubmit=false) { 
+		$form=new Form('settings');
+		$form->setAPIDataSources($input,$settings,$forcesubmit);
+		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
 		$form=new Form('details');
@@ -40,13 +58,39 @@ class AccountController extends LockedController {
 		$form->addElement('text','County',array())->setLabel(_('County/State'));
 		return $form;
 	}
-	function getdetailsAPI($arg='',$input=array()) { 
+	/*****************************************
+	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
+	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
+	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
+	 *****************************************/
+	public function logoutAPI($arg='',$input=array()) { 
+		$this->user_token->delete();
+		setcookie('UserID','',time()-3600,'/');
+		setcookie('TokenID','',time()-3600,'/');
+		setcookie('Token','',time()-3600,'/');
+		return array();
+	}
+	public function getsettingsAPI($arg='',$input=array()) { 
+		$this->user->set_visible_api_fields(array());
 		return $this->user;
 	}
-	function setdetailsAPI($arg='',$input=array()) { 
+	public function updatesettingsAPI($arg='',$input=array()) { 
+		$ret=array();
+		$settings=$this->getsettingsAPI();
+		$form=$this->get_settings_form($input,$settings,true);
+		if (!$form->validate()) { 
+
+		}
+		return $ret;
+	}
+	public function getdetailsAPI($arg='',$input=array()) { 
+		$this->user->set_visible_api_fields(array('FirstName','LastName','Email','Address1','Address2','Town','County','country_id'));
+		return $this->user;
+	}
+	public function updatedetailsAPI($arg='',$input=array()) { 
 		$ret=array();
 		$user=$this->getdetailsAPI();
-		$form=$this->get_details_form($input,$user,$forcesubmit);
+		$form=$this->get_details_form($input,$user,true);
 		if (!$form->validate()) { 
 
 		}

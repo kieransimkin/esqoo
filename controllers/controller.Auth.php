@@ -1,5 +1,20 @@
 <?php
 class AuthController extends OpenController {
+	/**********************************************
+	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
+	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
+	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
+	 **********************************************/
+	function loginUI($arg='',$input=array()) { 
+		$this->view->challenge=$this->getchallengeAPI('',array());
+		$this->view->forward=@$input['forward'];
+	}
+	/*****************************************
+	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
+	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
+	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
+	 *****************************************/
+
 	/**
 	 * This function returns a challenge, which you must hash together 
 	 * with your password before calling authenticate with the generated
@@ -42,10 +57,11 @@ class AuthController extends OpenController {
 		}
 		return $ret;
 	}
-	function loginUI($arg='',$input=array()) { 
-		$this->view->challenge=$this->getchallengeAPI('',array());
-		$this->view->forward=@$input['forward'];
-	}
+	/****************************
+	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
+	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
+	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
+	 ****************************/
 	private function ensure_response_authorized($user,$challenge,$input) { 
 		if (strlen(@$input['Response'])<1) { 
 			$this->api_error(5,"Response field is required");
