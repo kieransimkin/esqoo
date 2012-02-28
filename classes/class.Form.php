@@ -26,7 +26,12 @@ class DBSQL_DataSource implements HTML_QuickForm2_DataSource {
 		$this->values=$object;
 	}
 	public function getValue($name) { 
-		return $this->values->$name;
+		try { 
+			return $this->values->$name;
+		} catch (DBSQ_Exception $e) { 
+			return null;
+		}
+
 	}
 }
 class Submit_Array_DataSource extends HTML_QuickForm2_DataSource_Array implements HTML_QuickForm2_DataSource_Submit {
@@ -34,12 +39,8 @@ class Submit_Array_DataSource extends HTML_QuickForm2_DataSource_Array implement
 	public function __construct($input) { 
 		$this->values=$input;
 	}
-	public function getValue($name) {
-		try { 
-			return $this->values[$name];
-		} catch (DBSQ_Exception $e) { 
-			return null;
-		}
+	public function getValue($name) { 
+		return $this->values[$name];
 	}
 	public function getUpload($name) { 
 		return null;
