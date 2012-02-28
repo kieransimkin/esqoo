@@ -34,8 +34,12 @@ class Submit_Array_DataSource extends HTML_QuickForm2_DataSource_Array implement
 	public function __construct($input) { 
 		$this->values=$input;
 	}
-	public function getValue($name) { 
-		return $this->values[$name];
+	public function getValue($name) {
+		try { 
+			return $this->values[$name];
+		} catch (DBSQ_Exception $e) { 
+			return null;
+		}
 	}
 	public function getUpload($name) { 
 		return null;
