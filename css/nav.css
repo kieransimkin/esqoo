@@ -1,6 +1,6 @@
 ul#nav-one { 
-	margin-top: 0px;
-	padding-left: 0px;
+	margin-top: 0em;
+	padding-left: 0em;
 	padding-right: 1%;
 }
 ul#nav-one ul {
@@ -26,7 +26,7 @@ ul#nav-one li.lambda {
 	font-size: 30px;
 	position: absolute;
 	border-top: none;
-	left: 0px;
+	left: 0em;
 	padding-left: 15px;
 	padding-right: 15px;
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -40,8 +40,8 @@ ul#nav-one li.lambda:hover {
 	-moz-box-shadow: inset 2px 2px 4px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: inset 2px 2px 4px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: inset 2px 2px 4px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.5);
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0em;
+	border-bottom-left-radius: 0em;
 	
 }
 ul#nav-one li.lambda ul { 
