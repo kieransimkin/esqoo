@@ -86,6 +86,10 @@ class AccountController extends LockedController {
 	}
 	private function get_password_form($input,$forcesubmit=false) { 
 		$form=new Form('password');
+		$form->setAPIDataSources($input,null,$forcesubmit);
+		$form->addElement('password','OldPassword',array())->setLabel(_('Old Password'))->addRule('required',_('Required'));
+		$form->addElement('password','NewPassword',array())->setLabel(_('New Password'))->addRule('required',_('Required'));
+		$form->addElement('password','NewPasswordAgain',array())->setLabel(_('New Password (Again)'))->addRule('required',_('Required'));
 		return $form;
 	}
 	/*****************************************
@@ -137,10 +141,6 @@ class AccountController extends LockedController {
 		return $user;
 	}
 	public function updatepasswordAPI($arg='',$input=array()) { 
-		$form=$this->get_password_form($input,true);
-		if (!$form->validate()) { 
-			$this->api_form_validation_error($form);
-		}
 		if ($this->api_validation_success()) { 
 
 		}
