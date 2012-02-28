@@ -27,13 +27,14 @@ class AccountController extends LockedController {
 	}
 	public function settingsDialog($arg='',$input=array()) { 
 		$settings=$this->getsettingsAPI($arg,$input);
-		$form=$this->get_settings_form($input,$settings);
+		$themesettingsform=$this->get_theme_settings_form($input,$settings);
+		$editorsettingsform=$this->get_theme_settings_form($input,$settings);
 		if ($form->validate()) { 
 			$this->updatesettingsAPI($arg,$input);
 			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
 		} else { 
-			return $this->tabbedDialogFail(array('Theming'=>$form));
+			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform);
 		}
 	}
 	/*********************
@@ -41,10 +42,16 @@ class AccountController extends LockedController {
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
-	private function get_settings_form($input,$settings,$forcesubmit=false) { 
+	private function get_theme_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('settings');
-		//$form->setAPIDataSources($input,$settings,$forcesubmit);
-		$form->addElement("text","Hello",array())->setLabel('Hello');
+		$form->setAPIDataSources($input,$settings,$forcesubmit);
+		$form->addElement("static","Hello",array())->setLabel('Hello');
+		return $form;
+	}
+	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
+		$form=new Form('settings');
+		$form->setAPIDataSources($input,$settings,$forcesubmit);
+		$form->addElement("static","Hello2",array())->setLabel('Hello2');
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
@@ -77,8 +84,13 @@ class AccountController extends LockedController {
 	}
 	public function updatesettingsAPI($arg='',$input=array()) { 
 		$settings=$this->getsettingsAPI();
-		$form=$this->get_settings_form($input,$settings,true);
+		$form=$this->get_theme_settings_form($input,$settings,true);
 		if (!$form->validate()) {
+			// Throw error
+			return $settings;
+		}
+		$form=$this->get_editor_settings_form($input,$settings,true);
+		if (!$form->validate()) { 
 			// Throw error
 			return $settings;
 		}
