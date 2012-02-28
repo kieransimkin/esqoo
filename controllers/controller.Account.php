@@ -34,7 +34,7 @@ class AccountController extends LockedController {
 			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
 		} else { 
-			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform));
+			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform),'30%','550');
 		}
 	}
 	/*********************
