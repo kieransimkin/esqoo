@@ -37,6 +37,16 @@ class AccountController extends LockedController {
 			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform),'30%','550');
 		}
 	}
+	public function passwordDialog($arg='',$input=array()) { 
+		$form=$this->get_password_form($input);
+		if ($form->validate()) {
+			$this->updatepasswordAPI($arg,$input);
+			$this->showMessage(_('Password updated'));
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'30%','550');
+		}
+	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
@@ -65,6 +75,10 @@ class AccountController extends LockedController {
 		$form->addElement('text','Address2',array())->setLabel(_('Address Line 2'));
 		$form->addElement('text','Town',array())->setLabel(_('Town/City'))->addRule('required',_('Required'));
 		$form->addElement('text','County',array())->setLabel(_('County/State'));
+		return $form;
+	}
+	private function get_password_form($input,$forcesubmit=false) { 
+		$form=new Form('password');
 		return $form;
 	}
 	/*****************************************
@@ -114,6 +128,15 @@ class AccountController extends LockedController {
 			$user->save();
 		}
 		return $user;
+	}
+	public function updatepasswordAPI($arg='',$input=array()) { 
+		$form=$this->get_password_form($input,true);
+		if (!$form->validate()) { 
+			$this->api_form_validation_error($form);
+		}
+		if ($this->api_validation_success()) { 
+
+		}
 	}
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
