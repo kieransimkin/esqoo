@@ -12,7 +12,7 @@ $nav=array(
 	),
 	_('Account') => array(
 		"popup:"._('Account Details').":save,cancel,singleton:/account/details" => _('Account Details'),
-		"popup:"._('Settings').":save,cancel,singleton:/account/settings" => _('Settings'),
+		"popup:"._('Settings').":save,cancel,singleton:/account/settings" => _('Account Settings'),
 		"popup:"._('Change Password').":save,cancel,singleton:/account/password" => _('Change Password'),
 		"/account/logout" => _('Logout')
 	),
