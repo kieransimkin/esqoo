@@ -7,7 +7,8 @@ section, article, header, footer, nav, aside, hgroup {
 body,html { 
 	margin: 0;
 }
-.ui-button {
+.ui-button,
+.ui-selectmenu {
 	font-size: 0.9em !important;
 }
 input.esqoo-text-field {
