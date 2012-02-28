@@ -4,7 +4,7 @@ class Rich_editor extends DBSQL {
 		$res=Rich_editor::getAll();
 		$ret=array();
 		foreach ($res as $item) { 
-			$ret[$item->rich_editor_id]=$item->Tag;
+			$ret[$item->id]=$item->Tag;
 		}
 		var_dump($ret);
 		return $ret;
