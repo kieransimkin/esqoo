@@ -141,7 +141,7 @@ esqoo_ui.prepare_dialog_html = function(d,data) {
 		d.parent().find('input[type=text]:first').focus();
 	}
 	d.find('form').submit(function() { 
-		esqoo_ui.send_dialog_ajax_request(d,$(this));
+		esqoo_ui.send_dialog_ajax_request($(this),d.find('form'));
 		return false;
 	});
 }
