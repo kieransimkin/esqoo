@@ -17,7 +17,7 @@ $(document).ready(function() {
 		$(this).tabs();
 	});
 	$('select').livequery(function() { 
-		$(this).selectmenu();
+		$(this).selectmenu({width: '50%'});
 	});
 	 $("#nav-one").supersubs({ 
             minWidth:    12,   // minimum width of sub-menus in em units 
