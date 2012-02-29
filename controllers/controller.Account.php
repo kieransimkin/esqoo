@@ -45,7 +45,7 @@ class AccountController extends LockedController {
 			$this->showMessage(_('Account settings updated'));
 			return $this->formSuccess();
 		} else { 
-			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform),'30%','550',null,null,$invalid);
+			return $this->tabbedDialogFail(array(_('Theming')=>$themesettingsform,_('Editor')=>$editorsettingsform,_('Website')=>$websitesettingsform),'30%','550',null,null,$invalid);
 		}
 	}
 	public function passwordDialog($arg='',$input=array()) { 
