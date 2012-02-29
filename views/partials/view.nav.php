@@ -13,20 +13,20 @@ $nav=array(
 	_('Content') => array(
 		"submenu:"._('Media') => array(
 			"/content/upload" => _('Upload Media'),
-			"/content/manage-images" => _('Images'),
-			"/content/manage-video" => _('Video'),
-			"/content/manage-audio" => _('Audio')
+			"/content/manage-images" => _('My Images'),
+			"/content/manage-video" => _('My Video'),
+			"/content/manage-audio" => _('My Audio')
 		),
 		"submenu:"._('Posts and Pages') => array(
 			"/blog/post" => _('Write Blog Post'),
 			"/page/add-page" => _('Add Page'),
 			"/blog/manage-posts" => _('Blog Posts'),
-			"/page/manage-pages" => _('Pages'),
-			"/links" => _('Links')
+			"/page/manage-pages" => _('My Pages'),
+			"/links" => _('My Links')
 		)
 	),
 	_('Websites') => array(
-		"/website/manage-websites" => _('Manage'),
+		"/website/manage-websites" => _('My Websites'),
 		"/website/menus" => _('Menus')
 	),
 	_('Account') => array(
