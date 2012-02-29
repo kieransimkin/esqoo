@@ -11,7 +11,8 @@ body,html {
 .ui-selectmenu {
 	font-size: 0.9em !important;
 }
-input.esqoo-text-field {
+input.esqoo-text-field,
+textarea.esqoo-text-field {
 	font: inherit;
 	text-align: inherit;
 	outline: none;
