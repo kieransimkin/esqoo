@@ -161,4 +161,8 @@ class Controller {
 		$ret['url']=$url;
 		return $ret;
 	}
+	function formIFrame($url,$width=null,$minwidth=null,$height=null,$minheight=null) { 
+		echo '<iframe src="'.$url.'" width="100%"></iframe>';
+		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
+	}
 }

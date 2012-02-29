@@ -8,7 +8,7 @@ class WebsiteController extends LockedController {
 	function indexDialog ($arg='',$input=array()) { 
 		$form=$this->get_website_selector_form($input);
 		if ($form->validate()) { 
-			return $this->formTargetBlank('http://'.$this->getwebsiteAPI($arg,$input)->ServerName);
+			return $this->formIFrame('http://'.$this->getwebsiteAPI($arg,$input)->ServerName);
 		} else { 
 			return $this->formFail($form,'35%','550');
 		}

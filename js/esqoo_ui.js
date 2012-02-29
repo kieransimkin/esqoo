@@ -104,6 +104,7 @@ esqoo_ui.update_dialog_html = function(d,data) {
 		$(d).dialog("close");
 	} else if (data.rettype==='targetblank') { 
 		$(d).dialog("close");
+		// this gets blocked by popup blockers :(
 		window.open(data.url,'_blank');
 	} else { 
 		alert('Invalid return type');
