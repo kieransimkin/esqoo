@@ -155,4 +155,10 @@ class Controller {
 		}
 		return $ret;
 	}
+	function formTargetBlank($url) { 
+		$ret=array();
+		$ret['rettype']='targetblank';
+		$ret['url']=$url;
+		return $ret;
+	}
 }
