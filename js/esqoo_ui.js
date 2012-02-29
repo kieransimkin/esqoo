@@ -102,6 +102,9 @@ esqoo_ui.update_dialog_html = function(d,data) {
 		esqoo_ui.prepare_dialog_html(d,data);
 	} else if (data.rettype==='success') { 
 		$(d).dialog("close");
+	} else if (data.rettype==='targetblank') { 
+		$(d).dialog("close");
+		window.open(data.url,'_blank');
 	} else { 
 		alert('Invalid return type');
 	}
