@@ -3,5 +3,5 @@ $this->header(_('Write Blog Post'));
 ?>
 
 <?php
-$this->footer();?
+$this->footer();
 ?>
