@@ -10,7 +10,7 @@ $(document).ready(function() {
 		}
 		$(this).button({icons: {primary: primary, secondary: secondary}});
 	});
-	$('input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], input[type=search], input[type=tel]').livequery(function() { 
+	$('input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], input[type=search], input[type=tel] textarea').livequery(function() { 
 		$(this).button().addClass('esqoo-text-field');
 	});
 	$('section.esqoo-dialog-tabs').livequery(function() { 
