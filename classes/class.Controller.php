@@ -162,7 +162,7 @@ class Controller {
 		return $ret;
 	}
 	function formIFrame($url,$width=null,$minwidth=null,$height=null,$minheight=null) { 
-		echo '<iframe src="'.$url.'" width="100%"></iframe>';
+		echo '<a href="'.$url.'" target="_blank">Open in new window</a><br /><iframe class="form-iframe" src="'.$url.'"></iframe>';
 		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
 	}
 }
