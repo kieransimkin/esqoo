@@ -209,6 +209,7 @@ create table `website` (
 	index (ServerName),
 	unique key (ServerName,DeleteDate)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into website set user_id=1, ServerName='user.esqoo.local', Name='Default User Website',description='Description';
 drop table if exists `post`;
 create table `post` (
 	id int not null auto_increment,
