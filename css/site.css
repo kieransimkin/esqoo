@@ -83,7 +83,7 @@ div.ui-dialog div.ui-dialog-content div.error input {
 div.ui-dialog div.ui-dialog-content iframe.form-iframe { 
 	width: 100%;
 	height: 88%;
-	border: inherit;
+	border: 1px solid black; 
 }
 section.login-box div#login-errors { 
 	color: #FF0000;
@@ -93,6 +93,7 @@ input.ui-button,
 textarea.ui-button,
 a.ui-selectmenu,
 ul.ui-selectmenu-menu-dropdown,
+div.ui-dialog div.ui-dialog-content iframe.form-iframe,
 section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
