@@ -15,13 +15,13 @@ create table `user` (
 	daytime__ui_theme_id int not null default 1,
 	nighttime__ui_theme_id int not null default 1,
 	rich_editor_id int not null default 1,
-	createdate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
-	modifydate datetime default null,
-	deletedate datetime default null,
+	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+	ModifyDate datetime default null,
+	DeleteDate datetime default null,
 	primary key (id),
 	unique key (Username),
 	index (country_id),
-	index (deletedate),
+	index (DeleteDate),
 	index (daytime__ui_theme_id),
 	index (nighttime__ui_theme_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -77,7 +77,7 @@ create table `user_challenge` (
 	id int not null auto_increment,
 	user_id int not null,
 	challenge varchar(64) NOT NULL,
-	createdate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	primary key (id),
 	index (user_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -86,12 +86,12 @@ create table `user_token` (
 	id int not null auto_increment,
 	user_id int not null,
 	token varchar(255) not null,
-	createdate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
-	deletedate datetime default null,
+	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
+	DeleteDate datetime default null,
 	expires enum('false','true') not null default 'false',
 	primary key (id),
 	index (user_id),
-	index (deletedate,user_id,token)
+	index (DeleteDate,user_id,token)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 drop table if exists `group`;
 create table `group` (
@@ -115,8 +115,8 @@ CREATE TABLE `country` (
   `Name` varchar(256) NOT NULL,
   `Alpha2` char(2) NOT NULL,
   `Alpha3` char(3) NOT NULL,
-  `createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modifydate` datetime DEFAULT NULL,
+  `CreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ModifyDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Alpha2` (`Alpha2`),
   UNIQUE KEY `Alpha3` (`Alpha3`)
@@ -193,4 +193,38 @@ UNLOCK TABLES;
    update country set Currency='KRW' where Alpha3='KOR';
    update country set Currency='NZD' where Alpha3='NZL';
    update country set Currency='RUB' where Alpha3='RUS';
-
+drop table if exists `website`;
+create table `website` (
+	id int not null auto_increment,
+	user_id int not null,
+	ServerName varchar(256) NOT NULL,
+	`Name` varchar(512) NOT NULL,
+	description text not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (user_id,DeleteDate),
+	index (DeleteDate),
+	index (ServerName),
+	unique key (ServerName,DeleteDate)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `post`;
+create table `post` (
+	id int not null auto_increment,
+	GUID varchar(255) not null default '',
+	website_id int not null,
+	Title text not null,
+	Content longtext not null,
+	parent__post_id int default null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	PublishDate datetime default null,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (website_id,DeleteDate),
+	index (website_id,DeleteDate,PublishDate),
+	index (website_id),
+	index (guid),
+	index (parent__post_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
