@@ -92,6 +92,3 @@ ul#nav-one li a {
 ul#nav-one div.nav-float-right { 
 	float: right;
 }
-ul#nav-one li nav.nav-submenu { 
-	position: relative;
-}
