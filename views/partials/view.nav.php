@@ -21,7 +21,7 @@ $nav=array(
 			"/blog/post" => _('Write Blog Post'),
 			"/page/add-page" => _('Add Page'),
 			"/blog/manage-posts" => _('Blog Posts'),
-			"/page/manage-pages" => _('Pages')
+			"/page/manage-pages" => _('Pages'),
 			"/links" => _('Links')
 		)
 	),
