@@ -10,7 +10,7 @@ class WebsiteController extends LockedController {
 		if ($form->validate()) { 
 			return $this->formIFrame('http://'.$this->getwebsiteAPI($arg,$input)->ServerName);
 		} else { 
-			return $this->formFail($form,'35%','550');
+			return $this->formFail($form,'35%','550','50%','400');
 		}
 	}
 	/*********************
