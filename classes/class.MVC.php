@@ -20,6 +20,9 @@ class MVC {
 				$arg=$bits[2];
 			}
 		}
+		if (strlen($action)<1) { 
+			$action='index';
+		}
 		Site::loadAndConnect();
 		$controller_class = ucwords($controller).'Controller';
 		if ($api) { 
