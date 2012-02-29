@@ -26,7 +26,7 @@ $nav=array(
 		)
 	),
 	_('Websites') => array(
-		"/website/manage-websites" => _('Manage')
+		"/website/manage-websites" => _('Manage'),
 		"/website/menus" => _('Menus')
 	),
 	_('Account') => array(
