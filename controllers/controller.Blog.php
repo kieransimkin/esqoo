@@ -6,7 +6,18 @@ class BlogController extends LockedController {
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function postUI($arg='',$input=array()) { 
-		$this->view->form=0;
+		if (strlen($arg)>0) { 
+			try {
+				$post=Post::get($arg,'id','row',true);
+			} catch (DBSQ_Exception $e) { 
+				// Post not found
+				$post=null;
+			}
+		} else {
+			$post=null;
+		}
+		$form=$this->get_post_form($input,$post);
+		$this->view->form=$form;
 	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
