@@ -45,7 +45,7 @@ function render_nav_element($url,$item,$user) {
 	if (strpos($url,'submenu:')===0) { 
 		list($submenu,$title)=explode(':',$url,2);
 		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"return false;\">$title <div class=\"nav-float-right\">&raquo;</div></a>";
-		$content .= "<ul class=\"ui-state-default ui-corner-all\">";
+		$content .= "<nav class=\"nav-submenu\"><ul class=\"ui-state-default ui-corner-all\">";
 		$count=0;
 		foreach($item as $turl => $titem) {
 			$thiscontent=render_nav_element($turl,$titem,$user);	
@@ -54,7 +54,7 @@ function render_nav_element($url,$item,$user) {
 				++$count;
 			}
 		}
-		$content .= "</ul></li>";
+		$content .= "</ul></nav></li>";
 		if ($count==0) { 
 			return '';
 		}
