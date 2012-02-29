@@ -10,6 +10,23 @@ $nav=array(
 	_('File') => array(
 		"/file/upload" => _('Upload')
 	),
+	_('Content') => array(
+		"submenu:"._('Media') => array(
+			"popup:"._('Quick Media Upload').":save,cancel,singleton:/content/quick-upload" => _('Quick Upload'),
+			"/content/manage-images" => _('Images'),
+			"/content/manage-video" => _('Video'),
+			"/content/manage-audio" => _('Audio')
+		),
+		"submenu:"._('Posts and Pages') => array(
+			"popup:"._('Quick Post').":save,cancel,singleton:/blog/quick-post" => _('Quick Post'),
+			"/page/add-page" => _('Add Page'),
+			"/blog/manage-posts" => _('Blog Posts'),
+			"/page/manage-pages" => _('Pages')
+		)
+	),
+	_('Websites') => array(
+		"/website/manage-websites" => _('Manage')
+	),
 	_('Account') => array(
 		"popup:"._('Account Details').":save,cancel,singleton:/account/details" => _('Account Details'),
 		"popup:"._('Account Settings').":save,cancel,singleton:/account/settings" => _('Settings'),
