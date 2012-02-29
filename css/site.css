@@ -49,7 +49,8 @@ div.ui-dialog div.ui-dialog-content label {
 	float: left;
 	margin-left: 1.5%;
 }
-div.ui-dialog div.ui-dialog-content input.esqoo-text-field { 
+div.ui-dialog div.ui-dialog-content input.esqoo-text-field,
+div.ui-dialog div.ui-dialog-content textarea.esqoo-text-field { 
 	margin-bottom: 0.8em;
 	width: 56%;
 	padding: 0.3em 1em;
