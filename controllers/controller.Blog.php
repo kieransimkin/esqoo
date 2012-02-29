@@ -19,6 +19,20 @@ class BlogController extends LockedController {
 		$form=$this->get_post_form($input,$post);
 		$this->view->form=$form;
 	}
+	/*************************
+	 *  ╺┳┓╻┏━┓╻  ┏━┓┏━╸┏━┓  *
+	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
+	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
+	 *************************/
+	function quickpostDialog($arg='',$input=array()) { 
+		$form=$this->get_post_form($input,null);
+		if ($form->validate()) { 
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'30%','550');
+		}
+
+	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
