@@ -2,8 +2,8 @@
 $nav=array(
 	'&lambda;' => array(
 		"/" => _('Dashboard'),
-		"/file/upload" => _('Upload Media'),
-		"/blog/post" => _('Write Blog Post'),
+		"popup:"._('Quick Media Upload').":save,cancel,singleton:/content/quick-upload" => _('Quick Upload'),
+		"popup:"._('Quick Post').":save,cancel,singleton:/blog/quick-post" => _('Quick Post'),
 		"/website" => _('Visit My Website'),
 		"/lightswitch/flick" => ('Flick Light Switch')
 	),
@@ -12,13 +12,13 @@ $nav=array(
 	),
 	_('Content') => array(
 		"submenu:"._('Media') => array(
-			"popup:"._('Quick Media Upload').":save,cancel,singleton:/content/quick-upload" => _('Quick Upload'),
+			"/content/upload" => _('Upload Media'),
 			"/content/manage-images" => _('Images'),
 			"/content/manage-video" => _('Video'),
 			"/content/manage-audio" => _('Audio')
 		),
 		"submenu:"._('Posts and Pages') => array(
-			"popup:"._('Quick Post').":save,cancel,singleton:/blog/quick-post" => _('Quick Post'),
+			"/blog/post" => _('Write Blog Post'),
 			"/page/add-page" => _('Add Page'),
 			"/blog/manage-posts" => _('Blog Posts'),
 			"/page/manage-pages" => _('Pages')
