@@ -15,6 +15,7 @@ create table `user` (
 	daytime__ui_theme_id int not null default 1,
 	nighttime__ui_theme_id int not null default 1,
 	rich_editor_id int not null default 1,
+	default__website_id int default null,
 	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	ModifyDate datetime default null,
 	DeleteDate datetime default null,
@@ -23,7 +24,8 @@ create table `user` (
 	index (country_id),
 	index (DeleteDate),
 	index (daytime__ui_theme_id),
-	index (nighttime__ui_theme_id)
+	index (nighttime__ui_theme_id),
+	index (default__website_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 insert into user set Username='slinq',Email='kieran@slinq.com',Password='testpass',FirstName='Kieran',LastName='Simkin';
 drop table if exists `ui_theme`;

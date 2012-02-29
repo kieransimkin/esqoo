@@ -29,12 +29,16 @@ class AccountController extends LockedController {
 		$settings=$this->getsettingsAPI($arg,$input);
 		$themesettingsform=$this->get_theme_settings_form($input,$settings);
 		$editorsettingsform=$this->get_editor_settings_form($input,$settings);
+		$websitesettingsform=$this->get_website_settings_form($input,$settings);
 		$invalid=false;
 		if (!$themesettingsform->validate()) {
 			$invalid=$themesettingsform->getId();
 		}
 		if (!$editorsettingsform->validate()) { 
 			$invalid=$editorsettingsform->getId();
+		}
+		if (!$websitesettingsform->validate()) { 
+			$invalid=$websitesettingsform->getId();
 		}
 		if (!$invalid) {
 			$this->updatesettingsAPI($arg,$input);
@@ -70,6 +74,12 @@ class AccountController extends LockedController {
 		$form=new Form('editor_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
 		$form->addElement("select","rich_editor_id",array(),array('options'=>Rich_editor::get_menu()))->setLabel(_('Rich Editor'))->addRule('required',_('Required'));
+		return $form;
+	}
+	private function get_website_settings_form($input,$settings,$forcesubmit=false) { 
+		$form=new Form('website_settings');
+		$form->setAPIDataSources($input,$settings,$forcesubmit);
+		$form->addElement("select","default__website_id",array(),array('options'=>Website::get_menu($this->user->id)))->setLabel(_('Default Website'))->addRule('required',_('Required'));
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
@@ -118,6 +128,10 @@ class AccountController extends LockedController {
 		if (!$form->validate()) { 
 			$this->api_form_validation_error($form);
 		}
+		$form=$this->get_website_settings_form($input,$settings,true);
+		if (!$form->validate()) { 
+			$this->api_form_validation_error($form);
+		}
 		if ($this->api_validation_success()) { 
 			$settings->setFromFilteredArray($input,$this->get_settings_fields());
 			$settings->save();
@@ -154,6 +168,6 @@ class AccountController extends LockedController {
 		return array('FirstName','LastName','Email','Address1','Address2','Town','County','country_id');
 	}
 	private function get_settings_fields() { 
-		return array('rich_editor_id','daytime__ui_theme_id','nighttime__ui_theme_id');
+		return array('rich_editor_id','daytime__ui_theme_id','nighttime__ui_theme_id','default__website_id');
 	}
 }
