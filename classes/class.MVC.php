@@ -60,7 +60,8 @@ class MVC {
 				'minwidth'=>@$res['minwidth'],
 				'height'=>@$res['height'],
 				'minheight'=>@$res['minheight'],
-				'defaulttab'=>@$ret['defaulttab']));
+				'defaulttab'=>@$ret['defaulttab'],
+				'url'=>@$ret['url']));
 			die;
 		} else if (!$api) { 
 			header('X-UA-Compatible: IE=edge,chrome=1');
