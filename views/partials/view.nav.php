@@ -21,14 +21,14 @@ $nav=array(
 			"/page/manage-pages" => _('My Pages'),
 			"/links/" => _('My Links')
 		),
-	),
-	_('Websites') => array(
-		"/website/manage-websites" => _('My Websites'),
-		"/website/menus" => _('Menus'),
 		"submenu:"._('Keyword Tags') => array(
 			"/tag/add" => _('Add Keyword'),
 			"/tag/" => _('My Keywords')
 		)
+	),
+	_('Websites') => array(
+		"/website/manage-websites" => _('My Websites'),
+		"/website/menus" => _('Menus')
 	),
 	_('Account') => array(
 		"popup:"._('Account Details').":save,cancel,singleton:/account/details" => _('Account Details'),
