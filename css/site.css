@@ -83,6 +83,7 @@ div.ui-dialog div.ui-dialog-content div.error input {
 div.ui-dialog div.ui-dialog-content iframe.form-iframe { 
 	width: 100%;
 	height: 88%;
+	border: inherit;
 }
 section.login-box div#login-errors { 
 	color: #FF0000;
