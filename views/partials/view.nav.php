@@ -22,7 +22,7 @@ $nav=array(
 			"/links/" => _('My Links')
 		),
 		"submenu:"._('Keyword Tags') => array(
-			"/tag/add" => _('Add Keyword'),
+			"popup:"._('Add Keyword').":save,cancel,singleton:/tag/add" => _('Add Keyword'),
 			"/tag/" => _('My Keywords')
 		)
 	),
