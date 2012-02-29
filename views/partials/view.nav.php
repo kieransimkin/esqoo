@@ -7,9 +7,6 @@ $nav=array(
 		"targetblank:/website" => _('Visit My Website'),
 		"/lightswitch/flick" => ('Flick Light Switch')
 	),
-	_('File') => array(
-		"/file/upload" => _('Upload')
-	),
 	_('Content') => array(
 		"submenu:"._('Media') => array(
 			"/content/upload" => _('Upload Media'),
@@ -34,13 +31,6 @@ $nav=array(
 		"popup:"._('Account Settings').":save,cancel,singleton:/account/settings" => _('Settings'),
 		"popup:"._('Change Password').":save,cancel,singleton:/account/password" => _('Change Password'),
 		"/account/logout" => _('Logout')
-	),
-	_('Help') => array(
-		"/help/about" => _('About Esqoo'),
-		"submenu:"._('Contents') => array(
-			"/help/item1" => _('Item 1'),
-			"/help/item2" => _('Item 2')
-		)
 	)
 );?>
 <nav>
