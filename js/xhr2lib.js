@@ -416,6 +416,9 @@
 
     */
     exp.isTypeOf = function (obj, type) {
+	if (obj===null) {
+		return false;
+	}
 
       var cts = obj.constructor.toString().toLowerCase();
       type = type.replace(/^\s*|\s*$/, "").toLowerCase();

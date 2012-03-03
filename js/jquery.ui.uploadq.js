@@ -115,7 +115,30 @@ $.widget( "esqoo.uploadq", {
 
 				xhr.open("POST", me.options.url);
 				xhr.send(formData);
-				*/
+$xhr.ajax({
+
+      url: me.options.url
+
+    , data: {Name: item.file.name, Size: item.file.size, ResponseFormat: 'json', Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type}
+
+    , type: "post"
+
+    , success: function (d) {
+        console.log(d);
+					item.asset_id=d.Asset.AssetID;
+					if (d.RemainingChunkCount>0) {
+						console.log('doing more'); 
+						me._upload_file_chunk(item,d.RemainingChunks[0]);
+					} else { 
+						console.log('removing');
+						item.li.remove();
+						me._run_queue();
+					}
+      }
+
+    
+
+  });*/
 				$.post(me.options.url,{Name: item.file.name, Size: item.file.size, ResponseFormat: 'json', Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type}, function(data) { 
 					var d=$.parseJSON(data);
 					console.log(d);
@@ -129,6 +152,7 @@ $.widget( "esqoo.uploadq", {
 						me._run_queue();
 					}
 				});
+*/
 			} else { 
 				console.log('got here!!!!!');
 			}
