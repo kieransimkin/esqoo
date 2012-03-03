@@ -122,7 +122,7 @@ class ContentController extends LockedController {
 	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
 	 ****************************/
 	private function get_asset_fields() { 
-		return array('AssetID','Size','ChunkSize','MimeType');
+		return array('id','Size','ChunkSize','MimeType');
 	}
 
 }
