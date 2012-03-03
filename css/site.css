@@ -92,13 +92,29 @@ button.ui-button,
 input.ui-button,
 textarea.ui-button,
 div.ui-button,
+div.esqoo-dropzone,
 a.ui-selectmenu,
 ul.ui-selectmenu-menu-dropdown,
+ul.esqoo-uploadq-queue,
 div.ui-dialog div.ui-dialog-content iframe.form-iframe,
 section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+div.esqoo-dropzone { 
+	padding: 1em;
+}
+div.esqoo-dropzone-over { 
+	background-color: red !important;
+}
+span.esqoo-dropzone-label { 
+	border-style: dashed;
+	border-width: 1px;
+	border-color: inherit;
+	padding: 0.5em;
+	width: auto;
+	display: block;
 }
 a.ui-selectmenu { 
 	font-weight: normal !important;
@@ -116,4 +132,3 @@ span.esqoo-ui-dialog-button-icon {
 	margin-top: 0.6em;
 	margin-left: 1em;
 }
-
