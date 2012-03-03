@@ -6,8 +6,10 @@ class DBSQL extends DBSQ {
 		$this->DeleteDate=date("c");
 		$this->save();
 	}
-	function save() { 
-		$this->ModifyDate=date("c");
+	function save($nomodifydate=false) { 
+		if (!$nomodifydate) { 
+			$this->ModifyDate=date("c");
+		}
 		parent::save();
 	}
 	function set_visible_api_fields($fields=array()) { 

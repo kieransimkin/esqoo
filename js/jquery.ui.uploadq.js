@@ -85,7 +85,7 @@ $.widget( "esqoo.uploadq", {
 		item.reader= new FileReader();
 		item.reader.onloadend = function(evt) {
 			if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-				$.post(me.options.url,{Name: item.file.name, Size: item.file.size, HashType: 'SHA256', ResponseFormat: 'json', ChunkHash: Sha256.hash(evt.target.result), Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result}, function(data) { 
+				$.post(me.options.url,{Name: item.file.name, Size: item.file.size, HashType: 'SHA256', ResponseFormat: 'json', ChunkHash: Sha256.hash(evt.target.result), Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type}, function(data) { 
 					var d=$.parseJSON(data);
 					console.log(d);
 				});

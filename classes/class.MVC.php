@@ -78,6 +78,7 @@ class MVC {
 			if (strlen($_REQUEST['ResponseFormat'])<1) { 
 				$_REQUEST['ResponseFormat']='xml';
 			}
+			$res=$new_controller->api_expand_object_response($res);
 			$new_controller->api_response($res,$_REQUEST['ResponseFormat']);
 		}
 	}

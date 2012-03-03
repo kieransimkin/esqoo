@@ -66,6 +66,9 @@ class ContentController extends LockedController {
 		if ($input['AssetID']!=='null' && $input['AssetID']!=(int)$input['AssetID']) { 
 			$this->api_error(3,"If AssetID is specified, it must be an integer or 'null'");
 		}
+		if (!isset($input['MimeType']) || strlen($input['MimeType'])<1) { 
+			$this->api_error(8,"MimeType must be specified");
+		}
 		if ($this->api_validation_success()) { 
 			if (!isset($input['Name']) || strlen($input['Name'])<1) { 
 				$input['Name']='Untitled';
@@ -73,6 +76,42 @@ class ContentController extends LockedController {
 			if (!isset($input['ChunkSize']) || $input['ChunkSize']==='null') { 
 				$input['ChunkSize']=$input['Size'];
 			}
+			$asset=null;
+			$chunkdone=false;
+			if ($input['AssetID']==='null') { 
+				if (($asset=Asset::searchPartiallyUploaded($input['ChunkHash'],$input['HashType'],$input['Name'],$this->user->id,$input['Data']))) {  
+					$chunkdone=true;
+				} else { 
+					$asset=Asset::get();
+				}
+			} else { 
+				try { 
+					$asset=Asset::get($input['AssetID']);
+					if ($asset->user_id!=$this->user->id) { 
+						$this->api_error(5,"AssetID not found");
+					}
+				} catch (DBSQ_Exception $e) { 
+					$this->api_error(5,"AssetID not found");
+					return;
+				}
+			}
+			$asset->Name=$input['Name'];
+			$asset->Size=$input['Size'];
+			$asset->ChunkSize=$input['ChunkSize'];
+			$asset->user_id=$this->user->id;
+			$asset->MimeType=$input['MimeType'];
+			$asset->save();
+			if (!$chunkdone) { 
+				$chunk=Asset_chunk::get();
+				$chunk->asset_id=$asset->id;
+				$chunk->Chunk=$input['Chunk'];
+				$chunk->ChunkSize=$input['ChunkSize'];
+				$chunk->HashType=$input['HashType'];
+				$chunk->ChunkHash=$input['ChunkHash'];
+				$chunk->Data=$input['Data'];
+				$chunk->save();
+			}
+			return array('Asset'=>$asset,'RemainingChunks'=>$asset->getRemainingChunks());
 		}
 	}
 }

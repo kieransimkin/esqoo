@@ -48,6 +48,17 @@ class Controller {
 				die;
 		}
 	}
+	function api_expand_object_response($res) { 
+		foreach ($res as $key => &$val) { 
+			if ($val instanceof DBSQL) { 
+				$val=(string)$val;
+			}
+			if (is_array($val)) { 
+				$val=$this->api_expand_object_response($val);
+			}
+		}	
+		return $res;
+	}
 	function autoloadJS() {
 		$action = $this->action;
 		if(strpos($action,'..')!== false || strpos($action,'/')!==false) {
