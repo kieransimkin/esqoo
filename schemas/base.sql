@@ -231,3 +231,48 @@ create table `post` (
 	index (guid),
 	index (parent__post_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists asset;
+create table asset (
+	id int not null auto_increment,
+	user_id int not null,
+	album_id int default null,
+	GUID varchar(255) not null default '',
+	`Size` bigint not null,
+	Name varchar(512) not null,
+	ChunkSize bigint not null,
+	MimeType varchar(512) not null,
+	HashType varchar(10) default null,
+	AssetHash varchar(255) default null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	UploadCompleteDate datetime default null,
+	PublishDate datetime default null,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (user_id,DeleteDate),
+	index (user_id,DeleteDate,PublishDate),
+	index (user_id,UploadCompleteDate),
+	index (user_id),
+	index (album_id),
+	index (album_id,DeleteDate),
+	index (album_id,DeleteDate,PublishDate),
+	index (guid),
+	index (`user_id`,`Size`,`Name`(100),`UploadCompleteDate`,`ChunkSize`,`MimeType`(30)),
+	unique key (`Name`(100),`DeleteDate`,`album_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists asset_chunk;
+create table asset_chunk (
+	id int not null auto_increment,
+	asset_id int not null,
+	Chunk int not null,
+	ChunkSize int not null,
+	HashType varchar(10) not null,
+	ChunkHash varchar(255) not null,
+	Data longblob not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	primary key (id),
+	index (asset_id),
+	index (Chunk,HashType,ChunkHash),
+	index (HashType,ChunkHash,Chunk,asset_id),
+	unique key (`asset_id`,`Chunk`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
