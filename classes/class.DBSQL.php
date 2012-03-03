@@ -25,7 +25,15 @@ class DBSQL extends DBSQ {
 		$ret=array();
 		foreach ($this->_visiblefields as $field) { 
 			if ($field==='id') { 
-				$ret[self::_getTableName().'ID']=$ldata['id'];
+				$varname=ucfirst(self::_getTableName());
+				if (strpos($varname,'_')) { 
+					$bits=explode('_',$varname);
+					foreach ($bits as &$bit) { 
+						$bit=ucfirst($bit);
+					}
+					$varname=implode('',$bits);
+				}
+				$ret[$varname.'ID']=$ldata['id'];
 			} else if (substr($field,-3)=='_id') { 
 				$key=substr($field,0,strlen($field)-3);
 				$bits=explode('__',$key,2);
