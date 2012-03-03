@@ -3,7 +3,7 @@ $.widget( "esqoo.uploadq", {
 	// These options will be used as defaults
 	options: {
 		url: '/content/upload/api',
-		chunksize: 16384 // 16kB in bytes
+		chunksize: 524288  // 512kB in bytes
  	},
 	queue: [],
 	queue_running: false,
@@ -79,24 +79,82 @@ $.widget( "esqoo.uploadq", {
 		this.queue_running=true;
 		this._process_queue_item(this.queue.shift());
 	},
-	_upload_file_chunk: function(item,i) { 
-		// If we use onloadend, we need to check the readyState.
+	_reader_chunk_load: function(item,i) { 
 		var me = this;
-		item.reader= new FileReader();
-		item.reader.onloadend = function(evt) {
+		return function (evt) { 
 			if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-				$.post(me.options.url,{Name: item.file.name, Size: item.file.size, HashType: 'SHA256', ResponseFormat: 'json', ChunkHash: Sha256.hash(evt.target.result), Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type}, function(data) { 
+				/*	
+				console.log({Name: item.file.name, Size: item.file.size, ResponseFormat: 'json', Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type});
+				var formData = new FormData();
+				formData.append("Data", evt.target.result);
+				formData.append("Name", item.file.name);
+				formData.append("Size", item.file.size);
+				formData.append("ResponseFormat", 'json');
+				formData.append("Chunk", i);
+				formData.append("ChunkSize", me.options.chunksize);
+				if (typeof(item.asset_id)!='undefined') { 
+					formData.append("AssetID",item.asset_id);
+				} else { 
+					formData.append("AssetID",'null');
+				}
+				formData.append("MimeType",item.file.type);
+				var xhr = new XMLHttpRequest();
+				xhr.addEventListener("load", function(evt) { 
+					var d=$.parseJSON(xhr.responseText);
+					console.log(d);
+					item.asset_id=d.Asset.AssetID;
+					if (d.RemainingChunkCount>0) {
+						console.log('doing more'); 
+						me._upload_file_chunk(item,d.RemainingChunks[0]);
+					} else { 
+						console.log('removing');
+						item.li.remove();
+						me._run_queue();
+					}
+				}, false);
+
+				xhr.open("POST", me.options.url);
+				xhr.send(formData);
+				*/
+				$.post(me.options.url,{Name: item.file.name, Size: item.file.size, ResponseFormat: 'json', Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type}, function(data) { 
 					var d=$.parseJSON(data);
 					console.log(d);
+					item.asset_id=d.Asset.AssetID;
+					if (d.RemainingChunkCount>0) {
+						console.log('doing more'); 
+						me._upload_file_chunk(item,d.RemainingChunks[0]);
+					} else { 
+						console.log('removing');
+						item.li.remove();
+						me._run_queue();
+					}
 				});
-				/*
-				document.getElementById('byte_content').textContent = evt.target.result;
-				document.getElementById('byte_range').textContent = 
-				    ['Read bytes: ', start + 1, ' - ', stop + 1,
-				     ' of ', file.size, ' byte file'].join('');
-				*/
+			} else { 
+				console.log('got here!!!!!');
 			}
-		};
+		}
+
+	},
+	_reader_chunk_abort: function(item,i) { 
+		return function (e) { 
+			console.log('abort');
+			console.log(e);
+		}
+	},
+	_reader_chunk_error: function(item,i) { 
+		return function (e) { 
+			console.log('error');
+			console.log(e);
+		}
+	},
+	_upload_file_chunk: function(item,i) { 
+		console.log('doing chunk: '+i);
+		// If we use onloadend, we need to check the readyState.
+		var me = this;
+		reader= new FileReader();
+		reader.addEventListener('loadend',this._reader_chunk_load(item,i),false);
+		reader.addEventListener('abort',this._reader_chunk_abort(item,i),false);
+		reader.addEventListener('error',this._reader_chunk_error(item,i),false);
 		var start=i*this.options.chunksize;
 		var stop=i*this.options.chunksize+this.options.chunksize;
 		if (typeof(item.file.webkitSlice)!='undefined') {
@@ -106,7 +164,8 @@ $.widget( "esqoo.uploadq", {
 		} else if (typeof(item.file.slize)!='undefined') { 
 			var blob = item.file.slice(start, stop + 1);
 		}
-		item.reader.readAsBinaryString(blob);
+		console.log('start: '+start+' stop: '+stop);
+		reader.readAsBinaryString(blob);
 	},
 	_process_queue_item: function(item) { 
 		this.queue_item_running=item;

@@ -44,21 +44,8 @@ class ContentController extends LockedController {
 		if (!isset($input['Size']) || $input['Size']!=(int)$input['Size']) { 
 			$this->api_error(1,"Size field must be specified and must be an integer");
 		}
-		if (strlen(@$input['HashType'])<1) { 
-			$this->api_error(6,"HashType field is required");
-		}
-		if (	@$input['HashType']!='SHA1' && 
-			@$input['HashType']!='SHA256' && 
-			@$input['HashType']!='SHA384' && 
-			@$input['HashType']!='SHA512' && 
-			@$input['HashType']!='MD5') { 
-				$this->api_error(7,"HashType must be either 'SHA1', 'SHA256', 'SHA384', 'SHA512' or 'MD5'");
-		}
 		if (!isset($input['Chunk'])) { 
 			$this->api_error(2,"Chunk field is required");	
-		}
-		if (!isset($input['ChunkHash']) || strlen($input['ChunkHash'])<1) { 
-			$this->api_error(4,"ChunkHash field is required");	
 		}
 		if (!isset($input['AssetID'])) { 
 			$input['AssetID']='null';
@@ -78,6 +65,8 @@ class ContentController extends LockedController {
 			}
 			$asset=null;
 			$chunkdone=false;
+			$input['ChunkHash']=hash('sha256',$input['Data']);
+			$input['HashType']='SHA256';
 			if ($input['AssetID']==='null') { 
 				if (($asset=Asset::searchPartiallyUploaded($input['ChunkHash'],$input['HashType'],$input['Name'],$this->user->id,$input['Data']))) {  
 					$chunkdone=true;
