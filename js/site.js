@@ -19,6 +19,9 @@ $(document).ready(function() {
 	$('section.esqoo-dialog-tabs').livequery(function() { 
 		$(this).tabs();
 	});
+	$('input.upload-form[type=file]').livequery(function() { 
+		$(this).uploadq();
+	});
 	$('select').livequery(function() { 
 		$(this).selectmenu({width: '200'});
 	});

@@ -2,7 +2,7 @@
 $nav=array(
 	'&lambda;' => array(
 		"/" => _('Dashboard'),
-		"popup:"._('Quick Media Upload').":save,cancel,singleton:/content/quick-upload" => _('Quick Upload'),
+		"popup:"._('Quick Media Upload').":singleton:/content/quick-upload" => _('Quick Upload'),
 		"popup:"._('Quick Post').":save,cancel,singleton:/blog/quick-post" => _('Quick Post'),
 		"popup:"._('Visit My Website').":cancel,continue,singleton:/website" => _('Visit My Website'),
 		"/lightswitch/flick" => ('Flick Light Switch')

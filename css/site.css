@@ -91,6 +91,7 @@ section.login-box div#login-errors {
 button.ui-button,
 input.ui-button,
 textarea.ui-button,
+div.ui-button,
 a.ui-selectmenu,
 ul.ui-selectmenu-menu-dropdown,
 div.ui-dialog div.ui-dialog-content iframe.form-iframe,
