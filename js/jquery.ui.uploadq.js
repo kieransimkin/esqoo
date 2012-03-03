@@ -2,11 +2,12 @@
 $.widget( "esqoo.uploadq", {
 	// These options will be used as defaults
 	options: {
-		chunksize: 16384, // 16kB in bytes
-		file_hash_threshold: 10485760 // 10mB in bytes
+		url: '/content/upload/api',
+		chunksize: 16384 // 16kB in bytes
  	},
 	queue: [],
 	queue_running: false,
+	queue_item_running: null,
 	_create: function() { 
 		this._do_html_setup();
 	},
@@ -70,7 +71,6 @@ $.widget( "esqoo.uploadq", {
 		if (!this.queue_running) { 
 			this._run_queue();
 		}
-		console.log(this.queue);
 	},
 	_run_queue: function() { 
 		if (this.queue.length<1) { 
@@ -79,23 +79,26 @@ $.widget( "esqoo.uploadq", {
 		this.queue_running=true;
 		this._process_queue_item(this.queue.shift());
 	},
-	_process_queue_item: function(item) { 
-		item.status_text.html('Handshaking');
-		item.reader= new FileReader();
+	_upload_file_chunk: function(item,i) { 
 		// If we use onloadend, we need to check the readyState.
+		var me = this;
+		item.reader= new FileReader();
 		item.reader.onloadend = function(evt) {
 			if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+				$.post(me.options.url,{Name: item.file.name, Size: item.file.size, HashType: 'SHA256', ResponseFormat: 'json', ChunkHash: Sha256.hash(evt.target.result), Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result}, function(data) { 
+					var d=$.parseJSON(data);
+					console.log(d);
+				});
 				/*
 				document.getElementById('byte_content').textContent = evt.target.result;
 				document.getElementById('byte_range').textContent = 
 				    ['Read bytes: ', start + 1, ' - ', stop + 1,
 				     ' of ', file.size, ' byte file'].join('');
 				*/
-				console.log(Sha256.hash(evt.target.result));
 			}
 		};
-		var start=0;
-		var end=1000;
+		var start=i*this.options.chunksize;
+		var stop=i*this.options.chunksize+this.options.chunksize;
 		if (typeof(item.file.webkitSlice)!='undefined') {
 			var blob = item.file.webkitSlice(start, stop + 1);
 		} else if (typeof(item.file.mozSlice)!='undefined') {
@@ -104,6 +107,13 @@ $.widget( "esqoo.uploadq", {
 			var blob = item.file.slice(start, stop + 1);
 		}
 		item.reader.readAsBinaryString(blob);
+	},
+	_process_queue_item: function(item) { 
+		this.queue_item_running=item;
+		item.status_text.html('Handshaking');
+		item.chunks=Math.ceil(item.file.size/this.options.chunksize);
+		item.asset_id=null;
+		this._upload_file_chunk(item,0);
 	},
 	_handleFiles: function(files) { 
 		var me = this;

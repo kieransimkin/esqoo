@@ -132,3 +132,9 @@ span.esqoo-ui-dialog-button-icon {
 	margin-top: 0.6em;
 	margin-left: 1em;
 }
+ul.esqoo-uploadq-queue { 
+	list-style-type: none;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 1em;
+}
