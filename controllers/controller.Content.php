@@ -101,6 +101,8 @@ class ContentController extends LockedController {
 			$asset->user_id=$this->user->id;
 			$asset->MimeType=$input['MimeType'];
 			$asset->save();
+			$asset->set_visible_api_fields($this->get_asset_fields());
+
 			if (!$chunkdone) { 
 				$chunk=Asset_chunk::get();
 				$chunk->asset_id=$asset->id;
@@ -114,4 +116,13 @@ class ContentController extends LockedController {
 			return array('Asset'=>$asset,'RemainingChunks'=>$asset->getRemainingChunks());
 		}
 	}
+	/****************************
+	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
+	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
+	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
+	 ****************************/
+	private function get_asset_fields() { 
+		return array('AssetID','Size','ChunkSize','MimeType');
+	}
+
 }

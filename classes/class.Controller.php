@@ -51,7 +51,7 @@ class Controller {
 	function api_expand_object_response($res) { 
 		foreach ($res as $key => &$val) { 
 			if ($val instanceof DBSQL) { 
-				$val=(string)$val;
+				$val=$val->getFilteredDataArray();
 			}
 			if (is_array($val)) { 
 				$val=$this->api_expand_object_response($val);

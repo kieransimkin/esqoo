@@ -20,4 +20,12 @@ class DBSQL extends DBSQ {
 		$this->_visiblefields=$fields;
 		return $this;
 	}
+	function getFilteredDataArray() { 
+		$ldata=$this->getDataArray();
+		$ret=array();
+		foreach ($this->_visiblefields as $field) { 
+			$ret[$field]=$ldata[$field];
+		}
+		return $ret;
+	}
 }
