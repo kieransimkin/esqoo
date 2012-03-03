@@ -89,6 +89,7 @@ class ContentController extends LockedController {
 					$asset=Asset::get($input['AssetID']);
 					if ($asset->user_id!=$this->user->id) { 
 						$this->api_error(5,"AssetID not found");
+						return;
 					}
 				} catch (DBSQ_Exception $e) { 
 					$this->api_error(5,"AssetID not found");
@@ -113,7 +114,13 @@ class ContentController extends LockedController {
 				$chunk->Data=$input['Data'];
 				$chunk->save();
 			}
-			return array('Asset'=>$asset,'RemainingChunks'=>$asset->getRemainingChunks());
+			$remainingchunks=$asset->getRemainingChunks();
+			shuffle($remainingchunks);
+			$remainingchunkcount=count($remainingchunks);
+			if ($remainingchunkcount>10) { 
+				array_splice($remainingchunks,10);
+			}
+			return array('Asset'=>$asset,'RemainingChunks'=>$remainingchunks,'RemainingChunkCount'=>$remainingchunkcount);
 		}
 	}
 	/****************************
