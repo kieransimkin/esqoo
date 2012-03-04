@@ -11,15 +11,15 @@ $nav=array(
 		"submenu:"._('Media') => array(
 			"/content/upload" => _('Upload Media'),
 			"/album/" => _('Albums'),
-			"/content/manage-images" => _('My Images'),
-			"/content/manage-video" => _('My Video'),
-			"/content/manage-audio" => _('My Audio')
+			"/picture/" => _('My Pictures'),
+			"/video/" => _('My Video'),
+			"/audio/" => _('My Audio')
 		),
 		"submenu:"._('Posts and Pages') => array(
 			"/blog/post" => _('Write Blog Post'),
-			"/page/add-page" => _('Add Page'),
-			"/blog/manage-posts" => _('Blog Posts'),
-			"/page/manage-pages" => _('My Pages'),
+			"/page/add" => _('Add Page'),
+			"/blog/" => _('Blog Posts'),
+			"/page/" => _('My Pages'),
 			"/link/" => _('My Links')
 		),
 		"submenu:"._('Keyword Tags') => array(
@@ -27,8 +27,8 @@ $nav=array(
 			"/tag/" => _('My Keywords')
 		)
 	),
-	_('Websites') => array(
-		"/website/manage-websites" => _('My Websites'),
+	_('Website') => array(
+		"/website/" => _('My Websites'),
 		"/website/menus" => _('Menus')
 	),
 	_('Account') => array(

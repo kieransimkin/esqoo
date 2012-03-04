@@ -1,5 +1,5 @@
 <?php
-class TagController extends LockedController { 
+class AudioController extends LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -8,4 +8,4 @@ class TagController extends LockedController {
 	function indexUI($arg='',$input=array()) { 
 
 	}
-}
+} 

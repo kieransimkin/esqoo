@@ -161,11 +161,12 @@ div.esqoo-uploadq-failed-div-header {
 	border-style: solid;
 	border-width: 1px;
 	border-color: inherit;
-	margin: 0.1em;
+	margin: 0.2em;
 	padding-left: 0.4em;
 	padding-top: 0.1em;
 	padding-bottom: 0.1em;
 }
 input.esqoo-uploadq-album { 
 	float: right;
+	margin-right: 0px;
 }
