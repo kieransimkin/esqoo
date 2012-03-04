@@ -3,7 +3,7 @@ $.widget( "esqoo.uploadq", {
 	// These options will be used as defaults
 	options: {
 		url: '/content/upload/api',
-		chunksize: 524288  // 512kB in bytes
+		chunksize: 262144  // 512kB in bytes
  	},
 	queue: [],
 	queue_running: false,
@@ -79,86 +79,6 @@ $.widget( "esqoo.uploadq", {
 		this.queue_running=true;
 		this._process_queue_item(this.queue.shift());
 	},
-	_reader_chunk_load: function(item,i) { 
-		var me = this;
-		return function (evt) { 
-			if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-				/*	
-				console.log({Name: item.file.name, Size: item.file.size, ResponseFormat: 'json', Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type});
-				var formData = new FormData();
-				formData.append("Data", evt.target.result);
-				formData.append("Name", item.file.name);
-				formData.append("Size", item.file.size);
-				formData.append("ResponseFormat", 'json');
-				formData.append("Chunk", i);
-				formData.append("ChunkSize", me.options.chunksize);
-				if (typeof(item.asset_id)!='undefined') { 
-					formData.append("AssetID",item.asset_id);
-				} else { 
-					formData.append("AssetID",'null');
-				}
-				formData.append("MimeType",item.file.type);
-				var xhr = new XMLHttpRequest();
-				xhr.addEventListener("load", function(evt) { 
-					var d=$.parseJSON(xhr.responseText);
-					console.log(d);
-					item.asset_id=d.Asset.AssetID;
-					if (d.RemainingChunkCount>0) {
-						console.log('doing more'); 
-						me._upload_file_chunk(item,d.RemainingChunks[0]);
-					} else { 
-						console.log('removing');
-						item.li.remove();
-						me._run_queue();
-					}
-				}, false);
-
-				xhr.open("POST", me.options.url);
-				xhr.send(formData);
-$xhr.ajax({
-
-      url: me.options.url
-
-    , data: {Name: item.file.name, Size: item.file.size, ResponseFormat: 'json', Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type}
-
-    , type: "post"
-
-    , success: function (d) {
-        console.log(d);
-					item.asset_id=d.Asset.AssetID;
-					if (d.RemainingChunkCount>0) {
-						console.log('doing more'); 
-						me._upload_file_chunk(item,d.RemainingChunks[0]);
-					} else { 
-						console.log('removing');
-						item.li.remove();
-						me._run_queue();
-					}
-      }
-
-    
-
-  });*/
-				$.post(me.options.url,{Name: item.file.name, Size: item.file.size, ResponseFormat: 'json', Chunk: i, ChunkSize: me.options.chunksize, AssetID: item.asset_id, Data: evt.target.result, MimeType: item.file.type}, function(data) { 
-					var d=$.parseJSON(data);
-					console.log(d);
-					item.asset_id=d.Asset.AssetID;
-					if (d.RemainingChunkCount>0) {
-						console.log('doing more'); 
-						me._upload_file_chunk(item,d.RemainingChunks[0]);
-					} else { 
-						console.log('removing');
-						item.li.remove();
-						me._run_queue();
-					}
-				});
-*/
-			} else { 
-				console.log('got here!!!!!');
-			}
-		}
-
-	},
 	_reader_chunk_abort: function(item,i) { 
 		return function (e) { 
 			console.log('abort');
@@ -172,11 +92,10 @@ $xhr.ajax({
 		}
 	},
 	_upload_file_chunk: function(item,i) { 
-		console.log('doing chunk: '+i);
 		// If we use onloadend, we need to check the readyState.
 		var me = this;
 		reader= new FileReader();
-		reader.addEventListener('loadend',this._reader_chunk_load(item,i),false);
+//		reader.addEventListener('loadend',this._reader_chunk_load(item,i),false);
 		reader.addEventListener('abort',this._reader_chunk_abort(item,i),false);
 		reader.addEventListener('error',this._reader_chunk_error(item,i),false);
 		var start=i*this.options.chunksize;
@@ -188,13 +107,52 @@ $xhr.ajax({
 		} else if (typeof(item.file.slize)!='undefined') { 
 			var blob = item.file.slice(start, stop + 1);
 		}
-		console.log('start: '+start+' stop: '+stop);
-		reader.readAsBinaryString(blob);
+		var formData = new FormData();
+		formData.append("Data", blob);
+		formData.append("Name", item.file.name);
+		formData.append("Size", item.file.size);
+		me._update_upload_progress(item,0,item.file.size);
+		formData.append("ResponseFormat", 'json');
+		formData.append("Chunk", i);
+		formData.append("ChunkSize", me.options.chunksize);
+		if (item.asset_id===null || typeof(item.asset_id)=='undefined') { 
+			formData.append("AssetID",'null');
+		} else { 
+			formData.append("AssetID",item.asset_id);
+		}
+		formData.append("MimeType",item.file.type);
+		var xhr = new XMLHttpRequest();
+		xhr.addEventListener("load", function(evt) { 
+			var d=$.parseJSON(xhr.responseText);
+			item.asset_id=d.Asset.AssetID;
+			item.chunks_uploaded++;
+			if (d.RemainingChunkCount>0) {
+				me._upload_file_chunk(item,d.RemainingChunks[0]);
+			} else { 
+				item.li.remove();
+				me._run_queue();
+			}
+		}, false);
+		xhr.addEventListener('progress',function(e) { 
+			if (e.lengthComputable) { 
+				me._update_upload_progress(item,e.loaded,e.total);
+			}
+		}, false);
+		xhr.open("POST", me.options.url);
+		xhr.send(formData);
+	},
+	_update_upload_progress: function(item,thischunkloaded,thischunktotal) { 
+//		console.log(item,thischunkloaded,thischunktotal);
+		var chunksize=100/item.chunks;
+		var val=chunksize*item.chunks_uploaded;
+		val=val+((chunksize/thischunktotal)*thischunkloaded);
+		$(item.progress).progressbar("option","value",val);
 	},
 	_process_queue_item: function(item) { 
 		this.queue_item_running=item;
 		item.status_text.html('Handshaking');
 		item.chunks=Math.ceil(item.file.size/this.options.chunksize);
+		item.chunks_uploaded=0;
 		item.asset_id=null;
 		this._upload_file_chunk(item,0);
 	},

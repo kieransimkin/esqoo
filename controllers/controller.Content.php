@@ -56,6 +56,9 @@ class ContentController extends LockedController {
 		if (!isset($input['MimeType']) || strlen($input['MimeType'])<1) { 
 			$this->api_error(8,"MimeType must be specified");
 		}
+		if (!isset($_FILES['Data']) || strlen($input['Data']=file_get_contents($_FILES['Data']['tmp_name']))<1) { 
+			$this->api_error(9,"Data must be specified");
+		}
 		if ($this->api_validation_success()) { 
 			if (!isset($input['Name']) || strlen($input['Name'])<1) { 
 				$input['Name']='Untitled';
