@@ -3,9 +3,12 @@ $.widget( "esqoo.uploadq", {
 	// These options will be used as defaults
 	options: {
 		url: '/content/upload/api',
-		chunksize: 262144  // 512kB in bytes
+		chunksize: 262144,  // 256kB in bytes
+		chunkfailurelimit: 10
  	},
 	queue: [],
+	complete: [],
+	failed: [],
 	queue_running: false,
 	queue_item_running: null,
 	_create: function() { 
@@ -75,6 +78,7 @@ $.widget( "esqoo.uploadq", {
 	_run_queue: function() { 
 		if (this.queue.length<1) { 
 			this.queue_running=false;
+			return;
 		}
 		this.queue_running=true;
 		this._process_queue_item(this.queue.shift());
@@ -91,9 +95,41 @@ $.widget( "esqoo.uploadq", {
 			console.log(e);
 		}
 	},
+	_xhr_failure: function(item,i) { 
+		var me = this;
+		return function(e) { 
+			item.chunk_failures++;
+			me._upload_file_chunk(item,i);
+		}
+	},
+	_upload_complete: function (item) { 
+		var me = this;
+		item.li.slideUp('slow',function() { 
+			item.li.detach();
+			item.status_text.html('Complete');
+			item.li.appendTo(me.completecontainer);
+			item.li.slideDown('slow');
+		});
+		this.complete.push(item);
+	},
+	_upload_failed: function(item) { 
+		var me = this;
+		item.li.slideUp('slow',function() { 
+			item.li.detach();
+			item.status_text.html('Failed');
+			item.li.appendTo(this.failedcontainer);
+			item.li.slideDown('slow');
+		});
+		this.failed.push(item);
+	},
 	_upload_file_chunk: function(item,i) { 
 		// If we use onloadend, we need to check the readyState.
 		var me = this;
+		if (item.chunk_failures>me.options.chunkfailurelimit) { 
+			me._upload_failed(item);
+			me._run_queue();
+			return;
+		}
 		reader= new FileReader();
 //		reader.addEventListener('loadend',this._reader_chunk_load(item,i),false);
 		reader.addEventListener('abort',this._reader_chunk_abort(item,i),false);
@@ -123,16 +159,33 @@ $.widget( "esqoo.uploadq", {
 		formData.append("MimeType",item.file.type);
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener("load", function(evt) { 
-			var d=$.parseJSON(xhr.responseText);
+			try {
+				var d=$.parseJSON(xhr.responseText);
+			} catch (e) { 
+				console.log('exception');
+				console.log(e);
+				item.chunk_failures++;
+				me._upload_file_chunk(item,i);
+				return;
+			}
+			if (d.ErrorCount>0) { 
+				item.chunk_failures++;
+				me._upload_file_chunk(item,i);
+				return;
+			}
 			item.asset_id=d.Asset.AssetID;
 			item.chunks_uploaded++;
 			if (d.RemainingChunkCount>0) {
+				item.chunk_failures=0;
 				me._upload_file_chunk(item,d.RemainingChunks[0]);
 			} else { 
-				item.li.remove();
+				me._upload_complete(item);
 				me._run_queue();
 			}
 		}, false);
+		xhr.addEventListener('error',me._xhr_failure(item,i),false);
+		xhr.addEventListener('abort',me._xhr_failure(item,i),false);
+		xhr.addEventListener('timeout',me._xhr_failure(item,i),false);
 		xhr.addEventListener('progress',function(e) { 
 			if (e.lengthComputable) { 
 				me._update_upload_progress(item,e.loaded,e.total);
@@ -152,6 +205,7 @@ $.widget( "esqoo.uploadq", {
 		item.status_text.html('Uploading');
 		item.chunks=Math.ceil(item.file.size/this.options.chunksize);
 		item.chunks_uploaded=0;
+		item.chunk_failures=0;
 		item.asset_id=null;
 		this._upload_file_chunk(item,0);
 	},
@@ -169,6 +223,14 @@ $.widget( "esqoo.uploadq", {
 				.appendTo(this.element.parent());	
 		this.queuecontainer=$('<ul></ul>')
 				.addClass('esqoo-uploadq-queue')
+				.addClass('ui-widget-content')
+				.appendTo(this.element.parent());
+		this.failedcontainer=$('<ul></ul>')
+				.addClass('esqoo-uploadq-failed')
+				.addClass('ui-widget-content')
+				.appendTo(this.element.parent());
+		this.completecontainer=$('<ul></ul>')
+				.addClass('esqoo-uploadq-complete')
 				.addClass('ui-widget-content')
 				.appendTo(this.element.parent());
 		this.dropzonehotspot=$('<div></div>')

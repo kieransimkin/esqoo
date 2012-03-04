@@ -96,6 +96,8 @@ div.esqoo-dropzone,
 a.ui-selectmenu,
 ul.ui-selectmenu-menu-dropdown,
 ul.esqoo-uploadq-queue,
+ul.esqoo-uploadq-complete,
+ul.esqoo-uploadq-failed,
 div.ui-dialog div.ui-dialog-content iframe.form-iframe,
 section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -132,7 +134,9 @@ span.esqoo-ui-dialog-button-icon {
 	margin-top: 0.6em;
 	margin-left: 1em;
 }
-ul.esqoo-uploadq-queue { 
+ul.esqoo-uploadq-queue ,
+ul.esqoo-uploadq-complete ,
+ul.esqoo-uploadq-failed { 
 	list-style-type: none;
 	padding-left: 1em;
 	padding-right: 1em;
