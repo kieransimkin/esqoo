@@ -1,1 +1,3 @@
 * MySQL module
+* Pecl FileInfo
+* PHP 5.4

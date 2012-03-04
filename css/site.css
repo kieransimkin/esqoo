@@ -166,3 +166,6 @@ div.esqoo-uploadq-failed-div-header {
 	padding-top: 0.1em;
 	padding-bottom: 0.1em;
 }
+input.esqoo-uploadq-album { 
+	float: right;
+}

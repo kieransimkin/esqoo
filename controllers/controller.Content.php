@@ -32,7 +32,7 @@ class ContentController extends LockedController {
 	 *********************/
 	 private function get_upload_form($input,$forcesubmit=false) { 
 		$form=new Form('upload');
-		$form->addElement('text','album',array())->setLabel(_('Album'));
+		$form->addElement('text','album',array('class'=>'esqoo-uploadq-album','placeholder'=>_('Album')));
 		$form->addElement('file','upload',array('class'=>'upload-form','multiple'=>'multiple'))->setLabel(_('Select files'));
 		return $form;
 	 }
@@ -132,7 +132,11 @@ class ContentController extends LockedController {
 		return array('id','Size','ChunkSize','MimeType');
 	}
 	private function compile_asset($asset) { 
-
+		$res=DBSQ::query('select * from asset_chunk_data where asset_id=? order by chunk asc',array($asset->id));
+		
+		foreach ($res as $chunk) { 
+			
+		}
 	}
 
 }

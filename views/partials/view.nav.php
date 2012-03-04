@@ -10,6 +10,7 @@ $nav=array(
 	_('Content') => array(
 		"submenu:"._('Media') => array(
 			"/content/upload" => _('Upload Media'),
+			"/album/" => _('Albums'),
 			"/content/manage-images" => _('My Images'),
 			"/content/manage-video" => _('My Video'),
 			"/content/manage-audio" => _('My Audio')
@@ -19,7 +20,7 @@ $nav=array(
 			"/page/add-page" => _('Add Page'),
 			"/blog/manage-posts" => _('Blog Posts'),
 			"/page/manage-pages" => _('My Pages'),
-			"/links/" => _('My Links')
+			"/link/" => _('My Links')
 		),
 		"submenu:"._('Keyword Tags') => array(
 			"popup:"._('Add Keyword').":save,cancel,singleton:/tag/add" => _('Add Keyword'),
