@@ -142,7 +142,6 @@ $.widget( "esqoo.uploadq", {
 		xhr.send(formData);
 	},
 	_update_upload_progress: function(item,thischunkloaded,thischunktotal) { 
-//		console.log(item,thischunkloaded,thischunktotal);
 		var chunksize=100/item.chunks;
 		var val=chunksize*item.chunks_uploaded;
 		val=val+((chunksize/thischunktotal)*thischunkloaded);
@@ -150,7 +149,7 @@ $.widget( "esqoo.uploadq", {
 	},
 	_process_queue_item: function(item) { 
 		this.queue_item_running=item;
-		item.status_text.html('Handshaking');
+		item.status_text.html('Uploading');
 		item.chunks=Math.ceil(item.file.size/this.options.chunksize);
 		item.chunks_uploaded=0;
 		item.asset_id=null;

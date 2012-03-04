@@ -4,7 +4,7 @@ class Asset extends DBSQL {
 		return false;
 	}
 	public function getRemainingChunks() { 
-		$chunks=Asset_chunk::getAll('asset_id=?',array($this->id));
+		$chunks=DBSQ::getAll('select id, Chunk from asset_chunk where asset_id=?',array($this->id),'Asset_chunk');
 		$total=ceil($this->Size/$this->ChunkSize);
 		$array=array();
 		for ($c=0;$c<$total;$c++) { 
