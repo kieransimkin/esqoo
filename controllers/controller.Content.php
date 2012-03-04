@@ -103,8 +103,12 @@ class ContentController extends LockedController {
 				$chunk->ChunkSize=$input['ChunkSize'];
 				$chunk->HashType=$input['HashType'];
 				$chunk->ChunkHash=$input['ChunkHash'];
-				$chunk->Data=$input['Data'];
 				$chunk->save();
+				$chunkdata=Asset_chunk_data::get();
+				$chunkdata->asset_chunk_id=$chunk->id;
+				$chunkdata->Data=$input['Data'];
+				$chunkdata->save();
+				//$chunk->Data=$input['Data'];
 			}
 			$remainingchunks=$asset->getRemainingChunks();
 			shuffle($remainingchunks);

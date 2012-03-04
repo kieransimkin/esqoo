@@ -268,11 +268,18 @@ create table asset_chunk (
 	ChunkSize int not null,
 	HashType varchar(10) not null,
 	ChunkHash varchar(255) not null,
-	Data longblob not null,
 	CreateDate timestamp not null default CURRENT_TIMESTAMP,
 	primary key (id),
 	index (asset_id),
 	index (Chunk,HashType,ChunkHash),
 	index (HashType,ChunkHash,Chunk,asset_id),
 	unique key (`asset_id`,`Chunk`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists asset_chunk_data;
+create table asset_chunk_data ( 
+	id int not null auto_increment,
+	asset_chunk_id int not null,
+	Data longblob not null,
+	primary key (id),
+	index (asset_chunk_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

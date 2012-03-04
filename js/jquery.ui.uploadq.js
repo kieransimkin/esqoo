@@ -4,6 +4,8 @@ $.widget( "esqoo.uploadq", {
 	options: {
 		url: '/content/upload/api',
 		chunksize: 262144,  // 256kB in bytes
+		maxchunksize: 1048576,
+		chunksizestepup: 10485760,
 		chunkfailurelimit: 10
  	},
 	queue: [],
@@ -63,7 +65,7 @@ $.widget( "esqoo.uploadq", {
 			.appendTo(this.queuecontainer);
 		var status_text=$('<span></span>')
 			.addClass('esqoo-uploadq-queue-item-status-text')
-			.html('Upload Queued')
+			.html('Queued')
 			.appendTo(li);
 		var progress=$('<div></div>')
 			.addClass('esqoo-upload-queue-item-progress')
@@ -134,8 +136,8 @@ $.widget( "esqoo.uploadq", {
 //		reader.addEventListener('loadend',this._reader_chunk_load(item,i),false);
 		reader.addEventListener('abort',this._reader_chunk_abort(item,i),false);
 		reader.addEventListener('error',this._reader_chunk_error(item,i),false);
-		var start=i*this.options.chunksize;
-		var stop=i*this.options.chunksize+this.options.chunksize;
+		var start=i*item.chunksize;
+		var stop=i*item.chunksize+item.chunksize;
 		if (typeof(item.file.webkitSlice)!='undefined') {
 			var blob = item.file.webkitSlice(start, stop + 1);
 		} else if (typeof(item.file.mozSlice)!='undefined') {
@@ -150,7 +152,7 @@ $.widget( "esqoo.uploadq", {
 		me._update_upload_progress(item,0,item.file.size);
 		formData.append("ResponseFormat", 'json');
 		formData.append("Chunk", i);
-		formData.append("ChunkSize", me.options.chunksize);
+		formData.append("ChunkSize", item.chunksize);
 		if (item.asset_id===null || typeof(item.asset_id)=='undefined') { 
 			formData.append("AssetID",'null');
 		} else { 
@@ -203,7 +205,14 @@ $.widget( "esqoo.uploadq", {
 	_process_queue_item: function(item) { 
 		this.queue_item_running=item;
 		item.status_text.html('Uploading');
-		item.chunks=Math.ceil(item.file.size/this.options.chunksize);
+		item.chunksize=this.options.chunksize;
+		if (item.file.size>this.options.chunksizestepup) { 
+			item.chunksize=item.chunksize+item.chunksize*Math.floor(item.file.size/this.options.chunksizestepup);
+			if (item.chunksize>this.options.maxchunksize) {
+				item.chunksize=this.options.maxchunksize;
+			}
+		}
+		item.chunks=Math.ceil(item.file.size/item.chunksize);
 		item.chunks_uploaded=0;
 		item.chunk_failures=0;
 		item.asset_id=null;
