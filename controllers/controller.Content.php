@@ -32,6 +32,7 @@ class ContentController extends LockedController {
 	 *********************/
 	 private function get_upload_form($input,$forcesubmit=false) { 
 		$form=new Form('upload');
+		$form->addElement('text','album',array())->setLabel(_('Album'));
 		$form->addElement('file','upload',array('class'=>'upload-form','multiple'=>'multiple'))->setLabel(_('Select files'));
 		return $form;
 	 }
@@ -113,6 +114,9 @@ class ContentController extends LockedController {
 			$remainingchunks=$asset->getRemainingChunks();
 			shuffle($remainingchunks);
 			$remainingchunkcount=count($remainingchunks);
+			if ($remainingchunkcount===0) { 
+				$this->compile_asset($asset);
+			}
 			if ($remainingchunkcount>10) { 
 				array_splice($remainingchunks,10);
 			}
@@ -126,6 +130,9 @@ class ContentController extends LockedController {
 	 ****************************/
 	private function get_asset_fields() { 
 		return array('id','Size','ChunkSize','MimeType');
+	}
+	private function compile_asset($asset) { 
+
 	}
 
 }

@@ -72,6 +72,10 @@ $.widget( "esqoo.uploadq", {
 			.addClass('esqoo-progress')
 			.progressbar()
 			.appendTo(li);
+		if (!this.queue_visible) { 
+			this.queue_visible=true;
+			this.queuediv.fadeIn('slow');
+		}
 		this.queue.push({file: file,li: li,'status_text':status_text, progress: progress});
 		if (!this.queue_running) { 
 			this._run_queue();
@@ -108,9 +112,17 @@ $.widget( "esqoo.uploadq", {
 		var me = this;
 		item.li.slideUp('slow',function() { 
 			item.li.detach();
+			if (me.queue.length<1 && me.queue_visible) { 
+				me.queue_visible=false;
+				me.queuediv.fadeOut('slow');
+			}
 			item.status_text.html('Complete');
 			item.li.appendTo(me.completecontainer);
 			item.li.slideDown('slow');
+			if (!me.complete_visible) { 
+				me.complete_visible=true;
+				me.completediv.fadeIn('slow');
+			}
 		});
 		this.complete.push(item);
 	},
@@ -118,9 +130,19 @@ $.widget( "esqoo.uploadq", {
 		var me = this;
 		item.li.slideUp('slow',function() { 
 			item.li.detach();
+			if (me.queue.length<1 && me.queue_visible) { 
+				me.queue_visible=false;
+				me.queuediv.fadeOut('slow');
+			}
 			item.status_text.html('Failed');
-			item.li.appendTo(this.failedcontainer);
+			item.li.appendTo(me.failedcontainer);
 			item.li.slideDown('slow');
+			console.log('failed');
+			console.log(item);
+			if (!me.failed_visible) { 
+				me.failed_visible=true;
+				me.faileddiv.fadeIn('slow');
+			}
 		});
 		this.failed.push(item);
 	},
@@ -229,19 +251,55 @@ $.widget( "esqoo.uploadq", {
 				.addClass('esqoo-dropzone')
 				.addClass('ui-widget-content')
 				.css({position: 'relative'})
-				.appendTo(this.element.parent());	
+				.appendTo(this.element.parent());
+		this.queuediv=$('<div></div>')
+				.addClass('esqoo-uploadq-queue-div')
+				.addClass('ui-widget-content')
+				.addClass('ui-corner-all')
+				.hide()
+				.appendTo(this.element.parent());
+		this.queuedivheader=$('<div></div>')
+				.addClass('ui-widget-header')
+				.addClass('ui-corner-all')
+				.addClass('esqoo-uploadq-queue-div-header')
+				.html('Upload Queue')
+				.appendTo(this.queuediv);
+		this.queue_visible=false;
 		this.queuecontainer=$('<ul></ul>')
 				.addClass('esqoo-uploadq-queue')
+				.appendTo(this.queuediv);
+		this.faileddiv=$('<div></div>')
+				.addClass('esqoo-uploadq-failed-div')
 				.addClass('ui-widget-content')
+				.addClass('ui-corner-all')
+				.hide()
 				.appendTo(this.element.parent());
+		this.faileddivheader=$('<div></div>')
+				.addClass('ui-widget-header')
+				.addClass('ui-corner-all')
+				.addClass('esqoo-uploadq-failed-div-header')
+				.html('Failed')
+				.appendTo(this.faileddiv);
+		this.failed_visible=false;
 		this.failedcontainer=$('<ul></ul>')
 				.addClass('esqoo-uploadq-failed')
+				.appendTo(this.faileddiv);
+		this.completediv=$('<div></div>')
+				.addClass('esqoo-uploadq-complete-div')
 				.addClass('ui-widget-content')
+				.addClass('ui-corner-all')
+				.hide()
 				.appendTo(this.element.parent());
+		this.completedivheader=$('<div></div>')
+				.addClass('ui-widget-header')
+				.addClass('ui-corner-all')
+				.addClass('esqoo-uploadq-complete-div-header')
+				.html('Complete')
+				.appendTo(this.completediv);
+		this.complete_visible=false;
 		this.completecontainer=$('<ul></ul>')
 				.addClass('esqoo-uploadq-complete')
-				.addClass('ui-widget-content')
-				.appendTo(this.element.parent());
+				.appendTo(this.completediv);
 		this.dropzonehotspot=$('<div></div>')
 				.addClass('esqoo-dropzone-hotspot')
 				.css({position: 'absolute', width: '100%', height: '100%', top: '0px', left: '0px'})
