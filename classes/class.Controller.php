@@ -176,7 +176,7 @@ class Controller {
 		echo '<a href="'.$url.'" target="_blank">Open in new window</a><br /><iframe class="form-iframe" src="'.$url.'"></iframe>';
 		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
 	}
-	function flexigridResponse(&$rows,$page,$total,$control_html='') {
+	function flexigridResponse($rows,$page,$total,$control_html='') {
 		if (strlen($page)<1 || $page!=(int)$page) { 
 			$page=1;
 		} 
@@ -184,14 +184,7 @@ class Controller {
 		$outrows = array();
 		if (count($rows)>0) { 
 			foreach($rows as $row) {
-				$row_arr = (array)$row;
-				$newrow = array();
-				foreach((array)$row as $k => $cell) // assume $row is a db object or array with the correct ordering of columns
-					$newrow[]=trim((string)$cell); // (get rid of any non-numeric keys as they will get turned into JS object definitions instead of a list)
-					if($control_html) {
-						$newrow[]=str_replace('{id}',$row_arr['id'],$control_html);	
-					}
-				$outrows[] = array("id"=>@isset($row['id'])?$row['id']:@$row->id,"cell"=>$newrow);
+				$outrows[]=$row->getFilteredDataArray();
 			}
 		}
 		return array("page"=>$page,"total"=>$total,"rows"=>$outrows);

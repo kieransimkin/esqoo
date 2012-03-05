@@ -344,7 +344,7 @@
 						if (i % 2 && p.striped) {
 							tr.className = 'erow';
 						}
-						tr.addClass('ui-widget-content');
+						$(tr).addClass('ui-widget-content');
 						if (row.id) {
 							tr.id = 'row' + row.id;
 						}

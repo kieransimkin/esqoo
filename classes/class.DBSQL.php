@@ -20,6 +20,11 @@ class DBSQL extends DBSQ {
 		$this->_visiblefields=$fields;
 		return $this;
 	}
+	static function set_all_visible_api_fields($dblist,$fields=array()) { 
+		foreach ($dblist as &$db) { 
+			$db->set_visible_api_fields($fields);
+		}
+	}
 	function getFilteredDataArray() { 
 		$ldata=$this->getDataArray();
 		$ret=array();
