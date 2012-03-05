@@ -149,7 +149,6 @@
 }
 
 .flexigrid div.tDiv /*toolbar*/ {
-	background: #fafafa url(/images/flexigrid/bg.gif) repeat-x top;
 	position: relative;
 	border: 1px solid #ccc;
 	border-bottom: 0px;
@@ -163,7 +162,6 @@
 }
 
 .flexigrid div.sDiv /*toolbar*/ {
-	background: #fafafa url(/images/flexigrid/bg.gif) repeat-x top;
 	position: relative;
 	border: 1px solid #ccc;
 	border-top: 0px;
@@ -436,7 +434,6 @@ div.colCopy {
 }
 
 .flexigrid tr td.sorted {
-	background: #f3f3f3;
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #f3f3f3;
 }
@@ -446,12 +443,10 @@ div.colCopy {
 }
 
 .flexigrid tr.erow td {
-	background: #f7f7f7;
 	border-bottom: 1px solid #f7f7f7;
 }
 
 .flexigrid tr.erow td.sorted {
-	background: #e3e3e3;
 	border-bottom: 1px solid #e3e3e3;
 }
 
@@ -461,7 +456,6 @@ div.colCopy {
 
 .flexigrid div.bDiv tr:hover td,.flexigrid div.bDiv tr:hover td.sorted,.flexigrid div.bDiv tr.trOver td.sorted,.flexigrid div.bDiv tr.trOver td
 	{
-	background: #d9ebf5;
 	border-left: 1px solid #eef8ff;
 	border-bottom: 1px dotted #a8d8eb;
 }

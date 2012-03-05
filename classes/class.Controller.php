@@ -188,6 +188,5 @@ class Controller {
 			}
 		}
 		return array("Page"=>$page,"Total"=>$total,"Rows"=>$outrows);
-
 	}
 }
