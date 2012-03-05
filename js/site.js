@@ -25,6 +25,33 @@ $(document).ready(function() {
 	$('select').livequery(function() { 
 		$(this).selectmenu({width: '200'});
 	});
+	$('div.esqoo-flexigrid').livequery(function() { 
+		var height=200;
+		if ($(this).attr('data-flexigrid-height')) { 
+			height=$(this).attr('data-flexigrid-height');
+		}
+		var width='auto';
+		if ($(this).attr('data-flexigrid-width')) { 
+			width=$(this).attr('data-flexigrid-width');
+		}
+		var usepager=false;
+		if ($(this).attr('data-flexigrid-usepager')) { 
+			usepager=$(this).attr('data-flexigrid-usepager');	
+		}
+		var page=1;
+		if ($(this).attr('data-flexigrid-page')) { 
+			page=$(this).attr('data-flexigrid-page');
+		}
+		var useRp=true;
+		if ($(this).attr('data-flexigrid-userp')) { 
+			useRp=$(this).attr('data-flexigrid-userp');
+		}
+		var rp=15;
+		if ($(this).attr('data-flexigrid-rp')) { 
+			rp=$(this).attr('data-flexigrid-rp');
+		}
+		$(this).flexigrid({height: height, width: width, usepager: usepager, page: page, useRp: useRp, rp: rp, url: $(this).attr('data-flexigrid-url'), dataType: 'json'});
+	});
 	 $("#nav-one").supersubs({ 
             minWidth:    12,   // minimum width of sub-menus in em units 
             maxWidth:    15,   // maximum width of sub-menus in em units 
