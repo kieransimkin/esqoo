@@ -4,31 +4,31 @@ $nav=array(
 		"/" => _('Dashboard'),
 		"popup:"._('Quick Media Upload').":singleton:/content/quick-upload" => _('Quick Upload'),
 		"popup:"._('Quick Post').":save,cancel,singleton:/blog/quick-post" => _('Quick Post'),
-		"popup:"._('Visit My Website').":cancel,continue,singleton:/website" => _('Visit My Website'),
+		"targetblank:/website/" => _('Visit My Website'),
 		"/lightswitch/flick" => ('Flick Light Switch')
 	),
 	_('Content') => array(
 		"submenu:"._('Media') => array(
 			"/content/upload" => _('Upload Media'),
 			"/album/" => _('Albums'),
-			"/picture/" => _('My Pictures'),
-			"/video/" => _('My Video'),
-			"/audio/" => _('My Audio')
+			"/picture/" => _('Pictures'),
+			"/video/" => _('Video'),
+			"/audio/" => _('Audio')
 		),
 		"submenu:"._('Posts and Pages') => array(
 			"/blog/post" => _('Write Blog Post'),
 			"/page/add" => _('Add Page'),
 			"/blog/" => _('Blog Posts'),
-			"/page/" => _('My Pages'),
-			"/link/" => _('My Links')
+			"/page/" => _('Pages'),
+			"/link/" => _('Links')
 		),
 		"submenu:"._('Keyword Tags') => array(
 			"popup:"._('Add Keyword').":save,cancel,singleton:/tag/add" => _('Add Keyword'),
-			"/tag/" => _('My Keywords')
+			"/tag/" => _('Keywords')
 		)
 	),
 	_('Website') => array(
-		"/website/" => _('My Websites'),
+		"/website/templates" => _('Templates'),
 		"/website/menus" => _('Menus')
 	),
 	_('Account') => array(

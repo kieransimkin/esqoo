@@ -15,7 +15,6 @@ create table `user` (
 	daytime__ui_theme_id int not null default 1,
 	nighttime__ui_theme_id int not null default 1,
 	rich_editor_id int not null default 1,
-	default__website_id int default null,
 	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	ModifyDate datetime default null,
 	DeleteDate datetime default null,
@@ -24,8 +23,7 @@ create table `user` (
 	index (country_id),
 	index (DeleteDate),
 	index (daytime__ui_theme_id),
-	index (nighttime__ui_theme_id),
-	index (default__website_id)
+	index (nighttime__ui_theme_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 insert into user set Username='slinq',Email='kieran@slinq.com',Password='testpass',FirstName='Kieran',LastName='Simkin';
 drop table if exists `ui_theme`;
@@ -196,27 +194,11 @@ UNLOCK TABLES;
    update country set Currency='NZD' where Alpha3='NZL';
    update country set Currency='RUB' where Alpha3='RUS';
 drop table if exists `website`;
-create table `website` (
-	id int not null auto_increment,
-	user_id int not null,
-	ServerName varchar(256) NOT NULL,
-	`Name` varchar(512) NOT NULL,
-	description text not null,
-	CreateDate timestamp not null default CURRENT_TIMESTAMP,
-	DeleteDate datetime default null,
-	ModifyDate datetime default null,
-	primary key (id),
-	index (user_id,DeleteDate),
-	index (DeleteDate),
-	index (ServerName),
-	unique key (ServerName,DeleteDate)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-insert into website set user_id=1, ServerName='user.esqoo.local', Name='Default User Website',description='Description';
 drop table if exists `post`;
 create table `post` (
 	id int not null auto_increment,
 	GUID varchar(255) not null default '',
-	website_id int not null,
+	user_id int not null,
 	Title text not null,
 	Content longtext not null,
 	parent__post_id int default null,
@@ -225,9 +207,9 @@ create table `post` (
 	DeleteDate datetime default null,
 	ModifyDate datetime default null,
 	primary key (id),
-	index (website_id,DeleteDate),
-	index (website_id,DeleteDate,PublishDate),
-	index (website_id),
+	index (user_id,DeleteDate),
+	index (user_id,DeleteDate,PublishDate),
+	index (user_id),
 	index (guid),
 	index (parent__post_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -48,7 +48,6 @@ class BlogController extends LockedController {
 	 private function get_post_form($input,$post,$forcesubmit=false) { 
 		$form=new Form('post');
 		$form->setAPIDataSources($input,$post,$forcesubmit);
-		$form->addElement('select','website_id',array(),array('options'=>Website::get_menu($this->user->id)))->setLabel(_('Website'))->addRule('required',_('Required'));
 		$form->addElement('text','Title',array())->setLabel(_('Title'))->addRule('required',_('Required'));
 		$form->addElement('textarea','Content',array())->setLabel(_('Content'))->addrule('required',_('Required'));
 		return $form;
