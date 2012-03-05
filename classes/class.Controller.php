@@ -187,6 +187,6 @@ class Controller {
 				$outrows[]=$row->getFilteredDataArray();
 			}
 		}
-		return array("Page"=>$page,"Total"=>$total,"Rows"=>$outrows);
+		return array("Page"=>$page,"RowCount"=>$total,"Rows"=>$outrows);
 	}
 }

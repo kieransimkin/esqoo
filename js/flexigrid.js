@@ -10,6 +10,7 @@
 	$.addFlex = function (t, p) {
 		if (t.grid) return false; //return if already exist
 		p = $.extend({ //apply default properties
+			idfield: 'id',
 			height: 200, //default height
 			width: 'auto', //auto width
 			striped: true, //apply odd even stripes
@@ -221,6 +222,7 @@
 					this.fixHeight();
 					this.colresize = false;
 				} else if (this.vresize) {
+					$(this.vDiv).removeClass('ui-state-active');
 					this.vresize = false;
 				} else if (this.colCopy) {
 					$(this.colCopy).remove();
@@ -304,7 +306,7 @@
 			},
 			addData: function (data) { //parse data
 				if (p.dataType == 'json') {
-					data = $.extend({Rows: [], Page: 0, Total: 0}, data);
+					data = $.extend({Rows: [], Page: 0, RowCount: 0}, data);
 				}
 				if (p.preProcess) {
 					data = p.preProcess(data);
@@ -318,7 +320,7 @@
 				if (p.dataType == 'xml') {
 					p.total = +$('rows total', data).text();
 				} else {
-					p.total = data.Total;
+					p.total = data.RowCount;
 				}
 				if (p.total == 0) {
 					$('tr, a, td, div', t).unbind();
@@ -354,7 +356,19 @@
 								var idx = $(this).attr('axis').substr(3);
 								td.align = this.align;
 								// If the json elements aren't named (which is typical), use numeric order
-								td.innerHTML = row[p.colModel[idx].name];
+								if (p.colModel[idx].jsfilter.indexOf('.')===-1 && typeof(window[p.colModel[idx].jsfilter])=='function') { 
+									$(td).html(window[p.colModel[idx].jsfilter](row[p.idfield],row[p.colModel[idx].name]));
+								} else if (p.colModel[idx].jsfilter.indexOf('.')!==-1) { 
+									// This is a slightly hacky way of supporting non-global functions, less hacky than using eval() though
+									var el=p.colModel[idx].jsfilter.split('.');
+									if (typeof(window[el[0]][el[1]])=='function') { 
+										$(td).html(window[el[0]][el[1]](row[p.idfield],row[p.colModel[idx].name]));
+									} else { 
+										td.innerHTML = row[p.colModel[idx].name];
+									}
+								} else {
+									td.innerHTML = row[p.colModel[idx].name];
+								}
 								$(td).attr('abbr', $(this).attr('abbr'));
 								$(tr).append(td);
 								td = null;
@@ -667,7 +681,7 @@
 						if (g.multisel) {
 							$(this).toggleClass('trSelected');
 						}
-					}, function (e) { $(this).removeClass('ui-state-hover'); $(this).addClass('ui-state-highlight');});
+					}, function (e) { $(this).removeClass('ui-state-hover'); });
 					if ($.browser.msie && $.browser.version < 7.0) {
 						$(this).hover(function () {
 							$(this).addClass('trOver');
@@ -947,7 +961,16 @@
 		}
 		if (p.resizable && p.height != 'auto') {
 			g.vDiv.className = 'vGrip';
+			$(g.vDiv).addClass('ui-widget');
+			$(g.vDiv).addClass('ui-state-default');
+			$(g.vDiv).hover(function() { 
+				$(g.vDiv).addClass('ui-state-hover');
+			},
+			function() { 
+				$(g.vDiv).removeClass('ui-state-hover');
+			});
 			$(g.vDiv).mousedown(function (e) {
+				$(g.vDiv).addClass('ui-state-active');
 				g.dragStart('vresize', e)
 			}).html('<span></span>');
 			$(g.bDiv).after(g.vDiv);
@@ -1018,7 +1041,7 @@
 			}
 			//add search button
 			if (p.searchitems) {
-				$('.pDiv2', g.pDiv).prepend("<div class='pGroup'> <div class='pSearch pButton'><span></span></div> </div>  <div class='btnseparator'></div>");
+				$('.pDiv2', g.pDiv).prepend("<div class='pGroup'> <button class='pSearch pButton' data-icon-primary='ui-icon-search'></button> </div>  <div class='btnseparator'></div>");
 				$('.pSearch', g.pDiv).click(function () {
 					$(g.sDiv).slideToggle('fast', function () {
 						$('.sDiv:visible input:first', g.gDiv).trigger('focus');
@@ -1045,15 +1068,15 @@
 						" <input type='text' value='" + p.query +"' size='30' name='q' class='qsbox' /> "+
 						" <select name='qtype'>" + sopt + "</select></div>");
 				//Split into separate selectors because of bug in jQuery 1.3.2
-				$('input[name=q]', g.sDiv).keydown(function (e) {
-					if (e.keyCode == 13) {
+				$('input[name=q]', g.sDiv).keyup(function (e) {
+					//if (e.keyCode == 13) {
 						g.doSearch();
-					}
+					//}
 				});
-				$('select[name=qtype]', g.sDiv).keydown(function (e) {
-					if (e.keyCode == 13) {
+				$('select[name=qtype]', g.sDiv).keyup(function (e) {
+					//if (e.keyCode == 13) {
 						g.doSearch();
-					}
+					//}
 				});
 				$('input[value=Clear]', g.sDiv).click(function () {
 					$('input[name=q]', g.sDiv).val('');

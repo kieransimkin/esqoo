@@ -8,7 +8,11 @@ $(document).ready(function() {
 		if ($(this).attr('data-icon-secondary')) { 
 			secondary=$(this).attr('data-icon-secondary');
 		}
-		$(this).button({icons: {primary: primary, secondary: secondary}});
+		var text=true;
+		if ($(this).html()=='') { 
+			text=false;
+		}
+		$(this).button({text: text, icons: {primary: primary, secondary: secondary}});
 	});
 	$('input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], input[type=search], input[type=tel]').livequery(function() { 
 		$(this).button().addClass('esqoo-text-field');
@@ -26,6 +30,10 @@ $(document).ready(function() {
 		$(this).selectmenu({width: '200'});
 	});
 	$('div.esqoo-flexigrid').livequery(function() { 
+		var idfield='id';
+		if ($(this).attr('data-flexigrid-id-field')) { 
+			idfield=$(this).attr('data-flexigrid-id-field');
+		}
 		var height=200;
 		if ($(this).attr('data-flexigrid-height')) { 
 			height=$(this).attr('data-flexigrid-height');
@@ -58,7 +66,7 @@ $(document).ready(function() {
 		*/
 		var colModel=[];
 		for (var c=0; true; c++) { 
-			if (!$(this).attr('data-flexigrid-col'+c+'-display')) { 
+			if (!$(this).attr('data-flexigrid-col'+c+'-name')) { 
 				break;
 			}
 			var sortable=true;
@@ -69,10 +77,25 @@ $(document).ready(function() {
 			if ($(this).attr('data-flexigrid-col'+c+'-align') && $(this).attr('data-flexigrid-col'+c+'-align')!='left') { 
 				align=$(this).attr('data-flexigrid-col'+c+'-align');
 			}
-			colModel.push({display: $(this).attr('data-flexigrid-col'+c+'-display'), name: $(this).attr('data-flexigrid-col'+c+'-name'), width: $(this).attr('data-flexigrid-col'+c+'-width'), sortable: sortable, align: align});
+			var jsfilter='';
+			if ($(this).attr('data-flexigrid-col'+c+'-js-filter')) { 
+				jsfilter=$(this).attr('data-flexigrid-col'+c+'-js-filter');
+			}
+			colModel.push({display: $(this).attr('data-flexigrid-col'+c+'-display'), name: $(this).attr('data-flexigrid-col'+c+'-name'), width: $(this).attr('data-flexigrid-col'+c+'-width'), sortable: sortable, align: align, jsfilter: jsfilter});
+		}
+		var searchitems=[];
+		for (var c=0; true; c++) {
+			if (!$(this).attr('data-flexigrid-searchitem'+c+'-name')) { 
+				break;
+			}
+			var isdefault=false;
+			if ($(this).attr('data-flexigrid-searchitem'+c+'-isdefault')=='true') { 
+				isdefault=true;
+			}
+			searchitems.push({display: $(this).attr('data-flexigrid-searchitem'+c+'-display'), name: $(this).attr('data-flexigrid-searchitem'+c+'-name'), isdefault: isdefault});
 		}
 		var params=[{name: 'ResponseFormat',value:'json'}];
-		$(this).flexigrid({height: height, width: width, usepager: usepager, page: page, useRp: useRp, rp: rp, url: $(this).attr('data-flexigrid-url'), dataType: 'json', colModel: colModel,params:params});
+		$(this).flexigrid({height: height, width: width, usepager: usepager, page: page, useRp: useRp, rp: rp, url: $(this).attr('data-flexigrid-url'), dataType: 'json', colModel: colModel,params:params,idfield: idfield,searchitems: searchitems});
 	});
 	 $("#nav-one").supersubs({ 
             minWidth:    12,   // minimum width of sub-menus in em units 

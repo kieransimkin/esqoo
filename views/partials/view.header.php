@@ -11,7 +11,7 @@
 	$this->cssManager->display();
 	$theme=@$this->options['theme'];
 	if (strlen($theme)<1) { 
-		$theme='sunny';
+		//$theme='sunny';
 		//$theme='vader';
 		//$theme='ui-darkness';
 		//$theme='ui-lightness';
@@ -20,7 +20,7 @@
 		//$theme='swanky-purse';
 		//$theme='mint-choc';
 		//$theme='south-street';
-		//$theme='cupertino';
+		$theme='cupertino';
 		//$theme='start';
 		//$theme='hot-sneaks';
 		//$theme='dot-luv';
