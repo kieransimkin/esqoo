@@ -62,8 +62,8 @@ class DBSQL extends DBSQ {
 			$input[$a] = mysql_real_escape_string($input[$a]);
 		}
 
-		if (!$input['SortField']) $input['SortField']='id';
-		if (!$input['SortOrder']) $input['SortOrder'] = 'desc';
+		if (!$input['SortField'] || $input['SortField']=='undefined') $input['SortField']='id';
+		if (!$input['SortOrder'] || $input['SortOrder']=='undefined') $input['SortOrder'] = 'desc';
 
 		$sort = "ORDER BY ".$input['SortField']." ".$input['SortOrder'];
 

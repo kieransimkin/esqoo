@@ -72,7 +72,6 @@ $(document).ready(function() {
 			colModel.push({display: $(this).attr('data-flexigrid-col'+c+'-display'), name: $(this).attr('data-flexigrid-col'+c+'-name'), width: $(this).attr('data-flexigrid-col'+c+'-width'), sortable: sortable, align: align});
 		}
 		var params=[{name: 'ResponseFormat',value:'json'}];
-		console.log(params);
 		$(this).flexigrid({height: height, width: width, usepager: usepager, page: page, useRp: useRp, rp: rp, url: $(this).attr('data-flexigrid-url'), dataType: 'json', colModel: colModel,params:params});
 	});
 	 $("#nav-one").supersubs({ 
