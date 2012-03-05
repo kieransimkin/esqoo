@@ -80,6 +80,7 @@ $(document).ready(function() {
 			var jsfilter='';
 			if ($(this).attr('data-flexigrid-col'+c+'-js-filter')) { 
 				jsfilter=$(this).attr('data-flexigrid-col'+c+'-js-filter');
+				sortable=false;
 			}
 			colModel.push({display: $(this).attr('data-flexigrid-col'+c+'-display'), name: $(this).attr('data-flexigrid-col'+c+'-name'), width: $(this).attr('data-flexigrid-col'+c+'-width'), sortable: sortable, align: align, jsfilter: jsfilter});
 		}
