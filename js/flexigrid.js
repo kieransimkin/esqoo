@@ -38,7 +38,7 @@
 			qtype: '',
 			nomsg: 'No items',
 			minColToggle: 1, //minimum allowed column to be hidden
-			showToggleBtn: true, //show or hide column toggle popup
+			showToggleBtn: false, //show or hide column toggle popup
 			hideOnSubmit: true,
 			autoload: true,
 			blockOpacity: 0.5,
@@ -344,6 +344,7 @@
 						if (i % 2 && p.striped) {
 							tr.className = 'erow';
 						}
+						tr.addClass('ui-widget-content');
 						if (row.id) {
 							tr.id = 'row' + row.id;
 						}
@@ -387,6 +388,7 @@
 						if (i % 2 && p.striped) {
 							tr.className = 'erow';
 						}
+						tr.addClass('ui-widget-content');
 						var nid = $(this).attr('id');
 						if (nid) {
 							tr.id = 'row' + nid;
@@ -448,7 +450,7 @@
 						p.sortorder = 'asc';
 					}
 				}
-				$(th).addClass('sorted').siblings().removeClass('sorted');
+				$(th).addClass('ui-state-active').siblings().removeClass('ui-state-active');
 				$('.sdesc', this.hDiv).removeClass('sdesc');
 				$('.sasc', this.hDiv).removeClass('sasc');
 				$('div', th).addClass('s' + p.sortorder);
@@ -505,22 +507,22 @@
 					p.page = p.pages;
 				}
 				var param = [{
-					name: 'page',
+					name: 'Page',
 					value: p.newp
 				}, {
-					name: 'rp',
+					name: 'ResultsPerPage',
 					value: p.rp
 				}, {
-					name: 'sortname',
+					name: 'SortField',
 					value: p.sortname
 				}, {
-					name: 'sortorder',
+					name: 'SortOrder',
 					value: p.sortorder
 				}, {
-					name: 'query',
+					name: 'SearchQuery',
 					value: p.query
 				}, {
-					name: 'qtype',
+					name: 'SearchField',
 					value: p.qtype
 				}];
 				if (p.params) {
@@ -600,7 +602,7 @@
 					var pth = $('th:eq(' + n + ')', g.hDiv).get(0);
 					if (pth != null) {
 						if (p.sortname == $(pth).attr('abbr') && p.sortname) {
-							this.className = 'sorted';
+							this.className = 'ui-state-active';
 						}
 						$(tdDiv).css({
 							textAlign: pth.align,
@@ -668,10 +670,12 @@
 							$(g.gDiv).noSelect(false);
 						}
 					}).hover(function (e) {
+						$(this).removeClass('ui-state-highlight');
+						$(this).addClass('ui-state-hover');
 						if (g.multisel) {
 							$(this).toggleClass('trSelected');
 						}
-					}, function () {});
+					}, function (e) { $(this).removeClass('ui-state-hover'); $(this).addClass('ui-state-highlight');});
 					if ($.browser.msie && $.browser.version < 7.0) {
 						$(this).hover(function () {
 							$(this).addClass('trOver');
@@ -686,6 +690,7 @@
 		if (p.colModel) { //create model if any
 			thead = document.createElement('thead');
 			var tr = document.createElement('tr');
+			$(tr).addClass('ui-widget-header');
 			for (var i = 0; i < p.colModel.length; i++) {
 				var cm = p.colModel[i];
 				var th = document.createElement('th');
@@ -698,7 +703,13 @@
 					th.align = cm.align;
 				}
 				if (cm.width) {
-					$(th).attr('width', cm.width);
+					if (cm.width.substr(-1)=='%') { 
+						var frac=cm.width.substr(0,cm.width.length-1)/100;
+						// 20 is the number of pixels to allow for a scrollbar
+						$(th).attr('width', ($(t).width()-55)*frac);
+					} else { 
+						$(th).attr('width', cm.width);
+					}
 				}
 				if ($(cm).attr('hide')) {
 					th.hidden = true;
@@ -731,6 +742,7 @@
 		}
 		g.hTable = document.createElement('table');
 		g.gDiv.className = 'flexigrid';
+		$(g.gDiv).addClass('ui-widget');
 		if (p.width != 'auto') {
 			g.gDiv.style.width = p.width + 'px';
 		}
@@ -746,6 +758,7 @@
 		//set toolbar
 		if (p.buttons) {
 			g.tDiv.className = 'tDiv';
+			$(g.tDiv).addClass('ui-widget-content');
 			var tDiv2 = document.createElement('div');
 			tDiv2.className = 'tDiv2';
 			for (var i = 0; i < p.buttons.length; i++) {
@@ -781,6 +794,7 @@
 			$(g.gDiv).prepend(g.tDiv);
 		}
 		g.hDiv.className = 'hDiv';
+		$(g.hDiv).addClass('ui-widget-content');
 		$(t).before(g.hDiv);
 		g.hTable.cellPadding = 0;
 		g.hTable.cellSpacing = 0;
@@ -800,7 +814,7 @@
 					g.changeSort(this);
 				});
 				if ($(this).attr('abbr') == p.sortname) {
-					this.className = 'sorted';
+					this.className = 'ui-state-active';
 					thdiv.className = 's' + p.sortorder;
 				}
 			}
@@ -858,7 +872,7 @@
 					} else {
 						$(g.nDiv).css('left', nl);
 					}
-					if ($(this).hasClass('sorted')) {
+					if ($(this).hasClass('ui-state-active')) {
 						$(g.nBtn).addClass('srtd');
 					} else {
 						$(g.nBtn).removeClass('srtd');
@@ -881,6 +895,7 @@
 		});
 		//set bDiv
 		g.bDiv.className = 'bDiv';
+		$(g.bDiv).addClass('ui-widget-content');
 		$(t).before(g.bDiv);
 		$(g.bDiv).css({
 			height: (p.height == 'auto') ? 'auto' : p.height + "px"
@@ -962,9 +977,10 @@
 		// add pager
 		if (p.usepager) {
 			g.pDiv.className = 'pDiv';
+			$(g.pDiv).addClass('ui-widget-content');
 			g.pDiv.innerHTML = '<div class="pDiv2"></div>';
 			$(g.bDiv).after(g.pDiv);
-			var html = ' <div class="pGroup"> <div class="pFirst pButton"><span></span></div><div class="pPrev pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">' + p.pagetext + ' <input type="text" size="4" value="1" /> ' + p.outof + ' <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pNext pButton"><span></span></div><div class="pLast pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"> <div class="pReload pButton"><span></span></div> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pPageStat"></span></div>';
+			var html = ' <div class="pGroup"> <button class="pFirst pButton" data-icon-primary="ui-icon-arrowthickstop-1-w"></button><button class="pPrev pButton" data-icon-primary="ui-icon-arrowthick-1-w"></button> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">' + p.pagetext + ' <input type="text" size="4" value="1" /> ' + p.outof + ' <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <button class="pNext pButton" data-icon-primary="ui-icon-arrowthick-1-e"></button><button class="pLast pButton" data-icon-primary="ui-icon-arrowthickstop-1-e"></button> </div> <div class="btnseparator"></div> <div class="pGroup"> <button class="pReload pButton" data-icon-primary="ui-icon-refresh"></button> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pPageStat"></span></div>';
 			$('div', g.pDiv).html(html);
 			$('.pReload', g.pDiv).click(function () {
 				g.populate()
@@ -1018,6 +1034,7 @@
 				});
 				//add search box
 				g.sDiv.className = 'sDiv';
+				$(g.sDiv).addClass('ui-widget-header');
 				var sitems = p.searchitems;
 				var sopt = '', sel = '';
 				for (var s = 0; s < sitems.length; s++) {

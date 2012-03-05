@@ -50,7 +50,30 @@ $(document).ready(function() {
 		if ($(this).attr('data-flexigrid-rp')) { 
 			rp=$(this).attr('data-flexigrid-rp');
 		}
-		$(this).flexigrid({height: height, width: width, usepager: usepager, page: page, useRp: useRp, rp: rp, url: $(this).attr('data-flexigrid-url'), dataType: 'json'});
+		/*
+		searchitems : [
+			{display: 'User', name : 'user_metadata.username', isdefault: true},
+			{display: 'Subject', name : 'subject'}
+			]
+		*/
+		var colModel=[];
+		for (var c=0; true; c++) { 
+			if (!$(this).attr('data-flexigrid-col'+c+'-display')) { 
+				break;
+			}
+			var sortable=true;
+			if ($(this).attr('data-flexigrid-col'+c+'-sortable')=='false') { 
+				sortable=false;
+			}
+			var align='left';
+			if ($(this).attr('data-flexigrid-col'+c+'-align') && $(this).attr('data-flexigrid-col'+c+'-align')!='left') { 
+				align=$(this).attr('data-flexigrid-col'+c+'-align');
+			}
+			colModel.push({display: $(this).attr('data-flexigrid-col'+c+'-display'), name: $(this).attr('data-flexigrid-col'+c+'-name'), width: $(this).attr('data-flexigrid-col'+c+'-width'), sortable: sortable, align: align});
+		}
+		var params=[{name: 'ResponseFormat',value:'json'}];
+		console.log(params);
+		$(this).flexigrid({height: height, width: width, usepager: usepager, page: page, useRp: useRp, rp: rp, url: $(this).attr('data-flexigrid-url'), dataType: 'json', colModel: colModel,params:params});
 	});
 	 $("#nav-one").supersubs({ 
             minWidth:    12,   // minimum width of sub-menus in em units 
