@@ -304,7 +304,7 @@
 			},
 			addData: function (data) { //parse data
 				if (p.dataType == 'json') {
-					data = $.extend({rows: [], page: 0, total: 0}, data);
+					data = $.extend({Rows: [], Page: 0, Total: 0}, data);
 				}
 				if (p.preProcess) {
 					data = p.preProcess(data);
@@ -318,7 +318,7 @@
 				if (p.dataType == 'xml') {
 					p.total = +$('rows total', data).text();
 				} else {
-					p.total = data.total;
+					p.total = data.Total;
 				}
 				if (p.total == 0) {
 					$('tr, a, td, div', t).unbind();
@@ -333,13 +333,13 @@
 				if (p.dataType == 'xml') {
 					p.page = +$('rows page', data).text();
 				} else {
-					p.page = data.page;
+					p.page = data.Page;
 				}
 				this.buildpager();
 				//build new body
 				var tbody = document.createElement('tbody');
 				if (p.dataType == 'json') {
-					$.each(data.rows, function (i, row) {
+					$.each(data.Rows, function (i, row) {
 						var tr = document.createElement('tr');
 						if (i % 2 && p.striped) {
 							tr.className = 'erow';
@@ -354,11 +354,7 @@
 								var idx = $(this).attr('axis').substr(3);
 								td.align = this.align;
 								// If the json elements aren't named (which is typical), use numeric order
-								if (typeof row.cell[idx] != "undefined") {
-									td.innerHTML = (row.cell[idx] != null) ? row.cell[idx] : '';//null-check for Opera-browser
-								} else {
-									td.innerHTML = row.cell[p.colModel[idx].name];
-								}
+								td.innerHTML = row[p.colModel[idx].name];
 								$(td).attr('abbr', $(this).attr('abbr'));
 								$(tr).append(td);
 								td = null;
@@ -368,11 +364,7 @@
 							for (idx = 0; idx < cell.length; idx++) {
 								var td = document.createElement('td');
 								// If the json elements aren't named (which is typical), use numeric order
-								if (typeof row.cell[idx] != "undefined") {
-									td.innerHTML = (row.cell[idx] != null) ? row.cell[idx] : '';//null-check for Opera-browser
-								} else {
-									td.innerHTML = row.cell[p.colModel[idx].name];
-								}
+								td.innerHTML = row[p.colModel[idx].name];
 								$(tr).append(td);
 								td = null;
 							}
