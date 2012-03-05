@@ -57,4 +57,23 @@ class DBSQL extends DBSQ {
 		}
 		return $ret;
 	}
+	static function getSqlSuffix($input) {
+		foreach(array("Page","ResultsPerPage","SortField","SortOrder") as $a) {
+			$input[$a] = mysql_real_escape_string($input[$a]);
+		}
+
+		if (!$input['SortField']) $input['SortField']='id';
+		if (!$input['SortOrder']) $input['SortOrder'] = 'desc';
+
+		$sort = "ORDER BY ".$input['SortField']." ".$input['SortOrder'];
+
+		if (!$input['Page']) $input['Page'] = 1;
+		if (!$input['ResultsPerPage']) $input['ResultsPerPage'] = 15;
+
+		$start = (($input['Page']-1) * $input['ResultsPerPage']);
+
+		$limit = "LIMIT $start, ".$input['ResultsPerPage'];
+		return "$sort $limit";
+	}
+
 }
