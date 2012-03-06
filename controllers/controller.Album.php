@@ -16,6 +16,7 @@ class AlbumController extends LockedController {
 	public function addDialog($arg='',$input=array()) { 
 		$form=$this->get_album_form($input,null);
 		if ($form->validate()) { 
+			$this->createAPI('',$input);
 			$this->showMessage(_('Album created'));
 			return $this->formSuccess();	
 		} else { 
@@ -24,8 +25,10 @@ class AlbumController extends LockedController {
 	}
 	public function manageDialog($arg='',$input=array()) { 
 		$album=$this->getAPI('',array('AlbumID'=>$arg));
+		$input['AlbumID']=$arg;
 		$form=$this->get_album_form($input,$album);
 		if ($form->validate()) { 
+			$this->updateAPI('',$input);
 			$this->showMessage(_('Album updated'));
 			return $this->formSuccess();
 		} else { 
@@ -49,7 +52,7 @@ class AlbumController extends LockedController {
 	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
 	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
 	 *****************************************/
-	function listAPI($arg='',$input=array()) { 
+	public function listAPI($arg='',$input=array()) { 
 		$suffix=DBSQL::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$albums=Album::getAll('user_id=? and DeleteDate is null and Name like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
@@ -60,12 +63,33 @@ class AlbumController extends LockedController {
 		$numrows=DBSQL::foundRows();
 		return $this->flexigridResponse($albums,$input['Page'],$numrows);
 	}
-	function getAPI($arg='',$input=array()) { 
+	public function getAPI($arg='',$input=array()) { 
 		$album=$this->ensure_api_album($input);
 		if ($this->api_validation_success()) { 
 			$album->set_visible_api_fields($this->get_album_fields());
 			return $album;
 		}	
+	}
+	public function createAPI($arg='',$input=array()) { 
+		$form=$this->get_album_form($input,null,true);
+		$album=null;
+		if (!$form->validate()) { 
+			$this->api_form_validation_error($form);
+		}
+		if ($this->api_validation_success()) { 
+
+		}
+		return $album;
+	}
+	public function updateAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+		$form=$this->get_album_form($input,$album,true);
+		if (!$form->validate()) { 
+			$this->api_form_validation_error($form);
+		}
+		if ($this->api_validation_success()) { 
+		}
+		return $album;
 	}
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
@@ -73,7 +97,7 @@ class AlbumController extends LockedController {
 	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
 	 ****************************/
 	private function get_album_fields() { 
-		return array('Name',"id");
+		return array("Name","id","Description");
 	}
 	private function ensure_api_album($input) { 
 		$album=null;
@@ -84,6 +108,7 @@ class AlbumController extends LockedController {
 				$album=Album::get($input['AlbumID']);
 				if ($album->user_id!=$this->user->id) { 
 					$this->api_error(2,"AlbumID not found");
+					$album=null;
 				}
 			} catch (DBSQ_Exception $e) { 
 				$this->api_error(2,"AlbumID not found");
