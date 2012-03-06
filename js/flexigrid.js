@@ -696,10 +696,12 @@
 		if (p.colModel) { //create model if any
 			thead = document.createElement('thead');
 			var tr = document.createElement('tr');
-			$(tr).addClass('ui-widget-header');
+			$(tr).addClass('ui-widget-content');
 			for (var i = 0; i < p.colModel.length; i++) {
 				var cm = p.colModel[i];
 				var th = document.createElement('th');
+				$(th).addClass('ui-widget-header');
+				$(th).addClass('ui-corner-top');
 				th.innerHTML = cm.display;
 				if (cm.name && cm.sortable) {
 					$(th).attr('abbr', cm.name);
@@ -712,7 +714,7 @@
 					if (cm.width.substr(-1)=='%') { 
 						var frac=cm.width.substr(0,cm.width.length-1)/100;
 						// 20 is the number of pixels to allow for a scrollbar
-						$(th).attr('width', ($(t).width()-55)*frac);
+						$(th).attr('width', ($(t).width()-70)*frac);
 					} else { 
 						$(th).attr('width', cm.width);
 					}
@@ -749,6 +751,8 @@
 		g.hTable = document.createElement('table');
 		g.gDiv.className = 'flexigrid';
 		$(g.gDiv).addClass('ui-widget');
+		$(g.gDiv).addClass('ui-widget-content');
+		$(g.gDiv).addClass('ui-corner-all');
 		if (p.width != 'auto') {
 			g.gDiv.style.width = p.width + 'px';
 		}
@@ -801,10 +805,11 @@
 		}
 		g.hDiv.className = 'hDiv';
 		$(g.hDiv).addClass('ui-widget-content');
+		$(g.hDiv).addClass('ui-corner-top');
 		$(t).before(g.hDiv);
 		g.hTable.cellPadding = 0;
 		g.hTable.cellSpacing = 0;
-		$(g.hDiv).append('<div class="hDivBox"></div>');
+		$(g.hDiv).append('<div class="ui-widget-content hDivBox"></div>');
 		$('div', g.hDiv).append(g.hTable);
 		var thead = $("thead:first", t).get(0);
 		if (thead) $(g.hTable).append(thead);
@@ -963,6 +968,7 @@
 			g.vDiv.className = 'vGrip';
 			$(g.vDiv).addClass('ui-widget');
 			$(g.vDiv).addClass('ui-state-default');
+			$(g.vDiv).addClass('ui-corner-bottom');
 			$(g.vDiv).hover(function() { 
 				$(g.vDiv).addClass('ui-state-hover');
 			},
@@ -993,7 +999,7 @@
 		if (p.usepager) {
 			g.pDiv.className = 'pDiv';
 			$(g.pDiv).addClass('ui-widget-content');
-			g.pDiv.innerHTML = '<div class="pDiv2"></div>';
+			g.pDiv.innerHTML = '<div class="pDiv2 ui-widget-content"></div>';
 			$(g.bDiv).after(g.pDiv);
 			var html = ' <div class="pGroup"> <button class="pFirst pButton" data-icon-primary="ui-icon-arrowthickstop-1-w"></button><button class="pPrev pButton" data-icon-primary="ui-icon-arrowthick-1-w"></button> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pcontrol">' + p.pagetext + ' <input type="text" size="4" value="1" /> ' + p.outof + ' <span> 1 </span></span></div> <div class="btnseparator"></div> <div class="pGroup"> <button class="pNext pButton" data-icon-primary="ui-icon-arrowthick-1-e"></button><button class="pLast pButton" data-icon-primary="ui-icon-arrowthickstop-1-e"></button> </div> <div class="btnseparator"></div> <div class="pGroup"> <button class="pReload pButton" data-icon-primary="ui-icon-refresh"></button> </div> <div class="btnseparator"></div> <div class="pGroup"><span class="pPageStat"></span></div>';
 			$('div', g.pDiv).html(html);
@@ -1028,7 +1034,7 @@
 					else sel = '';
 					opt += "<option value='" + p.rpOptions[nx] + "' " + sel + " >" + p.rpOptions[nx] + "&nbsp;&nbsp;</option>";
 				}
-				$('.pDiv2', g.pDiv).prepend("<div class='pGroup'><select name='rp'>" + opt + "</select></div> <div class='btnseparator'></div>");
+				$('.pDiv2', g.pDiv).prepend("<div class='pGroup rp'><select name='rp' data-width='50'>" + opt + "</select></div> <div class='btnseparator'></div>");
 				$('select', g.pDiv).change(function () {
 					if (p.onRpChange) {
 						p.onRpChange(+this.value);

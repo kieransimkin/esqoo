@@ -18,7 +18,8 @@ $(document).ready(function() {
 		$(this).button().addClass('esqoo-text-field');
 	});
 	$('textarea:not(.plain-textarea)').livequery(function() { 
-		$(this).button().addClass('esqoo-text-field');
+		var html=$(this).html();
+		$(this).button().html(html).addClass('esqoo-text-field');
 	});
 	$('section.esqoo-dialog-tabs').livequery(function() { 
 		$(this).tabs();
@@ -27,14 +28,18 @@ $(document).ready(function() {
 		$(this).uploadq();
 	});
 	$('select').livequery(function() { 
-		$(this).selectmenu({width: '200'});
+		var width=200;
+		if ($(this).attr('data-width')) { 
+			width=$(this).attr('data-width');
+		}
+		$(this).selectmenu({width: width});
 	});
 	$('div.esqoo-flexigrid').livequery(function() { 
 		var idfield='id';
 		if ($(this).attr('data-flexigrid-id-field')) { 
 			idfield=$(this).attr('data-flexigrid-id-field');
 		}
-		var height=200;
+		var height=350;
 		if ($(this).attr('data-flexigrid-height')) { 
 			height=$(this).attr('data-flexigrid-height');
 		}

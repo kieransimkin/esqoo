@@ -72,12 +72,14 @@ class AlbumController extends LockedController {
 	}
 	public function createAPI($arg='',$input=array()) { 
 		$form=$this->get_album_form($input,null,true);
-		$album=null;
+		$album=Album::get();
 		if (!$form->validate()) { 
 			$this->api_form_validation_error($form);
 		}
 		if ($this->api_validation_success()) { 
-
+			$album->setFromFilteredArray($input,$this->get_album_fields());
+			$album->user_id=$this->user->id;
+			$album->save();
 		}
 		return $album;
 	}
@@ -88,12 +90,7 @@ class AlbumController extends LockedController {
 			$this->api_form_validation_error($form);
 		}
 		if ($this->api_validation_success()) { 
-			foreach ($this->get_album_fields() as $field) { 
-				if ($field=='id') { 
-					continue;
-				}
-				$album->$field=$input[$field];
-			}
+			$album->setFromFilteredArray($input,$this->get_album_fields());
 			$album->save();
 		}
 		return $album;

@@ -4,11 +4,12 @@ echo $this->form;
 ?>
 <h1><?=_('Albums')?></h1>
 <button data-icon-primary="ui-icon-plus" onclick="esqoo_ui.make_dialog({title:'<?=_('Create new album');?>'},'/album/add');"><?=_('Create new album');?></button>
+<br>&nbsp;<br>
 <script>
 var esqoo_album={};
 esqoo_album.actions= function (id,data) { 
 	var ret = $('<div></div>');
-	$('<button></button>').attr('data-icon-primary','ui-icon-trash').html('<?=_('Manage')?>').attr('onclick','esqoo_album.manage('+id+'); return false;').appendTo(ret);
+	$('<button></button>').attr('data-icon-primary','ui-icon-pencil').html('<?=_('Manage')?>').attr('onclick','esqoo_album.manage('+id+'); return false;').appendTo(ret);
 	//$('<button></button>').attr('data-icon-primary','ui-icon-trash').html('<?=_('Delete')?>').attr('onclick','esqoo_album.delete('+id+'); return false;').appendTo(ret);
 	return ret;
 }

@@ -7,6 +7,10 @@ section, article, header, footer, nav, aside, hgroup {
 body,html { 
 	margin: 0;
 }
+html {
+     overflow-y: -moz-scrollbars-vertical;
+     overflow-y: scroll;
+}
 .ui-button,
 .ui-selectmenu {
 	font-size: 0.9em !important;
