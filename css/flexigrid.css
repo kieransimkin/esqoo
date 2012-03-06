@@ -386,21 +386,9 @@ div.colCopy {
 	border-bottom: 0px solid #ccc;
 }
 
-.flexigrid div.hDiv th.thOver {
-	
-}
-
-.flexigrid div.hDiv th.thOver div,.flexigrid div.hDiv th.sorted.thOver div
-	{
-	border-bottom: 1px solid;
-	border-color: inherit;
-	padding-bottom: 4px;
-}
-
 .flexigrid div.hDiv th.sorted div {
 	border-bottom: 0px solid;
 	border-color: inherit;
-	padding-bottom: 5px;
 }
 
 .flexigrid div.hDiv th.thMove {
