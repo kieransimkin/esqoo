@@ -88,6 +88,13 @@ class AlbumController extends LockedController {
 			$this->api_form_validation_error($form);
 		}
 		if ($this->api_validation_success()) { 
+			foreach ($this->get_album_fields() as $field) { 
+				if ($field=='id') { 
+					continue;
+				}
+				$album->$field=$input[$field];
+			}
+			$album->save();
 		}
 		return $album;
 	}
