@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* CSS Document */
 .flexigrid {
-	font-size: 11px;
+	font-size: 0.9em;
 	position: relative;
 	border: 0px solid;
 	border-color: inherit;
@@ -283,7 +283,7 @@
 
 .flexigrid div.iDiv input,.flexigrid div.iDiv select,.flexigrid div.iDiv textarea
 	{
-	font-size: 11px;
+	font-size: 0.9em;
 }
 
 .flexigrid div.iDiv input.tb {
@@ -375,7 +375,7 @@
 }
 
 div.colCopy {
-	font-size: 11px;
+	font-size: 0.9em;
 	border: 1px solid;
 	border-color: inherit;
 	border-bottom: 0px;
@@ -577,6 +577,8 @@ div.pGroup {
 	padding-top: 0.2em;
 	padding-bottom: 0.2em;
 	width: 1.4em;
+	position: relative;
+	top: -0.1em;
 }
 .flexigrid div.pDiv2 div.rp,
 .flexigrid div.pDiv2 span.pcontrol,
