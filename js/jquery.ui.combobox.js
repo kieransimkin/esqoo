@@ -5,9 +5,17 @@
 		},
 		_create: function() {
 			var me = this;
+			this.hiddenvalueelement=$('<input type="hidden"></input>').attr('id','hidden-value-'+me.element.attr('id')).insertBefore(this.element);
+			this.hiddenlabelelement=$('<input type="hidden"></input>').attr('id','hidden-label-'+me.element.attr('id')).insertBefore(this.element);
 			$(this.element).autocomplete({
 			    source: this.options.source,
-			    minLength: 0
+			    minLength: 0,
+			    select: function(e,ui) { 
+				me.element.val(ui.item.label);
+				me.hiddenvalueelement.val(ui.item.value);
+				me.hiddenlabelelement.val(ui.item.label);
+				return false;
+			    }
 			}).addClass("ui-widget ui-widget-content ui-corner-left");
 			$(this.element).removeClass('ui-corner-all');
 			$(this.element).addClass('ui-corner-left');
