@@ -32,7 +32,8 @@ class ContentController extends LockedController {
 	 *********************/
 	 private function get_upload_form($input,$forcesubmit=false) { 
 		$form=new Form('upload');
-		$form->addElement('text','album',array('class'=>'esqoo-uploadq-album','placeholder'=>_('Album')));
+		$form->addElement('hidden','albumlist',array(),array())->setValue(json_encode(Album::get_autocomplete_array($this->user->id)));
+		$form->addElement('text','album',array('data-combobox-source-selector'=>'#albumlist-0','class'=>'esqoo-combobox esqoo-uploadq-album','placeholder'=>_('Album')));
 		$form->addElement('file','upload',array('class'=>'upload-form','multiple'=>'multiple'))->setLabel(_('Select files'));
 		return $form;
 	 }

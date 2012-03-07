@@ -27,6 +27,9 @@ $(document).ready(function() {
 	$('input.upload-form[type=file]').livequery(function() { 
 		$(this).uploadq();
 	});
+	$('input.esqoo-combobox').livequery(function() { 
+		$(this).combobox({source: $.parseJSON($($(this).attr('data-combobox-source-selector')).val())});
+	});
 	$('select').livequery(function() { 
 		var width=200;
 		if ($(this).attr('data-width')) { 

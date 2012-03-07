@@ -171,3 +171,11 @@ input.esqoo-uploadq-album {
 	float: right;
 	margin-right: 0px;
 }
+button.esqoo-combobox-button { 
+	float: right;
+	z-index: 10;
+}
+button.esqoo-combobox-button span.ui-button-text { 
+	padding-top: 0.2em;
+	padding-bottom: 0.3em;
+}
