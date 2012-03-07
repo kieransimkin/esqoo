@@ -184,3 +184,20 @@ button.esqoo-combobox-button span.ui-button-text {
 	padding-top: 0.2em;
 	padding-bottom: 0.3em;
 }
+input.esqoo-uploadq-album { 
+	width: 70%;
+}
+input.esqoo-upload-queue-item-name-container[readonly],
+input.esqoo-upload-queue-item-album-container[readonly] { 
+	background-color: transparent !important;
+	background-image: none !important;
+	color: inherit;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	border: none !important;
+}
+ul.esqoo-uploadq-complete textarea { 
+
+	width: 99%;
+}

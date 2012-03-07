@@ -1,5 +1,24 @@
 <?php
 class Album extends DBSQL { 
+	public function save() { 
+		$name=$this->Name;
+		$origname=$name;
+		$c=1;
+		while (Album::album_exists($this->user_id, $name)) { 
+			$name=$origname.' ('.$c.')';
+			++$c;
+		}
+		$this->Name=$name;
+		parent::save();
+	}
+	static function album_exists($user_id,$name) { 
+		$res=DBSQL::getOne('select id from album where user_id=? and UserVisible=\'true\' and DeleteDate is null and Name=?',array($user_id,$name));
+		if (is_null($res)) { 
+			return false;
+		} else {
+			return true;
+		}
+	}
 	static function get_menu($user_id) { 
 		$res=Album::getAll('DeleteDate is null and user_id=? and UserVisible=\'true\'',array($user_id));
 		$ret=array();
