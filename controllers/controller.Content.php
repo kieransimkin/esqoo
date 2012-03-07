@@ -6,8 +6,11 @@ class ContentController extends LockedController {
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function uploadUI($arg='',$input=array()) { 
-		$form=$this->get_upload_form($input);
+		$album=$this->foreign_api_action('AlbumController','get-stub');
+		$form=$this->get_upload_form($input,$album,$this->validate_album_id($arg));
 		if ($form->validate()) { 
+	
+
 		}
 		$this->view->form=$form;
 	}
@@ -17,7 +20,8 @@ class ContentController extends LockedController {
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
 	function quickuploadDialog($arg='',$input=array()) { 
-		$form=$this->get_upload_form($input);
+		$album=$this->foreign_api_action('AlbumController','get-stub');
+		$form=$this->get_upload_form($input,$album,$this->validate_album_id($arg));
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
@@ -30,10 +34,17 @@ class ContentController extends LockedController {
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
-	 private function get_upload_form($input,$forcesubmit=false) { 
+	 private function get_upload_form($input,$album,$defaultalbum,$forcesubmit=false) { 
 		$form=new Form('upload');
+		$form->addElement('hidden','new_album_id',array(),array())->setValue($album->id);
 		$form->addElement('hidden','albumlist',array(),array())->setValue(json_encode(Album::get_autocomplete_array($this->user->id)));
-		$form->addElement('text','album',array('data-combobox-source-selector'=>'#albumlist-0','class'=>'esqoo-combobox esqoo-uploadq-album','placeholder'=>_('Album')));
+		$form->addElement('hidden','new_album_name',array(),array())->setValue($album->Name);
+		$af=$form->addElement('text','album',array('data-combobox-source-selector'=>'#albumlist-0','class'=>'esqoo-combobox esqoo-uploadq-album'));
+		if ($defaultalbum) { 
+			$af->setValue($defaultalbum->Name);
+		} else { 
+			$af->setValue($album->Name);
+		}
 		$form->addElement('file','upload',array('class'=>'upload-form','multiple'=>'multiple'))->setLabel(_('Select files'));
 		return $form;
 	 }
@@ -137,6 +148,17 @@ class ContentController extends LockedController {
 		
 		foreach ($res as $chunk) { 
 			
+		}
+	}
+	private function validate_album_id($aid) { 
+		try { 
+			$album=Album::get($aid);
+			if ($album->user_id!=$this->user->id) { 
+				return false;
+			}
+			return $album;
+		} catch (DBSQ_Exception $e) { 
+			return false;
 		}
 	}
 

@@ -189,4 +189,17 @@ class Controller {
 		}
 		return array("Page"=>$page,"RowCount"=>$total,"Rows"=>$outrows);
 	}
+	function foreign_api_action($controller,$action,$arg='',$input=array()) { 
+		$oaction=$action;
+		$ocontroller=$controller;
+		$action=str_replace(' ','',str_replace('-','',strtolower($action))).'API';
+		$controller=ucwords($controller);
+		if (substr($controller,-10)!='Controller') { 
+			$controller=$controller.'Controller';
+		}
+		$new_controller=new $controller($ocontroller,$oaction);
+
+		return $new_controller->$action($arg,$input);
+		
+	}
 }

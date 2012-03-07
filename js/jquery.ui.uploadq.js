@@ -11,10 +11,21 @@ $.widget( "esqoo.uploadq", {
 	queue: [],
 	complete: [],
 	failed: [],
+	albumlist: null,
 	queue_running: false,
 	queue_item_running: null,
 	_create: function() { 
+		var me = this;
 		this._do_html_setup();
+		$(document).ready(function() { 
+			me._update_album_list();
+		});
+		$('#album-0').click(function() { 
+			if ($('#album-0').val()==$('#new_album_name-0').val()) { 
+				$('#album-0').focus();
+				$('#album-0').select();
+			}
+		});
 	},
 	_dragenter: function() { 
 		var me = this;
@@ -58,15 +69,29 @@ $.widget( "esqoo.uploadq", {
 			me._handleFiles(this.files);
 		}
 	},
-	_enqueue_file_upload: function(file) { 
+	_get_album_name_from_id: function (albumid) { 
+		var ret=$('#album-0').val();
+		$(this.albumlist).each(function(i,o) { 
+			if (o.value==albumid) { 
+				ret=o.label;
+				return false;
+			}
+		});
+		return ret;
+	},
+	_enqueue_file_upload: function(file,albumid) { 
 		var li=$('<li></li>')
 			.addClass('esqoo-uploadq-queue-item')
-			.html(file.name)
 			.appendTo(this.queuecontainer);
 		var status_text=$('<span></span>')
 			.addClass('esqoo-uploadq-queue-item-status-text')
 			.html('Queued')
 			.appendTo(li);
+		var namelabel=$('<span></span>').appendTo(li).html('Name:').addClass('esqoo-upload-queue-item-name-label');
+		var namecontainer=$('<input type="text"></input>').appendTo(li).val(file.name).addClass('esqoo-upload-queue-item-name-container').attr('readonly','readonly');
+		$('<br/>').appendTo(li);
+		var albumlabel=$('<span></span>').appendTo(li).html('Album:').addClass('esqoo-upload-queue-item-album-label');
+		var albumcontainer=$('<input type="text"></input>').appendTo(li).val(this._get_album_name_from_id(albumid)).addClass('esqoo-upload-queue-item-album-container').attr('readonly','readonly');
 		var progress=$('<div></div>')
 			.addClass('esqoo-upload-queue-item-progress')
 			.addClass('esqoo-progress')
@@ -76,7 +101,7 @@ $.widget( "esqoo.uploadq", {
 			this.queue_visible=true;
 			this.queuediv.fadeIn('slow');
 		}
-		this.queue.push({file: file,li: li,'status_text':status_text, progress: progress});
+		this.queue.push({file: file,li: li,'status_text':status_text, progress: progress,albumid: albumid,namecontainer: namecontainer});
 		if (!this.queue_running) { 
 			this._run_queue();
 		}
@@ -112,6 +137,12 @@ $.widget( "esqoo.uploadq", {
 		var me = this;
 		item.li.slideUp('slow',function() { 
 			item.li.detach();
+			item.namecontainer.removeAttr('readonly');
+			item.progress.hide();
+			$('<br/>').appendTo(item.li);
+			item.descriptionlabel=$('<span></span>').html('Description').appendTo(item.li);
+			$('<br/>').appendTo(item.li);
+			item.descriptioncontainer=$('<textarea></textarea>').appendTo(item.li);
 			if (me.queue.length<1 && me.queue_visible) { 
 				me.queue_visible=false;
 				me.queuediv.fadeOut('slow');
@@ -146,6 +177,55 @@ $.widget( "esqoo.uploadq", {
 		});
 		this.failed.push(item);
 	},
+	_get_current_album_id: function() { 
+		var name = $('#album-0').val();
+		if (this.albumlist===null) { 
+			this.albumlist=$.parseJSON($('#albumlist-0').val());
+		}
+		var album_id=null;
+		$(this.albumlist).each(function (i,o) {
+			if (o.label==name) { 
+				album_id=o.value;
+				return false;
+			}
+		});
+		if (album_id!==null) { 
+			return album_id;
+		} else { 
+			if ($('#album-0').val()!=$('#new_album_name-0').val()) { 
+				this._update_album_name($('#new_album_id-0').val(),$('#album-0').val());
+			} else { 
+				this._album_stub_complete($('#new_album_id-0').val());
+			}
+			return $('#new_album_id-0').val();	
+		}
+	},
+	_album_stub_complete: function(id) { 
+		var me = this;
+		$.post('/album/stub-complete/api',{AlbumID: id, ResponseFormat: 'json'},function(d) {
+			me._update_album_list();
+		});
+	},
+	_update_album_name: function(id,name) { 
+		var me = this;
+		$.post('/album/update/api',{AlbumID: id, Name: name,ResponseFormat: 'json'},function(d) {
+			me._update_album_list();
+		});
+	},
+	_update_album_list: function() { 
+		var me = this;
+		$.post('/album/list/api',{ResponseFormat: 'json'},function (d) { 
+			me.albumlist=[];
+			$(d.Rows).each(function(i,o) { 
+				me.albumlist.push({label: o.Name, value: o.AlbumID});
+			});
+			$('#album-0').autocomplete('option','source',me.albumlist);
+		},'json');
+		$.post('/album/get-stub/api',{ResponseFormat: 'json'},function(d) { 
+			$('#new_album_name-0').val(d.Name);
+			$('#new_album_id-0').val(d.AlbumID);
+		},'json');
+	},
 	_upload_file_chunk: function(item,i) { 
 		// If we use onloadend, we need to check the readyState.
 		var me = this;
@@ -171,6 +251,7 @@ $.widget( "esqoo.uploadq", {
 		formData.append("Data", blob);
 		formData.append("Name", item.file.name);
 		formData.append("Size", item.file.size);
+		formData.append("AlbumID",item.albumid);
 		me._update_upload_progress(item,0,item.file.size);
 		formData.append("ResponseFormat", 'json');
 		formData.append("Chunk", i);
@@ -242,8 +323,9 @@ $.widget( "esqoo.uploadq", {
 	},
 	_handleFiles: function(files) { 
 		var me = this;
+		var albumid= this._get_current_album_id();
 		$(files).each(function(i,o) {
-			me._enqueue_file_upload(o);
+			me._enqueue_file_upload(o,albumid);
 		});
 	},
 	_do_html_setup: function() { 
