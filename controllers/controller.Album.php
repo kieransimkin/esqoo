@@ -70,6 +70,22 @@ class AlbumController extends LockedController {
 			return $album;
 		}	
 	}
+	public function getstubAPI($arg='',$input=array()) { 
+		$album=Album::get();
+		$album->user_id=$this->user->id;
+		$album->Name=_('Untitled Album').' '.$this->user->format_date();
+		$album->save();
+		$album->set_visible_api_fields($this->get_album_fields());
+		return $album;
+	}
+	public function stubcompleteAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+		if ($this->api_validation_success()) { 
+			$album->UserVisible='true';
+			$album->save();
+			return $album;
+		}
+	}
 	public function createAPI($arg='',$input=array()) { 
 		$form=$this->get_album_form($input,null,true);
 		$album=Album::get();
@@ -80,6 +96,7 @@ class AlbumController extends LockedController {
 			$album->setFromFilteredArray($input,$this->get_album_fields());
 			$album->UserVisible='true';
 			$album->user_id=$this->user->id;
+			$album->set_visible_api_fields($this->get_album_fields());
 			$album->save();
 		}
 		return $album;
@@ -92,6 +109,8 @@ class AlbumController extends LockedController {
 		}
 		if ($this->api_validation_success()) { 
 			$album->setFromFilteredArray($input,$this->get_album_fields());
+			$album->UserVisible='true';
+			$album->set_visible_api_fields($this->get_album_fields());
 			$album->save();
 		}
 		return $album;

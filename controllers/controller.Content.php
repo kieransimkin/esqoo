@@ -6,9 +6,7 @@ class ContentController extends LockedController {
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function uploadUI($arg='',$input=array()) { 
-		$album=Album::get();
-		$album->user_id=$this->user->id;
-		$album->save();
+		$album=$this->foreign_api_action('AlbumController','get-stub');
 		$form=$this->get_upload_form($input,$album,$this->validate_album_id($arg));
 		if ($form->validate()) { 
 	
@@ -22,9 +20,7 @@ class ContentController extends LockedController {
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
 	function quickuploadDialog($arg='',$input=array()) { 
-		$album=Album::get();
-		$album->user_id=$this->user->id;
-		$album->save();
+		$album=$this->foreign_api_action('AlbumController','get-stub');
 		$form=$this->get_upload_form($input,$album,$this->validate_album_id($arg));
 		if ($form->validate()) { 
 			return $this->formSuccess();
@@ -42,9 +38,12 @@ class ContentController extends LockedController {
 		$form=new Form('upload');
 		$form->addElement('hidden','new_album_id',array(),array())->setValue($album->id);
 		$form->addElement('hidden','albumlist',array(),array())->setValue(json_encode(Album::get_autocomplete_array($this->user->id)));
+		$form->addElement('hidden','new_album_name',array(),array())->setValue($album->Name);
 		$af=$form->addElement('text','album',array('data-combobox-source-selector'=>'#albumlist-0','class'=>'esqoo-combobox esqoo-uploadq-album'));
 		if ($defaultalbum) { 
 			$af->setValue($defaultalbum->Name);
+		} else { 
+			$af->setValue($album->Name);
 		}
 		$form->addElement('file','upload',array('class'=>'upload-form','multiple'=>'multiple'))->setLabel(_('Select files'));
 		return $form;

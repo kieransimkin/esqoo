@@ -47,6 +47,9 @@ class MVC {
 			$new_controller->setView($controller.'/view.'.$action.".php");
 		}
 		$res=$new_controller->$funcname($arg,array_merge($_GET,$_POST));
+		if ($res instanceof DBSQL) { 
+			$res=$res->getFilteredDataArray();
+		}
 		if (!is_array($res)) {
 			$res=(array)@$res;
 		}
