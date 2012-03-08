@@ -284,6 +284,14 @@ $.widget( "esqoo.uploadq", {
 				item.chunk_failures=0;
 				me._upload_file_chunk(item,d.RemainingChunks[0]);
 			} else { 
+				item.assettype=d.AssetType;
+				if (d.AssetType=='Video') { 
+					item.videoid=d.Video.VideoID;
+				} else if (d.AssetType=='Audio') { 
+					item.audioid=d.Audio.AudioID;
+				} else if (d.AssetType=='Picture') {
+					item.pictureid=d.Picture.PictureID;
+				}
 				me._upload_complete(item);
 				me._run_queue();
 			}
