@@ -241,11 +241,11 @@ $.widget( "esqoo.uploadq", {
 		var start=i*item.chunksize;
 		var stop=i*item.chunksize+item.chunksize;
 		if (typeof(item.file.webkitSlice)!='undefined') {
-			var blob = item.file.webkitSlice(start, stop + 1);
+			var blob = item.file.webkitSlice(start, stop);
 		} else if (typeof(item.file.mozSlice)!='undefined') {
-			var blob = item.file.mozSlice(start, stop + 1);
+			var blob = item.file.mozSlice(start, stop);
 		} else if (typeof(item.file.slize)!='undefined') { 
-			var blob = item.file.slice(start, stop + 1);
+			var blob = item.file.slice(start, stop);
 		}
 		var formData = new FormData();
 		formData.append("Data", blob);

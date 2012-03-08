@@ -144,11 +144,17 @@ class ContentController extends LockedController {
 		return array('id','Size','ChunkSize','MimeType');
 	}
 	private function compile_asset($asset) { 
-		$res=DBSQ::query('select * from asset_chunk_data where asset_id=? order by chunk asc',array($asset->id));
-		
-		foreach ($res as $chunk) { 
-			
+		$res=DBSQ::query('select asset_chunk_data.Data,asset_chunk_data.id from asset_chunk left join asset_chunk_data on asset_chunk_data.asset_chunk_id=asset_chunk.id where asset_chunk.asset_id=? order by chunk asc',array($asset->id));
+		if (PEAR::isError($res)) { 
+			die('Asset compile failed'.print_r($res,true));
 		}
+		$fp=fopen($asset->get_filename(),"wb");
+		while ($chunk=&$res->fetchRow(DB_FETCHMODE_ASSOC)) { 
+			fwrite($fp,$chunk['Data']);
+			DBSQ::query('delete from asset_chunk_data where id=? limit 1',array($chunk['id']));
+		}
+		$asset->complete();
+		fclose($fp);
 	}
 	private function validate_album_id($aid) { 
 		try { 

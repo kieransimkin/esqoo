@@ -15,4 +15,14 @@ class Asset extends DBSQL {
 		}
 		return array_keys($array);
 	}
+	public function get_filename() { 
+		return dirname(__FILE__).'/../assets/'.$this->id;
+	}	
+	static public function get_filename_from_id($asset_id) { 
+		return dirname(__FILE__).'/../assets/'.$asset_id;
+	}
+	public function complete() { 
+		$this->UploadCompleteDate=date('Y-m-d h:i:s');
+		return $this->save();
+	}
 } 
