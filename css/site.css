@@ -104,6 +104,7 @@ div.esqoo-uploadq-complete-div,
 div.esqoo-uploadq-failed-div,
 div.flexigrid,
 ul.ui-autocomplete,
+div.esqoo-message-container,
 div.ui-dialog div.ui-dialog-content iframe.form-iframe,
 section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -207,4 +208,32 @@ input.esqoo-upload-queue-item-album-container[readonly] {
 }
 ul.esqoo-uploadq-complete textarea { 
 	width: 99%;
+}
+div.esqoo-message-container { 
+	padding-left: 1em;
+	padding-right: 1em;
+	margin-right: 0.15em;
+	font-family: inherit;
+	width: 11em;
+	height: 5em;
+}
+div.esqoo-message-label-container { 
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 100%;
+}
+div.esqoo-message-label { 
+	position: absolute;
+	top: 50%;
+	margin-top: -1em;
+	width: 100%;
+	text-align: center;
+}
+div.esqoo-message-close-button { 
+	position: absolute;
+	right: 0;
 }

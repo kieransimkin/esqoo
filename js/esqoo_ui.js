@@ -1,5 +1,6 @@
 var esqoo_ui = {};
 esqoo_ui.dialog_singletons = [];
+esqoo_ui.message_queue = [];
 $(document).ready(function() { 
 	esqoo_ui.dialog_singletons.length=0;
 	esqoo_ui.get_messages();
@@ -10,12 +11,47 @@ esqoo_ui.get_messages = function() {
 			esqoo_ui.add_messages(data.Messages);
 		}
 	}}).error(function() { 
-		alert('Unable to parse dialog JSON');
+		alert('Unable to parse message API JSON');
 		$(d).dialog('close');
 	});
 }
 esqoo_ui.add_messages = function(messages) {
-	console.log(messages);
+	$(messages).each(function(i,o) { 	
+		esqoo_ui.add_message(o);
+	});
+}
+esqoo_ui.add_message = function (message) { 
+	var container=$('<div></div>')
+		.addClass('esqoo-message-container ui-widget ui-widget-content ui-corner-all')
+		.css({position: 'fixed',bottom: '0px', right: '0px', opacity: '0.0'})
+		.appendTo($(document).find('body'));
+	var labelcontainer=$('<div></div>')
+		.addClass('esqoo-message-label-container')
+		.appendTo(container);
+	var label=$('<div></div>')
+		.addClass('esqoo-message-label')
+		.html(message.Message)
+		.appendTo(labelcontainer);
+	var closebutton=$('<div></div>')
+		.addClass('esqoo-message-close-button')
+		.button({icons: {primary: 'ui-icon-close'}, text: false})
+		.appendTo(container);
+	container.fadeTo('slow',1.0);
+	var item={visible: false, container: container};
+	$.extend(item,message);
+	closebutton.click(esqoo_ui.remove_message(item));
+	if (esqoo_ui.message_queue.length>0) { 
+		esqoo_ui.move_message_queue_up();
+	}
+	esqoo_ui.message_queue.push(item);
+}
+esqoo_ui.move_message_queue_up = function() { 
+
+}
+esqoo_ui.remove_message = function(item) {
+	return function(e) { 
+		console.log('closed');
+	}	
 }
 esqoo_ui.make_dialog = function(options,url,params) { 
 	var parameters = {
