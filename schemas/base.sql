@@ -340,3 +340,15 @@ create table audio (
 	index (DeleteDate,PublishDate,album_id),
 	index (guid)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists message;
+create table message (
+	id int not null auto_increment,
+	user_id int not null,
+	Message varchar(512) not null,
+	Severity enum('Notice','Error','Warning') not null default 'Notice',
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	CompleteDate datetime default null,
+	primary key (id),
+	index (user_id,CompleteDate),
+	index (CreateDate)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
