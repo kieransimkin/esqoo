@@ -89,8 +89,15 @@ class Controller {
 	function api_form_validation_error($form) { 
 		$this->api_error($form->getId(),_('Form validation failure'));
 	}
-	function showMessage($string) { 
-		// XXX TODO
+	function showMessage($string,$severity='Notice') { 
+		if ($severity!='Notice' && $severity!='Warning' && $severity!='Error') { 
+			$severity='Error';
+		}
+		$message=Message::get();
+		$message->user_id=$this->user->id;
+		$message->Severity=$severity;
+		$message->Message=$string;
+		$message->save();
 	}
 	function api_error_array() {
 		$ret=array();

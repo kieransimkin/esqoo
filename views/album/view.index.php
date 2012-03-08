@@ -15,7 +15,6 @@ esqoo_album.actions= function (id,data) {
 }
 esqoo_album.manage = function(id) { 
 	esqoo_ui.make_dialog({singleton: true, title:'Manage Album'},'/album/manage/'+id);
-	console.log('manage '+id);	
 }
 esqoo_album.delete = function(id) { 
 	console.log('delete '+id);	
