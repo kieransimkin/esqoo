@@ -2,7 +2,21 @@ var esqoo_ui = {};
 esqoo_ui.dialog_singletons = [];
 $(document).ready(function() { 
 	esqoo_ui.dialog_singletons.length=0;
+	esqoo_ui.get_messages();
 });
+esqoo_ui.get_messages = function() { 
+	$.ajax({url: '/message/get/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json'}, success: function(data) { 
+		if (data.MessageCount>0) { 
+			esqoo_ui.add_messages(data.Messages);
+		}
+	}}).error(function() { 
+		alert('Unable to parse dialog JSON');
+		$(d).dialog('close');
+	});
+}
+esqoo_ui.add_messages = function(messages) {
+	console.log(messages);
+}
 esqoo_ui.make_dialog = function(options,url,params) { 
 	var parameters = {
 		source : "dialog"
@@ -90,6 +104,7 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 }
 esqoo_ui.send_dialog_ajax_request = function(d,form) { 
 	$.ajax({url: form.attr('action'), dataType: 'json', type: 'post', data: form.serialize()+"&source=dialog", success: function(data) { 
+		esqoo_ui.get_messages();
 		esqoo_ui.update_dialog_html(d,data);
 	}}).error(function() { 
 		alert('Unable to parse dialog JSON');
