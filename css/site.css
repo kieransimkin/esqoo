@@ -104,7 +104,6 @@ div.esqoo-uploadq-complete-div,
 div.esqoo-uploadq-failed-div,
 div.flexigrid,
 ul.ui-autocomplete,
-div.esqoo-message-container,
 div.ui-dialog div.ui-dialog-content iframe.form-iframe,
 section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -210,6 +209,9 @@ ul.esqoo-uploadq-complete textarea {
 	width: 99%;
 }
 div.esqoo-message-container { 
+	-moz-box-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+	-webkit-box-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+	box-shadow: 2px 2px 10px rgba(0,0,0,0.7);
 	padding-left: 1em;
 	padding-right: 1em;
 	margin-right: 0.15em;
