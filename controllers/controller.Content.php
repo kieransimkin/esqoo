@@ -72,6 +72,9 @@ class ContentController extends LockedController {
 		if (!isset($_FILES['Data']) || strlen($input['Data']=file_get_contents($_FILES['Data']['tmp_name']))<1) { 
 			$this->api_error(9,"Data must be specified");
 		}
+		if (!$this->validate_album_id($input['AlbumID'])) { 
+			$this->api_error(10,"AlbumID not found");
+		}
 		if ($this->api_validation_success()) { 
 			if (!isset($input['Name']) || strlen($input['Name'])<1) { 
 				$input['Name']='Untitled';
@@ -121,18 +124,26 @@ class ContentController extends LockedController {
 				$chunkdata->asset_chunk_id=$chunk->id;
 				$chunkdata->Data=$input['Data'];
 				$chunkdata->save();
-				//$chunk->Data=$input['Data'];
 			}
 			$remainingchunks=$asset->getRemainingChunks();
 			shuffle($remainingchunks);
 			$remainingchunkcount=count($remainingchunks);
-			if ($remainingchunkcount===0) { 
-				$this->compile_asset($asset);
-			}
 			if ($remainingchunkcount>10) { 
 				array_splice($remainingchunks,10);
 			}
-			return array('Asset'=>$asset,'RemainingChunks'=>$remainingchunks,'RemainingChunkCount'=>$remainingchunkcount);
+			$ret=array('Asset'=>$asset,'RemainingChunks'=>$remainingchunks,'RemainingChunkCount'=>$remainingchunkcount);
+			if ($remainingchunkcount===0) { 
+				$ret=array_merge($ret,$asset->compile_asset($input['AlbumID']));
+
+				if (array_key_exists('Picture',$ret)) { 
+					$ret['Picture']->set_visible_api_fields($this->get_picture_fields());
+				} else if (array_key_exists('Video',$ret)) { 
+					$ret['Video']->set_visible_api_fields($this->get_video_fields());
+				} else if (array_key_exists('Audio',$ret)) { 
+					$ret['Audio']->set_visible_api_fields($this->get_audio_fields());
+				}
+			}
+			return $ret;
 		}
 	}
 	/****************************
@@ -141,20 +152,16 @@ class ContentController extends LockedController {
 	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
 	 ****************************/
 	private function get_asset_fields() { 
-		return array('id','Size','ChunkSize','MimeType');
+		return array('id','Name','Size','ChunkSize','MimeType');
 	}
-	private function compile_asset($asset) { 
-		$res=DBSQ::query('select asset_chunk_data.Data,asset_chunk_data.id from asset_chunk left join asset_chunk_data on asset_chunk_data.asset_chunk_id=asset_chunk.id where asset_chunk.asset_id=? order by chunk asc',array($asset->id));
-		if (PEAR::isError($res)) { 
-			die('Asset compile failed'.print_r($res,true));
-		}
-		$fp=fopen($asset->get_filename(),"wb");
-		while ($chunk=&$res->fetchRow(DB_FETCHMODE_ASSOC)) { 
-			fwrite($fp,$chunk['Data']);
-			DBSQ::query('delete from asset_chunk_data where id=? limit 1',array($chunk['id']));
-		}
-		$asset->complete();
-		fclose($fp);
+	private function get_picture_fields() {
+		return array('id','Name','Description');
+	}
+	private function get_video_fields() { 
+		return array('id','Name','Description');
+	}
+	private function get_audio_fields() { 
+		return array('id','Name','Description');
 	}
 	private function validate_album_id($aid) { 
 		try { 

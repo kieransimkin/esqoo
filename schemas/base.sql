@@ -218,7 +218,6 @@ drop table if exists asset;
 create table asset (
 	id int not null auto_increment,
 	user_id int not null,
-	album_id int default null,
 	GUID varchar(255) not null default '',
 	`Size` bigint not null,
 	Name varchar(512) not null,
@@ -236,12 +235,8 @@ create table asset (
 	index (user_id,DeleteDate,PublishDate),
 	index (user_id,UploadCompleteDate),
 	index (user_id),
-	index (album_id),
-	index (album_id,DeleteDate),
-	index (album_id,DeleteDate,PublishDate),
 	index (guid),
-	index (`user_id`,`Size`,`Name`(100),`UploadCompleteDate`,`ChunkSize`,`MimeType`(30)),
-	unique key (`Name`(100),`DeleteDate`,`album_id`)
+	index (`user_id`,`Size`,`Name`(100),`UploadCompleteDate`,`ChunkSize`,`MimeType`(30))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 drop table if exists asset_chunk;
 create table asset_chunk (
@@ -298,9 +293,44 @@ create table picture (
 	web_small__asset_id int default null,
 	web_medium__asset_id int default null,
 	web_large__asset_id int default null,
+	web_fullsize__asset_id int default null,
 	thumbnail_large__asset_id int default null,
 	thumbnail_small__asset_id int default null,
 	square__asset_id int default null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	PublishDate datetime default null,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (album_id),
+	index (DeleteDate,PublishDate,album_id),
+	index (guid)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists video;
+create table video (
+	id int not null auto_increment,
+	album_id int default null,
+	GUID varchar(255) NOT NULL default '',
+	Name varchar(512) NOT NULL,
+	Description text not null,
+	digital_negative__asset_id int not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	PublishDate datetime default null,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (album_id),
+	index (DeleteDate,PublishDate,album_id),
+	index (guid)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists audio;
+create table audio (
+	id int not null auto_increment,
+	album_id int default null,
+	GUID varchar(255) NOT NULL default '',
+	Name varchar(512) NOT NULL,
+	Description text not null,
+	digital_negative__asset_id int not null,
 	CreateDate timestamp not null default CURRENT_TIMESTAMP,
 	PublishDate datetime default null,
 	DeleteDate datetime default null,
