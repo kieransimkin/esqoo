@@ -215,4 +215,15 @@ class Controller {
 	function add_flexigrid_reload_selector($selector) { 
 		$this->flexigrid_reload_selectors[]=$selector;
 	}
+	function get_dialog_response($html,$res) { 
+		return array(	'html'=>$html,
+				'rettype'=>$res['rettype'],
+				'width'=>@$res['width'],
+				'minwidth'=>@$res['minwidth'],
+				'height'=>@$res['height'],
+				'minheight'=>@$res['minheight'],
+				'defaulttab'=>@$res['defaulttab'],
+				'url'=>@$res['url'],
+				'flexigrid_reload_selectors'=>@$res['flexigrid_reload_selectors']);
+	}
 }

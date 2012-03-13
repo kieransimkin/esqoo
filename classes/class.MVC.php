@@ -56,16 +56,7 @@ class MVC {
 		if ($_POST['source']==='dialog') { 
 			$html=ob_get_contents();
 			ob_end_clean();
-			echo json_encode(array(
-				'html'=>$html,
-				'rettype'=>$res['rettype'],
-				'width'=>@$res['width'],
-				'minwidth'=>@$res['minwidth'],
-				'height'=>@$res['height'],
-				'minheight'=>@$res['minheight'],
-				'defaulttab'=>@$res['defaulttab'],
-				'url'=>@$res['url'],
-				'flexigrid_reload_selectors'=>@$res['flexigrid_reload_selectors']));
+			echo json_encode($new_controller->get_dialog_response($html,$res));
 			die;
 		} else if (!$api) { 
 			header('X-UA-Compatible: IE=edge,chrome=1');
