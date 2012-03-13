@@ -42,7 +42,7 @@ esqoo_ui.add_message = function (message) {
 	$.extend(item,message);
 	closebutton.click(esqoo_ui.remove_message(item));
 	if (item.Severity=='Notice') { 
-		$(item).oneTime(10000,function() { 
+		$(item).oneTime(5000,function() { 
 			esqoo_ui.remove_message(this)();
 		});
 	}
