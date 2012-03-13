@@ -56,10 +56,10 @@ jQuery.extend({
 			
 			interval = jQuery.timer.timeParse(interval);
 
-			if (typeof interval != 'number' || isNaN(interval) || interval &lt;= 0)
+			if (typeof interval != 'number' || isNaN(interval) || interval <= 0)
 				return;
 
-			if (times &amp;&amp; times.constructor != Number) {
+			if (times && times.constructor != Number) {
 				belay = !!times;
 				times = 0;
 			}
@@ -76,10 +76,10 @@ jQuery.extend({
 			fn.$timerID = fn.$timerID || this.guid++;
 			
 			var handler = function() {
-				if (belay &amp;&amp; this.inProgress) 
+				if (belay && this.inProgress) 
 					return;
 				this.inProgress = true;
-				if ((++counter &gt; times &amp;&amp; times !== 0) || fn.call(element, counter) === false)
+				if ((++counter > times && times !== 0) || fn.call(element, counter) === false)
 					jQuery.timer.remove(element, label, fn);
 				this.inProgress = false;
 			};
