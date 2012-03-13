@@ -20,6 +20,16 @@ esqoo_ui.add_messages = function(messages) {
 	});
 }
 esqoo_ui.add_message = function (message) { 
+	var foundone=false;
+	$(esqoo_ui.message_queue).each(function(i,o) {
+		if (o.MessageID==message.MessageID) {
+			foundone=true;
+			return false;
+		}
+	});
+	if (foundone) { 
+		return;
+	}
 	var container=$('<div></div>')
 		.addClass('esqoo-message-container ui-widget ui-widget-content ui-corner-all')
 		.css({position: 'fixed',bottom: '0px', right: '0px', opacity: '0.0'})
