@@ -18,9 +18,11 @@ class MessageController extends LockedController {
 			}
 		} catch (DBSQ_Exception $e) { 
 			$this->api_error(2,_('MessageID not found'));
+			$mesasge=null;
 		}
 		if ($this->api_validation_success()) { 
 			$message->seen();
+			$message->set_visible_api_fields($this->get_message_fields());
 		}
 		return $message;
 	}

@@ -41,6 +41,11 @@ esqoo_ui.add_message = function (message) {
 	var item={visible: false, container: container};
 	$.extend(item,message);
 	closebutton.click(esqoo_ui.remove_message(item));
+	if (item.Severity=='Notice') { 
+		$(item).oneTime(5000,function() { 
+			console.log(this);
+		});
+	}
 	esqoo_ui.message_queue.unshift(item);
 	if (esqoo_ui.message_queue.length>1) { 
 		esqoo_ui.update_message_queue_positions();

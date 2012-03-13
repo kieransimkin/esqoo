@@ -30,7 +30,7 @@
 	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />
 <?php
 	$this->cssManager->display();
-	$this->jsManager->add("jquery-1.7.1.min", "jquery-ui-1.8.17.custom","modernizr-2.5.3","sha256","jquery.livequery","esqoo_helpers","esqoo_login","esqoo_ui","superfish","supersubs","jquery.ui.selectmenu","jquery.ui.uploadq","jquery.ui.combobox","flexigrid","jquery.pxem");
+	$this->jsManager->add("jquery-1.7.1.min", "jquery-ui-1.8.17.custom","modernizr-2.5.3","sha256","jquery.livequery","esqoo_helpers","esqoo_login","esqoo_ui","superfish","supersubs","jquery.ui.selectmenu","jquery.ui.uploadq","jquery.ui.combobox","flexigrid","jquery.pxem","jquery.timers");
 	$this->jsManager->add("site");
     	//$this->jsManager->add("jquery.livequery", "jquery.bgiframe.min", "jquery.tools.min", "flexigrid/flexigrid", "jquery.delayedobserver", "jquery.multiselects-0.3", "jquery.tmpl.1.1.1", "jquery.ui.selectmenu", "ui.checkbox", "jquery.blockUI", "ui.multiselect", "flot/jquery.flot", "flot/jquery.flot.pie", "flot/jquery.flot.selection", "flot/jquery.flot.navigate", "uploadify/swfobject", "uploadify/jquery.uploadify.v2.1.4.min", "superfish/superfish", "superfish/supersubs", "jquery.include", "jquery.timeago", "site", "ui", "tiny_mce/tiny_mce", "date");
 	$this->jsManager->display();
