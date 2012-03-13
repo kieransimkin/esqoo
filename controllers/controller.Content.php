@@ -55,25 +55,25 @@ class ContentController extends LockedController {
 	 *****************************************/
 	public function uploadAPI($arg='',$input=array()) { 
 		if (!isset($input['Size']) || $input['Size']!=(int)$input['Size']) { 
-			$this->api_error(1,"Size field must be specified and must be an integer");
+			$this->api_error(1,_("Size field must be specified and must be an integer"));
 		}
-		if (!isset($input['Chunk'])) { 
-			$this->api_error(2,"Chunk field is required");	
+		if (!isset($input['Chunk']) || $input['Chunk']!=(int)$input['Chunk']) { 
+			$this->api_error(2,_("Chunk field is required and must be an integer"));
 		}
 		if (!isset($input['AssetID'])) { 
 			$input['AssetID']='null';
 		}
 		if ($input['AssetID']!=='null' && $input['AssetID']!=(int)$input['AssetID']) { 
-			$this->api_error(3,"If AssetID is specified, it must be an integer or 'null'");
+			$this->api_error(3,_("If AssetID is specified, it must be an integer or 'null'"));
 		}
 		if (!isset($input['MimeType']) || strlen($input['MimeType'])<1) { 
-			$this->api_error(8,"MimeType must be specified");
+			$this->api_error(8,_("MimeType must be specified"));
 		}
 		if (!isset($_FILES['Data']) || strlen($input['Data']=file_get_contents($_FILES['Data']['tmp_name']))<1) { 
-			$this->api_error(9,"Data must be specified");
+			$this->api_error(9,_("Data must be specified"));
 		}
 		if (!$this->validate_album_id($input['AlbumID'])) { 
-			$this->api_error(10,"AlbumID not found");
+			$this->api_error(10,_("AlbumID not found"));
 		}
 		if ($this->api_validation_success()) { 
 			if (!isset($input['Name']) || strlen($input['Name'])<1) { 
@@ -96,11 +96,11 @@ class ContentController extends LockedController {
 				try { 
 					$asset=Asset::get($input['AssetID']);
 					if ($asset->user_id!=$this->user->id) { 
-						$this->api_error(5,"AssetID not found");
+						$this->api_error(5,_("AssetID not found"));
 						return;
 					}
 				} catch (DBSQ_Exception $e) { 
-					$this->api_error(5,"AssetID not found");
+					$this->api_error(5,_("AssetID not found"));
 					return;
 				}
 			}

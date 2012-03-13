@@ -126,19 +126,19 @@ class AlbumController extends LockedController {
 	private function ensure_api_album($input) { 
 		$album=null;
 		if (strlen(@$input['AlbumID'])<1) { 
-			$this->api_error(1,"AlbumID field is required");
+			$this->api_error(1,_("AlbumID field is required"));
 		} else { 
 			try { 
 				$album=Album::get($input['AlbumID']);
 				if ($album->user_id!=$this->user->id) { 
-					$this->api_error(2,"AlbumID not found");
+					$this->api_error(2,_("AlbumID not found"));
 					$album=null;
 				}
 			} catch (DBSQ_Exception $e) { 
-				$this->api_error(2,"AlbumID not found");
+				$this->api_error(2,_("AlbumID not found"));
 			}
 			if (is_null($album)) { 
-				$this->api_error(2,"AlbumID not found");
+				$this->api_error(2,_("AlbumID not found"));
 			}
 		}
 		return $album;
