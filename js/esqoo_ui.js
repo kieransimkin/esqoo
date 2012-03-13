@@ -24,6 +24,7 @@ esqoo_ui.add_message = function (message) {
 	var container=$('<div></div>')
 		.addClass('esqoo-message-container ui-widget ui-widget-content ui-corner-all')
 		.css({position: 'fixed',bottom: '0px', right: '0px', opacity: '0.0'})
+		.hide()
 		.appendTo($(document).find('body'));
 	var labelcontainer=$('<div></div>')
 		.addClass('esqoo-message-label-container')
