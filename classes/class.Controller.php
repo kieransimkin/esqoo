@@ -126,7 +126,7 @@ class Controller {
 		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
 	}
 	function formSuccess() { 
-		return array('rettype'=>'success','flexigrid_reload_selectors'=>$this->flexigrid_reload_selectors);
+		return array('rettype'=>'success');
 	}
 	function tabbedDialogFail($dialogs=array(),$width=null,$minwidth=null,$height=null,$minheight=null,$defaulttab=null) { 
 		if (!is_array($dialogs)) { 
@@ -172,14 +172,12 @@ class Controller {
 		if (!is_null($defaulttab)) { 
 			$ret['defaulttab']=$defaulttab;
 		}
-		$ret['flexigrid_reload_selectors']=$this->flexigrid_reload_selectors;
 		return $ret;
 	}
 	function formTargetBlank($url) { 
 		$ret=array();
 		$ret['rettype']='targetblank';
 		$ret['url']=$url;
-		$ret['flexigrid_reload_selectors']=$this->flexigrid_reload_selectors;
 		return $ret;
 	}
 	function formIFrame($url,$width=null,$minwidth=null,$height=null,$minheight=null) { 
@@ -189,6 +187,9 @@ class Controller {
 	function get_dialog_response($html,$res) { 
 		$ret=$res;
 		$ret['html']=$html;
+		if (count($this->flexigrid_reload_selectors)>0) { 
+			$ret['flexigrid_reload_selectors']=$this->flexigrid_reload_selectors;
+		}
 		return $ret;
 	}
 	function flexigridResponse($rows,$page,$total,$control_html='') {
