@@ -1,6 +1,7 @@
 <?php
 class Controller { 
 	public $api_errors=array();
+	private $flexigrid_reload_selectors=array();
 	function __construct($controller,$action) { 
 		$this->action=$action;
 		$this->controller=$controller;
@@ -125,7 +126,7 @@ class Controller {
 		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
 	}
 	function formSuccess() { 
-		return array('rettype'=>'success');
+		return array('rettype'=>'success','flexigrid_reload_selectors'=>$this->flexigrid_reload_selectors);
 	}
 	function tabbedDialogFail($dialogs=array(),$width=null,$minwidth=null,$height=null,$minheight=null,$defaulttab=null) { 
 		if (!is_array($dialogs)) { 
@@ -171,6 +172,7 @@ class Controller {
 		if (!is_null($defaulttab)) { 
 			$ret['defaulttab']=$defaulttab;
 		}
+		$ret['flexigrid_reload_selectors']=$this->flexigrid_reload_selectors;
 		return $ret;
 	}
 	function formTargetBlank($url) { 

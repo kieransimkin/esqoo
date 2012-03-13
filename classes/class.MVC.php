@@ -64,7 +64,8 @@ class MVC {
 				'height'=>@$res['height'],
 				'minheight'=>@$res['minheight'],
 				'defaulttab'=>@$res['defaulttab'],
-				'url'=>@$res['url']));
+				'url'=>@$res['url'],
+				'flexigrid_reload_selectors'=>@$res['flexigrid_reload_selectors']));
 			die;
 		} else if (!$api) { 
 			header('X-UA-Compatible: IE=edge,chrome=1');
