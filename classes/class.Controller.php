@@ -186,6 +186,11 @@ class Controller {
 		echo '<a href="'.$url.'" target="_blank">Open in new window</a><br /><iframe class="form-iframe" src="'.$url.'"></iframe>';
 		return $this->formFailAjaxResponse($width,$minwidth,$height,$minheight);
 	}
+	function get_dialog_response($html,$res) { 
+		$ret=$res;
+		$ret['html']=$html;
+		return $ret;
+	}
 	function flexigridResponse($rows,$page,$total,$control_html='') {
 		if (strlen($page)<1 || $page!=(int)$page) { 
 			$page=1;
@@ -214,16 +219,5 @@ class Controller {
 	}
 	function add_flexigrid_reload_selector($selector) { 
 		$this->flexigrid_reload_selectors[]=$selector;
-	}
-	function get_dialog_response($html,$res) { 
-		return array(	'html'=>$html,
-				'rettype'=>$res['rettype'],
-				'width'=>@$res['width'],
-				'minwidth'=>@$res['minwidth'],
-				'height'=>@$res['height'],
-				'minheight'=>@$res['minheight'],
-				'defaulttab'=>@$res['defaulttab'],
-				'url'=>@$res['url'],
-				'flexigrid_reload_selectors'=>@$res['flexigrid_reload_selectors']);
 	}
 }
