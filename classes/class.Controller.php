@@ -179,6 +179,7 @@ class Controller {
 		$ret=array();
 		$ret['rettype']='targetblank';
 		$ret['url']=$url;
+		$ret['flexigrid_reload_selectors']=$this->flexigrid_reload_selectors;
 		return $ret;
 	}
 	function formIFrame($url,$width=null,$minwidth=null,$height=null,$minheight=null) { 
@@ -210,5 +211,8 @@ class Controller {
 
 		return $new_controller->$action($arg,$input);
 		
+	}
+	function add_flexigrid_reload_selector($selector) { 
+		$this->flexigrid_reload_selectors[]=$selector;
 	}
 }
