@@ -36,7 +36,7 @@ esqoo_ui.add_message = function (message) {
 		.addClass('esqoo-message-close-button')
 		.button({icons: {primary: 'ui-icon-close'}, text: false})
 		.appendTo(container);
-	container.animate({opacity: '1.0'},{duration: 'slow', queue: 'false'})
+	container.animate({opacity: 1.0},{duration: 'slow', queue: false})
 	container.slideDown('slow');
 	var item={visible: false, container: container};
 	$.extend(item,message);
@@ -65,7 +65,7 @@ esqoo_ui.remove_message = function(item) {
 		});
 		esqoo_ui.message_queue.splice(index,1);
 		esqoo_ui.move_message_queue_down();
-		item.container.animate({opacity: '0.0'},{duration: 'slow', queue: 'false'});
+		item.container.animate({opacity: 0.0},{duration: 'slow', queue: false});
 		item.container.slideUp('fast',function() { 
 			item.container.remove();
 		});
