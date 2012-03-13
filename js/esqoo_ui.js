@@ -12,7 +12,6 @@ esqoo_ui.get_messages = function() {
 		}
 	}}).error(function() { 
 		alert('Unable to parse message API JSON');
-		$(d).dialog('close');
 	});
 }
 esqoo_ui.add_messages = function(messages) {
