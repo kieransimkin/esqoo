@@ -75,6 +75,7 @@ esqoo_ui.update_message_queue_positions = function() {
 }
 esqoo_ui.remove_message = function(item) {
 	return function(e) { 
+		console.log(item.removing);
 		if (typeof(item.removing)=='undefined' || item.removing===false) { 
 			return false;
 		}
@@ -222,7 +223,6 @@ esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) {
 	return parseInt(viewport_height*(val/100));
 }
 esqoo_ui.prepare_dialog_html = function(d,data) { 
-	console.log(data);
 	if (typeof(data.height)!='undefined' && data.height !== null) { 
 		d.dialog('option','height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
 	}
