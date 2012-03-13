@@ -5,6 +5,9 @@ $(document).ready(function() {
 	esqoo_ui.dialog_singletons.length=0;
 	esqoo_ui.get_messages();
 });
+esqoo_ui.get_em_size = function(el) { 
+    return Number(getComputedStyle(el.get(), '').fontSize.match(/(\d+)px/)[1]);
+}
 esqoo_ui.get_messages = function() { 
 	$.ajax({url: '/message/get/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json'}, success: function(data) { 
 		if (data.MessageCount>0) { 
@@ -51,7 +54,7 @@ esqoo_ui.update_message_queue_positions = function() {
 	for (var c=0; c<esqoo_ui.message_queue.length; c++) { 
 		var targetheight=c*10+'em';
 		var currentheight=esqoo_ui.message_queue[c].container.css('bottom');
-		console.log('c: '+c+' targetheight: '+targetheight+' currentheight: '+currentheight);
+		console.log('c: '+c+' targetheight: '+(esqoo_ui.get_em_size(esqoo_ui.message_queue[c].container)*targetheight)+' currentheight: '+currentheight);
 		
 	}
 }
