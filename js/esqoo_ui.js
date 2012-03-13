@@ -52,7 +52,7 @@ esqoo_ui.update_message_queue_positions = function() {
 		var targetheight=c*10;
 		var currentheight=esqoo_ui.message_queue[c].container.css('bottom');
 		console.log('c: '+c+' targetheight: '+targetheight+' currentheight: '+$(currentheight).toEm({scope: esqoo_ui.message_queue[c].container}));
-		esqoo_ui.message_queue[c].container.animate({bottom: $(targetheight).'em'},{duration: 'slow'});
+		esqoo_ui.message_queue[c].container.animate({bottom: $(targetheight)+'em'},{duration: 'slow'});
 		
 	}
 }
