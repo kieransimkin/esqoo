@@ -340,6 +340,25 @@ create table audio (
 	index (DeleteDate,PublishDate,album_id),
 	index (guid)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `file`;
+create table `file` (
+	id int not null auto_increment,
+	album_id int default null,
+	GUID varchar(255) NOT NULL default '',
+	Name varchar(512) NOT NULL,
+	Description text not null,
+	icon__asset_id int not null,
+	MimeType varchar(512) not null,
+	digital_negative__asset_id int not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	PublishDate datetime default null,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (album_id),
+	index (DeleteDate,PublishDate,album_id),
+	index (guid)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 drop table if exists message;
 create table message (
 	id int not null auto_increment,
