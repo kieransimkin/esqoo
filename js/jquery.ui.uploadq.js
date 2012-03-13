@@ -212,6 +212,7 @@ $.widget( "esqoo.uploadq", {
 	},
 	_update_album_list: function() { 
 		var me = this;
+		$('#albumlist').flexReload();
 		$.post('/album/list/api',{ResponseFormat: 'json'},function (d) { 
 			me.albumlist=[];
 			$(d.Rows).each(function(i,o) { 
