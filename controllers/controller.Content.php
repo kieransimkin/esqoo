@@ -141,6 +141,8 @@ class ContentController extends LockedController {
 					$ret['Video']->set_visible_api_fields($this->get_video_fields());
 				} else if (array_key_exists('Audio',$ret)) { 
 					$ret['Audio']->set_visible_api_fields($this->get_audio_fields());
+				} else { 
+					$ret['File']->set_visible_api_fields($this->get_file_fields());
 				}
 			}
 			return $ret;
@@ -162,6 +164,9 @@ class ContentController extends LockedController {
 	}
 	private function get_audio_fields() { 
 		return array('id','Name','Description');
+	}
+	private function get_file_fields() { 
+		return array('id','Name','Description','MimeType');
 	}
 	private function validate_album_id($aid) { 
 		try { 

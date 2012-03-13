@@ -156,6 +156,7 @@ class Asset extends DBSQL {
 			return $this->create_asset_audio($albumid);
 		} else {	
 			// Unrecognised MIME type!
+			return $this->create_asset_file($albumid);
 		}
 	}
 	private function create_asset_picture($albumid) { 
@@ -192,5 +193,15 @@ class Asset extends DBSQL {
 		$audio->save();
 		return array('AssetType'=>'Audio','Audio'=>$audio);
 	}
-
+	private function create_asset_file($albumid) { 
+		$file=File::get();
+		$file->album_id=$albumid;
+		$file->Name=$this->Name;
+		$file->Description='';
+		$file->GUID='fooo';
+		$file->MimeType=$this->MimeType;
+		$file->digital_negative__asset_id=$this->id;
+		$file->save();
+		return array('AssetType'=>'File','File'=>$file);
+	}
 } 
