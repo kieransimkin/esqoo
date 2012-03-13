@@ -4,7 +4,10 @@ class Album extends DBSQL {
 		$name=$this->Name;
 		$origname=$name;
 		$c=1;
-		while (Album::album_exists($this->user_id, $name)) { 
+		while (($alb=Album::album_exists($this->user_id, $name))) { 
+			if ($alb==$this->id) { 
+				break;
+			}
 			$name=$origname.' ('.$c.')';
 			++$c;
 		}
@@ -16,7 +19,7 @@ class Album extends DBSQL {
 		if (is_null($res)) { 
 			return false;
 		} else {
-			return true;
+			return $res;
 		}
 	}
 	static function get_menu($user_id) { 
