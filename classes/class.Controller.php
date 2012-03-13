@@ -219,7 +219,7 @@ class Controller {
 		return $new_controller->$action($arg,$input);
 		
 	}
-	function add_flexigrid_reload_selector($selector) { 
+	function addFlexigridReloadSelector($selector) { 
 		$this->flexigrid_reload_selectors[]=$selector;
 	}
 }

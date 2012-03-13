@@ -20,7 +20,7 @@ esqoo_album.delete = function(id) {
 	console.log('delete '+id);	
 }
 </script>
-<div class="esqoo-flexigrid" 
+<div class="esqoo-flexigrid" id="albumlist"
 	data-flexigrid-url="/album/list/api"
 	data-flexigrid-id-field="AlbumID"
 	data-flexigrid-usepager="true"

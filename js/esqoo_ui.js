@@ -176,6 +176,9 @@ esqoo_ui.setup_dialog_html = function(d,url,params) {
 }
 esqoo_ui.populate_dialog = function(d,url,params) { 
 	$.ajax({url: url, dataType: 'json', type: 'post', data: params, success: function(data) { 
+		if (typeof(data.flexigrid_reload_selectors)!='undefined') { 
+			esqoo_ui.reload_flexigrids(data.flexigrid_reload_selectors);
+		}
 		esqoo_ui.update_dialog_html(d,data);
 	}}).error(function() { 
 		alert('Unable to parse dialog JSON');
@@ -184,10 +187,18 @@ esqoo_ui.populate_dialog = function(d,url,params) {
 }
 esqoo_ui.send_dialog_ajax_request = function(d,form) { 
 	$.ajax({url: form.attr('action'), dataType: 'json', type: 'post', data: form.serialize()+"&source=dialog", success: function(data) { 
+		if (typeof(data.flexigrid_reload_selectors)!='undefined') { 
+			esqoo_ui.reload_flexigrids(data.flexigrid_reload_selectors);
+		}
 		esqoo_ui.get_messages();
 		esqoo_ui.update_dialog_html(d,data);
 	}}).error(function() { 
 		alert('Unable to parse dialog JSON');
+	});
+}
+esqoo_ui.reload_flexigrids = function (grids) { 
+	$(grids).each(function(i,o) { 
+		$(o).flexReload();
 	});
 }
 esqoo_ui.update_dialog_html = function(d,data) { 

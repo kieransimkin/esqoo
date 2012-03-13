@@ -18,6 +18,7 @@ class AlbumController extends LockedController {
 		if ($form->validate()) { 
 			$this->createAPI('',$input);
 			$this->showMessage(_('Album created'));
+			$this->addFlexigridReloadSelector('#albumlist');
 			return $this->formSuccess();	
 		} else { 
 			return $this->formFail($form,'30%','550');
@@ -30,6 +31,7 @@ class AlbumController extends LockedController {
 		if ($form->validate()) { 
 			$this->updateAPI('',$input);
 			$this->showMessage(_('Album updated'));
+			$this->addFlexigridReloadSelector('#albumlist');
 			return $this->formSuccess();
 		} else { 
 			return $this->formFail($form,'30%','550');
