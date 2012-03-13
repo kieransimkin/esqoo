@@ -6,7 +6,26 @@ class MessageController extends LockedController {
 		Message::seen($this->user->id);
 		return array('Messages'=>$messages,'MessageCount'=>count($messages));
 	}
+	public function seenAPI($arg='',$input=array()) { 
+		if (strlen(@$input['MessageID'])<1 || $input['MessageID']!=(int)$input['MessageID']) { 
+			$this->api_error(1,_("MessageID must be specified and must be an integer"));
+		}
+		$message=null;
+		try { 
+			$message=Message::get($input['MessageID']);
+			if ($message->user_id!=$this->user->id) { 
+				$this->api_error(2,_('MessageID not found'));
+				$message=null;
+			}
+		} catch (DBSQ_Exception $e) { 
+			$this->api_error(2,_('MessageID not found'));
+		}
+		if ($this->api_validation_success()) { 
+			$message->seen();
+		}
+		return $message;
+	}
 	private function get_message_fields() { 
-		return array('id','CreateDate','Severity','Message');
+		return array('id','CreateDate','Severity','Message','CompleteDate');
 	}
 } 

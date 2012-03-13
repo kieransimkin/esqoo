@@ -63,6 +63,9 @@ esqoo_ui.remove_message = function(item) {
 	return function(e) { 
 		var c=0;
 		var index=null;
+		$.ajax({url: '/message/seen/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', MessageID: item.MessageID}, success: function(data) { 
+
+		}});
 		$(esqoo_ui.message_queue).each(function(i,o) {
 			if (o===item) { 
 				index=c;
