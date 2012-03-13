@@ -75,11 +75,13 @@ esqoo_ui.update_message_queue_positions = function() {
 }
 esqoo_ui.remove_message = function(item) {
 	return function(e) { 
+		if (typeof(item.removing)=='undefined' || item.removing===false) { 
+			return false;
+		}
+		item.removing=true;
 		var c=0;
 		var index=null;
-		$.ajax({url: '/message/seen/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', MessageID: item.MessageID}, success: function(data) { 
-
-		}});
+		$.ajax({url: '/message/seen/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', MessageID: item.MessageID}});
 		$(esqoo_ui.message_queue).each(function(i,o) {
 			if (o===item) { 
 				index=c;
