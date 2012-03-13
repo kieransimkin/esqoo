@@ -37,21 +37,23 @@ esqoo_ui.add_message = function (message) {
 		.addClass('esqoo-message-close-button')
 		.button({icons: {primary: 'ui-icon-close'}, text: false})
 		.appendTo(container);
-	container.animate({opacity: 1.0},{duration: 'slow', queue: false})
 	container.slideDown('slow');
+	container.animate({opacity: 1.0},{duration: 'slow', queue: false})
 	var item={visible: false, container: container};
 	$.extend(item,message);
 	closebutton.click(esqoo_ui.remove_message(item));
-	esqoo_ui.message_queue.push(item);
+	esqoo_ui.message_queue.unshift(item);
 	if (esqoo_ui.message_queue.length>1) { 
-		esqoo_ui.move_message_queue_up();
+		esqoo_ui.update_message_queue_positions();
 	}
 }
-esqoo_ui.move_message_queue_up = function() { 
-
-}
-esqoo_ui.move_message_queue_down = function() { 
-
+esqoo_ui.update_message_queue_positions = function() { 
+	for (var c=0; c<esqoo_ui.message_queue.length; c++) { 
+		var targetheight=c*10+'em';
+		var currentheight=esqoo_ui.message_queue[c].container.css('bottom');
+		console.log('c: '+c+' targetheight: '+targetheight+' currentheight: '+currentheight);
+		
+	}
 }
 esqoo_ui.remove_message = function(item) {
 	return function(e) { 
@@ -65,11 +67,11 @@ esqoo_ui.remove_message = function(item) {
 			++c;	
 		});
 		esqoo_ui.message_queue.splice(index,1);
-		esqoo_ui.move_message_queue_down();
-		item.container.animate({opacity: 0.0},{duration: 'slow', queue: false});
+		esqoo_ui.update_message_queue_positions();
 		item.container.slideUp('fast',function() { 
 			item.container.remove();
 		});
+		item.container.animate({opacity: 0.0},{duration: 'slow', queue: false});
 	}	
 }
 esqoo_ui.make_dialog = function(options,url,params) { 
