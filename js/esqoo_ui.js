@@ -49,14 +49,14 @@ esqoo_ui.add_message = function (message) {
 }
 esqoo_ui.update_message_queue_positions = function() { 
 	for (var c=0; c<esqoo_ui.message_queue.length; c++) { 
-		var targetheight=0;
+		var targetheight='0px';
 		if (c>0) { 
-			targetheight=$(c*6).toPx();
+			targetheight=$(c*5).toPx({scope: esqoo_ui.message_queue[c].container});
 		}
 		var currentheight=esqoo_ui.message_queue[c].container.css('bottom');
-		console.log('c: '+c+' targetheight: '+targetheight+' currentheight: '+currentheight);
-		esqoo_ui.message_queue[c].container.animate({bottom: targetheight},{duration: 'slow'});
-		
+		if (currentheight!=targetheight) { 
+			esqoo_ui.message_queue[c].container.animate({bottom: targetheight},{duration: 'slow'});
+		}
 	}
 }
 esqoo_ui.remove_message = function(item) {
