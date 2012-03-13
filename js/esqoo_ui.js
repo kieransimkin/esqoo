@@ -220,6 +220,7 @@ esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) {
 	return parseInt(viewport_height*(val/100));
 }
 esqoo_ui.prepare_dialog_html = function(d,data) { 
+	console.log(data);
 	if (data.height !== null) { 
 		d.dialog('option','height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
 	}
@@ -232,7 +233,6 @@ esqoo_ui.prepare_dialog_html = function(d,data) {
 	if (data.minwidth !== null) { 
 		d.dialog('option','minWidth',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.minwidth));
 	}
-	console.log(data);
 	d.dialog('option','position','center');
 	// Dunno if we really wanna do this
 	if (d.parent().find('input[type=text]:first').val()=='') { 
