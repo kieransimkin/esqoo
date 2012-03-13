@@ -49,7 +49,7 @@ esqoo_ui.add_message = function (message) {
 }
 esqoo_ui.update_message_queue_positions = function() { 
 	for (var c=0; c<esqoo_ui.message_queue.length; c++) { 
-		var targetheight=$(c*5).toPx();
+		var targetheight=$(c*6).toPx();
 		var currentheight=esqoo_ui.message_queue[c].container.css('bottom');
 		console.log('c: '+c+' targetheight: '+targetheight+' currentheight: '+currentheight);
 		esqoo_ui.message_queue[c].container.animate({bottom: targetheight},{duration: 'slow'});
