@@ -5,6 +5,11 @@ $(document).ready(function() {
 	esqoo_ui.dialog_singletons.length=0;
 	esqoo_ui.get_messages();
 });
+esqoo_ui.create_message = function(message,severity) { 
+	$.ajax({url: '/message/create/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', Message: message, Severity: severity}, success: function(data) { 
+		esqoo_ui.get_messages();
+	}});
+}
 esqoo_ui.get_messages = function() { 
 	$.ajax({url: '/message/get/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json'}, success: function(data) { 
 		if (data.MessageCount>0) { 

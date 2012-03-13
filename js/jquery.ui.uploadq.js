@@ -168,8 +168,6 @@ $.widget( "esqoo.uploadq", {
 			item.status_text.html('Failed');
 			item.li.appendTo(me.failedcontainer);
 			item.li.slideDown('slow');
-			console.log('failed');
-			console.log(item);
 			if (!me.failed_visible) { 
 				me.failed_visible=true;
 				me.faileddiv.fadeIn('slow');
@@ -231,6 +229,7 @@ $.widget( "esqoo.uploadq", {
 		var me = this;
 		if (item.chunk_failures>me.options.chunkfailurelimit) { 
 			me._upload_failed(item);
+			esqoo_ui.create_message('Upload failed: '+item.file.name,'Notice');
 			me._run_queue();
 			return;
 		}
@@ -286,11 +285,17 @@ $.widget( "esqoo.uploadq", {
 			} else { 
 				item.assettype=d.AssetType;
 				if (d.AssetType=='Video') { 
+					esqoo_ui.create_message('Video upload successful: '+item.file.name,'Notice');
 					item.videoid=d.Video.VideoID;
 				} else if (d.AssetType=='Audio') { 
+					esqoo_ui.create_message('Audio upload successful: '+item.file.name,'Notice');
 					item.audioid=d.Audio.AudioID;
 				} else if (d.AssetType=='Picture') {
+					esqoo_ui.create_message('Picture upload successful: '+item.file.name,'Notice');
 					item.pictureid=d.Picture.PictureID;
+				} else if (d.AssetType=='File') {
+					esqoo_ui.create_message('File upload successful: '+item.file.name,'Notice');
+					item.fileid=d.File.FileID;
 				}
 				me._upload_complete(item);
 				me._run_queue();
