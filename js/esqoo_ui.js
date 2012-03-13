@@ -38,12 +38,12 @@ esqoo_ui.add_message = function (message) {
 		.appendTo(container);
 	container.slideDown('slow');
 	container.animate({opacity: 1.0},{duration: 'slow', queue: false})
-	var item={visible: false, container: container};
+	var item={container: container};
 	$.extend(item,message);
 	closebutton.click(esqoo_ui.remove_message(item));
 	if (item.Severity=='Notice') { 
-		$(item).oneTime(5000,function() { 
-			console.log(this);
+		$(item).oneTime(10000,function() { 
+			esqoo_ui.remove_message(this)();
 		});
 	}
 	esqoo_ui.message_queue.unshift(item);
