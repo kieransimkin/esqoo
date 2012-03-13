@@ -76,7 +76,8 @@ esqoo_ui.update_message_queue_positions = function() {
 esqoo_ui.remove_message = function(item) {
 	return function(e) { 
 		console.log(item.removing);
-		if (typeof(item.removing)=='undefined' || item.removing===false) { 
+		if (typeof(item.removing)!='undefined' && item.removing===true) { 
+			console.log('not removing because already removing');
 			return false;
 		}
 		item.removing=true;
