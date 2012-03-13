@@ -48,9 +48,25 @@ esqoo_ui.add_message = function (message) {
 esqoo_ui.move_message_queue_up = function() { 
 
 }
+esqoo_ui.move_message_queue_down = function() { 
+
+}
 esqoo_ui.remove_message = function(item) {
 	return function(e) { 
-		console.log('closed');
+		item.container.slideUp('fast',function() { 
+			item.container.remove();
+			var c=0;
+			var index=null;
+			$(esqoo_ui.message_queue).each(function(i,o) {
+				if (o===item) { 
+					index=c;
+					return false;
+				}
+				++c;	
+			});
+			esqoo_ui.message_queue.splice(index,1);
+			esqoo_ui.move_message_queue_down();
+		});
 	}	
 }
 esqoo_ui.make_dialog = function(options,url,params) { 
