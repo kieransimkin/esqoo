@@ -221,16 +221,16 @@ esqoo_ui.convert_percentages_to_viewport_height_pixels = function(val) {
 }
 esqoo_ui.prepare_dialog_html = function(d,data) { 
 	console.log(data);
-	if (data.height !== null) { 
+	if (typeof(data.height)!='undefined' && data.height !== null) { 
 		d.dialog('option','height',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.height));
 	}
-	if (data.width !== null) { 
+	if (typeof(data.width)!='undefined' && data.width !== null) { 
 		d.dialog('option','width',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.width));
 	}
-	if (data.minheight !== null) { 
+	if (typeof(data.minheight)!='undefined' && data.minheight !== null) { 
 		d.dialog('option','minHeight',esqoo_ui.convert_percentages_to_viewport_height_pixels(data.minheight));
 	}
-	if (data.minwidth !== null) { 
+	if (typeof(data.minwidth)!='undefined' && data.minwidth !== null) { 
 		d.dialog('option','minWidth',esqoo_ui.convert_percentages_to_viewport_width_pixels(data.minwidth));
 	}
 	d.dialog('option','position','center');
