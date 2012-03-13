@@ -91,6 +91,7 @@ class Controller {
 		$this->api_error($form->getId(),_('Form validation failure'));
 	}
 	function showMessage($string,$severity='Notice') { 
+		$severity=ucfirst(strtolower($severity));
 		if ($severity!='Notice' && $severity!='Warning' && $severity!='Error') { 
 			$severity='Error';
 		}
