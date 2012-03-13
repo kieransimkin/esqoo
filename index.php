@@ -22,6 +22,7 @@ function __autoload($class_name) {
 function shutdown_function () {
 	if (is_null($e = error_get_last()) === false) {
 		if ($e['type']==E_ERROR || $e['type']==E_PARSE || $e['type']==E_CORE_ERROR || $e['type']==E_CORE_WARNING || $e['type']==E_COMPILE_ERROR || $e['type']==E_COMPILE_WARNING) { 
+			var_dump($e);
 			header("HTTP/1.1 500 Internal Server Error");
 			return false;
 		}

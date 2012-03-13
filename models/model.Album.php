@@ -4,8 +4,13 @@ class Album extends DBSQL {
 		$name=$this->Name;
 		$origname=$name;
 		$c=1;
+		try { 
+			$thisid=$this->id;
+		} catch (DBSQ_Exception $e) { 
+			$thisid=-1;
+		}
 		while (($alb=Album::album_exists($this->user_id, $name))) { 
-			if ($alb==$this->id) { 
+			if ($alb==$thisid) { 
 				break;
 			}
 			$name=$origname.' ('.$c.')';
