@@ -14,7 +14,8 @@ create table `user` (
 	country_id int default null,
 	daytime__ui_theme_id int not null default 1,
 	nighttime__ui_theme_id int not null default 1,
-	rich_editor_id int not null default 1,
+	visual__rich_editor_id int not null default 1,
+	code__rich_editor_id int not null default 1,
 	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	ModifyDate datetime default null,
 	DeleteDate datetime default null,
@@ -63,16 +64,18 @@ insert into ui_theme set Tag='purple-lady', ui_state='both';
 drop table if exists `rich_editor`;
 create table `rich_editor` (
 	id int not null auto_increment,
+	`Type` enum('Code','Visual') not null default 'Visual',
 	Tag varchar(255) NOT NULL,
-	description text not null,
+	Description text not null,
 	primary key (id),
+	index (`Type`),
 	unique key (Tag)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-insert into rich_editor set Tag='TinyMCE',description='The TinyMCE WYSIWYG HTML editor.';
-insert into rich_editor set Tag='CKEditor',description='The CKEditor WYSIWYG HTML editor.';
-insert into rich_editor set Tag='EditArea',description='The EditArea code editor.';
-insert into rich_editor set Tag='Ace',description='The Ace code editor.';
-insert into rich_editor set Tag='markItUp',description='The markItUp code editor.';
+insert into rich_editor set Tag='TinyMCE',Description='The TinyMCE WYSIWYG HTML editor.', `Type`='Visual';
+insert into rich_editor set Tag='CKEditor',Description='The CKEditor WYSIWYG HTML editor.', `Type`='Visual';
+insert into rich_editor set Tag='EditArea',Description='The EditArea code editor.', `Type`='Code';
+insert into rich_editor set Tag='Ace',Description='The Ace code editor.', `Type`='Code';
+insert into rich_editor set Tag='markItUp',Description='The markItUp code editor.', `Type`='Code';
 drop table if exists `user_challenge`;
 create table `user_challenge` ( 
 	id int not null auto_increment,

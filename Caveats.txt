@@ -1,1 +1,2 @@
 * Dialog buttons have hardcoded english textual captions, also these captions are used for deciding which icon to use during iconification
+* Uploadq.js has some hardcoded english language strings

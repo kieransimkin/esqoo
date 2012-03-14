@@ -69,7 +69,8 @@ class AccountController extends LockedController {
 	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('editor_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
-		$form->addElement("select","rich_editor_id",array(),array('options'=>Rich_editor::get_menu()))->setLabel(_('Rich Editor'))->addRule('required',_('Required'));
+		$form->addElement("select","visual__rich_editor_id",array(),array('options'=>Rich_editor::get_menu()))->setLabel(_('Visual Editor'))->addRule('required',_('Required'));
+		$form->addElement("select","code__rich_editor_id",array(),array('options'=>Rich_editor::get_menu()))->setLabel(_('Code Editor'))->addRule('required',_('Required'));
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
@@ -154,6 +155,6 @@ class AccountController extends LockedController {
 		return array('FirstName','LastName','Email','Address1','Address2','Town','County','country_id');
 	}
 	private function get_settings_fields() { 
-		return array('rich_editor_id','daytime__ui_theme_id','nighttime__ui_theme_id');
+		return array('visual__rich_editor_id','code__rich_editor_id','daytime__ui_theme_id','nighttime__ui_theme_id');
 	}
 }
