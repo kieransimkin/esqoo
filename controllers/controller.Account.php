@@ -69,8 +69,8 @@ class AccountController extends LockedController {
 	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('editor_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
-		$form->addElement("select","visual__rich_editor_id",array(),array('options'=>Rich_editor::get_menu()))->setLabel(_('Visual Editor'))->addRule('required',_('Required'));
-		$form->addElement("select","code__rich_editor_id",array(),array('options'=>Rich_editor::get_menu()))->setLabel(_('Code Editor'))->addRule('required',_('Required'));
+		$form->addElement("select","visual__rich_editor_id",array(),array('options'=>Rich_editor::get_menu('Visual')))->setLabel(_('Visual Editor'))->addRule('required',_('Required'));
+		$form->addElement("select","code__rich_editor_id",array(),array('options'=>Rich_editor::get_menu('Code')))->setLabel(_('Code Editor'))->addRule('required',_('Required'));
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
