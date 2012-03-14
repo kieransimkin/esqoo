@@ -3,7 +3,7 @@
 <head>
 	<title><?=$this->title?$this->title:'Dashboard'?> - Esqoo</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="initial-scale=1.0, width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <?php
 	$this->cssManager->add("site","superfish","nav","jquery.ui.selectmenu","flexigrid");
 	$this->cssManager->add("template.".$this->template);
