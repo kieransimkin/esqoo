@@ -15,7 +15,7 @@ create table `user` (
 	daytime__ui_theme_id int not null default 1,
 	nighttime__ui_theme_id int not null default 1,
 	visual__rich_editor_id int not null default 1,
-	code__rich_editor_id int not null default 1,
+	code__rich_editor_id int not null default 4,
 	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	ModifyDate datetime default null,
 	DeleteDate datetime default null,
