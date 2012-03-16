@@ -4,7 +4,7 @@ $.widget('esqoo.qrichedit', {
 	options: { 
 		
 	},
-	visual_editor: 'TinyMCE',
+	visual_editor: 'CKEditor',
 	code_editor: 'markItUp',
 	unique_id:null,
 	_create: function() {
@@ -46,7 +46,10 @@ $.widget('esqoo.qrichedit', {
 			break;
 			case 'CKEditor':
 				this._load_javascript('/js/ckeditor/ckeditor.js', function() { 
-					console.log('CKEditor jQuery loaded');
+					me._load_javascript('/js/ckeditor/adapters/jquery.js',function() { 
+						$(me.visualtextbox).ckeditor();
+						console.log('CKEditor jQuery loaded');
+					});
 				});
 			break;
 		}
