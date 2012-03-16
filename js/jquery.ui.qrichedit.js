@@ -84,7 +84,6 @@ $.widget('esqoo.qrichedit', {
 					.insertAfter(this.container);
 		this.tabbar=$('<ul></ul>')
 					.addClass('esqoo-ui-tabbar')
-					.wrap('<nav></nav>')
 					.insertAfter(this.container);
 		$('<li><a href="#esqoo-ui-visual-rich-editor-'+this._get_unique_id()+'">Visual</a></li>').appendTo(this.tabbar);
 		$('<li><a href="#esqoo-ui-code-rich-editor-'+this._get_unique_id()+'">Code</a></li>').appendTo(this.tabbar);
