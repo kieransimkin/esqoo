@@ -68,7 +68,7 @@ $.widget('esqoo.qrichedit', {
 	},
 	_do_html_setup: function() { 
 		this.container= $('<div></div>')
-					.addClass(('esqoo-ui-rich-editor-container')
+					.addClass('esqoo-ui-rich-editor-container')
 					.insertAfter(this.element);
 		this.visualtabcontainer=$('<div></div>')
 					.attr('id','esqoo-ui-visual-rich-editor-'+this._get_unique_id())
