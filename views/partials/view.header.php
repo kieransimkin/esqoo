@@ -9,11 +9,14 @@
 	$this->cssManager->add("template.".$this->template);
 //	$this->cssManager->add("query.ui.base","themes/base/jquery.ui.core","themes/base/jquery.ui.dialog");
 	$this->cssManager->display();
-	$theme=@$this->options['theme'];
-	if ($this->user->DayState=='Daytime') { 
-		$theme=$this->user->daytime__ui_theme->Tag;
-	} else {
-		$theme=$this->user->nighttime__ui_theme->Tag;
+	if (!is_null($this->user)) { 
+		if ($this->user->DayState=='Daytime') { 
+			$theme=$this->user->daytime__ui_theme->Tag;
+		} else {
+			$theme=$this->user->nighttime__ui_theme->Tag;
+		}
+	} else { 
+		$theme='cupertino';
 	}
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />
@@ -51,11 +54,11 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 	WebFontConfig = {
 		google: { families: [ 'Cantarell' ] }
 	};
-	esqoo_ui.visual_editor='<?=$this->user->visual__rich_editor->Tag;?>';
-	esqoo_ui.code_editor='<?=$this->user->code__rich_editor->Tag;?>';
-	esqoo_ui.nighttime_theme='<?=$this->user->nighttime__ui_theme->Tag;?>';
-	esqoo_ui.daytime_theme='<?=$this->user->daytime__ui_theme->Tag;?>';
-	esqoo_ui.daystate='<?=$this->user->DayState;?>';
+	esqoo_ui.visual_editor='<?=@$this->user->visual__rich_editor->Tag;?>';
+	esqoo_ui.code_editor='<?=@$this->user->code__rich_editor->Tag;?>';
+	esqoo_ui.nighttime_theme='<?=@$this->user->nighttime__ui_theme->Tag;?>';
+	esqoo_ui.daytime_theme='<?=@$this->user->daytime__ui_theme->Tag;?>';
+	esqoo_ui.daystate='<?=@$this->user->DayState;?>';
 	</script>
 	<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
