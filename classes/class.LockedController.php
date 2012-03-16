@@ -18,6 +18,7 @@ class LockedController extends Controller {
 				$this->_redirectAuthFail();
 			}
 		} catch (DBSQ_Exception $e) { 
+			print $e;
 			$this->_redirectAuthFail();
 		}
 		$this->user=$user;
