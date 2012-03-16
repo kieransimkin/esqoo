@@ -1,15 +1,11 @@
 (function ( $ ) {
-$.ui.staticQRichEdit={'unique_id':0,'visual_editor':'CKEditor','code_editor':'markItUp'};
+$.ui.staticQRichEdit={'unique_id':0};
 $.widget('esqoo.qrichedit', {
 	options: { 
 		
 	},
-	visual_editor: null,
-	code_editor: null,
 	unique_id:null,
 	_create: function() {
-		this.visual_editor=$.ui.staticQRichEdit.visual_editor;
-		this.code_editor=$.ui.staticQRichEdit.code_editor;
 		this._do_html_setup();
 		this._do_javascript_loads();
 	},
@@ -39,7 +35,7 @@ $.widget('esqoo.qrichedit', {
 	},
 	_do_javascript_loads: function() { 
 		var me = this;
-		switch(this.visual_editor) { 
+		switch(esqoo_ui.visual_editor) { 
 			case 'TinyMCE':
 				this._load_javascript('/js/tinymce/jquery.tinymce.js',function () {
 					console.log('TinyMCE jQuery loaded');
@@ -55,7 +51,8 @@ $.widget('esqoo.qrichedit', {
 				});
 			break;
 		}
-		switch(this.code_editor) { 
+		console.log(esqoo_ui.code_editor);
+		switch(esqoo_ui.code_editor) { 
 			case 'EditArea':
 				this._load_javascript('/js/editarea/edit_area_full.js', function() { 
 					editAreaLoader.init({
