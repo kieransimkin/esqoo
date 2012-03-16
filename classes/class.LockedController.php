@@ -10,6 +10,7 @@ class LockedController extends Controller {
 		}
 		try { 
 			$user=User::get($input['UserID'],'id','row',true);
+			var_dump($user);
 			$usertoken=User_token::get($input['TokenID']);
 			if ($usertoken->user_id!=$user->id) { 
 				$this->_redirectAuthFail();
@@ -19,6 +20,7 @@ class LockedController extends Controller {
 			}
 		} catch (DBSQ_Exception $e) { 
 			print $e;
+			die;
 			$this->_redirectAuthFail();
 		}
 		$this->user=$user;
