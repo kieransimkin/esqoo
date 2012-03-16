@@ -29,21 +29,31 @@ $.widget('esqoo.qrichedit', {
 	_do_javascript_loads: function() { 
 		switch(this.visual_editor) { 
 			case 'TinyMCE':
-			
+				this._load_javascript('/js/tinymce/jquery.tinymce.js',function () {
+					console.log('TinyMCE jQuery loaded');
+				});
 			break;
 			case 'CKEditor':
-
+				this._load_javascript('/js/ckeditor/ckeditor.js', function() { 
+					console.log('CKEditor jQuery loaded');
+				});
 			break;
 		}
 		switch(this.code_editor) { 
 			case 'EditArea':
-
+				this._load_javascript('/js/editarea/edit_area.js', function() { 
+					console.log('EditArea loaded');
+				});
 			break;
 			case 'Ace':
-
+				this._load_javascript('/js/ace/build/src/ace.js',function() { 
+					console.log('Ace loaded');
+				});
 			break;
 			case 'markItUp':
-
+				this._load_javascript('/js/markitup/markitup/jquery.markitup.js',function() { 
+					console.log('markItUp');
+				});
 			break;
 		}
 	},
