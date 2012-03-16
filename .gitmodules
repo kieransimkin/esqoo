@@ -16,6 +16,3 @@
 [submodule "js/markitup"]
 	path = js/markitup
 	url = git://github.com/markitup/1.x.git
-[submodule "js/tinymce"]
-	path = js/tinymce
-	url = git://github.com/tinymce/tinymce.git
