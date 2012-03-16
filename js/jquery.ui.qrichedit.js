@@ -13,7 +13,8 @@ $.widget('esqoo.qrichedit', {
 	},
 	_get_unique_id: function(initial) { 
 		if (this.unique_id===null) { 
-			this.unique_id=$.ui.staticQRichEdit.unique_id++;
+			this.unique_id=$.ui.staticQRichEdit.unique_id;
+			$.ui.staticQRichEdit.unique_id=$.ui.staticQRichEdit.unique_id+1;
 		}
 		return this.unique_id;
 	},
