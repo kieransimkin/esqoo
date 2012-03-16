@@ -59,7 +59,7 @@ $.widget('esqoo.qrichedit', {
 			case 'Ace':
 				this._load_javascript('/js/ace/build/src/ace.js',function() { 
 					console.log('Ace loaded');
-					ace.edit($(me.codetextbox));
+					ace.edit($(me.codetextbox).get());
 				});
 			break;
 			case 'markItUp':
