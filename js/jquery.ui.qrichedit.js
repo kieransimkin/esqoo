@@ -67,25 +67,29 @@ $.widget('esqoo.qrichedit', {
 		}
 	},
 	_do_html_setup: function() { 
+		this.container= $('<div></div>')
+					.addClass(('esqoo-ui-rich-editor-container')
+					.insertAfter(this.element);
 		this.visualtabcontainer=$('<div></div>')
 					.attr('id','esqoo-ui-visual-rich-editor-'+this._get_unique_id())
 					.addClass('esqoo-ui-visual-rich-editor-tab-container')
-					.insertAfter(this.element);
+					.insertAfter(this.container);
 		this.codetabcontainer=$('<div></div>')
 					.attr('id','esqoo-ui-code-rich-editor-'+this._get_unique_id())
 					.addClass('esqoo-ui-code-rich-editor-tab-container')
-					.insertAfter(this.element);
+					.insertAfter(this.container);
 		this.rawtabcontainer=$('<div></div>')
 					.attr('id','esqoo-ui-raw-rich-editor-'+this._get_unique_id())
 					.addClass('esqoo-ui-raw-rich-editor-tab-container')
-					.insertAfter(this.element);
+					.insertAfter(this.container);
 		this.tabbar=$('<ul></ul>')
 					.addClass('esqoo-ui-tabbar')
 					.wrap('<nav></nav>')
-					.insertAfter(this.element);
+					.insertAfter(this.container);
 		$('<li><a href="#esqoo-ui-visual-rich-editor-'+this._get_unique_id()+'">Visual</a></li>').appendTo(this.tabbar);
 		$('<li><a href="#esqoo-ui-code-rich-editor-'+this._get_unique_id()+'">Code</a></li>').appendTo(this.tabbar);
 		$('<li><a href="#esqoo-ui-raw-rich-editor-'+this._get_unique_id()+'">Raw</a></li>').appendTo(this.tabbar);
+		this.container.tabs();
 	},
 	_setOption: function (key, value) { 
 		switch(key) { 
