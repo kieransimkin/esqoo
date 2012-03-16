@@ -41,7 +41,7 @@ $.widget('esqoo.qrichedit', {
 			case 'TinyMCE':
 				this._load_javascript('/js/tinymce/jquery.tinymce.js',function () {
 					console.log('TinyMCE jQuery loaded');
-					$(me.visualtextbox).tinymce({});
+					$(me.visualtextbox).tinymce({script_url : '/js/tinymce/tiny_mce.js'});
 				});
 			break;
 			case 'CKEditor':
