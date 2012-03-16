@@ -10,7 +10,7 @@ class LockedController extends Controller {
 		}
 		try { 
 			$user=User::get($input['UserID'],'id','row',true);
-			$usertoken=User_token::get($input['TokenID']);
+			$usertoken=User_token::get($input['TokenID'],'id','row',true);
 			var_dump($usertoken);
 			if ($usertoken->user_id!=$user->id) { 
 				print"g1".$usertoken->user_id."-".$user->id;
