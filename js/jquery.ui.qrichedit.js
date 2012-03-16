@@ -52,7 +52,7 @@ $.widget('esqoo.qrichedit', {
 		}
 		switch(this.code_editor) { 
 			case 'EditArea':
-				this._load_javascript('/js/editarea/edit_area.js', function() { 
+				this._load_javascript('/js/editarea/edit_area_full.js', function() { 
 					editAreaLoader.init({
 						id: $(me.codetextbox).attr('id')
 					});
