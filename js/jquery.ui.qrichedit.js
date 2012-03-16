@@ -17,7 +17,7 @@ $.widget('esqoo.qrichedit', {
 		var me = this;
 		return (function() { 
 			var id=0;
-			return (me.unique_id=function() { return id++; });
+			return (me.unique_id=function() { return id++; })();
 		})();
 	},
 	_load_javascript: function(s,callback) { 
