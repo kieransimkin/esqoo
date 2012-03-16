@@ -37,6 +37,9 @@ $(document).ready(function() {
 		}
 		$(this).selectmenu({width: width});
 	});
+	$('textarea.esqoo-qrichedit').livequery(function() { 
+		$(this).qrichedit();
+	});
 	$('div.esqoo-flexigrid').livequery(function() { 
 		var idfield='id';
 		if ($(this).attr('data-flexigrid-id-field')) { 

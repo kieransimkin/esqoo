@@ -49,7 +49,7 @@ class BlogController extends LockedController {
 		$form=new Form('post');
 		$form->setAPIDataSources($input,$post,$forcesubmit);
 		$form->addElement('text','Title',array())->setLabel(_('Title'))->addRule('required',_('Required'));
-		$form->addElement('textarea','Content',array())->setLabel(_('Content'))->addrule('required',_('Required'));
+		$form->addElement('textarea','Content',array('class'=>'esqoo-qrichedit'))->setLabel(_('Content'))->addrule('required',_('Required'));
 		return $form;
 	 }
 	/*****************************************
