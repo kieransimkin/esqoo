@@ -10,3 +10,9 @@
 [submodule "js/paginajax"]
 	path = js/paginajax
 	url = git://github.com/kieransimkin/jquery.ui.paginajax
+[submodule "js/ace"]
+	path = js/ace
+	url = git://github.com/ajaxorg/ace.git
+[submodule "js/markitup"]
+	path = js/markitup
+	url = git://github.com/markitup/1.x.git
