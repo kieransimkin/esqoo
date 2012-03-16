@@ -51,7 +51,6 @@ $.widget('esqoo.qrichedit', {
 				});
 			break;
 		}
-		console.log(esqoo_ui.code_editor);
 		switch(esqoo_ui.code_editor) { 
 			case 'EditArea':
 				this._load_javascript('/js/editarea/edit_area_full.js', function() { 
