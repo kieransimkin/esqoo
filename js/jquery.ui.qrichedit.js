@@ -41,7 +41,7 @@ $.widget('esqoo.qrichedit', {
 			case 'TinyMCE':
 				this._load_javascript('/js/tinymce/jquery.tinymce.js',function () {
 					console.log('TinyMCE jQuery loaded');
-					//$(me.visualtextbox).tinymce({script_url : '/js/tinymce/tiny_mce.js'});
+					$(me.visualtextbox).tinymce({script_url : '/js/tinymce/tiny_mce.js'});
 				});
 			break;
 			case 'CKEditor':
@@ -53,13 +53,16 @@ $.widget('esqoo.qrichedit', {
 		switch(this.code_editor) { 
 			case 'EditArea':
 				this._load_javascript('/js/editarea/edit_area.js', function() { 
+					editAreaLoader.init({
+						id: $(me.codetextbox).attr('id')
+					});
 					console.log('EditArea loaded');
 				});
 			break;
 			case 'Ace':
 				this._load_javascript('/js/acewidget/contrib/jquery.acewidget/jquery.acewidget.js',function() { 
 					console.log('Ace loaded');
-					$(me.visualtextbox).acewidget();
+					$(me.codetextbox).acewidget();
 				});
 			break;
 			case 'markItUp':
@@ -79,6 +82,7 @@ $.widget('esqoo.qrichedit', {
 					.appendTo(this.container);
 		this.visualtextbox=$('<textarea></textarea>')
 					.html(this.element.html())
+					.attr('id','esqoo-ui-visual-text-box-'+this._get_unique_id())
 					.appendTo(this.visualtabcontainer);
 		this.codetabcontainer=$('<div></div>')
 					.attr('id','esqoo-ui-code-rich-editor-'+this._get_unique_id())
@@ -86,6 +90,7 @@ $.widget('esqoo.qrichedit', {
 					.prependTo(this.container);
 		this.codetextbox=$('<textarea></textarea>')
 					.html(this.element.html())
+					.attr('id','esqoo-ui-code-text-box-'+this._get_unique_id())
 					.appendTo(this.codetabcontainer);
 		this.rawtabcontainer=$('<div></div>')
 					.attr('id','esqoo-ui-raw-rich-editor-'+this._get_unique_id())
@@ -93,6 +98,7 @@ $.widget('esqoo.qrichedit', {
 					.prependTo(this.container);
 		this.rawtextbox=$('<textarea></textarea>')
 					.html(this.element.html())
+					.attr('id','esqoo-ui-raw-text-box-'+this._get_unique_id())
 					.appendTo(this.rawtabcontainer);
 		this.tabbar=$('<ul></ul>')
 					.addClass('esqoo-ui-tabbar')
