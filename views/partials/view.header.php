@@ -10,21 +10,10 @@
 //	$this->cssManager->add("query.ui.base","themes/base/jquery.ui.core","themes/base/jquery.ui.dialog");
 	$this->cssManager->display();
 	$theme=@$this->options['theme'];
-	if (strlen($theme)<1) { 
-		//$theme='purple-lady';
-		$theme='sunny';
-		//$theme='vader';
-		//$theme='ui-darkness';
-		//$theme='ui-lightness';
-		//$theme='humanity';
-		//$theme='le-frog';
-		//$theme='swanky-purse';
-		//$theme='mint-choc';
-		//$theme='south-street';
-		//$theme='cupertino';
-		//$theme='start';
-		//$theme='hot-sneaks';
-		//$theme='dot-luv';
+	if ($this->user->DayState=='Daytime') { 
+		$theme=$this->user->daytime__ui_theme->Tag;
+	} else {
+		$theme=$this->user->nighttime__ui_theme->Tag;
 	}
 	?>
 	<link rel="stylesheet" href="/css/themes/<?=$theme?>/jquery.ui.all.css" />
@@ -66,6 +55,7 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 	esqoo_ui.code_editor='<?=$this->user->code__rich_editor->Tag;?>';
 	esqoo_ui.nighttime_theme='<?=$this->user->nighttime__ui_theme->Tag;?>';
 	esqoo_ui.daytime_theme='<?=$this->user->daytime__ui_theme->Tag;?>';
+	esqoo_ui.daystate='<?=$this->user->DayState;?>';
 	</script>
 	<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
