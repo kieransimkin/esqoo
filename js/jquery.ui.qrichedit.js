@@ -5,20 +5,14 @@ $.widget('esqoo.qrichedit', {
 	},
 	visual_editor: 'TinyMCE',
 	code_editor: 'Ace',
-	unique_id: null,
+	unique_id: 0,
 	_create: function() {
+		this.unique_id++;
 		this._do_html_setup();
 		this._do_javascript_loads();
 	},
 	_get_unique_id: function() { 
-		if (this.unique_id!==null) { 
-			return this.unique_id;
-		}
-		var me = this;
-		return (function() { 
-			var id=0;
-			return (me.unique_id=function() { return id++; })();
-		})();
+		return this.unique_id;
 	},
 	_load_javascript: function(s,callback) { 
 		var me = this;
