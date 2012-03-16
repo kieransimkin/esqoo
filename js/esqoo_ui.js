@@ -312,3 +312,22 @@ esqoo_ui.buttonify_dialog = function(d) {
 		esqoo_ui.buttonify_button($(this),'ui-icon-check');
 	});
 }
+esqoo_ui.switch_theme = function (theme) { 
+	var cssLink = $('<link href="http://esqoo.local/css/themes/'+theme+'/jquery.ui.all.css" type="text/css" rel="Stylesheet" class="ui-theme" />');
+	$("head").append(cssLink);
+		
+	if( $("link.ui-theme").size() > 3){
+		$("link.ui-theme:first").remove();
+	}	
+}
+esqoo_ui.flick_light_switch = function() { 
+	if (esqoo_ui.daystate=='Daytime') { 
+		esqoo_ui.daystate='Nighttime';
+		$('body').removeClass('daytime').addClass('nighttime');
+		esqoo_ui.switch_theme(esqoo_ui.nighttime_theme);
+	} else { 
+		esqoo_ui.daystate='Daytime';
+		$('body').removeClass('nighttime').addClass('daytime');
+		esqoo_ui.switch_theme(esqoo_ui.daytime_theme);
+	}
+}

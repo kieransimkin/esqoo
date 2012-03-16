@@ -7,6 +7,14 @@ section, article, header, footer, nav, aside, hgroup {
 body,html { 
 	margin: 0;
 }
+body.nighttime { 
+	background-color: black;
+	color: white;
+}
+body.daytime { 
+	background-color: white;
+	color: black;
+}
 html {
      overflow-y: -moz-scrollbars-vertical;
      overflow-y: scroll;

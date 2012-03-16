@@ -5,7 +5,7 @@ $nav=array(
 		"popup:"._('Quick Media Upload').":singleton:/content/quick-upload" => _('Quick Upload'),
 		"popup:"._('Quick Post').":save,cancel,singleton:/blog/quick-post" => _('Quick Post'),
 		"targetblank:/website/" => _('Visit My Website'),
-		"/lightswitch/flick" => ('Flick Light Switch')
+		"jsaction:esqoo_ui.flick_light_switch();" => ('Flick Light Switch')
 	),
 	_('Content') => array(
 		"submenu:"._('Media') => array(
@@ -43,7 +43,11 @@ $nav=array(
 <?php
 function render_nav_element($url,$item,$user) {
 	$content='';
-	if (strpos($url,'submenu:')===0) { 
+	if (strpos($url,"jsaction:")===0) { 
+		list($jsaction,$action)=explode(':',$url,2);
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"$action return false;\">$item</a></li>";
+		
+	} else if (strpos($url,'submenu:')===0) { 
 		list($submenu,$title)=explode(':',$url,2);
 		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"return false;\">$title <div class=\"nav-float-right\">&raquo;</div></a>";
 		$content .= "<ul class=\"ui-state-default ui-corner-all\">";
@@ -96,8 +100,6 @@ function render_nav_element($url,$item,$user) {
 		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" target=\"_blank\">$item... </a><div class=\"nav-float-right\"><span class=\"ui-icon ui-icon-extlink\"></span></div></li>";
 
 	} else {
-		list($controller, $action) = explode("/", substr($url, 1));
-		$unopened=0;
 		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$url\" onclick=\"create_page_loading_overlay();\">$item</a></li>";
 	}
 	return $content;
