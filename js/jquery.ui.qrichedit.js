@@ -62,7 +62,7 @@ $.widget('esqoo.qrichedit', {
 	},
 	_setOption: function (key, value) { 
 		switch(key) { 
-			case 'disabled';
+			case 'disabled':
 			// handle changes to disabled option
 			break;
 		}
