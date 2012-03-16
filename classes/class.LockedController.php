@@ -11,20 +11,13 @@ class LockedController extends Controller {
 		try { 
 			$user=User::get($input['UserID'],'id','row',true);
 			$usertoken=User_token::get($input['TokenID'],'id','row',true);
-			var_dump($usertoken);
 			if ($usertoken->user_id!=$user->id) { 
-				print"g1".$usertoken->user_id."-".$user->id;
-				die;
 				$this->_redirectAuthFail();
 			}
 			if ($usertoken->token!=$input['Token']) { 
-				print"g2";
-				die;
 				$this->_redirectAuthFail();
 			}
 		} catch (DBSQ_Exception $e) { 
-			print $e;
-			die;
 			$this->_redirectAuthFail();
 		}
 		$this->user=$user;
