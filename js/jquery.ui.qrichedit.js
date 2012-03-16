@@ -67,6 +67,7 @@ $.widget('esqoo.qrichedit', {
 			break;
 			case 'markItUp':
 				this._load_javascript('/js/markitup/markitup/jquery.markitup.js',function() { 
+					$(me.codetextbox).markItUp();
 					console.log('markItUp');
 				});
 			break;
