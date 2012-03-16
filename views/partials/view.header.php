@@ -62,5 +62,5 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 	</script>
 	<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
-<body class="controller-<?=strtolower($this->controller);?> action-<?=strtolower($this->controller).'-'.strtolower($this->controller->action);?> template-<?=strtolower($this->template);?>">
+<body class="controller-<?=strtolower($this->controller);?> action-<?=strtolower($this->controller).'-'.strtolower($this->controller->action);?> template-<?=strtolower($this->template);?> <?=strtolower($this->user->DayState);?>">
 
