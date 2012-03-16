@@ -1,13 +1,15 @@
 (function ( $ ) {
-$.ui.staticQRichEdit={'unique_id':0};
+$.ui.staticQRichEdit={'unique_id':0,'visual_editor':'CKEditor','code_editor':'markItUp'};
 $.widget('esqoo.qrichedit', {
 	options: { 
 		
 	},
-	visual_editor: 'CKEditor',
-	code_editor: 'markItUp',
+	visual_editor: null,
+	code_editor: null,
 	unique_id:null,
 	_create: function() {
+		this.visual_editor=$.ui.staticQRichEdit.visual_editor;
+		this.code_editor=$.ui.staticQRichEdit.code_editor;
 		this._do_html_setup();
 		this._do_javascript_loads();
 	},
