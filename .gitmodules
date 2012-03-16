@@ -16,3 +16,6 @@
 [submodule "js/markitup"]
 	path = js/markitup
 	url = git://github.com/markitup/1.x.git
+[submodule "js/acewidget"]
+	path = js/acewidget
+	url = git://github.com/jeromeetienne/acewidget.git
