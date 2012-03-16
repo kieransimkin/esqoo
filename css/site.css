@@ -239,3 +239,6 @@ div.esqoo-message-close-button {
 	position: absolute;
 	right: 0;
 }
+div.esqoo-ui-rich-editor-container { 
+	clear: both;
+}
