@@ -16,6 +16,8 @@ function __autoload($class_name) {
 	foreach ($files as $file)
 		if (file_exists($file))
 			return include_once($file);
+
+	throw new Exception('Class "'.$class_name.'" could not be autoloaded');
 }
 
 
