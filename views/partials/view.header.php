@@ -62,8 +62,10 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 	WebFontConfig = {
 		google: { families: [ 'Cantarell' ] }
 	};
-	$.ui.staticQRichEdit.visual_editor='<?=$this->user->visual__rich_editor->Tag;?>';
-	$.ui.staticQRichEdit.code_editor='<?=$this->user->code__rich_editor->Tag;?>';
+	esqoo_ui.visual_editor='<?=$this->user->visual__rich_editor->Tag;?>';
+	esqoo_ui.code_editor='<?=$this->user->code__rich_editor->Tag;?>';
+	esqoo_ui.nighttime_theme='<?=$this->user->nighttime__ui_theme->Tag;?>';
+	esqoo_ui.daytime_theme='<?=$this->user->daytime__ui_theme->Tag;?>';
 	</script>
 	<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
