@@ -84,11 +84,13 @@ $.widget('esqoo.qrichedit', {
 					.prependTo(this.container);
 		this.tabbar=$('<ul></ul>')
 					.addClass('esqoo-ui-tabbar')
+					.wrap('<nav />')
 					.prependTo(this.container);
 		$('<li><a href="#esqoo-ui-visual-rich-editor-'+this._get_unique_id()+'">Visual</a></li>').appendTo(this.tabbar);
 		$('<li><a href="#esqoo-ui-code-rich-editor-'+this._get_unique_id()+'">Code</a></li>').appendTo(this.tabbar);
 		$('<li><a href="#esqoo-ui-raw-rich-editor-'+this._get_unique_id()+'">Raw</a></li>').appendTo(this.tabbar);
 		this.container.tabs();
+		this.element.hide();
 	},
 	_setOption: function (key, value) { 
 		switch(key) { 
