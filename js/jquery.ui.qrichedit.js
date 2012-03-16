@@ -41,7 +41,7 @@ $.widget('esqoo.qrichedit', {
 			case 'TinyMCE':
 				this._load_javascript('/js/tinymce/jquery.tinymce.js',function () {
 					console.log('TinyMCE jQuery loaded');
-					$(me.visualtextbox).tinymce({script_url : '/js/tinymce/tiny_mce.js'});
+					//$(me.visualtextbox).tinymce({script_url : '/js/tinymce/tiny_mce.js'});
 				});
 			break;
 			case 'CKEditor':
@@ -59,7 +59,7 @@ $.widget('esqoo.qrichedit', {
 			case 'Ace':
 				this._load_javascript('/js/acewidget/contrib/jquery.acewidget/jquery.acewidget.js',function() { 
 					console.log('Ace loaded');
-					$(me.codetextbox).acewidget();
+					$(me.visualtextbox).acewidget();
 				});
 			break;
 			case 'markItUp':
