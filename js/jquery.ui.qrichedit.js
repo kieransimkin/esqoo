@@ -1,17 +1,20 @@
 (function ( $ ) {
+$.ui.staticQRichEdit={'unique_id':0};
 $.widget('esqoo.qrichedit', {
 	options: { 
 		
 	},
 	visual_editor: 'TinyMCE',
 	code_editor: 'Ace',
-	unique_id: 0,
+	unique_id=null;
 	_create: function() {
-		this.unique_id++;
 		this._do_html_setup();
 		this._do_javascript_loads();
 	},
-	_get_unique_id: function() { 
+	_get_unique_id: function(initial) { 
+		if (this.unique_id===null) { 
+			this.unique_id=$.ui.staticQRichEdit.unique_id++;
+		}
 		return this.unique_id;
 	},
 	_load_javascript: function(s,callback) { 
