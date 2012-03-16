@@ -39,7 +39,7 @@ create table `ui_theme` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 insert into ui_theme set Tag='cupertino', ui_state='day';
 insert into ui_theme set Tag='black-tie', ui_state='day';
-insert into ui_theme set Tag='blitzer', ui_state='both';
+insert into ui_theme set Tag='blitzer', ui_state='day';
 insert into ui_theme set Tag='dark-hive', ui_state='night';
 insert into ui_theme set Tag='dot-luv', ui_state='night';
 insert into ui_theme set Tag='eggplant', ui_state='both';
@@ -47,7 +47,7 @@ insert into ui_theme set Tag='excite-bike', ui_state='day';
 insert into ui_theme set Tag='flick', ui_state='day';
 insert into ui_theme set Tag='hot-sneaks', ui_state='day';
 insert into ui_theme set Tag='humanity', ui_state='day';
-insert into ui_theme set Tag='le-frog', ui_state='both';
+insert into ui_theme set Tag='le-frog', ui_state='night';
 insert into ui_theme set Tag='mint-choc', ui_state='night';
 insert into ui_theme set Tag='overcast', ui_state='day';
 insert into ui_theme set Tag='pepper-grinder', ui_state='day';

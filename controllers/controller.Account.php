@@ -62,8 +62,9 @@ class AccountController extends LockedController {
 	private function get_theme_settings_form($input,$settings,$forcesubmit=false) { 
 		$form=new Form('theme_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
-		$form->addElement("select","daytime__ui_theme_id",array(),array('options'=>UI_theme::get_menu()))->setLabel(_('Lights-on Theme'))->addRule('required',_('Required'));
-		$form->addElement("select","nighttime__ui_theme_id",array(),array('options'=>UI_theme::get_menu()))->setLabel(_('Lights-off Theme'))->addRule('required',_('Required'));
+		$form->addElement("select","daytime__ui_theme_id",array('onchange'=>'esqoo_ui.update_theme(\'daytime\',$(this));'),array('options'=>Ui_theme::get_menu('Daytime')))->setLabel(_('Lights-on Theme'))->addRule('required',_('Required'));
+		$form->addElement("select","nighttime__ui_theme_id",array('onchange'=>'esqoo_ui.update_theme(\'nighttime\',$(this));'),array('options'=>Ui_theme::get_menu('Nighttime')))->setLabel(_('Lights-off Theme'))->addRule('required',_('Required'));
+		$form->addElement("button","lightswitch",array('onclick'=>'esqoo_ui.flick_light_switch(); return false;','data-icon-primary'=>'ui-icon-lightbulb'),array('content'=>_('Flick Light Switch')));
 		return $form;
 	}
 	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
@@ -124,6 +125,18 @@ class AccountController extends LockedController {
 			$settings->save();
 		}
 		return $settings;
+	}
+	public function updatedaystateAPI($arg='',$input=array()) { 
+		$input['DayState']=strtolower($input['DayState']);
+		if ($input['DayState']!='daytime' && $input['DayState']!='nighttime') { 
+			$this->api_error(1,'DayState must be Daytime or Nighttime');	
+		}
+		if ($this->api_validation_success()) { 
+			$this->user->DayState=ucfirst($input['DayState']);
+			$this->user->save();
+			$this->user->set_visible_api_fields(array('DayState','id'));
+			return $this->user;
+		}
 	}
 	public function getdetailsAPI($arg='',$input=array()) { 
 		$this->user->set_visible_api_fields($this->get_details_fields());

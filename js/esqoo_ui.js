@@ -320,6 +320,19 @@ esqoo_ui.switch_theme = function (theme) {
 		$("link.ui-theme:first").remove();
 	}	
 }
+esqoo_ui.update_theme = function (daystate,item) { 
+	if (daystate=='daytime') { 
+		esqoo_ui.daytime_theme=item.find('option:selected').html();
+		if (esqoo_ui.daystate=='Daytime') { 
+			esqoo_ui.switch_theme(esqoo_ui.daytime_theme);
+		}
+	} else { 
+		esqoo_ui.nighttime_theme=item.find('option:selected').html();
+		if (esqoo_ui.daystate=='Nighttime') { 
+			esqoo_ui.switch_theme(esqoo_ui.nighttime_theme);
+		}
+	}
+}
 esqoo_ui.flick_light_switch = function() { 
 	if (esqoo_ui.daystate=='Daytime') { 
 		esqoo_ui.daystate='Nighttime';
@@ -330,4 +343,5 @@ esqoo_ui.flick_light_switch = function() {
 		$('body').removeClass('nighttime').addClass('daytime');
 		esqoo_ui.switch_theme(esqoo_ui.daytime_theme);
 	}
+	$.ajax({url: '/account/update-day-state/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', DayState: esqoo_ui.daystate}});
 }
