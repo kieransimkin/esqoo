@@ -36,9 +36,11 @@ $.widget('esqoo.qrichedit', {
 		}
 	},
 	_do_javascript_loads: function() { 
+		var me = this;
 		switch(this.visual_editor) { 
 			case 'TinyMCE':
 				this._load_javascript('/js/tinymce/jquery.tinymce.js',function () {
+					me.visualtextbox.tinymce({});
 					console.log('TinyMCE jQuery loaded');
 				});
 			break;
