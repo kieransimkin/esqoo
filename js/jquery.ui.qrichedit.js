@@ -72,9 +72,9 @@ $.widget('esqoo.qrichedit', {
 		this.tabbar=$('<ul></ul>')
 					.addClass('esqoo-ui-tabbar')
 					.insertAfter(this.element);
-		$('<li><a href="#esqoo-ui-visual-rich-editor-'+this._get_unique_id()+'">Visual</a></li>').appendTo(tabbar);
-		$('<li><a href="#esqoo-ui-code-rich-editor-'+this._get_unique_id()+'">Code</a></li>').appendTo(tabbar);
-		$('<li><a href="#esqoo-ui-raw-rich-editor-'+this._get_unique_id()+'">Raw</a></li>').appendTo(tabbar);
+		$('<li><a href="#esqoo-ui-visual-rich-editor-'+this._get_unique_id()+'">Visual</a></li>').appendTo(this.tabbar);
+		$('<li><a href="#esqoo-ui-code-rich-editor-'+this._get_unique_id()+'">Code</a></li>').appendTo(this.tabbar);
+		$('<li><a href="#esqoo-ui-raw-rich-editor-'+this._get_unique_id()+'">Raw</a></li>').appendTo(this.tabbar);
 		this.visualtabcontainer=$('<div></div>')
 					.attr('id','esqoo-ui-visual-rich-editor-'+this._get_unique_id())
 					.addClass('esqoo-ui-visual-rich-editor-tab-container')
