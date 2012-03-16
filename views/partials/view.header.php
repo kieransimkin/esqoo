@@ -62,10 +62,9 @@ if ((isset($this->js) && $this->js) || (isset($this->jsOnloads) && $this->jsOnlo
 	WebFontConfig = {
 		google: { families: [ 'Cantarell' ] }
 	};
-	$.ui.staticQRichEdit.visual_editor='';
-	$.ui.staticQRichEdit.code_editor='';
+	$.ui.staticQRichEdit.visual_editor='<?=$this->user->visual__rich_editor->Tag;?>';
+	$.ui.staticQRichEdit.code_editor='<?=$this->user->code__rich_editor->Tag;?>';
 	</script>
-	<?php var_dump($this->user->visual__rich_editor->Tag);?>
 	<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
 <body class="controller-<?=strtolower($this->controller);?> action-<?=strtolower($this->controller).'-'.strtolower($this->controller->action);?> template-<?=strtolower($this->template);?>">
