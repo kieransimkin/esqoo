@@ -5,7 +5,7 @@ $.widget('esqoo.qrichedit', {
 		
 	},
 	visual_editor: 'TinyMCE',
-	code_editor: 'EditArea',
+	code_editor: 'markItUp',
 	unique_id:null,
 	_create: function() {
 		this._do_html_setup();
