@@ -57,9 +57,9 @@ $.widget('esqoo.qrichedit', {
 				});
 			break;
 			case 'Ace':
-				this._load_javascript('/js/ace/build/src/ace.js',function() { 
+				this._load_javascript('/js/acewidget/contrib/jquery.acewidget/jquery.acewidget.js',function() { 
 					console.log('Ace loaded');
-					ace.edit($(me.codetextbox).get());
+					$(me.codetextbox).acewidget();
 				});
 			break;
 			case 'markItUp':
