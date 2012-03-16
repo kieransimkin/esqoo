@@ -62,6 +62,7 @@ insert into ui_theme set Tag='ui-darkness', ui_state='both';
 insert into ui_theme set Tag='ui-lightness', ui_state='day';
 insert into ui_theme set Tag='vader', ui_state='both';
 insert into ui_theme set Tag='purple-lady', ui_state='both';
+insert into ui_theme set Tag='leafy-suburb', ui_state='both';
 drop table if exists `rich_editor`;
 create table `rich_editor` (
 	id int not null auto_increment,
