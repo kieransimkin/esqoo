@@ -234,7 +234,7 @@ $.widget('esqoo.qrichedit', {
 
 	},
 	_write_value_to_raw: function() { 
-		this.rawtextbox.html(this.current_value);
+		this.rawtextbox.val(this.current_value);
 	},
 	_handle_tab_change: function() { 
 		var me = this;
