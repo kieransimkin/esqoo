@@ -60,6 +60,38 @@ $.widget('esqoo.qrichedit', {
 			break;
 		}
 		switch(esqoo_ui.code_editor) { 
+			case 'CodeMirror':
+				this._load_javascript('/js/codemirror/lib/codemirror.js',function() { 
+						me._load_stylesheet('/js/codemirror/lib/codemirror.css');
+						me._load_javascript('/js/codemirror/mode/xml/xml.js',function() { 
+							me._load_javascript('/js/codemirror/mode/javascript/javascript.js',function() { 
+								me._load_javascript('/js/codemirror/mode/css/css.js', function() { 
+									me._load_javascript('/js/codemirror/mode/clike/clike.js', function() { 
+										me._load_javascript('/js/codemirror/mode/php/php.js', function() { 
+											var washidden=false;
+											if (me.codetabcontainer.hasClass('ui-tabs-hide')) { 
+												washidden=true;
+												me.codetabcontainer.removeClass('ui-tabs-hide');
+											}
+											me.codemirror_editor=CodeMirror.fromTextArea(document.getElementById(me.codetextbox.attr('id')),{
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "application/x-httpd-php",
+        indentUnit: 4,
+        indentWithTabs: true,
+        enterMode: "keep",
+        tabMode: "shift"
+      });
+											if (washidden) { 
+												me.codetabcontainer.addClass('ui-tabs-hide');
+											}
+										});
+									});
+								});
+							});
+						});
+				});
+			break;
 			case 'EditArea':
 				this._load_javascript('/js/editarea/edit_area_full.js', function() { 
 				});
@@ -165,7 +197,13 @@ $.widget('esqoo.qrichedit', {
 			case 'markItUp':
 			this._read_value_from_markitup();
 			break;
+			case 'CodeMirror':
+			this._read_value_from_codemirror();
+			break;
 		}
+	},
+	_read_value_from_codemirror: function() { 
+		this.current_value=this.codemirror_editor.getValue();
 	},
 	_read_value_from_editarea: function() { 
 		this.current_value=editAreaLoader.getValue($(this.codetextbox).attr('id'));
@@ -206,8 +244,22 @@ $.widget('esqoo.qrichedit', {
 			case 'markItUp':
 			this._write_value_to_markitup();
 			break;
+			case 'CodeMirror':
+			this._write_value_to_codemirror();
+			break;
 		}
 
+	},
+	_write_value_to_codemirror: function() { 
+		var washidden=false;
+		if (this.codetabcontainer.hasClass('ui-tabs-hide')) { 
+			washidden=true;
+			this.codetabcontainer.removeClass('ui-tabs-hide');
+		}
+		this.codemirror_editor.setValue(this.current_value);
+		if (washidden) { 
+			this.codetabcontainer.addClass('ui-tabs-hide');
+		}
 	},
 	_write_value_to_editarea: function() { 
 		editAreaLoader.setValue($(this.codetextbox).attr('id'),this.current_value);
@@ -221,21 +273,24 @@ $.widget('esqoo.qrichedit', {
 	_write_value_to_raw: function() { 
 		this.rawtextbox.val(this.current_value);
 	},
+	_read_value: function() { 
+		switch(this.current_tab) { 
+			case 'visual':
+			this._read_value_from_visual();
+			break;
+			case 'code':
+			this._read_value_from_code();
+			break;
+			case 'raw':
+			this._read_value_from_raw();
+			break;
+		}
+	},
 	_handle_tab_change: function() { 
 		var me = this;
 		return function(e,ui) { 
 			var tab=null;
-			switch(me.current_tab) { 
-				case 'visual':
-				me._read_value_from_visual();
-				break;
-				case 'code':
-				me._read_value_from_code();
-				break;
-				case 'raw':
-				me._read_value_from_raw();
-				break;
-			}
+			me._read_value();
 			switch (ui.index) { 
 				case 0:
 				// Visual tab

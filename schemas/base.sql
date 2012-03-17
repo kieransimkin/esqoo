@@ -80,6 +80,7 @@ insert into rich_editor set Tag='CKEditor',Description='The CKEditor WYSIWYG HTM
 insert into rich_editor set Tag='EditArea',Description='The EditArea code editor.', `Type`='Code';
 insert into rich_editor set Tag='Ace',Description='The Ace code editor.', `Type`='Code';
 insert into rich_editor set Tag='markItUp',Description='The markItUp code editor.', `Type`='Code';
+insert into rich_editor set Tag='CodeMirror',Description='The CodeMirror code editor.', `Type`='Code';
 drop table if exists `user_challenge`;
 create table `user_challenge` ( 
 	id int not null auto_increment,
