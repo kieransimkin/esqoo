@@ -48,7 +48,6 @@ $.widget('esqoo.qrichedit', {
 		switch(esqoo_ui.visual_editor) { 
 			case 'TinyMCE':
 				this._load_javascript('/js/tinymce/jquery.tinymce.js',function () {
-					console.log('TinyMCE jQuery loaded');
 					$(me.visualtextbox).tinymce({script_url : '/js/tinymce/tiny_mce.js'});
 				});
 			break;
@@ -56,7 +55,6 @@ $.widget('esqoo.qrichedit', {
 				this._load_javascript('/js/ckeditor/ckeditor.js', function() { 
 					me._load_javascript('/js/ckeditor/adapters/jquery.js',function() { 
 						$(me.visualtextbox).ckeditor();
-						console.log('CKEditor jQuery loaded');
 					});
 				});
 			break;
@@ -64,21 +62,10 @@ $.widget('esqoo.qrichedit', {
 		switch(esqoo_ui.code_editor) { 
 			case 'EditArea':
 				this._load_javascript('/js/editarea/edit_area_full.js', function() { 
-					/*
-					editAreaLoader.init({
-						id: $(me.codetextbox).attr('id'),
-						allow_toggle: false,
-						syntax: "html",
-						start_highlight: true
-		
-					});
-					*/
-					console.log('EditArea loaded');
 				});
 			break;
 			case 'Ace':
 				this._load_javascript('/js/acewidget/contrib/jquery.acewidget/jquery.acewidget.js',function() { 
-					console.log('Ace loaded');
 					$(me.codetextbox).acewidget();
 				});
 			break;
@@ -162,9 +149,7 @@ $.widget('esqoo.qrichedit', {
 		}
 	},
 	_read_value_from_tinymce: function() { 
-		console.log('got here');
 		this.current_value=this.visualtextbox.html();
-		console.log(this.current_value);
 	},
 	_read_value_from_ckeditor: function() { 
 		this.current_value=this.visualtextbox.val();

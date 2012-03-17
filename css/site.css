@@ -250,3 +250,16 @@ div.esqoo-message-close-button {
 div.esqoo-ui-rich-editor-container { 
 	clear: both;
 }
+.markItUp {
+	border: 0px !important;
+	margin: 0 !important;
+	width: auto !important;
+}
+div.esqoo-ui-visual-rich-editor-tab-container,
+div.esqoo-ui-code-rich-editor-tab-container,
+div.esqoo-ui-raw-rich-editor-tab-container { 
+	padding: 0 !important;
+}
+div.esqoo-ui-raw-rich-editor-tab-container textarea { 
+	margin: 0;
+}

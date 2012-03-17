@@ -19,3 +19,6 @@
 [submodule "js/acewidget"]
 	path = js/acewidget
 	url = git://github.com/jeromeetienne/acewidget.git
+[submodule "js/codemirror"]
+	path = js/codemirror
+	url = git://github.com/marijnh/CodeMirror2.git
