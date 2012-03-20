@@ -2,15 +2,15 @@
 class AssetController extends DetachedController { 
 	public function remap($uri,$input=array()) { 
 		if (substr($uri,0,9)=='/picture/') { 
-			$this->get_picture(substr($uri,9));
+			$this->get_picture(substr($uri,8));
 		} else if (substr($uri,0,7)=='/video/') { 
-			$this->get_video(substr($uri,7));
+			$this->get_video(substr($uri,6));
 		} else if (substr($uri,0,7)=='/audio/') { 
-			$this->get_audio(substr($uri,7));
+			$this->get_audio(substr($uri,6));
 		} else if (substr($uri,0,6)=='/file/') { 
-			$this->get_file(substr($uri,6));
+			$this->get_file(substr($uri,5));
 		} else { 
-			$this->get_asset(substr($uri,1));	
+			$this->get_asset($uri);	
 		}
 		die;
 	}
@@ -18,15 +18,22 @@ class AssetController extends DetachedController {
 		print "Getting picture: $uri";
 	}
 	private function get_video($uri) { 
-		print "Getting video: $uri";
+		print "Getting video: ".$this->find_uri_id($uri);
 	}
 	private function get_audio($uri) { 
-		print "Getting audio: $uri";
+		print "Getting audio: ".$this->find_uri_id($uri);
 	}
 	private function get_file($uri) { 
-		print "Getting file: $uri";
+		print "Getting file: ".$this->find_uri_id($uri);
 	}
 	private function get_asset($uri) {
-		print "Getting Asset: $uri";
+		print "Getting Asset: ".$this->find_uri_id($uri);
+	}
+	private function find_uri_id($uri) { 
+		$pos=strripos($uri,'/');
+		if (!is_numeric(substr($uri,$pos,1))) { 
+			MVC::throw404();
+		}
+		return (int)substr($uri,pos);
 	}
 }
