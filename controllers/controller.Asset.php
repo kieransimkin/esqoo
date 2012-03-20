@@ -31,6 +31,7 @@ class AssetController extends DetachedController {
 	}
 	private function find_uri_id($uri) { 
 		$pos=strripos($uri,'/');
+		print $pos;
 		if (!is_numeric(substr($uri,$pos,1))) { 
 			MVC::throw404();
 		}
