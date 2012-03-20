@@ -10,7 +10,7 @@ class AssetController extends DetachedController {
 		} else if (substr($uri,0,6)=='/file/') { 
 			$this->get_file(substr($uri,6));
 		} else { 
-			$this->get_asset($uri);	
+			$this->get_asset(substr($uri,1));	
 		}
 		die;
 	}
