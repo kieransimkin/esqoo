@@ -13,7 +13,9 @@ class Controller {
 	}
 
 	public function render() {
-		$this->view->user = $this->user;
+		if (isset($this->user)) { 
+			$this->view->user = @$this->user;
+		}
 		$this->view->jsManager = new JSManager;
 		$this->view->jsFiles = $this->jsFiles;
 		$this->view->cssManager = new CSSManager;
