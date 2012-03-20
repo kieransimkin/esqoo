@@ -1,5 +1,10 @@
 <?php
 class AssetController extends DetachedController { 
+	/****************************************
+	 *  ╻ ╻┏━┓╻   ┏━┓┏━╸┏┳┓┏━┓┏━┓┏━┓┏━╸┏━┓  *
+	 *  ┃ ┃┣┳┛┃   ┣┳┛┣╸ ┃┃┃┣━┫┣━┛┣━┛┣╸ ┣┳┛  *
+	 *  ┗━┛╹┗╸╹   ╹┗╸┗━╸╹ ╹╹ ╹╹  ╹  ┗━╸╹┗╸  *
+	 ****************************************/
 	public function remap($uri,$input=array()) { 
 		if (substr($uri,0,9)=='/picture/') { 
 			$this->get_picture(substr($uri,8));
@@ -14,6 +19,12 @@ class AssetController extends DetachedController {
 		}
 		die;
 	}
+	/****************************
+	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
+	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
+	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
+	 ****************************/
+
 	private function get_picture($uri) { 
 		print "Getting picture: $uri";
 	}
@@ -31,7 +42,6 @@ class AssetController extends DetachedController {
 	}
 	private function find_uri_id($uri) { 
 		$pos=strripos($uri,'/');
-		print substr($uri,$pos+1);
 		if (!is_numeric(substr($uri,$pos+1,1))) { 
 			MVC::throw404();
 		}
