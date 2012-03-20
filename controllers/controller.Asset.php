@@ -35,6 +35,6 @@ class AssetController extends DetachedController {
 		if (!is_numeric(substr($uri,$pos+1,1))) { 
 			MVC::throw404();
 		}
-		return (int)substr($uri,$pos);
+		return intval(substr($uri,$pos+1));
 	}
 }
