@@ -39,6 +39,8 @@ class AssetController extends DetachedController {
 	}
 	private function get_asset($uri) {
 		print "Getting Asset: ".$this->find_uri_id($uri);
+		$asset=Asset::get($this->find_uri_id($uri));
+		var_dump($asset);
 	}
 	private function find_uri_id($uri) { 
 		$pos=strripos($uri,'/');
