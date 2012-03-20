@@ -23,7 +23,6 @@ class MVC {
 		if (strlen($action)<1) { 
 			$action='index';
 		}
-		Site::loadAndConnect();
 		$controller_class = ucwords($controller).'Controller';
 		if ($api) { 
 			$funcname = strtolower(str_replace('-','',$action)).'API';
@@ -38,15 +37,21 @@ class MVC {
 		if (!class_exists($controller_class)) { 
 			self::throw404($controller_class,$funcname);
 		}
+		if (!is_subclass_of($controller_class,'DetachedController')) { 
+			Site::loadAndConnect();
+		}
 		$new_controller = new $controller_class($controller, $action);
-
-		if (!method_exists($new_controller, $funcname)) { 
-			self::throw404($controller_class, $funcname);
+		if (method_exists($new_controller,'remap')) { 
+			$res=$new_controller->remap($funcname,$arg,array_merge($_GET,$_POST));
+		} else { 
+			if (!method_exists($new_controller, $funcname)) { 
+				self::throw404($controller_class, $funcname);
+			}
+			if (!$api) { 
+				$new_controller->setView($controller.'/view.'.$action.".php");
+			}
+			$res=$new_controller->$funcname($arg,array_merge($_GET,$_POST));
 		}
-		if (!$api) { 
-			$new_controller->setView($controller.'/view.'.$action.".php");
-		}
-		$res=$new_controller->$funcname($arg,array_merge($_GET,$_POST));
 		if ($res instanceof DBSQL) { 
 			$res=$res->getFilteredDataArray();
 		}
