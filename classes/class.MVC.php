@@ -1,5 +1,6 @@
 <?php
 class MVC { 
+	static public $controller=null;
 	public static function dispatch($uri) { 
 		if ($uri=='/' || $uri=='') { 
 			$controller='dashboard';
@@ -40,7 +41,7 @@ class MVC {
 		if (!is_subclass_of($controller_class,'DetachedController')) { 
 			Site::loadAndConnect();
 		}
-		$new_controller = new $controller_class($controller, $action);
+		self::$controller = $new_controller = new $controller_class($controller, $action);
 		if (method_exists($new_controller,'remap')) { 
 			$res=$new_controller->remap(substr($uri,strlen($controller)),array_merge($_GET,$_POST));
 		} else { 
