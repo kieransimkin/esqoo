@@ -42,7 +42,7 @@ class MVC {
 		}
 		$new_controller = new $controller_class($controller, $action);
 		if (method_exists($new_controller,'remap')) { 
-			$res=$new_controller->remap($funcname,$arg,array_merge($_GET,$_POST));
+			$res=$new_controller->remap($uri,array_merge($_GET,$_POST));
 		} else { 
 			if (!method_exists($new_controller, $funcname)) { 
 				self::throw404($controller_class, $funcname);
