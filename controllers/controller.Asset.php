@@ -46,10 +46,6 @@ class AssetController extends DetachedController {
 			}
 			$picture->web_large__asset->output();
 		} else if (substr($uri,0,13)=='/web-fullsize/') { 
-			if (is_null($picture->web_fullsize__asset_id)) { 
-				Site::loadAndConnect();
-				$picture->generate_thumbnail('web-fullsize');
-			}
 			$picture->web_fullsize__asset->output();
 		} else if (substr($uri,0,17)=='/thumbnail-large/') { 
 			if (is_null($picture->thumbnail_large__asset_id)) { 
