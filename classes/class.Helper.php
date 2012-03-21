@@ -29,4 +29,14 @@ class Helper {
 		$string.=mt_rand(10,99);
 		return strtolower($string);
 	}
+	/* Stolen from Wordpress: */
+	static function sanitize_file_name( $filename ) {
+	    $filename_raw = $filename;
+	    $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
+	    $filename = str_replace($special_chars, '', $filename);
+	    $filename = preg_replace('/[\s-]+/', '-', $filename);
+	    $filename = trim($filename, '.-_');
+	    return $filename;
+	}
+
 }

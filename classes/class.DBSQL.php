@@ -2,6 +2,22 @@
 require_once(dirname(__FILE__).'/dbsq/dbsq.class.php');
 class DBSQL extends DBSQ { 
 	private $_visiblefields=array();
+	private static $_cachedfields=array();
+	function __get($key) { 
+		if (in_array($key,self::$_cachedfields) && !isset($this->$key)) {
+			$ret=Cache::getKey(get_called_class().'-'.$this->lazyLoadKey,$this->lazyLoadId.'-'.$key);
+			if ($ret instanceof Cache_error) { 
+				return parent::__get($key);
+			} else { 
+				return $ret;
+			}
+
+		}
+		return parent::__get($key);
+	}
+	function __set($key,$val) { 
+		return parent::__set($key,$val);
+	}
 	function delete() { 
 		$this->DeleteDate=date("c");
 		$this->save();
@@ -10,7 +26,10 @@ class DBSQL extends DBSQ {
 		if (!$nomodifydate) { 
 			$this->ModifyDate=date("c");
 		}
-		parent::save();
+		foreach (self::$_cachedfields as $cachedfield) { 
+			Cache::setKey(get_called_class().'-'.$this->lazyLoadKey, $this->lazyLoadId.'-'.$cachedfield,$this->$cachedfield);
+		}
+		return parent::save();
 	}
 	function set_visible_api_fields($fields=array()) { 
 		if (!is_array($fields)) { 
