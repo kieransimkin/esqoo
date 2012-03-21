@@ -27,6 +27,51 @@ class AssetController extends DetachedController {
 
 	private function get_picture($uri) { 
 		$picture=Picture::get($this->find_uri_id($uri));
+		if (substr($uri,0,11)=='/web-small/') { 
+			if (is_null($picture->web_small__asset_id)) { 
+				Site::loadAndConnect();
+				$picture->generate_thumbnail('web-small');
+			}
+			$picture->web_small__asset->output();
+		} else if (substr($uri,0,12)=='/web-medium/') { 
+			if (is_null($picture->web_medium__asset_id)) { 
+				Site::loadAndConnect();
+				$picture->generate_thumbnail('web-medium');
+			}
+			$picture->web_medium__asset->output();
+		} else if (substr($uri,0,11)=='/web-large/') { 
+			if (is_null($picture->web_large__asset_id)) { 
+				Site::loadAndConnect();
+				$picture->generate_thumbnail('web-large');
+			}
+			$picture->web_large__asset->output();
+		} else if (substr($uri,0,13)=='/web-fullsize/') { 
+			if (is_null($picture->web_fullsize__asset_id)) { 
+				Site::loadAndConnect();
+				$picture->generate_thumbnail('web-fullsize');
+			}
+			$picture->web_fullsize__asset->output();
+		} else if (substr($uri,0,17)=='/thumbnail-large/') { 
+			if (is_null($picture->thumbnail_large__asset_id)) { 
+				Site::loadAndConnect();
+				$picture->generate_thumbnail('thumbnail-large');
+			}
+			$picture->thumbnail_large__asset->output();
+		} else if (substr($uri,0,17)=='/thumbnail-small/') { 
+			if (is_null($picture->thumbnail_small__asset_id)) { 
+				Site::loadAndConnect();
+				$picture->generate_thumbnail('thumbnail-small');
+			}
+			$picture->thumbnail_small__asset->output();
+		} else if (substr($uri,0,8)=='/square/') { 
+			if (is_null($picture->square__asset_id)) { 
+				Site::loadAndConnect();
+				$picture->generate_thumbnail('square');
+			}
+			$picture->square__asset->output();
+		} else if (substr($uri,0,)=='/digital-negative/') { 
+			$picture->digital_negative__asset->output();
+		}
 	}
 	private function get_video($uri) { 
 		$video=Video::get($this->find_uri_id($uri));

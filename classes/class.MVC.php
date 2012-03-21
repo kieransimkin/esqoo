@@ -40,7 +40,9 @@ class MVC {
 		}
 		if (!is_subclass_of($controller_class,'DetachedController')) { 
 			Site::loadAndConnect();
-		}
+		} else { 
+			self::$detached=true;
+		}	
 		self::$controller = $new_controller = new $controller_class($controller, $action);
 		if (method_exists($new_controller,'remap')) { 
 			$res=$new_controller->remap(substr($uri,strlen($controller)),array_merge($_GET,$_POST));

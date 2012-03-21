@@ -6,7 +6,8 @@ class DBSQL extends DBSQ {
 	function __get($key) { 
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
-			if ($ret instanceof CacheError) { 
+			if ($ret instanceof CacheError) {
+				Site::loadAndConnect();
 				return parent::__get($key);
 			} else { 
 				$this->$key=$ret;
