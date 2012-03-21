@@ -33,8 +33,7 @@ class Cache {
 		if ($fp===false) { 
 			return new CacheError('miss');
 		}
-		$data=fgets($fp);
-		var_dump($data);
+		$data=unserialize(fgets($fp));
 		fclose($fp);
 		return $data;
 	}
