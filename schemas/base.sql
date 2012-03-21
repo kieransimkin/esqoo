@@ -13,7 +13,7 @@ create table `user` (
 	County varchar(512) default null,
 	country_id int default null,
 	daytime__ui_theme_id int not null default 1,
-	nighttime__ui_theme_id int not null default 1,
+	nighttime__ui_theme_id int not null default 4,
 	visual__rich_editor_id int not null default 1,
 	code__rich_editor_id int not null default 4,
 	DayState enum('Daytime','Nighttime') not null default 'Daytime',
@@ -28,6 +28,23 @@ create table `user` (
 	index (nighttime__ui_theme_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 insert into user set Username='slinq',Email='kieran@slinq.com',Password='testpass',FirstName='Kieran',LastName='Simkin';
+drop table if exists `user_picture_size`;
+create table `user_picture_size` (
+	id int not null auto_increment,
+	user_id int not null,
+	picture_size_type enum('web-small','web-medium','web-large','thumbnail-large','thumbnail-small','square') not null,
+	`size` int not null,
+	primary key (id),
+	index (user_id),
+	index (user_id,picture_size_type),
+	unique key (user_id,picture_size_type)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into user_picture_size set user_id=1, picture_size_type='web-small', `size`=320;
+insert into user_picture_size set user_id=1, picture_size_type='web-medium', `size`=640;
+insert into user_picture_size set user_id=1, picture_size_type='web-large', `size`=960;
+insert into user_picture_size set user_id=1, picture_size_type='thumbnail-large', `size`=200;
+insert into user_picture_size set user_id=1, picture_size_type='thumbnail-small', `size`=150;
+insert into user_picture_size set user_id=1, picture_size_type='square', `size`=100;
 drop table if exists `ui_theme`;
 create table `ui_theme` (
 	id int not null auto_increment,
