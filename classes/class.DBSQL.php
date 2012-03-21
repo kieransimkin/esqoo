@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__).'/dbsq/dbsq.class.php');
 class DBSQL extends DBSQ { 
 	private $_visiblefields=array();
-	private static $_cachedfields=array();
+	public static $_cachedfields=array();
 	function __get($key) { 
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey(get_called_class().'-'.$this->lazyLoadKey,$this->lazyLoadId.'-'.$key);
