@@ -20,11 +20,11 @@ class DBSQL extends DBSQ {
 			if (in_array($newkey,static::$_cachedfields)) { 
 				$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey));
 				if ($ret instanceof CacheError) {
-					print "Got here!!";
 					Site::loadAndConnect();
 					return parent::__get($key);
 				} else { 
 					print "Got here$%$!!";
+					print $ret;
 					$this->$newkey=$ret;
 					return $this->$key;
 				}
