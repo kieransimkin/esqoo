@@ -28,44 +28,52 @@ class AssetController extends DetachedController {
 	private function get_picture($uri) { 
 		$picture=Picture::get($this->find_uri_id($uri));
 		if (substr($uri,0,11)=='/web-small/') { 
+			print "1";
 			if (is_null($picture->web_small__asset_id)) { 
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('web-small');
 			}
 			$picture->web_small__asset->output();
 		} else if (substr($uri,0,12)=='/web-medium/') { 
+			print "2";
 			if (is_null($picture->web_medium__asset_id)) { 
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('web-medium');
 			}
 			$picture->web_medium__asset->output();
 		} else if (substr($uri,0,11)=='/web-large/') { 
+			print "3";
 			if (is_null($picture->web_large__asset_id)) { 
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('web-large');
 			}
 			$picture->web_large__asset->output();
 		} else if (substr($uri,0,13)=='/web-fullsize/') { 
+			print "4";
 			$picture->web_fullsize__asset->output();
 		} else if (substr($uri,0,17)=='/thumbnail-large/') { 
+			print "5";
 			if (is_null($picture->thumbnail_large__asset_id)) { 
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('thumbnail-large');
 			}
 			$picture->thumbnail_large__asset->output();
 		} else if (substr($uri,0,17)=='/thumbnail-small/') { 
+			print "6";
 			if (is_null($picture->thumbnail_small__asset_id)) { 
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('thumbnail-small');
 			}
 			$picture->thumbnail_small__asset->output();
 		} else if (substr($uri,0,8)=='/square/') { 
+			print "7";
 			if (is_null($picture->square__asset_id)) { 
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('square');
 			}
 			$picture->square__asset->output();
 		} else if (substr($uri,0,18)=='/digital-negative/') { 
+			print "8";
 			$picture->digital_negative__asset->output();
 		}
 	}
