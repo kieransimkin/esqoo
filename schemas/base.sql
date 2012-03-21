@@ -13,7 +13,7 @@ create table `user` (
 	County varchar(512) default null,
 	country_id int default null,
 	daytime__ui_theme_id int not null default 1,
-	nighttime__ui_theme_id int not null default 4,
+	nighttime__ui_theme_id int not null default 6,
 	visual__rich_editor_id int not null default 1,
 	code__rich_editor_id int not null default 4,
 	DayState enum('Daytime','Nighttime') not null default 'Daytime',
