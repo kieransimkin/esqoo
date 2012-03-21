@@ -22,6 +22,7 @@ class Cache {
 		print $name;
 	}
 	static private function setFileKey($namespace,$key,$value) { 
+		var_dump(array($namespace,$key,$value);
 		$name=self::get_file_storage_name($namespace,$key);
 		print $name;
 	}
