@@ -48,8 +48,7 @@ class AssetController extends DetachedController {
 				$picture->generate_thumbnail('web-large');
 			}
 			$picture->web_large__asset->output();
-		} else if (substr($uri,0,13)=='/web-fullsize/') { 
-			print "4";
+		} else if (substr($uri,0,14)=='/web-fullsize/') { 
 			$picture->web_fullsize__asset->output();
 		} else if (substr($uri,0,17)=='/thumbnail-large/') { 
 			print "5";
