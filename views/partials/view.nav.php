@@ -29,7 +29,11 @@ $nav=array(
 	),
 	_('Website') => array(
 		"/website/templates" => _('Templates'),
-		"/website/menus" => _('Menus')
+		"/website/menus" => _('Menus'),
+		"submenu:"._('Settings') => array(
+			"/website/picture-sizes" => _('Picture Sizes'),
+			"/website/plugins" => _('Plugins')
+		)
 	),
 	_('Account') => array(
 		"popup:"._('Account Details').":save,cancel,singleton:/account/details" => _('Account Details'),
