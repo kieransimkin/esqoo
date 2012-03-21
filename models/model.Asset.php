@@ -1,5 +1,6 @@
 <?php
 class Asset extends DBSQL { 
+	public static $_cachedfields=array('MimeType','Size','AssetHash','HashType');
 	static public function searchPartiallyUploaded($chunkhash,$hashtype,$name,$userid,$data) { 
 		return false;
 	}
@@ -27,6 +28,12 @@ class Asset extends DBSQL {
 		$this->MimeType=$mimetype;
 		$this->UploadCompleteDate=date('Y-m-d h:i:s');
 		return $this->save();
+	}
+	public function output() { 
+		header('Content-type: '.$this->MimeType);
+		header('Content-length: '.$this->Size);
+		readfile($this->get_filename());
+		die;
 	}
 	public function is_picture() {
 		switch ($this->MimeType) {  
