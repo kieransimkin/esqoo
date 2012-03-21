@@ -32,7 +32,7 @@ class Cache {
 		$name=self::get_file_storage_name($namespace,$key);
 		self::make_cache_directory($name);
 		$fp=fopen($name,"w");
-		fputs($fp,$value);
+		fputs($fp,serialize($value));
 		fclose($fp);
 	}
 	static private function make_cache_directory($filename) { 

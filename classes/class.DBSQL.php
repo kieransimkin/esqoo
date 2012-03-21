@@ -15,9 +15,6 @@ class DBSQL extends DBSQ {
 		}
 		return parent::__get($key);
 	}
-	function __set($key,$val) { 
-		return parent::__set($key,$val);
-	}
 	function delete() { 
 		$this->DeleteDate=date("c");
 		$this->save();
