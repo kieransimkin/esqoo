@@ -11,6 +11,6 @@ class User extends DBSQL {
 			throw new Exception('type must be one of web-small, web-medium, web-large, thumbnail-large, thumbnail-small or square');
 			return null;
 		}
-		return $this->getOne('select `size` from user_picture_size where user_id=? and picture_size_type=?',array($this->id,$type);
+		return $this->getOne('select `size` from user_picture_size where user_id=? and picture_size_type=?',array($this->id,$type));
 	}
 }
