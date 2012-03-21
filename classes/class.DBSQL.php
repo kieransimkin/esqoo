@@ -26,13 +26,14 @@ class DBSQL extends DBSQ {
 		if (!$nomodifydate) { 
 			$this->ModifyDate=date("c");
 		}
+		$ret= parent::save();
 		if (count(static::$_cachedfields)>0) { 
 			foreach (static::$_cachedfields as $cachedfield) { 
 				Cache::setKey(get_called_class().'-'.$this->_get_lazyLoadIndexName(), $this->_get_lazyLoadId().'-'.$cachedfield,$this->$cachedfield);
 			}
 			print "got here";
 		}
-		return parent::save();
+		return $ret;
 	}
 	function set_visible_api_fields($fields=array()) { 
 		if (!is_array($fields)) { 
