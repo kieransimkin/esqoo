@@ -18,6 +18,7 @@ class DBSQL extends DBSQ {
 		$newkey=$key.'_id';
 		if (substr($key,-3,3)!='_id') { 
 			if (in_array($newkey,static::$_cachedfields)) { 
+				print "Got here!!";
 				$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey));
 				if ($ret instanceof CacheError) {
 					Site::loadAndConnect();
