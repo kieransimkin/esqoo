@@ -5,7 +5,7 @@ class DBSQL extends DBSQ {
 	public static $_cachedfields=array();
 	function __get($key) { 
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
-			$ret=Cache::getKey('DB-'.get_called_class().'-'.$this->_get_lazyLoadIndexName(),$this->_get_lazyLoadId().'-'.$key);
+			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
 			if ($ret instanceof CacheError) { 
 				return parent::__get($key);
 			} else { 
@@ -31,7 +31,7 @@ class DBSQL extends DBSQ {
 			foreach (static::$_cachedfields as $cachedfield) { 
 				try { 
 					$data=$this->$cachedfield;
-					Cache::setKey(get_called_class().'-'.$this->_get_lazyLoadIndexName(), $this->_get_lazyLoadId().'-'.$cachedfield,parent::__get($cachedfield));
+					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),parent::__get($cachedfield));
 				} catch (DBSQ_Exception $e) { 
 					//noop
 				}
