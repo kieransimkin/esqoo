@@ -33,7 +33,7 @@ class Cache {
 		self::make_cache_directory($name);
 	}
 	static private function make_cache_directory($filename) { 
-		mkdir(
+		mkdir(dirname($filename),0777,true);
 	}
 	static private function get_file_storage_name($namespace,$key) { 
 		return dirname(__FILE__).'/../cache/'.Helper::sanitize_file_name($namespace).'/'.Helper::sanitize_file_name($key);
