@@ -66,6 +66,7 @@ class AssetController extends DetachedController {
 			}
 			$picture->square__asset->output();
 		} else if (substr($uri,0,18)=='/digital-negative/') { 
+			// XXX potentially make this not public depending on a preference
 			$picture->digital_negative__asset->output();
 		}
 	}
