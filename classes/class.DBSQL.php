@@ -24,8 +24,9 @@ class DBSQL extends DBSQ {
 					return parent::__get($key);
 				} else { 
 					print "Got here$%$!!";
-					print $ret;
+					var_dump($this);
 					$this->$newkey=$ret;
+					var_dump($this);
 					return $this->$key;
 				}
 			}
