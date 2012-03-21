@@ -9,6 +9,7 @@ class DBSQL extends DBSQ {
 			if ($ret instanceof CacheError) { 
 				return parent::__get($key);
 			} else { 
+				$this->$key=$ret;
 				return $ret;
 			}
 
