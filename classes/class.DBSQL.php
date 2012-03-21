@@ -4,7 +4,7 @@ class DBSQL extends DBSQ {
 	private $_visiblefields=array();
 	private static $_cachedfields=array();
 	function __get($key) { 
-		if (in_array($key,self::$_cachedfields) && !isset($this->$key)) {
+		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey(get_called_class().'-'.$this->lazyLoadKey,$this->lazyLoadId.'-'.$key);
 			if ($ret instanceof Cache_error) { 
 				return parent::__get($key);
@@ -26,8 +26,8 @@ class DBSQL extends DBSQ {
 		if (!$nomodifydate) { 
 			$this->ModifyDate=date("c");
 		}
-		if (count(self::$_cachedfields)>0) { 
-			foreach (self::$_cachedfields as $cachedfield) { 
+		if (count(static::$_cachedfields)>0) { 
+			foreach (static::$_cachedfields as $cachedfield) { 
 				Cache::setKey(get_called_class().'-'.$this->lazyLoadKey, $this->lazyLoadId.'-'.$cachedfield,$this->$cachedfield);
 			}
 			print "got here";
