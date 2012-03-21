@@ -74,6 +74,8 @@ class AssetController extends DetachedController {
 			$picture->square__asset->output();
 		} else if (substr($uri,0,18)=='/digital-negative/') { 
 			print "8";
+			var_dump($picture->digital_negative__asset);
+			die;
 			$picture->digital_negative__asset->output();
 		}
 	}
