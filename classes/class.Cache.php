@@ -1,5 +1,13 @@
 <?php
-class CacheError { };
+class CacheError {
+	private $error=null;
+	function __construct($err) { 
+		$this->error=$err;	
+	}
+	function __toString() { 
+		return $this->error;
+	}
+};
 class Cache { 
 	static public $backend='flatfile';
 	static public function getKey($namespace,$key) { 
@@ -21,8 +29,11 @@ class Cache {
 		return new CacheError('miss');
 	}
 	static private function setFileKey($namespace,$key,$value) { 
-		var_dump(array($namespace,$key,$value));
 		$name=self::get_file_storage_name($namespace,$key);
+		self::make_cache_directory($name);
+	}
+	static private function make_cache_directory($filename) { 
+		mkdir(
 	}
 	static private function get_file_storage_name($namespace,$key) { 
 		return dirname(__FILE__).'/../cache/'.Helper::sanitize_file_name($namespace).'/'.Helper::sanitize_file_name($key);
