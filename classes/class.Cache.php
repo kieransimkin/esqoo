@@ -26,12 +26,21 @@ class Cache {
 	}
 	static private function getFileKey($namespace,$key) { 
 		$name=self::get_file_storage_name($namespace,$key);
-		return new CacheError('miss');
+		if (!file_exists($name)) { 
+			return new CacheError('miss');
+		}
+		$fp=fopen($name,"rb");
+		if ($fp===false) { 
+			return new CacheError('miss');
+		}
+		$data=unserialize(fgets($fp));
+		fclose($fp);
+		return $data;
 	}
 	static private function setFileKey($namespace,$key,$value) { 
 		$name=self::get_file_storage_name($namespace,$key);
 		self::make_cache_directory($name);
-		$fp=fopen($name,"w");
+		$fp=fopen($name,"wb");
 		fputs($fp,serialize($value));
 		fclose($fp);
 	}
