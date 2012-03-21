@@ -65,7 +65,7 @@ class AssetController extends DetachedController {
 				$picture->generate_thumbnail('square');
 			}
 			$picture->square__asset->output();
-		} else if (substr($uri,0,)=='/digital-negative/') { 
+		} else if (substr($uri,0,18)=='/digital-negative/') { 
 			$picture->digital_negative__asset->output();
 		}
 	}
