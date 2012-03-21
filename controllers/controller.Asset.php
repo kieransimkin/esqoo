@@ -26,7 +26,7 @@ class AssetController extends DetachedController {
 	 ****************************/
 
 	private function get_picture($uri) { 
-		print "Getting picture: $uri";
+		print "Getting picture: $uri\n";
 		$picture=Picture::get($this->find_uri_id($uri));
 		print $picture->digital_negative__asset_id;
 		var_dump($picture);
