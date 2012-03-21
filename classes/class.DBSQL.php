@@ -23,11 +23,8 @@ class DBSQL extends DBSQ {
 					Site::loadAndConnect();
 					return parent::__get($key);
 				} else { 
-					print "Got here$%$!!";
-					var_dump($this);
 					$this->$newkey=$ret;
-					var_dump($this);
-					return $this->$key;
+					return parent::__get($key);
 				}
 			}
 		}
