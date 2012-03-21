@@ -31,9 +31,12 @@ class Cache {
 	static private function setFileKey($namespace,$key,$value) { 
 		$name=self::get_file_storage_name($namespace,$key);
 		self::make_cache_directory($name);
+		$fp=fopen($name,"w");
+		fputs($value);
+		fclose($fp);
 	}
 	static private function make_cache_directory($filename) { 
-		mkdir(dirname($filename),0777,true);
+		@mkdir(dirname($filename),0777,true);
 	}
 	static private function get_file_storage_name($namespace,$key) { 
 		return dirname(__FILE__).'/../cache/'.Helper::sanitize_file_name($namespace).'/'.Helper::sanitize_file_name($key);
