@@ -6,7 +6,7 @@ class DBSQL extends DBSQ {
 	function __get($key) { 
 		if ($this->__isset($key)) { 
 			print "key: ".$key." : ";
-			var_dump($this->$key);
+			var_dump($this->rawGet($key));
 		}
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
