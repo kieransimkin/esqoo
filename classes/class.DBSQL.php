@@ -5,6 +5,7 @@ class DBSQL extends DBSQ {
 	public static $_cachedfields=array();
 	function __get($key) { 
 		if (isset($this->$key)) { 
+			print "got here";
 			return $this->$key;
 		}
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
