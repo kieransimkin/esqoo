@@ -3,7 +3,6 @@ class Picture extends DBSQL {
 	public static $_cachedfields=array('digital_negative__asset_id','web_small__asset_id','web_medium__asset_id','web_large__asset_id','web_fullsize__asset_id','thumbnail_small__asset_id','thumbnail_large__asset_id','square__asset_id');
 	public function generate_thumbnail($size) { 
 		$max=$this->album->user->get_picture_size($size);
-		print "Generating thumbnail of size: $max";
 		if ($size=='square' || substr($size,0,10)=='thumbnail_') { 
 			$fname=$this->thumbnail_fullsize__asset->get_filename();
 		} else { 
@@ -27,7 +26,6 @@ class Picture extends DBSQL {
 		$var=str_replace('-','_',$size).'__asset_id';
 		$this->$var=$assetid;
 		$ret=$this->save();
-		die;
 		return $this->save();
 	}
 	public function import_raw() { 

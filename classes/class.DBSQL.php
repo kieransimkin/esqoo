@@ -43,17 +43,14 @@ class DBSQL extends DBSQ {
 		if (count(static::$_cachedfields)>0) { 
 			foreach (static::$_cachedfields as $cachedfield) { 
 				try { 
-//					$data=parent::__get($cachedfield);
 					$data=$this->$cachedfield;
 					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data);
-					//Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),parent::__get($cachedfield));
 				} catch (DBSQ_Exception $e) { 
 					var_dump($e);
 					//noop
 				}
 			}
 		}
-		print '---'.$this->id.'---';
 		return $ret;
 	}
 	function set_visible_api_fields($fields=array()) { 
