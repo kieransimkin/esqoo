@@ -21,12 +21,12 @@ class Picture extends DBSQL {
 		$asset->HashType='MD5';
 		$asset->AssetHash=md5($data);
 		$assetid=$asset->save();
-		die;
 		$fp=fopen($asset->get_filename(),"wb");
 		fwrite($fp,$data);
 		fclose($fp);
 		$var=str_replace('-','_',$size).'__asset_id';
 		$this->$var=$assetid;
+		die;
 		return $this->save();
 	}
 	public function import_raw() { 
