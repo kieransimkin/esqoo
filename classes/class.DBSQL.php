@@ -10,7 +10,6 @@ class DBSQL extends DBSQ {
 				Site::loadAndConnect();
 				return parent::__get($key);
 			} else { 
-				print "got here345345";
 				$this->$key=$ret;
 				return $ret;
 			}
@@ -42,11 +41,10 @@ class DBSQL extends DBSQ {
 		}
 		$ret=parent::save();
 		if (count(static::$_cachedfields)>0) { 
-			var_dump(static::$_cachedfields);
 			foreach (static::$_cachedfields as $cachedfield) { 
 				try { 
-					//$data=parent::__get($cachedfield);
-					//Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),parent::__get($cachedfield));
+					$data=parent::__get($cachedfield);
+					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),parent::__get($cachedfield));
 				} catch (DBSQ_Exception $e) { 
 					var_dump($e);
 					//noop
