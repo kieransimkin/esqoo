@@ -58,6 +58,7 @@ class AssetController extends DetachedController {
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('thumbnail-small');
 			}
+			var_dump($picture->thumbnail_small__asset);
 			$picture->thumbnail_small__asset->output();
 		} else if (substr($uri,0,8)=='/square/') { 
 			if (is_null($picture->square__asset_id)) { 
