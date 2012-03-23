@@ -55,7 +55,6 @@ class AssetController extends DetachedController {
 			$picture->thumbnail_large__asset->output();
 		} else if (substr($uri,0,17)=='/thumbnail-small/') { 
 			if (is_null($picture->thumbnail_small__asset)) { 
-				var_dump($picture);
 				Site::loadAndConnect();
 				$picture->generate_thumbnail('thumbnail-small');
 			}
