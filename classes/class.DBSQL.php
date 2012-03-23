@@ -40,6 +40,7 @@ class DBSQL extends DBSQ {
 			$this->ModifyDate=date("c");
 		}
 		$ret=parent::save();
+		return;
 		if (count(static::$_cachedfields)>0) { 
 			foreach (static::$_cachedfields as $cachedfield) { 
 				try { 
