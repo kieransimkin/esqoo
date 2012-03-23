@@ -45,7 +45,7 @@ class DBSQL extends DBSQ {
 			foreach (static::$_cachedfields as $cachedfield) { 
 				try { 
 					$data=parent::__get($cachedfield);
-					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),parent::__get($cachedfield));
+					//Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),parent::__get($cachedfield));
 				} catch (DBSQ_Exception $e) { 
 					var_dump($e);
 					//noop
