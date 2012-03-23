@@ -5,16 +5,11 @@ class DBSQL extends DBSQ {
 	public static $_cachedfields=array();
 	function __get($key) { 
 		if ($this->__isset($key)) { 
-			print "key: ".$key." : ";
-			var_dump($this->rawGet($key));
 			return $this->rawGet($key);
 		}
 		if (substr($key,-3,3)=='_id') { 
 			$newkey=substr($key,0,strlen($key)-3);
-			print "newkey: $newkey";
 			if ($this->__isset($newkey)) {
-				print "key: ".$newkey." : ";
-				var_dump($this->rawGet($newkey));
 				return $this->rawGet($newkey);
 			}
 		}
@@ -24,8 +19,6 @@ class DBSQL extends DBSQ {
 				Site::loadAndConnect();
 				return parent::__get($key);
 			} else { 
-				print "cache hit: ".$key;
-				var_dump($ret);
 				$this->$key=$ret;
 				return $ret;
 			}
@@ -39,8 +32,6 @@ class DBSQL extends DBSQ {
 					Site::loadAndConnect();
 					return parent::__get($key);
 				} else { 
-					print "Cache hit: $newkey : ";
-					var_dump($ret);
 					$this->$newkey=$ret;
 					if (is_null($ret)) { 
 						return null;
