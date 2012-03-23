@@ -1,6 +1,6 @@
 <?php
 class Asset extends DBSQL { 
-	public static $_cachedfields=array('MimeType','Size','AssetHash','HashType');
+	public static $_cachedfields=array('MimeType','Size','AssetHash','HashType','ModifyDate');
 	static public function searchPartiallyUploaded($chunkhash,$hashtype,$name,$userid,$data) { 
 		return false;
 	}
@@ -30,6 +30,13 @@ class Asset extends DBSQL {
 		return $this->save();
 	}
 	public function output() { 
+		header("Last-Modified: ".$this->ModifyDate);
+		header("Etag: ".$this->AssetHash);
+		if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $this->ModifyDate ||
+		    trim($_SERVER['HTTP_IF_NONE_MATCH']) == $this->AssetHash) {
+		    header("HTTP/1.1 304 Not Modified");
+		    exit;
+		} 
 		header('Content-type: '.$this->MimeType);
 		header('Content-length: '.$this->Size);
 		readfile($this->get_filename());
