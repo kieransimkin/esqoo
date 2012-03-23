@@ -4,7 +4,7 @@ class DBSQL extends DBSQ {
 	private $_visiblefields=array();
 	public static $_cachedfields=array();
 	function __get($key) { 
-		if (isset(parent::$key)) { 
+		if ($this->isset($key)) { 
 			print "key: ".$key." : ";
 			var_dump(parent::$key);
 		}
