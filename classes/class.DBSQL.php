@@ -24,7 +24,11 @@ class DBSQL extends DBSQ {
 					return parent::__get($key);
 				} else { 
 					$this->$newkey=$ret;
-					return parent::__get($key);
+					if (is_null($ret)) { 
+						return null;
+					} else { 
+						return parent::__get($key);
+					}
 				}
 			}
 		}
