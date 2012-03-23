@@ -23,6 +23,8 @@ class DBSQL extends DBSQ {
 					Site::loadAndConnect();
 					return parent::__get($key);
 				} else { 
+					print "Cache hit: $newkey : ";
+					var_dump($ret);
 					$this->$newkey=$ret;
 					if (is_null($ret)) { 
 						return null;
