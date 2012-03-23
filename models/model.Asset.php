@@ -176,6 +176,9 @@ class Asset extends DBSQL {
 		$pic->digital_negative__asset_id=$this->id;
 		if (!$israw) { 
 			$pic->web_fullsize__asset_id=$this->id;
+			$pic->thumbnail_fullsize__asset_id=$this->id;
+		} else { 
+			$pic->import_raw();
 		}
 		$pic->save();
 		return array('AssetType'=>'Picture','Picture'=>$pic);

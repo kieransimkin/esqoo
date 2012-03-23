@@ -319,6 +319,7 @@ create table picture (
 	web_medium__asset_id int default null,
 	web_large__asset_id int default null,
 	web_fullsize__asset_id int default null,
+	thumbnail_fullsize__asset_id int default null,
 	thumbnail_large__asset_id int default null,
 	thumbnail_small__asset_id int default null,
 	square__asset_id int default null,
