@@ -4,9 +4,9 @@ class DBSQL extends DBSQ {
 	private $_visiblefields=array();
 	public static $_cachedfields=array();
 	function __get($key) { 
-		if ($this->isset($key)) { 
+		if ($this->__isset($key)) { 
 			print "key: ".$key." : ";
-			var_dump(parent::$key);
+			var_dump($this->$key);
 		}
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
