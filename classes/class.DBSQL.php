@@ -7,6 +7,16 @@ class DBSQL extends DBSQ {
 		if ($this->__isset($key)) { 
 			print "key: ".$key." : ";
 			var_dump($this->rawGet($key));
+			return $this->rawGet($key);
+		}
+		if (substr($key,-3,3)=='_id') { 
+			$newkey=substr($key,0,strlen($key)-3);
+			print "newkey: $newkey";
+			if ($this->__isset($newkey)) {
+				print "key: ".$newkey." : ";
+				var_dump($this->rawGet($newkey));
+				return $this->rawGet($newkey);
+			}
 		}
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
