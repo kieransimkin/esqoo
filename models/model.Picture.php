@@ -7,6 +7,7 @@ class Picture extends DBSQL {
 		if ($size=='square' || substr($size,0,10)=='thumbnail_') { 
 			$fname=$this->thumbnail_fullsize__asset->get_filename();
 		} else { 
+			var_dump($this->web_fullsize__asset);
 			$fname=$this->web_fullsize__asset->get_filename();
 		}
 		$image=new Imagick($fname);
