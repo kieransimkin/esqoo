@@ -6,6 +6,7 @@ class DBSQL extends DBSQ {
 	function __get($key) { 
 		if (isset($this->$key)) { 
 			print "got herezz".print_r($this->$key,true);
+			print "key: ".$key;
 			var_dump($this->$key);
 			return $this->$key;
 		}
