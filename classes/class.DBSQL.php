@@ -4,12 +4,12 @@ class DBSQL extends DBSQ {
 	private $_visiblefields=array();
 	public static $_cachedfields=array();
 	function __get($key) { 
-		if ($this->__isset($key)) { 
+		if (isset($this->$key)) { 
 			return $this->rawGet($key);
 		}
 		if (substr($key,-3,3)=='_id') { 
 			$newkey=substr($key,0,strlen($key)-3);
-			if ($this->__isset($newkey)) {
+			if (isset($this->$newkey)) {
 				return $this->rawGet($newkey);
 			}
 		}
