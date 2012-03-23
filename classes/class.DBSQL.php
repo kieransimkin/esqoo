@@ -51,7 +51,7 @@ class DBSQL extends DBSQ {
 				}
 			}
 		}
-		die;
+		print '---'.$this->id.'---';
 		return $ret;
 	}
 	function set_visible_api_fields($fields=array()) { 
