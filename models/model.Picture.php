@@ -27,7 +27,9 @@ class Picture extends DBSQL {
 		$var=str_replace('-','_',$size).'__asset_id';
 		print $var;
 		print $assetid;
+		var_dump($this);
 		$this->$var=$assetid;
+		var_dump($this);
 		$ret=$this->save();
 		return $this->save();
 	}
