@@ -4,11 +4,11 @@ class DBSQL extends DBSQ {
 	private $_visiblefields=array();
 	public static $_cachedfields=array();
 	function __get($key) { 
-		if (isset($this->$key)) { 
+		if (isset($this->{$key})) { 
 			print "got herezz".print_r($this->$key,true);
 			print "key: ".$key;
-			var_dump($this->$key);
-			return $this->$key;
+			var_dump($this->{$key});
+			return $this->{$key};
 		}
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
