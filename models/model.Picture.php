@@ -15,6 +15,7 @@ class Picture extends DBSQL {
 	        $image->setImageCompressionQuality(90);
 		$asset=Asset::get();
 		$data=(string)$image;
+		die;
 		$asset->Size=strlen($data);
 		$asset->ChunkSize=strlen($data);
 		$asset->MimeType='image/jpeg';
