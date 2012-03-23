@@ -41,7 +41,7 @@ class DBSQL extends DBSQ {
 		}
 		$ret=parent::save();
 		if (count(static::$_cachedfields)>0) { 
-			var_dump(static::$_cached_fields);
+			var_dump(static::$_cachedfields);
 			foreach (static::$_cachedfields as $cachedfield) { 
 				try { 
 					$data=parent::__get($cachedfield);
