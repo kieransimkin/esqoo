@@ -38,5 +38,8 @@ class Helper {
 	    $filename = trim($filename, '.-_');
 	    return $filename;
 	}
+	static function url_friendly_encode($url) { 
+		return urlencode(iconv('UTF-8','ASCII//TRANSLIT',str_replace(' ','-',$url)));
+	}
 
 }
