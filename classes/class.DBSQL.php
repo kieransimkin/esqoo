@@ -127,6 +127,11 @@ class DBSQL extends DBSQ {
 				$ret[$field]=$ldata[$field];
 			}
 		}
+		foreach ($this->_computedfields as $name => $func) { 
+			if (method_exists($this,$func)) { 
+				$ret[$name]=$this->$func();
+			}
+		}	
 		return $ret;
 	}
 	static function getSqlSuffix($input) {

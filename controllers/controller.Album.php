@@ -91,6 +91,7 @@ class AlbumController extends LockedController {
 		} else { 
 			$pictures=Picture::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
 		}
+		DBSQL::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
 		DBSQL::set_all_visible_api_fields($pictures,$this->get_picture_fields());
 		$numrows=DBSQL::foundRows();
 		return $this->flexigridResponse($pictures,$input['Page'],$numrows);

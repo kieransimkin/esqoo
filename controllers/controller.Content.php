@@ -137,7 +137,7 @@ class ContentController extends LockedController {
 
 				if (array_key_exists('Picture',$ret)) { 
 					$ret['Picture']->set_visible_api_fields($this->get_picture_fields());
-					$ret['PictureURLs']=$ret['Picture']->get_url_array();
+					$ret['Picture']->add_computed_field('PictureURLs','get_url_array');
 				} else if (array_key_exists('Video',$ret)) { 
 					$ret['Video']->set_visible_api_fields($this->get_video_fields());
 				} else if (array_key_exists('Audio',$ret)) { 

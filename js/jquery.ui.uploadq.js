@@ -297,7 +297,7 @@ $.widget( "esqoo.uploadq", {
 				} else if (d.AssetType=='Picture') {
 					esqoo_ui.create_message('Picture upload successful: '+item.file.name,'Notice');
 					item.pictureid=d.Picture.PictureID;
-					item.thumbnailurl=d.PictureURLs['thumbnail-small'];
+					item.thumbnailurl=d.Picture.PictureURLs['thumbnail-small'];
 				} else if (d.AssetType=='File') {
 					esqoo_ui.create_message('File upload successful: '+item.file.name,'Notice');
 					item.fileid=d.File.FileID;
