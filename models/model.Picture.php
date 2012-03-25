@@ -212,12 +212,13 @@ class Picture extends DBSQL {
 		} else { 
 			$ret['FocalLength']=$exif['FocalLength'];
 		}
-		$ret['GPSLatitudeRef']=$exif['GPSLatitudeRef'];
-		$ret['GPSLongitudeRef']=$exif['GPSLongitudeRef'];
 		$ret['GPSLatitude']=$exif['GPSLatitude'];
+		$ret['GPSLatitudeRef']=$exif['GPSLatitudeRef'];
 		$ret['GPSLongitude']=$exif['GPSLongitude'];
+		$ret['GPSLongitudeRef']=$exif['GPSLongitudeRef'];
 		$ret['GPSLatitudeDecimal']=self::get_exif_gps($exif['GPSLatitude'],$exif['GPSLatitudeRef']);
 		$ret['GPSLongitudeDecimal']=self::get_exif_gps($exif['GPSLongitude'],$exif['GPSLongitudeRef']);
+		$ret['FocusDistance']=$exif['COMPUTED']['FocusDistance'];
 		return $ret;
 	}
 	private static function get_exif_gps($exifCoord, $hemi) {
