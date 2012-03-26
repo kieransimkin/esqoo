@@ -1,6 +1,5 @@
 <?php
 $this->header(_('Albums'));
-echo $this->form;
 ?>
 <h1><?=_('Albums')?></h1>
 <button data-icon-primary="ui-icon-plus" onclick="esqoo_ui.make_dialog({title:'<?=_('Create new album');?>'},'/album/add');"><?=_('Create new album');?></button>
@@ -35,7 +34,7 @@ esqoo_album.delete = function(id) {
 	data-flexigrid-col1-js-filter="esqoo_album.actions"
 
 	data-flexigrid-searchitem0-name="Name"
-	data-flexigrid-searchitem0-display="Album Name"
+	data-flexigrid-searchitem0-display="<?=_('Album Name');?>"
 	data-flexigrid-searchitem0-isdefault="true"
 ></div>
 <?php
