@@ -29,9 +29,9 @@ class TagController extends LockedController {
 		$input['TagID']=$arg;
 		$form=$this->get_tag_form($input,$tag);
 		if ($form->validate()) { 
-
+			return $this->formSuccess();
 		} else { 
-
+			return $this->formFail($form,'30%','550');
 		}
 	}
 	/*********************
