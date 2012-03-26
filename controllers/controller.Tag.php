@@ -47,6 +47,7 @@ class TagController extends LockedController {
 			$tag=Tag::get();
 			$tag->Name=$input['Name'];
 			$tag->Description=$input['Description'];
+			$tag->user_id=$this->user->id;
 			$tag->save();
 			$tag->set_visible_api_fields($this->get_tag_fields());
 			return $tag;
