@@ -319,6 +319,7 @@ class Picture extends DBSQL {
 		} else { 
 			$ret['FocalLength']=$exif['FocalLength'];
 		}
+		$ret['DigitalZoomRatio']=self::exif_val_to_num($exif['DigitalZoomRatio']);
 		$ret['GPSLatitude']=$exif['GPSLatitude'];
 		$ret['GPSLatitudeRef']=$exif['GPSLatitudeRef'];
 		$ret['GPSLongitude']=$exif['GPSLongitude'];
@@ -328,14 +329,14 @@ class Picture extends DBSQL {
 		$ret['GPSAltitude']=$exif['GPSAltitude'];
 		$ret['GPSAltitudeRef']=$exif['GPSAltitudeRef'];
 		if ($exif['GPSAltitudeRef']) { 
-			$ret['GPSAltitudeDecimal']=-1*self::exif_gps2Num($exif['GPSAltitude']);
+			$ret['GPSAltitudeDecimal']=-1*self::exif_val_to_num($exif['GPSAltitude']);
 		} else {
-			$ret['GPSAltitudeDecimal']=self::exif_gps2Num($exif['GPSAltitude']);
+			$ret['GPSAltitudeDecimal']=self::exif_val_to_num($exif['GPSAltitude']);
 		}
-		$ret['GPSDOP']=self::exif_gps2Num($exif['GPSDOP']);
-		$ret['GPSSpeed']=self::exif_gps2Num($exif['GPSSpeed']);
+		$ret['GPSDOP']=self::exif_val_to_num($exif['GPSDOP']);
+		$ret['GPSSpeed']=self::exif_val_to_num($exif['GPSSpeed']);
 		$ret['GPSSpeedRef']=$exif['GPSSpeedRef'];
-		$ret['GPSImgDirection']=self::exif_gps2Num($exif['GPSImgDirection']);
+		$ret['GPSImgDirection']=self::exif_val_to_num($exif['GPSImgDirection']);
 		$ret['GPSImgDirectionRef']=$exif['GPSImgDirectionRef'];
 		$ret['GPSDestLatitude']=$exif['GPSDestLatitude'];
 		$ret['GPSDestLatitudeRef']=$exif['GPSDestLatitudeRef'];
@@ -343,25 +344,30 @@ class Picture extends DBSQL {
 		$ret['GPSDestLongitudeRef']=$exif['GPSDestLongitudeRef'];
 		$ret['GPSDestLatitudeDecimal']=self::get_exif_gps($exif['GPSDestLatitude'],$exif['GPSDestLatitudeRef']);
 		$ret['GPSDestLongitudeDecimal']=self::get_exif_gps($exif['GPSDestLongitude'],$exif['GPSDestLongitudeRef']);
-		$ret['GPSDestBearing']=self::exif_gps2Num($exif['GPSDestBearing']);
+		$ret['GPSDestBearing']=self::exif_val_to_num($exif['GPSDestBearing']);
 		$ret['GPSDestBearingRef']=$exif['GPSDestBearingRef'];
-		$ret['GPSDestDistance']=self::exif_gps2Num($exif['GPSDestDistance']);
+		$ret['GPSDestDistance']=self::exif_val_to_num($exif['GPSDestDistance']);
 		$ret['GPSDestDistanceRef']=$exif['GPSDestDistanceRef'];
 		$ret['FocusDistance']=$exif['COMPUTED']['FocusDistance'];
 		return $ret;
 	}
 	private static function get_exif_gps($exifCoord, $hemi) {
-
-	    $degrees = count($exifCoord) > 0 ? self::exif_gps2Num($exifCoord[0]) : 0;
-	    $minutes = count($exifCoord) > 1 ? self::exif_gps2Num($exifCoord[1]) : 0;
-	    $seconds = count($exifCoord) > 2 ? self::exif_gps2Num($exifCoord[2]) : 0;
+		if (is_null($exifCoord)||is_null($hemi)) { 
+			return null;
+		}
+	    $degrees = count($exifCoord) > 0 ? self::exif_val_to_num($exifCoord[0]) : 0;
+	    $minutes = count($exifCoord) > 1 ? self::exif_val_to_num($exifCoord[1]) : 0;
+	    $seconds = count($exifCoord) > 2 ? self::exif_val_to_num($exifCoord[2]) : 0;
 
 	    $flip = ($hemi == 'W' or $hemi == 'S') ? -1 : 1;
 
 	    return $flip * ($degrees + $minutes / 60 + $seconds / 3600);
 
 	}
-	private static function exif_gps2Num($coordPart) {
+	private static function exif_val_to_num($coordPart) {
+		if (is_null($coordPart)) { 
+			return null;
+		}
 	    $parts = explode('/', $coordPart);
 
 	    if (count($parts) <= 0)
