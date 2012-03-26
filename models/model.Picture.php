@@ -177,67 +177,67 @@ class Picture extends DBSQL {
 		}	
 		return $text;
 	}
-	private function get_exif_afga_makernotes($notes) { 
+	private function get_exif_afga_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_canon_makernotes($notes) { 
+	private function get_exif_canon_makernotes($exif) { 
+		$ret=array();
+			var_dump($exif);	
+		return $ret;
+	}
+	private function get_exif_casio_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_casio_makernotes($notes) { 
+	private function get_exif_epson_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_epson_makernotes($notes) { 
+	private function get_exif_fujifilm_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_fujifilm_makernotes($notes) { 
+	private function get_exif_konica_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_konica_makernotes($notes) { 
+	private function get_exif_kyocera_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_kyocera_makernotes($notes) { 
+	private function get_exif_nikon_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_nikon_makernotes($notes) { 
+	private function get_exif_olympus_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_olympus_makernotes($notes) { 
+	private function get_exif_panasonic_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_panasonic_makernotes($notes) { 
+	private function get_exif_pentax_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_pentax_makernotes($notes) { 
+	private function get_exif_ricoh_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
 	}
-	private function get_exif_ricoh_makernotes($notes) { 
-		$ret=array();
-			
-		return $ret;
-	}
-	private function get_exif_sony_makernotes($notes) { 
+	private function get_exif_sony_makernotes($exif) { 
 		$ret=array();
 			
 		return $ret;
@@ -252,43 +252,43 @@ class Picture extends DBSQL {
 		$ret['Make']=$exif['Make'];
 		switch ($exif['Make']) { 
 			case 'Agfa':
-				$makernotes=$this->get_exif_afga_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_afga_makernotes($exif);
 				break;
 			case 'Canon':
-				$makernotes=$this->get_exif_canon_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_canon_makernotes($exif);
 				break;
 			case 'Casio':
-				$makernotes=$this->get_exif_casio_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_casio_makernotes($exif);
 				break;
 			case 'Epson':
-				$makernotes=$this->get_exif_epson_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_epson_makernotes($exif);
 				break;
 			case 'Fujifilm':
-				$makernotes=$this->get_exif_fujifilm_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_fujifilm_makernotes($exif);
 				break;
 			case 'Konica':
-				$makernotes=$this->get_exif_konica_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_konica_makernotes($exif);
 				break;
 			case 'Kyocera':
-				$makernotes=$this->get_exif_kyocera_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_kyocera_makernotes($exif);
 				break;
 			case 'Nikon':
-				$makernotes=$this->get_exif_nikon_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_nikon_makernotes($exif);
 				break;
 			case 'Olympus':
-				$makernotes=$this->get_exif_olympus_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_olympus_makernotes($exif);
 				break;
 			case 'Panasonic':
-				$makernotes=$this->get_exif_panasonic_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_panasonic_makernotes($exif);
 				break;
 			case 'Pentax':
-				$makernotes=$this->get_exif_pentax_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_pentax_makernotes($exif);
 				break;
 			case 'Ricoh':
-				$makernotes=$this->get_exif_ricoh_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_ricoh_makernotes($exif);
 				break;
 			case 'Sony':
-				$makernotes=$this->get_exif_sony_makernotes($exif['MakerNotes']);
+				$makernotes=$this->get_exif_sony_makernotes($exif);
 				break;
 		}
 		$ret['MakerNotes']=$makernotes;
