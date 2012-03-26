@@ -14,7 +14,7 @@ class TagController extends LockedController {
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
 	function addDialog($arg='',$input=array()) { 
-		$form=$this->get_add_form($input);
+		$form=$this->get_tag_form($input);
 		if ($form->validate()) { 
 			$this->createAPI($arg,$input);
 			$this->showMessage(_('Tag created'));
@@ -24,13 +24,24 @@ class TagController extends LockedController {
 			return $this->formFail($form,'30%','550');
 		}
 	}
+	function manageDialog($arg='',$input=array()) { 
+		$tag=$this->getAPI('',array('TagID'=>$arg));
+		$input['TagID']=$arg;
+		$form=$this->get_tag_form($input,$tag);
+		if ($form->validate()) { 
+
+		} else { 
+
+		}
+	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
-	function get_add_form($input) { 
+	function get_tag_form($input,$tag,$forcesubmit=false) { 
 		$form=new Form('add');
+		$form->setAPIDataSources($input,$tag,$forcesubmit);
 		$form->addElement('text','Name',array())->setLabel(_('Name'))->addRule('required',_('Required'));
 		$form->addElement('textarea','Description',array())->setLabel(_('Description'));
 		return $form;
@@ -41,7 +52,7 @@ class TagController extends LockedController {
 	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
 	 *****************************************/
 	function createAPI($arg='',$input=array()) { 
-		$form=$this->get_add_form($input);
+		$form=$this->get_tag_form($input,null,true);
 		if (!$form->validate()) { 
 			$this->api_form_validation_error($form);
 		} else { 
