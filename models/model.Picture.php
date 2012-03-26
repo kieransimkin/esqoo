@@ -177,6 +177,71 @@ class Picture extends DBSQL {
 		}	
 		return $text;
 	}
+	private function get_exif_afga_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_canon_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_casio_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_epson_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_fujifilm_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_konica_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_kyocera_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_nikon_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_olympus_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_panasonic_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_pentax_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_ricoh_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
+	private function get_exif_sony_makernotes($notes) { 
+		$ret=array();
+			
+		return $ret;
+	}
 	public function get_exif_data() { 
 		$ret=array();
 		$exif=$this->get_raw_exif_data();
@@ -185,6 +250,48 @@ class Picture extends DBSQL {
 		$ret['CCDWidth']=$exif['COMPUTED']['CCDWidth'];
 		$ret['IsColor']=$exif['COMPUTED']['IsColor'];
 		$ret['Make']=$exif['Make'];
+		switch ($exif['Make']) { 
+			case 'Agfa':
+				$makernotes=$this->get_exif_afga_makernotes($exif['MakerNotes']);
+				break;
+			case 'Canon':
+				$makernotes=$this->get_exif_canon_makernotes($exif['MakerNotes']);
+				break;
+			case 'Casio':
+				$makernotes=$this->get_exif_casio_makernotes($exif['MakerNotes']);
+				break;
+			case 'Epson':
+				$makernotes=$this->get_exif_epson_makernotes($exif['MakerNotes']);
+				break;
+			case 'Fujifilm':
+				$makernotes=$this->get_exif_fujifilm_makernotes($exif['MakerNotes']);
+				break;
+			case 'Konica':
+				$makernotes=$this->get_exif_konica_makernotes($exif['MakerNotes']);
+				break;
+			case 'Kyocera':
+				$makernotes=$this->get_exif_kyocera_makernotes($exif['MakerNotes']);
+				break;
+			case 'Nikon':
+				$makernotes=$this->get_exif_nikon_makernotes($exif['MakerNotes']);
+				break;
+			case 'Olympus':
+				$makernotes=$this->get_exif_olympus_makernotes($exif['MakerNotes']);
+				break;
+			case 'Panasonic':
+				$makernotes=$this->get_exif_panasonic_makernotes($exif['MakerNotes']);
+				break;
+			case 'Pentax':
+				$makernotes=$this->get_exif_pentax_makernotes($exif['MakerNotes']);
+				break;
+			case 'Ricoh':
+				$makernotes=$this->get_exif_ricoh_makernotes($exif['MakerNotes']);
+				break;
+			case 'Sony':
+				$makernotes=$this->get_exif_sony_makernotes($exif['MakerNotes']);
+				break;
+		}
+		$ret['MakerNotes']=$makernotes;
 		$ret['Model']=$exif['Model'];
 		$ret['OrientationText']=$this->get_exif_orientation($exif['Orientation']);
 		$ret['Orientation']=$exif['Orientation'];
