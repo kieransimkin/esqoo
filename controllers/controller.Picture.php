@@ -19,7 +19,7 @@ class PictureController extends LockedController {
 	 *********************/
 	private function get_index_browse_form($input=array()) { 
 		$form=new Form('indexbrowse');
-		$form->addElement('select','album',array(),array('options'=>Album::get_menuy($this->user->id)));
+		$form->addElement('select','album',array(),array('options'=>Album::get_menu($this->user->id)));
 		return $form;
 	}
 	/*****************************************
