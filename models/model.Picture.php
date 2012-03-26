@@ -220,6 +220,11 @@ class Picture extends DBSQL {
 		$ret['GPSLongitudeDecimal']=self::get_exif_gps($exif['GPSLongitude'],$exif['GPSLongitudeRef']);
 		$ret['GPSAltitude']=$exif['GPSAltitude'];
 		$ret['GPSAltitudeRef']=$exif['GPSAltitudeRef'];
+		if ($exif['GPSAltitudeRef']) { 
+				$ret['GPSAltitudeDecimal']=-1*self::exif_gps2Num($exif['GPSAltitude']);
+		} else {
+				$ret['GPSAltitudeDecimal']=self::exif_gps2Num($exif['GPSAltitude']);
+		}
 		$ret['FocusDistance']=$exif['COMPUTED']['FocusDistance'];
 		return $ret;
 	}
