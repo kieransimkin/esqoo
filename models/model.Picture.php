@@ -235,7 +235,7 @@ class Picture extends DBSQL {
 		$ret['GPSDestLongitude']=$exif['GPSDestLongitude'];
 		$ret['GPSDestLongitudeRef']=$exif['GPSDestLongitudeRef'];
 		$ret['GPSDestLatitudeDecimal']=self::get_exif_gps($exif['GPSDestLatitude'],$exif['GPSDestLatitudeRef']);
-		$ret['GPSLongitudeDecimal']=self::get_exif_gps($exif['GPSDestLongitude'],$exif['GPSDestLongitudeRef']);
+		$ret['GPSDestLongitudeDecimal']=self::get_exif_gps($exif['GPSDestLongitude'],$exif['GPSDestLongitudeRef']);
 		$ret['GPSDestBearing']=self::exif_gps2Num($exif['GPSDestBearing']);
 		$ret['GPSDestBearingRef']=$exif['GPSDestBearingRef'];
 		$ret['GPSDestDistance']=self::exif_gps2Num($exif['GPSDestDistance']);
