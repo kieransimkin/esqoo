@@ -221,10 +221,25 @@ class Picture extends DBSQL {
 		$ret['GPSAltitude']=$exif['GPSAltitude'];
 		$ret['GPSAltitudeRef']=$exif['GPSAltitudeRef'];
 		if ($exif['GPSAltitudeRef']) { 
-				$ret['GPSAltitudeDecimal']=-1*self::exif_gps2Num($exif['GPSAltitude']);
+			$ret['GPSAltitudeDecimal']=-1*self::exif_gps2Num($exif['GPSAltitude']);
 		} else {
-				$ret['GPSAltitudeDecimal']=self::exif_gps2Num($exif['GPSAltitude']);
+			$ret['GPSAltitudeDecimal']=self::exif_gps2Num($exif['GPSAltitude']);
 		}
+		$ret['GPSDOP']=self::exif_gps2Num($exif['GPSDOP']);
+		$ret['GPSSpeed']=self::exif_gps2Num($exif['GPSSpeed']);
+		$ret['GPSSpeedRef']=$exif['GPSSpeedRef'];
+		$ret['GPSImgDirection']=self::exif_gps2Num($exif['GPSImgDirection']);
+		$ret['GPSImgDirectionRef']=$exif['GPSImgDirectionRef'];
+		$ret['GPSDestLatitude']=$exif['GPSDestLatitude'];
+		$ret['GPSDestLatitudeRef']=$exif['GPSDestLatitudeRef'];
+		$ret['GPSDestLongitude']=$exif['GPSDestLongitude'];
+		$ret['GPSDestLongitudeRef']=$exif['GPSDestLongitudeRef'];
+		$ret['GPSDestLatitudeDecimal']=self::get_exif_gps($exif['GPSDestLatitude'],$exif['GPSDestLatitudeRef']);
+		$ret['GPSLongitudeDecimal']=self::get_exif_gps($exif['GPSDestLongitude'],$exif['GPSDestLongitudeRef']);
+		$ret['GPSDestBearing']=self::exif_gps2Num($exif['GPSDestBearing']);
+		$ret['GPSDestBearingRef']=$exif['GPSDestBearingRef'];
+		$ret['GPSDestDistance']=self::exif_gps2Num($exif['GPSDestDistance']);
+		$ret['GPSDestDistanceRef']=$exif['GPSDestDistanceRef'];
 		$ret['FocusDistance']=$exif['COMPUTED']['FocusDistance'];
 		return $ret;
 	}
