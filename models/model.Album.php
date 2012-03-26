@@ -17,7 +17,7 @@ class Album extends DBSQL {
 			++$c;
 		}
 		$this->Name=$name;
-		parent::save();
+		return parent::save();
 	}
 	static function album_exists($user_id,$name) { 
 		$res=DBSQL::getOne('select id from album where user_id=? and UserVisible=\'true\' and DeleteDate is null and Name=?',array($user_id,$name));

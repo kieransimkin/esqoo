@@ -457,3 +457,14 @@ create table file_tag (
 	index (file_id),
 	unique key (tag_id,file_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists post_tag;
+create table post_tag (
+	id int not null auto_increment,
+	tag_id int not null,
+	post_id int not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	primary key (id),
+	index (tag_id),
+	index (post_id),
+	unique key (tag_id,post_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
