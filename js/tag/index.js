@@ -5,6 +5,6 @@ esqoo_tag_index.actions=function(id,data) {
 	return ret;
 }
 esqoo_tag_index.manage=function(id) { 
-
+	esqoo_ui.make_dialog({singleton: true, title:'Manage Tag'},'/tag/manage/'+id);
 }
 
