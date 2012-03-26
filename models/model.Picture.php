@@ -414,8 +414,7 @@ class Picture extends DBSQL {
 	}
 	public function get_tag_array() { 
 		$tags=DBSQ::getAll('select tag.id,tag.Name from picture_tag inner join tag on tag.id=picture_tag.tag_id where picture_tag.picture_id=? and tag.DeleteDate is null',array($this->id),'Tag');
-		var_dump($tags);
-		$tags->set_visible_api_fields(array('id','Name')); // Hmm, should this really be in the model? these are supposed to go in the controller
+		DBSQL::set_all_visible_api_fields($tags,array('id','Name')); // Hmm, should this really be in the model? these are supposed to go in the controller
 		return $tags;
 	}
 	public function get_url($size='web-small') { 
