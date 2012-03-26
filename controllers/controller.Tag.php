@@ -29,6 +29,9 @@ class TagController extends LockedController {
 		$input['TagID']=$arg;
 		$form=$this->get_tag_form($input,$tag);
 		if ($form->validate()) { 
+			$this->updateAPI($arg,$input);
+			$this->showMessage(_('Tag updated'));
+			$this->addFlexigridReloadSelector('#taglist');
 			return $this->formSuccess();
 		} else { 
 			return $this->formFail($form,'30%','550');
@@ -55,7 +58,8 @@ class TagController extends LockedController {
 		$form=$this->get_tag_form($input,null,true);
 		if (!$form->validate()) { 
 			$this->api_form_validation_error($form);
-		} else { 
+		}
+		if ($this->api_validation_success()) { 
 			$tag=Tag::get();
 			$tag->Name=$input['Name'];
 			$tag->Description=$input['Description'];
@@ -82,6 +86,19 @@ class TagController extends LockedController {
 			$tag->set_visible_api_fields($this->get_tag_fields());
 			return $tag;
 		}
+	}
+	public function updateAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+		$form=$this->get_tag_form($input,$album,true);
+		if (!$form->validate()) { 
+			$this->api_form_validation_error($form);
+		}
+		if ($this->api_validation_success()) { 
+			$tag->setFromFilteredArray($input,$this->get_tag_fields());
+			$tag->set_visible_api_fields($this->get_tag_fields());
+			$tag->save();
+		}
+		return $album;
 	}
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
