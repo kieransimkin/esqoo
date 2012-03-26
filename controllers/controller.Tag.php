@@ -53,6 +53,17 @@ class TagController extends LockedController {
 			return $tag;
 		}
 	}
+	public function listAPI($arg='',$input=array()) { 
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$tags=Tag::getAll('user_id=? and DeleteDate is null and Name like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+		} else { 
+			$tags=Tag::getAll('user_id=? and DeleteDate is null',array($this->user->id),null,$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($tags,$this->get_tag_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($tags,$input['Page'],$numrows);
+	}
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
 	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
