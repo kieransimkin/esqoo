@@ -148,6 +148,9 @@ $.widget( "esqoo.uploadq", {
 				me.queuediv.fadeOut('slow');
 			}
 			item.status_text.html('Complete');
+			item.thumbnail=$('<img />').attr('src',item.thumbnailurl).addClass('esqoo-uploadq-queue-item-thumbnail').hide().insertAfter(item.namecontainer).load(function() { 
+				$(this).fadeIn('slow');
+			});
 			item.li.appendTo(me.completecontainer);
 			item.li.slideDown('slow');
 			if (!me.complete_visible) { 
@@ -294,6 +297,7 @@ $.widget( "esqoo.uploadq", {
 				} else if (d.AssetType=='Picture') {
 					esqoo_ui.create_message('Picture upload successful: '+item.file.name,'Notice');
 					item.pictureid=d.Picture.PictureID;
+					item.thumbnailurl=d.Picture.PictureURLs['thumbnail-small'];
 				} else if (d.AssetType=='File') {
 					esqoo_ui.create_message('File upload successful: '+item.file.name,'Notice');
 					item.fileid=d.File.FileID;

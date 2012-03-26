@@ -65,6 +65,77 @@ class AlbumController extends LockedController {
 		$numrows=DBSQL::foundRows();
 		return $this->flexigridResponse($albums,$input['Page'],$numrows);
 	}
+	public function listmediaAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+		$input['ListType']=strtolower($input['ListType']);
+		$this->ensure_valid_listtype($input);
+		if ($this->api_validation_success()) { 
+			if ($input['ListType']=='pictures') { 
+				return $this->listpicturesAPI($arg,$input);
+			} else if ($input['ListType']=='videos') { 
+				return $this->listvideosAPI($arg,$input);
+			} else if ($input['ListType']=='audios') { 
+				return $this->listaudiosAPI($arg,$input);
+			} else if ($input['ListType']=='files') { 
+				return $this->listfilesAPI($arg,$input);
+			} else if ($input['ListType']=='all') { 
+				return $this->listallAPI($arg,$input);
+			}
+		}
+	}
+	public function listpicturesAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$pictures=Picture::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+		} else { 
+			$pictures=Picture::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
+		}
+		DBSQL::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
+		DBSQL::set_all_visible_api_fields($pictures,$this->get_picture_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($pictures,$input['Page'],$numrows);
+	}
+	public function listvideosAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$videos=Video::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+		} else { 
+			$videos=Video::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($videos,$this->get_video_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($videos,$input['Page'],$numrows);
+	}
+	public function listaudiosAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$audios=Audio::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+		} else { 
+			$audios=Audio::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($audios,$this->get_audio_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($audios,$input['Page'],$numrows);
+	}
+	public function listfilesAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$files=File::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+		} else { 
+			$files=File::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($files,$this->get_file_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($files,$input['Page'],$numrows);
+	}
+	public function listallAPI($arg='',$input=array()) { 
+		$album=$this->ensure_api_album($input);
+
+	}
 	public function getAPI($arg='',$input=array()) { 
 		$album=$this->ensure_api_album($input);
 		if ($this->api_validation_success()) { 
@@ -125,6 +196,9 @@ class AlbumController extends LockedController {
 	private function get_album_fields() { 
 		return array("Name","id","Description");
 	}
+	private function get_picture_fields() { 
+		return array("Name","id","Description");
+	}
 	private function ensure_api_album($input) { 
 		$album=null;
 		if (strlen(@$input['AlbumID'])<1) { 
@@ -144,5 +218,13 @@ class AlbumController extends LockedController {
 			}
 		}
 		return $album;
+	}
+	private function ensure_valid_listtype($input) { 
+		if (strlen($input['ListType'])<1) { 
+			$this->api_error(3,_('ListType is required'));
+		}
+		if ($input['ListType']!='pictures' && $input['ListType']!='videos' && $input['ListType']!='audios' && $input['ListType']!='files' && $input['ListType']!='all') { 
+			$this->api_error(4,_('ListType must be either pictures, videos, audios, files or all.'));
+		}
 	}
 }

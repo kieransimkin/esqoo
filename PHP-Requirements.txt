@@ -2,3 +2,5 @@
 * FileInfo
 * PHP 5.4
 * PECL ImageMagick
+* iconv
+* Exif (--enable-exif)

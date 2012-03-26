@@ -156,6 +156,10 @@ ul.esqoo-uploadq-failed {
 	padding-left: 1em;
 	padding-right: 1em;
 }
+img.esqoo-uploadq-queue-item-thumbnail { 
+	clear: both;
+	float: right;
+}
 div.esqoo-uploadq-queue-div,
 div.esqoo-uploadq-complete-div,
 div.esqoo-uploadq-failed-div {
@@ -263,3 +267,4 @@ div.esqoo-ui-raw-rich-editor-tab-container {
 div.esqoo-ui-raw-rich-editor-tab-container textarea { 
 	margin: 0;
 }
+

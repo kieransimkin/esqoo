@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__).'/dbsq/dbsq.class.php');
 class DBSQL extends DBSQ { 
 	private $_visiblefields=array();
+	private $_computedfields=array();
 	public static $_cachedfields=array();
 	function __get($key) { 
 		if (isset($this->$key)) { 
@@ -82,6 +83,15 @@ class DBSQL extends DBSQ {
 			$db->set_visible_api_fields($fields);
 		}
 	}
+	function add_computed_field($name,$func) { 
+		$this->_computedfields[$name]=$func;
+		return $this;
+	}
+	static function add_all_computed_field($dblist,$name,$func) { 
+		foreach ($dblist as &$db) { 
+			$db->add_computed_field($name,$func);
+		}
+	}
 	function getFilteredDataArray() { 
 		$ldata=$this->getDataArray();
 		$ret=array();
@@ -117,6 +127,11 @@ class DBSQL extends DBSQ {
 				$ret[$field]=$ldata[$field];
 			}
 		}
+		foreach ($this->_computedfields as $name => $func) { 
+			if (method_exists($this,$func)) { 
+				$ret[$name]=$this->$func();
+			}
+		}	
 		return $ret;
 	}
 	static function getSqlSuffix($input) {
