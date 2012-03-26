@@ -14,7 +14,7 @@ class TagController extends LockedController {
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
 	function addDialog($arg='',$input=array()) { 
-		$this->get_add_form($input);
+		$form=$this->get_add_form($input);
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
