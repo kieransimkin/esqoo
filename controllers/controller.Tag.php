@@ -14,7 +14,7 @@ class TagController extends LockedController {
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
 	function addDialog($arg='',$input=array()) { 
-		$form=$this->get_tag_form($input);
+		$form=$this->get_tag_form($input,null);
 		if ($form->validate()) { 
 			$this->createAPI($arg,$input);
 			$this->showMessage(_('Tag created'));
