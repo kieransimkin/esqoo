@@ -10,6 +10,7 @@ class PictureController extends LockedController {
 		if ($form->validate()) { 
 
 		}
+		$this->view->setTemplate('fullpage');
 		$this->view->form=$form;
 	}
 	/*********************
