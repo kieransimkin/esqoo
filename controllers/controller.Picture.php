@@ -6,7 +6,20 @@ class PictureController extends LockedController {
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function indexUI($arg='',$input=array()) { 
+		$form=$this->get_index_browse_form($input);
+		if ($form->validate()) { 
 
+		}
+		$this->view->form=$form;
+	}
+	/*********************
+	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
+	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
+	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
+	 *********************/
+	private function get_index_browse_form($input=array()) { 
+		$form=new Form('indexbrowse');
+		return $form;
 	}
 	/*****************************************
 	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
