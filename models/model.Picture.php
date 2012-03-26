@@ -52,10 +52,8 @@ class Picture extends DBSQL {
 			case 2:
 				// The 0th row is at the visual top of the image, and the 0th column is the visual right-hand side.
 				break;
-
 			case 3:
 				// The 0th row is at the visual bottom of the image, and the 0th column is the visual right-hand side.
-
 				break;
 			case 4:
 				// The 0th row is at the visual bottom of the image, and the 0th column is the visual left-hand side.
@@ -71,7 +69,6 @@ class Picture extends DBSQL {
 				break;
 			case 8: 
 				// The 0th row is the visual left-hand side of the image, and the 0th column is the visual bottom.
-
 				break;
 
 		}
@@ -242,6 +239,15 @@ class Picture extends DBSQL {
 			
 		return $ret;
 	}
+	public function get_simplified_exif_data() { 
+		$ret=$this->get_exif_data();
+		unset($ret['GPSLatitude']);
+		unset($ret['GPSLatitudeRef']);
+		unset($ret['GPSLongitude']);
+		unset($ret['GPSLongitudeRef']);
+		// We should replace ExposureMode, ExposureProgram, Flash and the like with the more specific versions read from the vendor-specific makernotes
+		return $ret;
+	}
 	public function get_exif_data() { 
 		$ret=array();
 		$exif=$this->get_raw_exif_data();
@@ -249,6 +255,29 @@ class Picture extends DBSQL {
 		$ret['ExposureTime']=$exif['ExposureTime'];
 		$ret['CCDWidth']=$exif['COMPUTED']['CCDWidth'];
 		$ret['IsColor']=$exif['COMPUTED']['IsColor'];
+		if (substr($exif['FocalLength'],-2,2)=='/1') { 
+			$ret['FocalLength']=substr($exif['FocalLength'],0,strlen($exif['FocalLength'])-2);
+		} else { 
+			$ret['FocalLength']=$exif['FocalLength'];
+		}
+		$ret['FocusDistance']=$exif['COMPUTED']['FocusDistance'];
+		$ret['DigitalZoomRatio']=self::exif_val_to_num($exif['DigitalZoomRatio']);
+		$ret['ISOSpeedRatings']=$exif['ISOSpeedRatings'];
+		$ret['ExposureProgramText']=$this->get_exif_exposure_program($exif['ExposureProgram']);		
+		$ret['ExposureProgram']=$exif['ExposureProgram'];
+		if ($exif['ExposureMode']==0) { 
+			$ret['ExposureModeText']=_('Auto');
+		} else if ($exif['ExposureMode']==1) { 
+			$ret['ExposureModeText']=_('Manual');
+		} else if ($exif['ExposureMode']==2) { 
+			$ret['ExposureModeText']=_('Auto bracket');
+		}
+		$ret['ExposureMode']=$exif['ExposureMode'];
+		$ret['ExposureBiasValue']=$exif['ExposureBiasValue'];
+		$ret['MeteringModeText']=$this->get_exif_metering_mode($exif['MeteringMode']);
+		$ret['MeteringMode']=$exif['MeteringMode'];
+		$ret['FlashText']=$this->get_exif_flash($exif['Flash']);
+		$ret['Flash']=$exif['Flash'];
 		$ret['Make']=$exif['Make'];
 		switch ($exif['Make']) { 
 			case 'Agfa':
@@ -298,37 +327,15 @@ class Picture extends DBSQL {
 		$ret['DateTime']=$exif['DateTime'];
 		$ret['DateTimeOriginal']=$exif['DateTimeOriginal'];
 		$ret['DateTimeDigitized']=$exif['DateTimeDigitized'];
-		$ret['ISOSpeedRatings']=$exif['ISOSpeedRatings'];
-		$ret['ExposureProgramText']=$this->get_exif_exposure_program($exif['ExposureProgram']);		
-		$ret['ExposureProgram']=$exif['ExposureProgram'];
-		if ($exif['ExposureMode']==0) { 
-			$ret['ExposureModeText']=_('Auto');
-		} else if ($exif['ExposureMode']==1) { 
-			$ret['ExposureModeText']=_('Manual');
-		} else if ($exif['ExposureMode']==2) { 
-			$ret['ExposureModeText']=_('Auto bracket');
-		}
-		$ret['ExposureMode']=$exif['ExposureMode'];
-		$ret['ExposureBiasValue']=$exif['ExposureBiasValue'];
-		$ret['MeteringModeText']=$this->get_exif_metering_mode($exif['MeteringMode']);
-		$ret['MeteringMode']=$exif['MeteringMode'];
-		$ret['FlashText']=$this->get_exif_flash($exif['Flash']);
-		$ret['Flash']=$exif['Flash'];
-		if (substr($exif['FocalLength'],-2,2)=='/1') { 
-			$ret['FocalLength']=substr($exif['FocalLength'],0,strlen($exif['FocalLength'])-2);
-		} else { 
-			$ret['FocalLength']=$exif['FocalLength'];
-		}
-		$ret['DigitalZoomRatio']=self::exif_val_to_num($exif['DigitalZoomRatio']);
 		$ret['GPSLatitude']=$exif['GPSLatitude'];
 		$ret['GPSLatitudeRef']=$exif['GPSLatitudeRef'];
 		$ret['GPSLongitude']=$exif['GPSLongitude'];
 		$ret['GPSLongitudeRef']=$exif['GPSLongitudeRef'];
-		$ret['GPSLatitudeDecimal']=self::get_exif_gps($exif['GPSLatitude'],$exif['GPSLatitudeRef']);
-		$ret['GPSLongitudeDecimal']=self::get_exif_gps($exif['GPSLongitude'],$exif['GPSLongitudeRef']);
 		$ret['GPSAltitude']=$exif['GPSAltitude'];
 		$ret['GPSAltitudeRef']=$exif['GPSAltitudeRef'];
-		if ($exif['GPSAltitudeRef']) { 
+		$ret['GPSLatitudeDecimal']=self::get_exif_gps($exif['GPSLatitude'],$exif['GPSLatitudeRef']);
+		$ret['GPSLongitudeDecimal']=self::get_exif_gps($exif['GPSLongitude'],$exif['GPSLongitudeRef']);
+		if ($exif['GPSAltitudeRef']) { // XXX not sure if this is right, check it
 			$ret['GPSAltitudeDecimal']=-1*self::exif_val_to_num($exif['GPSAltitude']);
 		} else {
 			$ret['GPSAltitudeDecimal']=self::exif_val_to_num($exif['GPSAltitude']);
@@ -348,7 +355,6 @@ class Picture extends DBSQL {
 		$ret['GPSDestBearingRef']=$exif['GPSDestBearingRef'];
 		$ret['GPSDestDistance']=self::exif_val_to_num($exif['GPSDestDistance']);
 		$ret['GPSDestDistanceRef']=$exif['GPSDestDistanceRef'];
-		$ret['FocusDistance']=$exif['COMPUTED']['FocusDistance'];
 		return $ret;
 	}
 	private static function get_exif_gps($exifCoord, $hemi) {
