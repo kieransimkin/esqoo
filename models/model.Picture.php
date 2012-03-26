@@ -412,6 +412,11 @@ class Picture extends DBSQL {
 		$this->$var=$assetid;
 		return $this->save();
 	}
+	public function get_tag_array() { 
+		$tags=DBSQL::getAll('select tag.id,tag.Name from picture_tag inner join tag on tag.id=picture_tag.tag_id where picture_tag.picture_id=? and tag.DeleteDate is null',array($this->id),'Tag');
+		$tags->set_visible_api_fields(array('id','Name')); // Hmm, should this really be in the model? these are supposed to go in the controller
+		return $tags;
+	}
 	public function get_url($size='web-small') { 
 		self::assert_picture_size_type($size);
 		return '/asset/picture/'.$size.'/'.$this->id.'-'.Helper::url_friendly_encode($this->Name);

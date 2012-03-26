@@ -52,6 +52,15 @@ class PictureController extends LockedController {
 			return $picture;
 		}
 	}
+	function getAPI($arg='',$input=array()) { 
+		$picture=$this->ensure_api_picture($input);
+		if ($this->api_validation_success()) { 
+			$picture->add_computed_field('PictureURLs','get_url_array');
+			$picture->add_computed_field('Tags','get_tag_array');
+			$picture->set_visible_api_fields($this->get_picture_fields());
+			return $picture;
+		}
+	}
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
 	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
