@@ -185,6 +185,7 @@ class Picture extends DBSQL {
 	private function get_exif_canon_makernotes($exif) { 
 		$ret=array();
 		$ret['Lens']=$exif['UndefinedTag:0x0095'];
+		var_dump($exif);
 		return $ret;
 	}
 	private function get_exif_casio_makernotes($exif) { 
