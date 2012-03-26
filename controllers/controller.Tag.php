@@ -18,6 +18,7 @@ class TagController extends LockedController {
 		if ($form->validate()) { 
 			$this->createAPI($arg,$input);
 			$this->showMessage(_('Tag created'));
+			$this->addFlexigridReloadSelector('#taglist');
 			return $this->formSuccess();
 		} else { 
 			return $this->formFail($form,'30%','550');
