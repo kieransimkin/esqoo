@@ -65,6 +65,13 @@ class TagController extends LockedController {
 		$numrows=DBSQL::foundRows();
 		return $this->flexigridResponse($tags,$input['Page'],$numrows);
 	}
+	public function getAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+		if ($this->api_validation_success()) { 
+			$tag->set_visible_api_fields($this->get_tag_fields());
+			return $tag;
+		}
+	}
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
 	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
@@ -72,5 +79,25 @@ class TagController extends LockedController {
 	 ****************************/
 	private function get_tag_fields() { 
 		return array('id','Name','Description');
+	}
+	private function ensure_api_tag($input) { 
+		$tag=null;
+		if (strlen(@$input['TagID'])<1) { 
+			$this->api_error(1,_("TagID field is required"));
+		} else { 
+			try { 
+				$tag=Tag::get($input['TagID']);
+				if ($tag->user_id!=$this->user->id) { 
+					$this->api_error(2,_("TagID not found"));
+					$tag=null;
+				}
+			} catch (DBSQ_Exception $e) { 
+				$this->api_error(2,_("TagID not found"));
+			}
+			if (is_null($tag)) { 
+				$this->api_error(2,_("TagID not found"));
+			}
+		}
+		return $tag;
 	}
 }
