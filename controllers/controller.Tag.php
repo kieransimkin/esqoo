@@ -28,6 +28,7 @@ class TagController extends LockedController {
 	 *********************/
 	function get_add_form($input) { 
 		$form=new Form('add');
+		$form->addElement('text','Name',array())->setLabel(_('Name'))->addRule('required',_('Required'));
 		return $form;
 	}
 
