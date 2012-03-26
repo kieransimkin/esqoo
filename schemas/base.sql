@@ -397,3 +397,63 @@ create table message (
 	index (user_id,CompleteDate),
 	index (CreateDate)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists tag;
+create table tag (
+	id int not null auto_increment,
+	user_id int not null,
+	Name varchar(512) not null,
+	Description text not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	PublishDate datetime default null,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (user_id,DeleteDate,PublishDate),
+	index (Name,DeleteDate,PublishDate),
+	index (user_id,Name,DeleteDate,PublishDate),
+	index (user_id,DeleteDate)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists picture_tag;
+create table picture_tag (
+	id int not null auto_increment,
+	tag_id int not null,
+	picture_id int not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	primary key (id),
+	index (tag_id),
+	index (picture_id),
+	unique key (tag_id,picture_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists audio_tag;
+create table audio_tag (
+	id int not null auto_increment,
+	tag_id int not null,
+	audio_id int not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	primary key (id),
+	index (tag_id),
+	index (audio_id),
+	unique key (tag_id,audio_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists video_tag;
+create table video_tag (
+	id int not null auto_increment,
+	tag_id int not null,
+	video_id int not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	primary key (id),
+	index (tag_id),
+	index (video_id),
+	unique key (tag_id,video_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists file_tag;
+create table file_tag (
+	id int not null auto_increment,
+	tag_id int not null,
+	file_id int not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	primary key (id),
+	index (tag_id),
+	index (file_id),
+	unique key (tag_id,file_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
