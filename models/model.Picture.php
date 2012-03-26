@@ -28,6 +28,9 @@ class Picture extends DBSQL {
 		$ret=$this->save();
 		return $this->save();
 	}
+	public function get_url() { 
+
+	}
 	public function import_raw() { 
 
 	}
