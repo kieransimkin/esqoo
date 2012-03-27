@@ -40,6 +40,9 @@ $(document).ready(function() {
 	$('textarea.esqoo-qrichedit').livequery(function() { 
 		$(this).qrichedit();
 	});
+	$('.sqtip[data-pictureid]').livequery(function() { 
+		$(this).sqtip({'picture_id':$(this).attr('data-pictureid')});
+	});
 	$('div.esqoo-flexigrid').livequery(function() { 
 		var idfield='id';
 		if ($(this).attr('data-flexigrid-id-field')) { 

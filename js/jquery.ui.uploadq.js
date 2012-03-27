@@ -149,7 +149,7 @@ $.widget( "esqoo.uploadq", {
 			}
 			item.status_text.html('Complete');
 			if (typeof(item.thumbnailurl)!='undefined') { 
-				item.thumbnail=$('<img />').attr('src',item.thumbnailurl).addClass('esqoo-uploadq-queue-item-thumbnail').hide().insertAfter(item.namecontainer).load(function() { 
+				item.thumbnail=$('<img />').attr('src',item.thumbnailurl).addClass('esqoo-uploadq-queue-item-thumbnail').addClass('sqtip').attr('data-pictureid',item.pictureid).hide().insertAfter(item.namecontainer).load(function() { 
 					$(this).fadeIn('slow');
 				});
 			}
@@ -241,8 +241,8 @@ $.widget( "esqoo.uploadq", {
 		}
 		reader= new FileReader();
 //		reader.addEventListener('loadend',this._reader_chunk_load(item,i),false);
-		reader.addEventListener('abort',this._reader_chunk_abort(item,i),false);
-		reader.addEventListener('error',this._reader_chunk_error(item,i),false);
+		reader.onabort=function(event) { this._reader_chunk_abort(item,i); }
+		reader.onerror=function(event) { this._reader_chunk_error(item,i); }
 		var start=i*item.chunksize;
 		var stop=i*item.chunksize+item.chunksize;
 		if (typeof(item.file.webkitSlice)!='undefined') {
@@ -423,7 +423,10 @@ $.widget( "esqoo.uploadq", {
 				.button({icons: {primary: 'ui-icon-folder-open', secondary: null}})
 				.click(function() { 
 					if (fileElem) { 
+						fileElem.show();
+						fileElem.focus();
 						fileElem.click();
+						fileElem.hide();
 					}
 				});
 		this.element.parent().parent().find('label:eq(0)').hide();
