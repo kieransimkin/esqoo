@@ -43,6 +43,23 @@ $(document).ready(function() {
 	$('.sqtip[data-pictureid]').livequery(function() { 
 		$(this).sqtip({'picture_id':$(this).attr('data-pictureid')});
 	});
+	$('.esqoo-qtip').livequery(function() {
+		var position_my='top middle';
+		if ($(this).attr('data-qtip-position-my')) { 
+			position_my=$(this).attr('data-qtip-position-my');
+		}
+		var position_at='bottom middle';
+		if ($(this).attr('data-qtip-position-at')) { 
+			position_at=$(this).attr('data-qtip-position-at');
+		}
+		if ($(this).attr('data-qtip-content')) { 
+			$(this).qtip({content: $(this).attr('data-qtip-content'), style: { classes: 'ui-tooltip-rounded ui-tooltip-shadow', widget: true }, position: {my: position_my, at: position_at}});
+		} else if ($(this).attr('title')) { 
+			$(this).qtip({content: $(this).attr('title'),style: { classes: 'ui-tooltip-rounded ui-tooltip-shadow', widget: true }, position: {my: position_my, at: position_at}});
+		} else if ($(this).attr('alt')) { 
+			$(this).qtip({content: $(this).attr('alt'),style: { classes: 'ui-tooltip-rounded ui-tooltip-shadow', widget: true }, position: {my: position_my, at: position_at}});
+		}
+	});
 	$('div.esqoo-flexigrid').livequery(function() { 
 		var idfield='id';
 		if ($(this).attr('data-flexigrid-id-field')) { 
