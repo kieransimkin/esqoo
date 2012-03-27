@@ -267,4 +267,17 @@ div.esqoo-ui-raw-rich-editor-tab-container {
 div.esqoo-ui-raw-rich-editor-tab-container textarea { 
 	margin: 0;
 }
-
+div.sqtip-aperturefnumber,
+div.sqtip-exposuretime,
+div.sqtip-isospeedratings { 
+	float: left; width: 33%;
+}
+div.sqtip-exif-container { 
+	clear: both;
+}
+div.sqtip-exposuretime { 
+	text-align: center;
+}
+div.sqtip-aperturefnumber { 
+	text-align: right;
+}

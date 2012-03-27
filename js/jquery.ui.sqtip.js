@@ -14,13 +14,24 @@ $.widget( "esqoo.sqtip", {
 				fixed: true,
 				delay: 1000
 			},
+			position: {
+				my: 'right middle',
+				at: 'left middle',
+				target: $(me.element)
+			},
+			style: {
+				classes: 'ui-tooltip-rounded ui-tooltip-shadow',
+				widget: true
+			},
 			events: { 
 				render: function(event,api) { 
 					$.ajax({url: '/picture/get-full/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', PictureID: me.element.attr('data-pictureid')}, success: function(data) { 
-						console.log(data);
-						api.set('content.text',data.PictureURLs['web-medium']+'foo');
+						var i=new Image();
+						i.src=data.PictureURLs['web-small'];
+						i.onload=function() { 
+							api.set('content.text','<img src="'+data.PictureURLs['web-small']+'"><br /><div class="sqtip-exif-container"><div class="sqtip-isospeedratings">'+data.EXIF.ISOSpeedRatings+'</div><div class="sqtip-exposuretime">'+data.EXIF.ExposureTime+'sec</div><div class="sqtip-aperturefnumber">'+data.EXIF.ApertureFNumber+'</div></div>');
+						}
 					}});
-					console.log(api);
 				}
 			} 
 		});
