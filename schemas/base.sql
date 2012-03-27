@@ -409,8 +409,8 @@ create table tag (
 	ModifyDate datetime default null,
 	primary key (id),
 	index (user_id,DeleteDate,PublishDate),
-	index (Name,DeleteDate,PublishDate),
-	index (user_id,Name,DeleteDate,PublishDate),
+	index (Name(100),DeleteDate,PublishDate),
+	index (user_id,Name(100),DeleteDate,PublishDate),
 	index (user_id,DeleteDate)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 drop table if exists picture_tag;
