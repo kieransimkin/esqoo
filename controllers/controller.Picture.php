@@ -25,26 +25,37 @@ class PictureController extends LockedController {
 		$tagmenu=Tag::get_menu($this->user->id);
 		$tagcontainerclass='';
 		$albumcontainerclass='';
+		$albumid='';
+		$tagid='';
+		$input['View']=strtolower($input['View']);
+		$view='thumbnailbrowse';
+		if (strlen($input['View'])>0 && ($input['View']=='flexigrid' || $input['View']=='thumbnailbrowse' || $input['View']=='mediaslide')) { 
+			$view=$input['View'];
+		}
 		if (strlen($input['AlbumID'])>0) { 
 			if (array_key_exists($input['AlbumID'],$albummenu)) { 
 				$selectedstate='album';
-				$albumcontainerclass='ui-widget-header';
+				$albumid=$input['AlbumID'];
+				$albumcontainerclass=' ui-widget-header';
 			}
 		} else if (strlen($input['TagID'])>0) { 
 			if (array_key_exists($input['TagID'],$tagmenu)) { 
 				$selectedstate='tag';
-				$tagcontainerclass='ui-widget-header';
+				$tagid=$input['TagID'];
+				$tagcontainerclass=' ui-widget-header';
 			}
 		}
+		$tagmenu['']=_('Not Selected');
+		$albummenu['']=_('Not Selected');
 		$form->addElement('script','vars',array(),array('content'=>"esqoo_picture_index.selectedstate='".$selectedstate."';\n"));	
 		$container=$form->addElement('div','topheadingcontainer',array('class'=>'esqoo-picture-browse-top-heading-container ui-widget-content ui-helper-clearfix ui-corner-all'));
 		$albumtagcontainer=$container->addElement('div','albumtagcontainer',array('class'=>'esqoo-picture-browse-top-heading-album-tag-container'));
-		$albumcontainer=$albumtagcontainer->addElement('div','albumcontainer',array('class'=>'esqoo-picture-browse-top-heading-album-container ui-corner-all '.$albumcontainerclass));
-		$albumcontainer->addElement('select','album',array('data-width'=>'65%'),array('options'=>array_merge(array(''=>_('Not Selected')),$albummenu)))->setLabel(_('Album'));
+		$albumcontainer=$albumtagcontainer->addElement('div','albumcontainer',array('class'=>'esqoo-picture-browse-top-heading-album-container ui-corner-all'.$albumcontainerclass));
+		$albumcontainer->addElement('select','AlbumID',array('data-width'=>'65%'),array('options'=>$albummenu))->setLabel(_('Album'))->setValue($albumid);
 		$tagcontainer=$albumtagcontainer->addElement('div','tagcontainer',array('class'=>'esqoo-picture-browse-top-heading-tag-container ui-corner-all'.$tagcontainerclass));
-		$tagcontainer->addElement('select','tag',array('data-width'=>'65%'),array('options'=>array_merge(array(''=>_('Not Selected')),$tagmenu)))->setLabel(_('Tag'));
+		$tagcontainer->addElement('select','TagID',array('data-width'=>'65%'),array('options'=>$tagmenu))->setLabel(_('Tag'))->setValue($tagid);
 		$viewcontainer=$container->addElement('div','viewcontainer',array('class'=>'esqoo-picture-browse-top-heading-view-container'));
-		$viewcontainer->addElement('select','',array('data-width'=>'65%'),array('options'=>array('flexigrid'=>_('List'),'thumbnailbrowse'=>_('Thumbnails'),'mediaslide'=>_('MediaSlide'))))->setLabel(_('View'));
+		$viewcontainer->addElement('select','View',array('data-width'=>'65%'),array('options'=>array('flexigrid'=>_('List'),'thumbnailbrowse'=>_('Thumbnails'),'mediaslide'=>_('MediaSlide'))))->setLabel(_('View'))->setValue($view);
 		return $form;
 	}
 	/*****************************************
