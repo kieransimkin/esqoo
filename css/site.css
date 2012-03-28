@@ -155,10 +155,20 @@ ul.esqoo-uploadq-failed {
 	list-style-type: none;
 	padding-left: 1em;
 	padding-right: 1em;
+	border-color: inherit;
 }
 img.esqoo-uploadq-queue-item-thumbnail { 
 	clear: both;
 	float: right;
+}
+li.esqoo-uploadq-queue-item { 
+	clear: both;
+}
+li.esqoo-uploadq-queue-item:not(:first-child) { 
+	border-top: 1px dotted;
+	border-color: inherit;
+	padding-top: 1em;
+	margin-top: 0.5em;
 }
 div.esqoo-uploadq-queue-div,
 div.esqoo-uploadq-complete-div,

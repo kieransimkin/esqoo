@@ -29,6 +29,8 @@ $.widget( "esqoo.sqtip", {
 						var i=new Image();
 						i.src=data.PictureURLs['web-small'];
 						i.onload=function() { 
+							// The following line shouldn't be needed, but qtip doesn't seem to size itself properly automatically:
+							api.elements.content.css({width: this.width});
 							api.set('content.text','<img src="'+data.PictureURLs['web-small']+'"><br /><div class="sqtip-exif-container"><div class="esqoo-qtip sqtip-isospeedratings" data-qtip-content="ISO Speed" data-qtip-position-my="top right" data-qtip-position-at="bottom left">'+data.EXIF.ISOSpeedRatings+'</div><div class="esqoo-qtip sqtip-exposuretime" data-qtip-content="Exposure Time" data-qtip-position-my="top middle" data-qtip-position-at="bottom middle">'+data.EXIF.ExposureTime+'sec</div><div class="esqoo-qtip sqtip-aperturefnumber" data-qtip-content="Aperture" data-qtip-position-my="top left" data-qtip-position-at="bottom right">'+data.EXIF.ApertureFNumber+'</div></div>');
 						}
 					}});
@@ -36,7 +38,6 @@ $.widget( "esqoo.sqtip", {
 			} 
 		});
 		console.log(this.element);
-		console.log('got here');
 	},
 	// Use the _setOption method to respond to changes to options
 	_setOption: function( key, value ) {
