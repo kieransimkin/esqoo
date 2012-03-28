@@ -1,0 +1,27 @@
+.esqoo-picture-browse-top-heading-album-container,
+.esqoo-picture-browse-top-heading-tag-container,
+.esqoo-picture-browse-top-heading-view-container { 
+	width: 33%;
+	float: left;
+	text-align: center;
+	position: relative;
+	padding-top: 0.5em;
+}
+.esqoo-picture-browse-top-heading-album-container,
+.esqoo-picture-browse-top-heading-tag-container {
+	border-color: inherit !important;
+}
+.esqoo-picture-browse-top-heading-album-tag-container { 
+	border-color: inherit !important;
+}
+label.element { 
+	width: 25%;
+	float: left;
+}
+.esqoo-picture-browse-top-heading-container { 
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	padding: 0.5em;
+	margin-top: 1.5em;
+}
+a.ui-selectmenu { 
+}

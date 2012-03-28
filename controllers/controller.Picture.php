@@ -20,7 +20,31 @@ class PictureController extends LockedController {
 	 *********************/
 	private function get_index_browse_form($input=array()) { 
 		$form=new Form('indexbrowse');
-		$form->addElement('select','album',array(),array('options'=>Album::get_menu($this->user->id)))->setLabel(_('Album'));
+		$selectedstate=null;
+		$albummenu=Album::get_menu($this->user->id);
+		$tagmenu=Tag::get_menu($this->user->id);
+		$tagcontainerclass='';
+		$albumcontainerclass='';
+		if (strlen($input['AlbumID'])>0) { 
+			if (array_key_exists($input['AlbumID'],$albummenu)) { 
+				$selectedstate='album';
+				$albumcontainerclass='ui-widget-header';
+			}
+		} else if (strlen($input['TagID'])>0) { 
+			if (array_key_exists($input['TagID'],$tagmenu)) { 
+				$selectedstate='tag';
+				$tagcontainerclass='ui-widget-header';
+			}
+		}
+		$form->addElement('script','vars',array(),array('content'=>"esqoo_picture_index.selectedstate='".$selectedstate."';\n"));	
+		$container=$form->addElement('div','topheadingcontainer',array('class'=>'esqoo-picture-browse-top-heading-container ui-widget-content ui-helper-clearfix ui-corner-all'));
+		$albumtagcontainer=$container->addElement('div','albumtagcontainer',array('class'=>'esqoo-picture-browse-top-heading-album-tag-container'));
+		$albumcontainer=$albumtagcontainer->addElement('div','albumcontainer',array('class'=>'esqoo-picture-browse-top-heading-album-container ui-corner-all '.$albumcontainerclass));
+		$albumcontainer->addElement('select','album',array('data-width'=>'65%'),array('options'=>array_merge(array(''=>_('Not Selected')),$albummenu)))->setLabel(_('Album'));
+		$tagcontainer=$albumtagcontainer->addElement('div','tagcontainer',array('class'=>'esqoo-picture-browse-top-heading-tag-container ui-corner-all'.$tagcontainerclass));
+		$tagcontainer->addElement('select','tag',array('data-width'=>'65%'),array('options'=>array_merge(array(''=>_('Not Selected')),$tagmenu)))->setLabel(_('Tag'));
+		$viewcontainer=$container->addElement('div','viewcontainer',array('class'=>'esqoo-picture-browse-top-heading-view-container'));
+		$viewcontainer->addElement('select','',array('data-width'=>'65%'),array('options'=>array('flexigrid'=>_('List'),'thumbnailbrowse'=>_('Thumbnails'),'mediaslide'=>_('MediaSlide'))))->setLabel(_('View'));
 		return $form;
 	}
 	/*****************************************

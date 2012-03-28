@@ -21,6 +21,9 @@ class MVC {
 				$arg=$bits[2];
 			}
 		}
+		if (strpos($action,'?')!==FALSE) { 
+			$action=substr($action,0,strpos($action,'?'));
+		}
 		if (strlen($action)<1) { 
 			$action='index';
 		}

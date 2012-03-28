@@ -416,9 +416,9 @@ $.widget("ui.selectmenu", {
 
 		// set menu width to either menuWidth option value, width option value, or select width
 		if ( o.style == 'dropdown' ) {
-			this.list.width( o.menuWidth ? o.menuWidth : o.width );
+			this.list.width( o.menuWidth ? o.menuWidth : this.newelement.width() );
 		} else {
-			this.list.width( o.menuWidth ? o.menuWidth : o.width - o.handleWidth );
+			this.list.width( o.menuWidth ? o.menuWidth : this.newelement.width() - o.handleWidth );
 		}
 
 		// reset height to auto
@@ -564,6 +564,12 @@ $.widget("ui.selectmenu", {
 				
 			self.listWrap.appendTo( o.appendTo );
 			self.list.attr('aria-hidden', false);			
+			// set menu width to either menuWidth option value, width option value, or select width
+			if ( o.style == 'dropdown' ) {
+				self.list.width( o.menuWidth ? o.menuWidth : self.newelement.width() );
+			} else {
+				self.list.width( o.menuWidth ? o.menuWidth : self.newelement.width() - o.handleWidth );
+			}
 			self.listWrap.addClass( self.widgetBaseClass + '-open' );
 						
 			var selected = this._selectedOptionLi();

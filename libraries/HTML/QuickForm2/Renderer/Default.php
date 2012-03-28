@@ -105,6 +105,8 @@ class HTML_QuickForm2_Renderer_Default extends HTML_QuickForm2_Renderer
         'html_quickform2_element_inputhidden' => '<div style="display: none;">{element}</div>',
         'html_quickform2' => '<div class="quickform">{errors}<form{attributes}><div>{hidden}{content}</div></form><qf:reqnote><div class="reqnote">{reqnote}</div></qf:reqnote></div>',
         'html_quickform2_container_fieldset' => '<fieldset{attributes}><qf:label><legend id="{id}-legend">{label}</legend></qf:label>{content}</fieldset>',
+        'html_quickform2_container_div' => '<div{attributes}><qf:label><h1 id="{id}-legend">{label}</h1></qf:label>{content}</div>',
+        'html_quickform2_container_section' => '<section{attributes}><qf:label><h1 id="{id}-legend">{label}</h1></qf:label>{content}</section>',
         'special:error' => array(
             'prefix'    => '<div class="errors"><qf:message><p>{message}</p></qf:message><ul><li>',
             'separator' => '</li><li>',

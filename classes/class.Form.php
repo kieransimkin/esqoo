@@ -1,7 +1,13 @@
 <?php
 require_once 'HTML/QuickForm2.php';
 class Form extends HTML_QuickForm2 { 
+	private static $_setup=false;
 	public function __construct($id, $method = 'post', $attributes = null) {
+		if (!self::$_setup) { 
+			HTML_QuickForm2_Factory::registerElement('div','HTML_QuickForm2_Container_Div');
+			HTML_QuickForm2_Factory::registerElement('section','HTML_QuickForm2_Container_Section');
+			self::$_setup=true;
+		}
 		if (!isset($attributes) || !isset($attributes['action'])) { 
 			if (!isset($attributes)) { 
 				$attributes=array();
