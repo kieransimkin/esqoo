@@ -33,6 +33,8 @@ esqoo_picture_index.tag_select_change = function(e) {
 	esqoo_picture_index.update_viewer();
 }
 esqoo_picture_index.update_in_progress = false;
+esqoo_picture_index.frame_displaying=1;
+esqoo_picture_index.frame_type=null;
 esqoo_picture_index.update_viewer = function() { 
 	if (esqoo_picture_index.update_in_progress) { 
 		return;
@@ -41,3 +43,28 @@ esqoo_picture_index.update_viewer = function() {
 	console.log($('#View-0').val());
 	console.log('updating viewer');
 }
+// Get the picture frame that's currently in the foreground
+esqoo_picture_index._get_foreground_frame: function() { 
+	if (esqoo_picture_index.frame_displaying==1) { 
+		return $('#picturelist-1');
+	} else { 
+		return $('#picturelist-2');
+	}
+}
+// Get the picture frame that's not currently visible
+esqoo_picture_index._get_background_frame: function() { 
+	if (esqoo_picture_index.frame_displaying==1) { 
+		return $('#picturelist-2');
+	} else { 
+		return $('#picturelist-1');
+	}
+}
+// Switch our record of which frame is visible
+esqoo_picture_index._toggle_pframe: function() { 
+	if (esqoo_picture_index.frame_displaying==1) { 
+		esqoo_picture_index.frame_displaying=2;
+	} else { 
+		esqoo_picture_index.frame_displaying=1;
+	}
+}
+
