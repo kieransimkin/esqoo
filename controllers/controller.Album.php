@@ -197,7 +197,7 @@ class AlbumController extends LockedController {
 		return array("Name","id","Description");
 	}
 	private function get_picture_fields() { 
-		return array("Name","id","Description");
+		return array("Name","id","Description","ModifyDate");
 	}
 	private function ensure_api_album($input) { 
 		$album=null;

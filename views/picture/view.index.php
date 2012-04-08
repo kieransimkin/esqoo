@@ -5,13 +5,14 @@ echo $this->form;
 <br style="clear: both;" />
 <div class="esqoo-picture-list-mediaslide-container" style="display: none;">
 	MediaSlide
-	<div
-
+	<div class="esqoo-mediaslide" id="picturelist-mediaslide"
+	data-mediaslide-url="/album/list-pictures/api"
 	></div>
 </div>
 <div class="esqoo-picture-list-thumbnailbrowse-container" style="display: none;">
 	Thumbnail Browse
-	<div 
+	<div class="esqoo-thumbnailbrowse" id="picturelist-thumbnailbrowse"
+	data-thumbnailbrowse-url="/album/list-pictures/api"
 	></div>
 </div>
 <div class="esqoo-picture-list-flexigrid-container" style="display: none;">

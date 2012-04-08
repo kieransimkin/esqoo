@@ -60,6 +60,14 @@ $(document).ready(function() {
 			$(this).qtip({content: $(this).attr('alt'),style: { classes: 'ui-tooltip-rounded ui-tooltip-shadow', widget: true }, position: {my: position_my, at: position_at}});
 		}
 	});
+	$('div.esqoo-mediaslide').livequery(function() { 
+		var url=$(this).attr('data-mediaslide-url');
+		$(this).mediaslide({esqoo_xml_ajax: url});
+	});
+	$('div.esqoo-thumbnailbrowse').livequery(function() { 
+		var url=$(this).attr('data-thumbnailbrowse-url');
+		$(this).thumbnailbrowse({url: url});
+	});
 	$('div.esqoo-flexigrid').livequery(function() { 
 		var idfield='id';
 		if ($(this).attr('data-flexigrid-id-field')) { 

@@ -1,13 +1,13 @@
 (function( $ ) {
 $.widget( "esqoo.thumbnailbrowse", {
 	options: {
-
+		url: null
 	},
 	_create: function() { 
 		this._do_html_setup();
 	},
 	_do_html_setup: function() { 
-
+		
 	},
 	// Use the _setOption method to respond to changes to options
 	_setOption: function( key, value ) {
