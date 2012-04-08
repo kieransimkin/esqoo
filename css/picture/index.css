@@ -25,3 +25,38 @@ label.element {
 }
 a.ui-selectmenu { 
 }
+div.picture-list-table-container { 
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	height: 100%;
+}
+table.picture-list-table { 
+	width: 100%;
+	height: 100%;
+}
+table.picture-list-table td.page-form-header { 
+	vertical-align: top;
+}
+table.picture-list-table td.page-content { 
+	height: 100%;
+}
+table.picture-list-table td {
+	padding: 0;
+}
+div.picture-list-rel-container { 
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+div.picture-list-container { 
+	width: 100%;
+	height: 100%;
+	background-color: red;
+	position: absolute;
+}
+header { 
+	position: absolute;
+	width: 100%;
+	z-index: 100;
+}
