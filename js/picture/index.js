@@ -31,5 +31,6 @@ esqoo_picture_index.tag_select_change = function(e) {
 	esqoo_picture_index.update_viewer();
 }
 esqoo_picture_index.update_viewer = function() { 
+	console.log($('#View-0').val());
 	console.log('updating viewer');
 }
