@@ -60,7 +60,7 @@ esqoo_picture_index._get_background_frame: function() {
 	}
 }
 // Switch our record of which frame is visible
-esqoo_picture_index._toggle_pframe: function() { 
+esqoo_picture_index._toggle_frame: function() { 
 	if (esqoo_picture_index.frame_displaying==1) { 
 		esqoo_picture_index.frame_displaying=2;
 	} else { 
