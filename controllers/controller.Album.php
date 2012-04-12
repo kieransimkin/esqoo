@@ -199,6 +199,15 @@ class AlbumController extends LockedController {
 	private function get_picture_fields() { 
 		return array("Name","id","Description","ModifyDate");
 	}
+	private function get_video_fields() { 
+		return array("Name","id","Description","ModifyDate");
+	}
+	private function get_audio_fields() { 
+		return array("Name","id","Description","ModifyDate");
+	}
+	private function get_file_fields() { 
+		return array("Name","id","Description","ModifyDate");
+	}
 	private function ensure_api_album($input) { 
 		$album=null;
 		if (strlen(@$input['AlbumID'])<1) { 

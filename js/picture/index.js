@@ -146,13 +146,13 @@ esqoo_picture_index.load_mediaslide = function(frame,loadcallback) {
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
 	$(frame).show();
-	$(frame).mediaslide({esqoo_xml_ajax: {url: url, options: params}, ready:function () { console.log('ready'); }});
+	$(frame).mediaslide({esqoo_xml_ajax: {url: url, options: params}, ready:loadcallback });
 	$(frame).hide();
-	loadcallback();
 }
 esqoo_picture_index.update_mediaslide = function(frame,loadcallback) { 
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
+	$(frame).mediaslide('option','esqoo_xml_ajax',{url: url, options: params});
 	loadcallback();
 }
 // Get the frame that's currently in the foreground

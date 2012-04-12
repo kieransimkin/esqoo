@@ -100,6 +100,24 @@ class TagController extends LockedController {
 		}
 		return $album;
 	}
+	public function listmediaAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+		$input['ListType']=strtolower($input['ListType']);
+		$this->ensure_valid_listtype($input);
+		if ($this->api_validation_success()) { 
+			if ($input['ListType']=='pictures') { 
+				return $this->listpicturesAPI($arg,$input);
+			} else if ($input['ListType']=='videos') { 
+				return $this->listvideosAPI($arg,$input);
+			} else if ($input['ListType']=='audios') { 
+				return $this->listaudiosAPI($arg,$input);
+			} else if ($input['ListType']=='files') { 
+				return $this->listfilesAPI($arg,$input);
+			} else if ($input['ListType']=='all') { 
+				return $this->listallAPI($arg,$input);
+			}
+		}
+	}
 	public function listpicturesAPI($arg='',$input=array()) { 
 		$tag=$this->ensure_api_tag($input);
 		$suffix=DBSQL::getSqlSuffix($input);
@@ -113,6 +131,47 @@ class TagController extends LockedController {
 		$numrows=DBSQL::foundRows();
 		return $this->flexigridResponse($pictures,$input['Page'],$numrows);
 	}
+	public function listvideosAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? and video.DeleteDate is null and video.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'Video',$suffix);
+		} else { 
+			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? AND video.DeleteDate is null',array($tag->id),'Video',$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($videos,$this->get_video_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($videos,$input['Page'],$numrows);
+	}
+	public function listaudiosAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? and audio.DeleteDate is null and audio.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'Audio',$suffix);
+		} else { 
+			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? AND audio.DeleteDate is null',array($tag->id),'Audio',$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($audios,$this->get_audio_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($audios,$input['Page'],$numrows);
+	}
+	public function listfilesAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? and file.DeleteDate is null and file.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'File',$suffix);
+		} else { 
+			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? AND file.DeleteDate is null',array($tag->id),'File',$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($files,$this->get_file_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($files,$input['Page'],$numrows);
+	}
+	public function listallAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+
+	}
+	
 
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
@@ -123,6 +182,15 @@ class TagController extends LockedController {
 		return array('id','Name','Description');
 	}
 	private function get_picture_fields() { 
+		return array("Name","id","Description","ModifyDate");
+	}
+	private function get_video_fields() { 
+		return array("Name","id","Description","ModifyDate");
+	}
+	private function get_audio_fields() { 
+		return array("Name","id","Description","ModifyDate");
+	}
+	private function get_file_fields() { 
 		return array("Name","id","Description","ModifyDate");
 	}
 	private function ensure_api_tag($input) { 
