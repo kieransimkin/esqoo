@@ -49,6 +49,8 @@ esqoo_picture_index.update_viewer = function() {
 	var inactive_frame=esqoo_picture_index.get_background_frame($('#View-0').val());
 	$(active_frame).css({'z-index': 1});
 	$(inactive_frame).css({'z-index': 2});
+	console.log(active_frame);
+	console.log(inactive_frame);
 	esqoo_picture_index.prepare_new_viewer($('#View-0').val(),inactive_frame,function() { 
 		esqoo_picture_index.current_view=$('#View-0').val();
 		if ($(active_frame).attr('id')!=$(inactive_frame).attr('id')) { 
@@ -135,11 +137,15 @@ esqoo_picture_index.update_flexigrid = function(frame,loadcallback) {
 esqoo_picture_index.load_thumbnailbrowse = function(frame,loadcallback) { 
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
-	loadcallback();
+	$(frame).show();
+	$(frame).thumbnailbrowse({esqoo_xml_ajax: {url: url, options: params}, ready: loadcallback});
+	$(frame).hide();
+	loadcallback(); // TODO - disable this once thumbnailbrowse triggers ready
 }
 esqoo_picture_index.update_thumbnailbrowse = function(frame,loadcallback) { 
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
+	$(frame).thumbnailbrowse('option','esqoo_xml_ajax',{url: url, options: params});
 	loadcallback();
 }
 esqoo_picture_index.load_mediaslide = function(frame,loadcallback) { 
@@ -161,8 +167,10 @@ esqoo_picture_index.get_foreground_frame = function() {
 		return $('#picturelist-flexigrid');
 	} else if (esqoo_picture_index.current_view=='mediaslide') { 
 		return $('#picturelist-mediaslide');
-	} else { 
+	} else if (esqoo_picture_index.current_view=='thumbnailbrowse') { 
 		return $('#picturelist-thumbnailbrowse');
+	} else { 
+		return $('<div></div>');
 	}
 }
 // Get the picture frame that's not currently visible
