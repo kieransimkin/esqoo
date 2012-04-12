@@ -97,9 +97,9 @@ esqoo_picture_index.get_list_params = function() {
 	return params;
 }
 esqoo_picture_index.get_list_url = function () { 
-	var url='/album/list-pictures/api';
+	var url='/album/list-pictures/api/';
 	if (esqoo_picture_index.selectedstate=='tag') { 
-		url='/tag/list-pictures/api';
+		url='/tag/list-pictures/api/';
 	}
 	return url;
 }
@@ -145,7 +145,10 @@ esqoo_picture_index.update_thumbnailbrowse = function(frame,loadcallback) {
 esqoo_picture_index.load_mediaslide = function(frame,loadcallback) { 
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
-	$(frame).mediaslide({esqoo_xml_ajax: {url: url, options: params}, ready: loadcallback});
+	$(frame).show();
+	$(frame).mediaslide({esqoo_xml_ajax: {url: url, options: params}, ready:function () { console.log('ready'); }});
+	$(frame).hide();
+	loadcallback();
 }
 esqoo_picture_index.update_mediaslide = function(frame,loadcallback) { 
 	var params=esqoo_picture_index.get_list_params();
