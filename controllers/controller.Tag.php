@@ -100,6 +100,20 @@ class TagController extends LockedController {
 		}
 		return $album;
 	}
+	public function listpicturesAPI($arg='',$input=array()) { 
+		$tag=$this->ensure_api_tag($input);
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
+			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? and picture.DeleteDate is null and picture.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'Picture',$suffix);
+		} else { 
+			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? AND picture.DeleteDate is null',array($tag->id),'Picture',$suffix);
+		}
+		DBSQL::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
+		DBSQL::set_all_visible_api_fields($pictures,$this->get_picture_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($pictures,$input['Page'],$numrows);
+	}
+
 	/****************************
 	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
 	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
@@ -107,6 +121,9 @@ class TagController extends LockedController {
 	 ****************************/
 	private function get_tag_fields() { 
 		return array('id','Name','Description');
+	}
+	private function get_picture_fields() { 
+		return array("Name","id","Description","ModifyDate");
 	}
 	private function ensure_api_tag($input) { 
 		$tag=null;

@@ -59,3 +59,6 @@ header {
 	width: 100%;
 	z-index: 100;
 }
+div.ui-selectmenu-open {
+	z-index: 100 !important;
+}

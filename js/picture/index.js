@@ -53,9 +53,6 @@ esqoo_picture_index.update_viewer = function() {
 		esqoo_picture_index.current_view=$('#View-0').val();
 		if ($(active_frame).attr('id')!=$(inactive_frame).attr('id')) { 
 			$(inactive_frame).fadeIn(1000,function() { 
-				console.log(active_frame);
-				console.log(inactive_frame);
-				console.log('hiding');
 				$(active_frame).hide();
 				esqoo_picture_index.update_in_progress=false;
 			});
@@ -63,8 +60,6 @@ esqoo_picture_index.update_viewer = function() {
 			esqoo_picture_index.update_in_progress=false;
 		}
 	});	
-	console.log($('#View-0').val());
-	console.log('updating viewer');
 }
 esqoo_picture_index.prepare_new_viewer = function(view,frame,loadcallback) { 
 	switch (view) { 
@@ -94,14 +89,14 @@ esqoo_picture_index.prepare_new_viewer = function(view,frame,loadcallback) {
 			break;
 	}
 }
-esqoo_picture_index.get_flexigrid_params = function() { 
+esqoo_picture_index.get_list_params = function() { 
 	var params=[{name: 'AlbumID', value: $('#AlbumID-0').val()}];
 	if (esqoo_picture_index.selectedstate=='tag') { 
 		params=[{name: 'TagID', value: $('#TagID-0').val()}];
 	}
 	return params;
 }
-esqoo_picture_index.get_flexigrid_url = function () { 
+esqoo_picture_index.get_list_url = function () { 
 	var url='/album/list-pictures/api';
 	if (esqoo_picture_index.selectedstate=='tag') { 
 		url='/tag/list-pictures/api';
@@ -110,8 +105,8 @@ esqoo_picture_index.get_flexigrid_url = function () {
 }
 esqoo_picture_index.load_flexigrid = function(frame,loadcallback) { 
 	$(frame).show();
-	var params=esqoo_picture_index.get_flexigrid_params();
-	var url=esqoo_picture_index.get_flexigrid_url();
+	var params=esqoo_picture_index.get_list_params();
+	var url=esqoo_picture_index.get_list_url();
 	esqoo_picture_index.flexigrid=$(frame).find('div').flexigrid({
 		height: $(frame).height()-100, 
 		width: $(frame).width(), 
@@ -132,22 +127,29 @@ esqoo_picture_index.load_flexigrid = function(frame,loadcallback) {
 	loadcallback();
 }
 esqoo_picture_index.update_flexigrid = function(frame,loadcallback) { 
-	console.log('updating flexigrid');
-	var params=esqoo_picture_index.get_flexigrid_params();
-	var url=esqoo_picture_index.get_flexigrid_url();
+	var params=esqoo_picture_index.get_list_params();
+	var url=esqoo_picture_index.get_list_url();
 	$(frame).find('div').flexReload(url,params);
 	loadcallback();
 }
 esqoo_picture_index.load_thumbnailbrowse = function(frame,loadcallback) { 
+	var params=esqoo_picture_index.get_list_params();
+	var url=esqoo_picture_index.get_list_url();
 	loadcallback();
 }
 esqoo_picture_index.update_thumbnailbrowse = function(frame,loadcallback) { 
+	var params=esqoo_picture_index.get_list_params();
+	var url=esqoo_picture_index.get_list_url();
 	loadcallback();
 }
 esqoo_picture_index.load_mediaslide = function(frame,loadcallback) { 
-	loadcallback();
+	var params=esqoo_picture_index.get_list_params();
+	var url=esqoo_picture_index.get_list_url();
+	$(frame).mediaslide({esqoo_xml_ajax: {url: url, options: params}, ready: loadcallback});
 }
 esqoo_picture_index.update_mediaslide = function(frame,loadcallback) { 
+	var params=esqoo_picture_index.get_list_params();
+	var url=esqoo_picture_index.get_list_url();
 	loadcallback();
 }
 // Get the frame that's currently in the foreground
