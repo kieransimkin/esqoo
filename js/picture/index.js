@@ -53,7 +53,7 @@ esqoo_picture_index.update_viewer = function() {
 		esqoo_picture_index.current_view=$('#View-0').val();
 		if ($(active_frame).attr('id')!=$(inactive_frame).attr('id')) { 
 			$(inactive_frame).fadeIn(1000,function() { 
-				$(active_frame).hide();
+				$(active_frame).fadeOut(500);
 				esqoo_picture_index.update_in_progress=false;
 			});
 		} else { 

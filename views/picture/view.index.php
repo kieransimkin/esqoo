@@ -1,6 +1,6 @@
 <?php
 $this->header(_('Pictures'));
-?><div class="picture-list-table-container"><table class="picture-list-table"><tr><td class="page-form-header"><br style="clear: both;" /><?php
+?><div class="picture-list-table-container"><table class="picture-list-table" cellpadding="0" cellspacing="0"><tr><td class="page-form-header"><br style="clear: both;" /><?php
 echo $this->form;
 ?>
 </td></tr><tr><td class="page-content">

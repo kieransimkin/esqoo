@@ -21,7 +21,7 @@ label.element {
 .esqoo-picture-browse-top-heading-container { 
 	box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
 	padding: 0.5em;
-	margin-top: 1.5em;
+	margin-top: 0.25em;
 }
 a.ui-selectmenu { 
 }
@@ -34,6 +34,7 @@ div.picture-list-table-container {
 table.picture-list-table { 
 	width: 100%;
 	height: 100%;
+	border: 0px;
 }
 table.picture-list-table td.page-form-header { 
 	vertical-align: top;
@@ -41,8 +42,9 @@ table.picture-list-table td.page-form-header {
 table.picture-list-table td.page-content { 
 	height: 100%;
 }
-table.picture-list-table td {
+table.picture-list-table td, table.picture-list-table tr {
 	padding: 0;
+	margin:0;
 }
 div.picture-list-rel-container { 
 	position: relative;
@@ -58,7 +60,4 @@ header {
 	position: absolute;
 	width: 100%;
 	z-index: 100;
-}
-div.ui-selectmenu-open {
-	z-index: 100 !important;
 }

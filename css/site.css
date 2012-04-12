@@ -294,4 +294,7 @@ div.sqtip-exposuretime {
 div.sqtip-aperturefnumber { 
 	text-align: right;
 }
+div.ui-selectmenu-open {
+	z-index: 5000 !important;
+}
 

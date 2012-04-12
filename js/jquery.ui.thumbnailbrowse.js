@@ -1,10 +1,11 @@
 (function( $ ) {
 $.widget( "esqoo.thumbnailbrowse", {
 	options: {
-		url: null
+		esqoo_xml_ajax: null
 	},
 	_create: function() { 
 		this._do_html_setup();
+		console.log(this.options);
 	},
 	_do_html_setup: function() { 
 		this.container=$('<div></div>')
