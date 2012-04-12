@@ -356,9 +356,9 @@
 								var idx = $(this).attr('axis').substr(3);
 								td.align = this.align;
 								// If the json elements aren't named (which is typical), use numeric order
-								if (p.colModel[idx].jsfilter.indexOf('.')===-1 && typeof(window[p.colModel[idx].jsfilter])=='function') { 
+								if (typeof(p.colModel[idx].jsfilter) != 'undefined' && p.colModel[idx].jsfilter.indexOf('.')===-1 && typeof(window[p.colModel[idx].jsfilter])=='function') { 
 									$(td).html(window[p.colModel[idx].jsfilter](row[p.idfield],row[p.colModel[idx].name]));
-								} else if (p.colModel[idx].jsfilter.indexOf('.')!==-1) { 
+								} else if (typeof(p.colModel[idx].jsfilter) != 'undefined' && p.colModel[idx].jsfilter.indexOf('.')!==-1) { 
 									// This is a slightly hacky way of supporting non-global functions, less hacky than using eval() though
 									var el=p.colModel[idx].jsfilter.split('.');
 									if (typeof(window[el[0]][el[1]])=='function') { 
@@ -530,6 +530,9 @@
 				}, {
 					name: 'SearchField',
 					value: p.qtype
+				}, { 
+					name: 'ResponseFormat',
+					value: 'json'
 				}];
 				if (p.params) {
 					for (var pi = 0; pi < p.params.length; pi++) {
@@ -1235,9 +1238,17 @@
 			}
 		});
 	}; //end flexigrid
-	$.fn.flexReload = function (p) { // function to reload grid
+	$.fn.flexReload = function (url,params) { // function to reload grid
 		return this.each(function () {
-			if (this.grid && this.p.url) this.grid.populate();
+			if (this.grid) { 
+				if (typeof(url)!='undefined') { 
+					this.p.url=url;
+				}
+				if (typeof(params)!='undefined') { 
+					this.p.params=params;
+				}	
+				if (this.p.url) { this.grid.populate(); }
+			}
 		});
 	}; //end flexReload
 	$.fn.flexOptions = function (p) { //function to update general options

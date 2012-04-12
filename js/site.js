@@ -134,7 +134,7 @@ $(document).ready(function() {
 			}
 			searchitems.push({display: $(this).attr('data-flexigrid-searchitem'+c+'-display'), name: $(this).attr('data-flexigrid-searchitem'+c+'-name'), isdefault: isdefault});
 		}
-		var params=[{name: 'ResponseFormat',value:'json'}];
+		var params=[];
 		$(this).flexigrid({height: height, width: width, usepager: usepager, page: page, useRp: useRp, rp: rp, url: $(this).attr('data-flexigrid-url'), dataType: 'json', colModel: colModel,params:params,idfield: idfield,searchitems: searchitems});
 	});
 	 $("#nav-one").supersubs({ 

@@ -4,8 +4,9 @@ $this->header(_('Pictures'));
 echo $this->form;
 ?>
 </td></tr><tr><td class="page-content">
-<div class="picture-list-rel-container"><div id="picturelist-1" style="z-index: 1;" class="picture-list-container"></div>
-<div id="picturelist-2" style="z-index: 2; visibility: hidden;" class="picture-list-container"></div>
+<div class="picture-list-rel-container"><div id="picturelist-flexigrid" style="z-index: 1; display: none;" class="picture-list-container"><div></div></div>
+<div id="picturelist-thumbnailbrowse" style="z-index: 2; display: none;" class="picture-list-container"></div>
+<div id="picturelist-mediaslide" style="z-index: 2; display: none;" class="picture-list-container"></div>
 </div>
 </td></tr></table></div>
 <?php
