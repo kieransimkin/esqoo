@@ -49,8 +49,6 @@ esqoo_picture_index.update_viewer = function() {
 	var inactive_frame=esqoo_picture_index.get_background_frame($('#View-0').val());
 	$(active_frame).css({'z-index': 1});
 	$(inactive_frame).css({'z-index': 2});
-	console.log(active_frame);
-	console.log(inactive_frame);
 	esqoo_picture_index.prepare_new_viewer($('#View-0').val(),inactive_frame,function() { 
 		esqoo_picture_index.current_view=$('#View-0').val();
 		if ($(active_frame).attr('id')!=$(inactive_frame).attr('id')) { 
