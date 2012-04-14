@@ -16,6 +16,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 		"flickr_groups_data": null,
 	},
 	thumbnail_list: [],
+	thumbnail_size: null,
+	thumbnails_loading: {},
+	thumbnails_loaded: {},
 	_create: function() { 
 		if (this.options.maxsize==null) { 
 			this.options.maxsize=this.element.width();
@@ -26,9 +29,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 	_resize: function() { 
 		var me = this;
 		return function() { 
-			console.log(me.element.height());
-			console.log(me.element.width());
 			me._position_content_body();
+			me._trigger_thumbnail_loads();
 		}
 	},
 	_do_html_setup: function() { 
@@ -79,21 +81,24 @@ $.widget( "esqoo.thumbnailbrowse", {
 				.appendTo(this.content_left_bar_body);
 		this.thumb_container=$('<div></div>')
 				.addClass('esqoo-ui-thumbnailbrowse-thumb-container')
-				.css({width: '75%', height: '100%', float: 'left', 'overflow-y': 'auto'})
+				.css({ width: '74%', height: '100%', float: 'left', 'overflow-y': 'auto'}) // TODO fix this width
+				.scroll(this._scroll_thumb_container())
 				.appendTo(this.content_body);
 		this.thumbnail_container_list=$('<ul></ul>')
 				.addClass('esqoo-ui-thumbnailbrowse-thumb-container-list')
+				.css({padding: '0px','margin-top':'0px'})
 				.appendTo(this.thumb_container);
 		this._setup_header_controls_html();
 		this._setup_footer_controls_html();
 		this._setup_left_bar_html();
 		this._position_content_body();
 	},
-	_generate_thumbnail_list: function() { 
-		this.thumb_container.html('Thumb container');
-		this.d.each(function() { 
-			console.log(this);
-		});
+	_scroll_thumb_container: function() { 
+		var me = this;
+		return function() { 
+			me._trigger_thumbnail_loads();
+
+		}
 	},
 	_setup_left_bar_html: function() { 
 		this.content_left_bar_body_minimize_button=$('<button data-icon-primary="ui-icon-close"></button>')
@@ -147,8 +152,77 @@ $.widget( "esqoo.thumbnailbrowse", {
 			me._update_thumbnail_size(ui.value);
 		}
 	},
+	_get_current_image_size: function() { 
+		if (this.thumbnail_size<=this.options.picturesizes['thumbnail-small']) { 
+			return 'thumbnail-small';
+		} else if (this.thumbnail_size<=this.options.picturesizes['thumbnail-large']) { 
+			return 'thumbnail-large';
+		} else if (this.thumbnail_size<=this.options.picturesizes['web-small']) { 
+			return 'web-small';
+		} else if (this.thumbnail_size<=this.options.picturesizes['web-medium']) { 
+			return 'web-medium';
+		} else { 
+			return 'web-large';
+		}
+		return this.thumbnail_size;
+	},
+	_get_best_thumbnail_quality: function(thumb) { 
+		if (typeof(this.thumbnails_loaded['web-large:'+thumb.object.id])!='undefined') { 
+			return 'web-large';
+		} else if (typeof(this.thumbnails_loaded['web-medium:'+thumb.object.id])!='undefined') { 
+			return 'web-medium';
+		} else if (typeof(this.thumbnails_loaded['web-small:'+thumb.object.id])!='undefined') { 
+			return 'web-small';
+		} else if (typeof(this.thumbnails_loaded['thumbnail-large:'+thumb.object.id])!='undefined') { 
+			return 'thumbnail-large';
+		} else if (typeof(this.thumbnails_loaded['thumbnail-small:'+thumb.object.id])!='undefined') { 
+			return 'thumbnail-small';
+		} else { 
+			return null;
+		}
+	},
 	_update_thumbnail_size: function(size) { 
+		this.thumbnail_size=size;
+		this._trigger_thumbnail_loads();
 		console.log('got size'+size);
+	},
+	_update_thumbnail_best_quality: function(thumb) { 
+		var quality=this._get_best_thumbnail_quality(thumb);
+		thumb.li.find('img').attr('src',thumb.object[quality]);
+	},
+	_do_thumbnail_load: function (thumb,size) { 
+		if (typeof(this.thumbnails_loading[size+':'+thumb.object.id])!='undefined') { 
+			return;
+		}
+		this.thumbnails_loading[size+':'+thumb.object.id]='true';
+		var img=new Image();
+		var me=this;
+		img.onload=function() { 
+			me.thumbnails_loaded[size+':'+thumb.object.id]='true';	
+			me._update_thumbnail_best_quality(thumb);
+		}
+		img.src=thumb.object[size];
+		console.log(thumb.object[size]);
+	},
+	_trigger_thumbnail_loads: function() { 
+		var parentoffsettop=this.thumbnail_container_list.offset()['top'];
+		var scrolltop=this.thumb_container.scrollTop();
+		var scrollbottom=scrolltop+this.thumb_container.height();
+		var me = this;
+		var current_image_size=me._get_current_image_size();
+		$.each(this.thumbnail_list,function(i,o) { 
+			if (typeof(o)=='undefined') { 
+				return;
+			}
+			var offsettop=$(o.li).find(':eq(0)').offset()['top']-parentoffsettop;
+			if (offsettop>scrollbottom) { 
+				return;
+			}
+			if (offsettop+$(o.li).height()<scrolltop) { 
+				return;
+			}
+			me._do_thumbnail_load(o,current_image_size);
+		});
 	},
 	_setup_footer_controls_html: function() { 
 		this.footer_controls_status=$('<span></span>')
@@ -157,6 +231,24 @@ $.widget( "esqoo.thumbnailbrowse", {
 	},
 	_position_content_body: function() { 
 		this.content_body.css({top: this.header_controls.height(), height: this.element.height()-(this.header_controls.height()+this.footer_controls.outerHeight())});
+	},
+	_do_thumbnail_html_setup: function() { 
+		var me = this;
+		me.thumbnail_container_list.html('');
+		me.thumbnail_list={};
+		$(this.d).each(function() { 
+			me.thumbnail_list[this.id]={object: this, li: $('<li></li>')
+						.html(this.title)
+						.css({display: 'block',float: 'left', margin:'1em'})
+						.appendTo(me.thumbnail_container_list)};
+			var imagecontainer=$('<div></div>').width(100).height(100).css({margin: 'auto',border:'1px solid black'}).prependTo(me.thumbnail_list[this.id].li);
+			$('<img />').css({width: '100%',height: '100%'}).appendTo(imagecontainer);
+		});
+		this.header_controls_size_slider.slider('value',this.options.initialsize);
+		this._update_thumbnail_size(this.options.initialsize);
+	},
+	_do_no_selection_toolbar_set: function() { 
+		this.footer_controls_status.html(this.d.length+' Pictures');
 	},
 	// Use the _setOption method to respond to changes to options
 	_setOption: function( key, value ) {
@@ -351,20 +443,6 @@ $.widget( "esqoo.thumbnailbrowse", {
 		}
 		this._do_thumbnail_html_setup();
 		this._do_no_selection_toolbar_set();
-	},
-	_do_thumbnail_html_setup: function() { 
-		var me = this;
-		me.thumbnail_container_list.html('');
-		$(this.d).each(function() { 
-			me.thumbnail_list[this.id]=$('<li></li>')
-						.html(this.title)
-						.appendTo(me.thumbnail_container_list);
-		});
-		this.header_controls_size_slider.slider('value',this.options.initialsize);
-		this._update_thumbnail_size(this.options.initialsize);
-	},
-	_do_no_selection_toolbar_set: function() { 
-		this.footer_controls_status.html(this.d.length+' Pictures');
 	},
 	destroy: function() {
 		$.Widget.prototype.destroy.call( this );
