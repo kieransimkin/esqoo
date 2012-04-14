@@ -3,6 +3,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 	options: {
 		picturesizes: {},
 		initialsize: 150,
+		minsize: 100,
+		maxsize: null,
 		esqoo_xml_data: null,
 		esqoo_xml_ajax: null,
 		atom_xml_data: null,
@@ -15,10 +17,22 @@ $.widget( "esqoo.thumbnailbrowse", {
 	},
 	thumbnail_list: [],
 	_create: function() { 
+		if (this.options.maxsize==null) { 
+			this.options.maxsize=this.element.width();
+		}
 		this._do_html_setup();
 		this._init_data();
 	},
+	_resize: function() { 
+		var me = this;
+		return function() { 
+			console.log(me.element.height());
+			console.log(me.element.width());
+			me._position_content_body();
+		}
+	},
 	_do_html_setup: function() { 
+		$(window).resize(this._resize());
 		this.container=$('<div></div>')
 				.addClass('esqoo-ui-thumbnailbrowse-container')
 				.css({position: 'relative', height: '100%', width: '100%'})
@@ -65,7 +79,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 				.appendTo(this.content_left_bar_body);
 		this.thumb_container=$('<div></div>')
 				.addClass('esqoo-ui-thumbnailbrowse-thumb-container')
-				.css({width: '75%', height: '100%', float: 'left'})
+				.css({width: '75%', height: '100%', float: 'left', 'overflow-y': 'auto'})
 				.appendTo(this.content_body);
 		this.thumbnail_container_list=$('<ul></ul>')
 				.addClass('esqoo-ui-thumbnailbrowse-thumb-container-list')
@@ -82,10 +96,59 @@ $.widget( "esqoo.thumbnailbrowse", {
 		});
 	},
 	_setup_left_bar_html: function() { 
-		this.content_left_bar_body_content.html('Left Bar');
+		this.content_left_bar_body_minimize_button=$('<button data-icon-primary="ui-icon-close"></button>')
+						.css({float: 'right'})
+						.appendTo(this.content_left_bar_body_content)
+						.click(this._left_bar_minimize_button_click());
+		this.content_left_bar_body_maximize_button=$('<button data-icon-primary="ui-icon-maximize"></button>')
+						.appendTo(this.content_left_bar_body_content)
+						.css({display: 'none'})
+						.click(this._left_bar_maximize_button_click());
+		this.content_left_bar_body_text=$('<span></span>').appendTo(this.content_left_bar_body_content);
+		this.content_left_bar_body_text.html('Left Bar');
+	},
+	_left_bar_minimize_button_click: function() { 
+		var me = this;
+		return function() { 
+			me.content_left_bar_body_minimize_button.attr('disabled',true);
+			me.content_left_bar_body_minimize_button.fadeOut('fast');
+			me.content_left_bar_body_text.fadeOut('fast',function() { 
+				me.content_left_bar_body_maximize_button.fadeIn('fast');
+				me.content_left_bar_body_maximize_button.removeAttr('disabled');
+				me.content_left_bar_body_maximize_button.css({height: me.content_left_bar_body.height(), top: '-1em', left: '-0.3em', width: '1em'});
+				me.content_left_bar.css({'min-width':'0px'});
+				me.content_left_bar.animate({width:'0.7em'});
+			});
+		}
+	},
+	_left_bar_maximize_button_click: function() { 
+		var me = this;
+		return function() { 
+			me.content_left_bar_body_maximize_button.attr('disabled',true);
+			me.content_left_bar_body_maximize_button.fadeOut('fast');
+			me.content_left_bar.animate({width: '25%','min-width':'250px'},function() {
+				me.content_left_bar_body_minimize_button.removeAttr('disabled');
+				me.content_left_bar_body_minimize_button.fadeIn('fast');
+				me.content_left_bar_body_text.fadeIn('fast');
+			});
+		}
 	},
 	_setup_header_controls_html: function() { 
 		this.header_controls_content.html('Header');	
+		this.header_controls_size_slider=$('<div></div>')
+					.addClass('esqoo-ui-thumbnailbrowse-header-controls-size-slider')
+					.css({width: '25%', float: 'right', 'min-width':'200px'})
+					.appendTo(this.header_controls_content)
+					.slider({min: this.options.minsize, max: this.options.maxsize, slide: this._size_slider_slide()});
+	},
+	_size_slider_slide: function() { 
+		var me = this;
+		return function (event,ui) { 
+			me._update_thumbnail_size(ui.value);
+		}
+	},
+	_update_thumbnail_size: function(size) { 
+		console.log('got size'+size);
 	},
 	_setup_footer_controls_html: function() { 
 		this.footer_controls_status=$('<span></span>')
@@ -297,6 +360,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 						.html(this.title)
 						.appendTo(me.thumbnail_container_list);
 		});
+		this.header_controls_size_slider.slider('value',this.options.initialsize);
+		this._update_thumbnail_size(this.options.initialsize);
 	},
 	_do_no_selection_toolbar_set: function() { 
 		this.footer_controls_status.html(this.d.length+' Pictures');
