@@ -12,6 +12,8 @@ class PictureController extends LockedController {
 		}
 		$this->view->setTemplate('fullpage');
 		$this->view->form=$form;
+		$picturesizes=User_picture_size::getAll('user_id=?',array($this->user->id));
+		$this->view->picturesizes=$picturesizes;
 	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *

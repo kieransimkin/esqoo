@@ -1,5 +1,16 @@
 <?php
 $this->header(_('Pictures'));
+if (count($this->picturesizes)>0) { 
+	?>
+	<script>
+	<?php
+	foreach ($this->picturesizes as $picturesize) { 
+		print "esqoo_picture_index.picturesizes['".$picturesize->picture_size_type."']='".$picturesize->size."';\n";
+	}
+	?>
+	</script>
+	<?php
+}
 ?><div class="picture-list-table-container"><table class="picture-list-table" cellpadding="0" cellspacing="0"><tr><td class="page-form-header"><br style="clear: both;" /><?php
 echo $this->form;
 ?>

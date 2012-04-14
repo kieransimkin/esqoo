@@ -1,6 +1,8 @@
 (function( $ ) {
 $.widget( "esqoo.thumbnailbrowse", {
 	options: {
+		picturesizes: {},
+		initialsize: 150,
 		esqoo_xml_data: null,
 		esqoo_xml_ajax: null,
 		atom_xml_data: null,
@@ -9,8 +11,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 		"json_ajax": null,
 		"flickr_public_photos_data": null,
 		"flickr_favorites_data": null,
-		"flickr_groups_data": null
+		"flickr_groups_data": null,
 	},
+	thumbnail_list: [],
 	_create: function() { 
 		this._do_html_setup();
 		this._init_data();
@@ -64,14 +67,19 @@ $.widget( "esqoo.thumbnailbrowse", {
 				.addClass('esqoo-ui-thumbnailbrowse-thumb-container')
 				.css({width: '75%', height: '100%', float: 'left'})
 				.appendTo(this.content_body);
+		this.thumbnail_container_list=$('<ul></ul>')
+				.addClass('esqoo-ui-thumbnailbrowse-thumb-container-list')
+				.appendTo(this.thumb_container);
 		this._setup_header_controls_html();
 		this._setup_footer_controls_html();
 		this._setup_left_bar_html();
 		this._position_content_body();
-		this._generate_thumbnail_list();
 	},
 	_generate_thumbnail_list: function() { 
 		this.thumb_container.html('Thumb container');
+		this.d.each(function() { 
+			console.log(this);
+		});
 	},
 	_setup_left_bar_html: function() { 
 		this.content_left_bar_body_content.html('Left Bar');
@@ -80,15 +88,28 @@ $.widget( "esqoo.thumbnailbrowse", {
 		this.header_controls_content.html('Header');	
 	},
 	_setup_footer_controls_html: function() { 
-		this.footer_controls_content.html('Footer');
+		this.footer_controls_status=$('<span></span>')
+					.addClass('esqoo-ui-thumbnailbrowse-footer-status')
+					.appendTo(this.footer_controls_content);
 	},
 	_position_content_body: function() { 
 		this.content_body.css({top: this.header_controls.height(), height: this.element.height()-(this.header_controls.height()+this.footer_controls.outerHeight())});
 	},
 	// Use the _setOption method to respond to changes to options
 	_setOption: function( key, value ) {
+		$.Widget.prototype._setOption.apply( this, arguments );
 		switch( key ) {
-
+			case "atom_xml_data":
+			case "atom_xml_ajax":
+			case "esqoo_xml_data":
+			case "esqoo_xml_ajax":
+			case "json_data":
+			case "json_ajax":
+			case "flickr_public_photos_data": 
+			case "flickr_favorites_data":
+			case "flickr_groups_data":
+				this._init_data();
+				break;
 			case "disabled":
 			// handle changes to disabled option
 
@@ -96,13 +117,11 @@ $.widget( "esqoo.thumbnailbrowse", {
 
 		}
 
-		$.Widget.prototype._setOption.apply( this, arguments );
 	},
 	// Load and parse the data from its data source
 	_init_data: function() { 
 		o=this;
 		if (this.options.atom_xml_data !== null) { 
-			console.log('1');
 			this.dataType='atom';
 			if (typeof(this.options.atom_xml_data)=='string') { 
 				this.data=$.parseXML(this.options.atom_xml_data);
@@ -137,7 +156,6 @@ $.widget( "esqoo.thumbnailbrowse", {
 			}
 			this._init_display();
 		} else if (this.options.esqoo_xml_ajax !== null) { 
-			console.log('got here');
 			if (typeof(this.options.esqoo_xml_ajax)!='string') { 
 				$.ajax(this.options.esqoo_xml_ajax.url,{data: this.options.esqoo_xml_ajax.options, success: function(data) { 
 					o.data=$(data);
@@ -269,9 +287,19 @@ $.widget( "esqoo.thumbnailbrowse", {
 			throw new Error('ThumbnailBrowse: unknown data type: '+this.dataType);
 		}
 		this._do_thumbnail_html_setup();
+		this._do_no_selection_toolbar_set();
 	},
 	_do_thumbnail_html_setup: function() { 
-		console.log(this.d);
+		var me = this;
+		me.thumbnail_container_list.html('');
+		$(this.d).each(function() { 
+			me.thumbnail_list[this.id]=$('<li></li>')
+						.html(this.title)
+						.appendTo(me.thumbnail_container_list);
+		});
+	},
+	_do_no_selection_toolbar_set: function() { 
+		this.footer_controls_status.html(this.d.length+' Pictures');
 	},
 	destroy: function() {
 		$.Widget.prototype.destroy.call( this );

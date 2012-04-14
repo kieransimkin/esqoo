@@ -11,6 +11,7 @@ $(document).ready(function() {
 });
 var esqoo_picture_index={};
 esqoo_picture_index.selectedstate='';
+esqoo_picture_index.picturesizes={};
 esqoo_picture_index.album_select_change = function(e) { 
 	var val = $('#AlbumID-0').val();
 	if (val!=='') { 
@@ -136,7 +137,7 @@ esqoo_picture_index.load_thumbnailbrowse = function(frame,loadcallback) {
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
 	$(frame).show();
-	$(frame).thumbnailbrowse({esqoo_xml_ajax: {url: url, options: params}, ready: loadcallback});
+	$(frame).thumbnailbrowse({initialsize: esqoo_picture_index.picturesizes['thumbnail-small'], picturesizes: esqoo_picture_index.picturesizes, esqoo_xml_ajax: {url: url, options: params}, ready: loadcallback});
 	$(frame).hide();
 	loadcallback(); // TODO - disable this once thumbnailbrowse triggers ready
 }
