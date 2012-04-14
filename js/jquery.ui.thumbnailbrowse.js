@@ -96,7 +96,11 @@ $.widget( "esqoo.thumbnailbrowse", {
 	_scroll_thumb_container: function() { 
 		var me = this;
 		return function() { 
-			me._trigger_thumbnail_loads();
+			// stupid hack to run this a separate thread:
+			function run() { 
+				me._trigger_thumbnail_loads();
+			}
+			setTimeout(run,0);
 
 		}
 	},
@@ -183,12 +187,21 @@ $.widget( "esqoo.thumbnailbrowse", {
 	},
 	_update_thumbnail_size: function(size) { 
 		this.thumbnail_size=size;
+		$.each(this.thumbnail_list, function(i,o) { 
+			$(o.li).find('div').css({width:size});
+		});
 		this._trigger_thumbnail_loads();
-		console.log('got size'+size);
 	},
 	_update_thumbnail_best_quality: function(thumb) { 
 		var quality=this._get_best_thumbnail_quality(thumb);
 		thumb.li.find('img').attr('src',thumb.object[quality]);
+		console.log(this.thumbnails_loaded[quality+':'+thumb.object.id].width);
+		if (this.thumbnails_loaded[quality+':'+thumb.object.id].width < this.options.picturesizes[quality]) { 
+			var nwidth=(this.thumbnails_loaded[quality+':'+thumb.object.id].width/this.options.picturesizes[quality])*100;
+			thumb.li.find('img').css({width:nwidth+'%'});
+		} else { 
+			thumb.li.find('img').css({width:'100%'});
+		}
 	},
 	_do_thumbnail_load: function (thumb,size) { 
 		if (typeof(this.thumbnails_loading[size+':'+thumb.object.id])!='undefined') { 
@@ -198,7 +211,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 		var img=new Image();
 		var me=this;
 		img.onload=function() { 
-			me.thumbnails_loaded[size+':'+thumb.object.id]='true';	
+			me.thumbnails_loaded[size+':'+thumb.object.id]=this;	
 			me._update_thumbnail_best_quality(thumb);
 		}
 		img.src=thumb.object[size];
@@ -241,8 +254,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 						.html(this.title)
 						.css({display: 'block',float: 'left', margin:'1em'})
 						.appendTo(me.thumbnail_container_list)};
-			var imagecontainer=$('<div></div>').width(100).height(100).css({margin: 'auto',border:'1px solid black'}).prependTo(me.thumbnail_list[this.id].li);
-			$('<img />').css({width: '100%',height: '100%'}).appendTo(imagecontainer);
+			var imagecontainer=$('<div></div>').css({'width':'100px', margin: 'auto','text-align':'center'}).prependTo(me.thumbnail_list[this.id].li);
+			$('<img />').css({'width': '100%','max-height': '100%'}).appendTo(imagecontainer);
 		});
 		this.header_controls_size_slider.slider('value',this.options.initialsize);
 		this._update_thumbnail_size(this.options.initialsize);
@@ -275,6 +288,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 	},
 	// Load and parse the data from its data source
 	_init_data: function() { 
+		this.thumbnails_loading={};
 		o=this;
 		if (this.options.atom_xml_data !== null) { 
 			this.dataType='atom';
@@ -312,7 +326,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 			this._init_display();
 		} else if (this.options.esqoo_xml_ajax !== null) { 
 			if (typeof(this.options.esqoo_xml_ajax)!='string') { 
-				$.ajax(this.options.esqoo_xml_ajax.url,{data: this.options.esqoo_xml_ajax.options, success: function(data) { 
+				var options=this.options.esqoo_xml_ajax.options;
+				options.push({'name':'ResultsPerPage','value':'1000'});
+				$.ajax(this.options.esqoo_xml_ajax.url,{data: options, success: function(data) { 
 					o.data=$(data);
 					o.dataType='esqoo';
 					o._init_display();	
