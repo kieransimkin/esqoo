@@ -172,7 +172,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 		this.header_controls_content.html('Header');	
 		this.header_controls_size_slider=$('<div></div>')
 					.addClass('esqoo-ui-thumbnailbrowse-header-controls-size-slider')
-					.css({width: '25%', float: 'right', 'min-width':'200px'})
+					.css({width: '25%', float: 'right', 'min-width':'200px', top:'0.1em'})
 					.appendTo(this.header_controls_content)
 					.slider({animate: true,min: this.options.minsize, max: this.options.maxsize, slide: this._size_slider_slide(), change: this._size_slider_change(), start: this._size_slider_start()});
 	},
@@ -242,6 +242,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 		}
 		$.each(this.thumbnail_list, function(i,o) { 
 			$(o.li).find('div').css({width:size});
+			$(o.li).find('div').css({height:size});
 			$(o.li).find('span').css({width:size});
 		});
 		if (trigger) { 
@@ -306,11 +307,20 @@ $.widget( "esqoo.thumbnailbrowse", {
 		me.thumbnail_list={};
 		$(this.d).each(function() { 
 			me.thumbnail_list[this.id]={object: this, li: $('<li></li>')
-						.css({display: 'block',float: 'left', margin:'1em'})
+						.css({display: 'block',float: 'left', margin:'0.5em',padding: '0.5em','border':'1px solid transparent','cursor':'pointer'})
+						.addClass('ui-corner-all')
+						.hover(function() { 
+							$(this).addClass('ui-widget-content ui-state-active');
+						}, function() { 
+							$(this).removeClass('ui-widget-content ui-state-active');
+						})
 						.appendTo(me.thumbnail_container_list)};
-			$('<span></span>').html(this.title).css({'word-wrap':'break-word', display: 'block',width: '100px','text-align':'center'}).appendTo(me.thumbnail_list[this.id].li);
+			$('<span></span>').html(this.title).css({'font-weight':'normal',height:'2em','word-wrap':'break-word', display: 'block',width: '100px','text-align':'center'}).appendTo(me.thumbnail_list[this.id].li);
 			var imagecontainer=$('<div></div>').css({'width':'100px', margin: 'auto','text-align':'center'}).prependTo(me.thumbnail_list[this.id].li);
-			$('<img />').css({'width': '100%','max-height': '100%'}).appendTo(imagecontainer);
+			var table=$('<table></table>').css({height: '100%',width:'100%'}).appendTo(imagecontainer);
+			var tr=$('<tr></tr>').appendTo(table);
+			var td=$('<td></td>').css({'vertical-align':'middle'}).appendTo(tr);
+			$('<img />').css({'width': '100%','max-height': '100%'}).appendTo(td);
 		});
 		this.header_controls_size_slider.slider('value',this.options.initialsize);
 	},
