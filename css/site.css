@@ -15,10 +15,6 @@ body.daytime {
 	background-color: white;
 	color: black;
 }
-html {
-     overflow-y: -moz-scrollbars-vertical;
-     overflow-y: scroll;
-}
 .ui-button,
 .ui-selectmenu {
 	font-size: 0.9em !important;
@@ -106,6 +102,8 @@ textarea.ui-button,
 div.ui-button,
 div.esqoo-dropzone,
 a.ui-selectmenu,
+a.ui-slider-handle,
+div.ui-slider,
 ul.ui-selectmenu-menu-dropdown,
 div.esqoo-uploadq-queue-div,
 div.esqoo-uploadq-complete-div,

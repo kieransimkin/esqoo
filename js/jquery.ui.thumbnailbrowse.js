@@ -5,6 +5,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 		initialsize: 150,
 		minsize: 100,
 		maxsize: null,
+		selecttype: 'single', // also supports 'multi'
 		esqoo_xml_data: null,
 		esqoo_xml_ajax: null,
 		atom_xml_data: null,
@@ -19,6 +20,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 	thumbnail_size: null,
 	thumbnails_loading: {},
 	thumbnails_loaded: {},
+	scroll_timeout:null,
+	size_slider_scroll_fraction:null,
 	_create: function() { 
 		if (this.options.maxsize==null) { 
 			this.options.maxsize=this.element.width();
@@ -30,6 +33,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 		var me = this;
 		return function() { 
 			me._position_content_body();
+			me._size_thumb_container();
+			me._size_controls();
 			me._trigger_thumbnail_loads();
 		}
 	},
@@ -45,7 +50,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 				.addClass('ui-corner-bl')
 				.addClass('ui-corner-br')
 				.addClass('ui-corner-tr')
-				.css({position: 'absolute', bottom: '0px', width: '100%'})
+				.css({position: 'absolute', bottom: '0px'})
 				.appendTo(this.container);
 		this.element.addClass('ui-widget');
 		this.footer_controls_content=$('<div></div>')
@@ -57,11 +62,12 @@ $.widget( "esqoo.thumbnailbrowse", {
 				.addClass('ui-corner-tr')
 				.addClass('ui-corner-tl')
 				.addClass('ui-corner-br')
-				.css({position: 'absolute', top: '0px', width: '100%'})
+				.css({position: 'absolute', top: '0px'})
 				.appendTo(this.container);
 		this.header_controls_content=$('<div></div>')
 				.css({margin: '0.2em'})
 				.appendTo(this.header_controls);
+		this._size_controls();
 		this.content_body=$('<div></div>')
 				.addClass('esqoo-ui-thumbnailbrowse-content-body')
 				.css({position: 'absolute', top: '0px', width: '100%'})
@@ -81,7 +87,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 				.appendTo(this.content_left_bar_body);
 		this.thumb_container=$('<div></div>')
 				.addClass('esqoo-ui-thumbnailbrowse-thumb-container')
-				.css({ width: '74%', height: '100%', float: 'left', 'overflow-y': 'auto'}) // TODO fix this width
+				.css({ height: '100%', float: 'left', 'overflow-y': 'auto'}) // TODO fix this width
 				.scroll(this._scroll_thumb_container())
 				.appendTo(this.content_body);
 		this.thumbnail_container_list=$('<ul></ul>')
@@ -92,6 +98,14 @@ $.widget( "esqoo.thumbnailbrowse", {
 		this._setup_footer_controls_html();
 		this._setup_left_bar_html();
 		this._position_content_body();
+		this._size_thumb_container();
+	},
+	_size_controls: function() { 
+		this.header_controls.css({'width':this.element.width()-2});
+		this.footer_controls.css({'width':this.element.width()-2});
+	},
+	_size_thumb_container: function() { 
+		this.thumb_container.css({'width': this.element.width()-(this.content_left_bar.outerWidth()+1)});
 	},
 	_scroll_thumb_container: function() { 
 		var me = this;
@@ -99,8 +113,12 @@ $.widget( "esqoo.thumbnailbrowse", {
 			// stupid hack to run this a separate thread:
 			function run() { 
 				me._trigger_thumbnail_loads();
+				me.scroll_timeout=null;
 			}
-			setTimeout(run,0);
+			if (me.scroll_timeout!==null) { 
+				clearTimeout(me.scroll_timeout);
+			}
+			me.scroll_timeout=setTimeout(run,300);
 
 		}
 	},
@@ -126,7 +144,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 				me.content_left_bar_body_maximize_button.removeAttr('disabled');
 				me.content_left_bar_body_maximize_button.css({height: me.content_left_bar_body.height(), top: '-1em', left: '-0.3em', width: '1em'});
 				me.content_left_bar.css({'min-width':'0px'});
-				me.content_left_bar.animate({width:'0.7em'});
+				me.content_left_bar.animate({width:'0.7em'},function() { 
+					me._size_thumb_container();
+				});
 			});
 		}
 	},
@@ -135,6 +155,12 @@ $.widget( "esqoo.thumbnailbrowse", {
 		return function() { 
 			me.content_left_bar_body_maximize_button.attr('disabled',true);
 			me.content_left_bar_body_maximize_button.fadeOut('fast');
+			if (me.element.width()*0.25<250) { 
+				var ratio=250/me.element.width();
+				me.thumb_container.css({width: (me.element.width()*(1-ratio))-1});
+			} else { 
+				me.thumb_container.css({width: (me.element.width()*0.75)-1});
+			}
 			me.content_left_bar.animate({width: '25%','min-width':'250px'},function() {
 				me.content_left_bar_body_minimize_button.removeAttr('disabled');
 				me.content_left_bar_body_minimize_button.fadeIn('fast');
@@ -148,12 +174,36 @@ $.widget( "esqoo.thumbnailbrowse", {
 					.addClass('esqoo-ui-thumbnailbrowse-header-controls-size-slider')
 					.css({width: '25%', float: 'right', 'min-width':'200px'})
 					.appendTo(this.header_controls_content)
-					.slider({min: this.options.minsize, max: this.options.maxsize, slide: this._size_slider_slide()});
+					.slider({animate: true,min: this.options.minsize, max: this.options.maxsize, slide: this._size_slider_slide(), change: this._size_slider_change(), start: this._size_slider_start()});
+	},
+	_size_slider_start: function() { 
+		var me = this;
+		return function(event, ui) { 
+			me.size_slider_scroll_fraction=me._get_scroll_fraction();
+		}
+	},
+	_get_scroll_fraction: function() { 
+		return this.thumb_container.scrollTop()/this.thumb_container[0].scrollHeight;
+		
+	},
+	_set_scroll_fraction: function(frac) { 
+		if (frac===null) { 
+			return;
+		}
+		this.thumb_container.scrollTop(this.thumb_container[0].scrollHeight*frac);
 	},
 	_size_slider_slide: function() { 
 		var me = this;
 		return function (event,ui) { 
+			me._update_thumbnail_size(ui.value,false);
+			me._set_scroll_fraction(me.size_slider_scroll_fraction);
+		}
+	},
+	_size_slider_change: function() { 
+		var me = this;
+		return function (event,ui) { 
 			me._update_thumbnail_size(ui.value);
+			me._set_scroll_fraction(me.size_slider_scroll_fraction);
 		}
 	},
 	_get_current_image_size: function() { 
@@ -185,17 +235,22 @@ $.widget( "esqoo.thumbnailbrowse", {
 			return null;
 		}
 	},
-	_update_thumbnail_size: function(size) { 
+	_update_thumbnail_size: function(size,trigger) { 
 		this.thumbnail_size=size;
+		if (typeof(trigger)=='undefined') { 
+			trigger=true;
+		}
 		$.each(this.thumbnail_list, function(i,o) { 
 			$(o.li).find('div').css({width:size});
+			$(o.li).find('span').css({width:size});
 		});
-		this._trigger_thumbnail_loads();
+		if (trigger) { 
+			this._trigger_thumbnail_loads();
+		}
 	},
 	_update_thumbnail_best_quality: function(thumb) { 
 		var quality=this._get_best_thumbnail_quality(thumb);
 		thumb.li.find('img').attr('src',thumb.object[quality]);
-		console.log(this.thumbnails_loaded[quality+':'+thumb.object.id].width);
 		if (this.thumbnails_loaded[quality+':'+thumb.object.id].width < this.options.picturesizes[quality]) { 
 			var nwidth=(this.thumbnails_loaded[quality+':'+thumb.object.id].width/this.options.picturesizes[quality])*100;
 			thumb.li.find('img').css({width:nwidth+'%'});
@@ -215,7 +270,6 @@ $.widget( "esqoo.thumbnailbrowse", {
 			me._update_thumbnail_best_quality(thumb);
 		}
 		img.src=thumb.object[size];
-		console.log(thumb.object[size]);
 	},
 	_trigger_thumbnail_loads: function() { 
 		var parentoffsettop=this.thumbnail_container_list.offset()['top'];
@@ -239,6 +293,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 	},
 	_setup_footer_controls_html: function() { 
 		this.footer_controls_status=$('<span></span>')
+					.html('Loading...')
 					.addClass('esqoo-ui-thumbnailbrowse-footer-status')
 					.appendTo(this.footer_controls_content);
 	},
@@ -251,14 +306,13 @@ $.widget( "esqoo.thumbnailbrowse", {
 		me.thumbnail_list={};
 		$(this.d).each(function() { 
 			me.thumbnail_list[this.id]={object: this, li: $('<li></li>')
-						.html(this.title)
 						.css({display: 'block',float: 'left', margin:'1em'})
 						.appendTo(me.thumbnail_container_list)};
+			$('<span></span>').html(this.title).css({'word-wrap':'break-word', display: 'block',width: '100px','text-align':'center'}).appendTo(me.thumbnail_list[this.id].li);
 			var imagecontainer=$('<div></div>').css({'width':'100px', margin: 'auto','text-align':'center'}).prependTo(me.thumbnail_list[this.id].li);
 			$('<img />').css({'width': '100%','max-height': '100%'}).appendTo(imagecontainer);
 		});
 		this.header_controls_size_slider.slider('value',this.options.initialsize);
-		this._update_thumbnail_size(this.options.initialsize);
 	},
 	_do_no_selection_toolbar_set: function() { 
 		this.footer_controls_status.html(this.d.length+' Pictures');

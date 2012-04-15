@@ -1,3 +1,7 @@
+html {
+     overflow-y: -moz-scrollbars-vertical;
+     overflow-y: scroll;
+}
 section.normal-template-body { 
 	position: relative;
 	top: 0px;
