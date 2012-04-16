@@ -4,6 +4,18 @@ esqoo_ui.message_queue = [];
 $(document).ready(function() { 
 	esqoo_ui.dialog_singletons.length=0;
 	esqoo_ui.get_messages();
+	if (!fullScreenApi.supportsFullScreen) { 
+		$('.esqoo-ui-menubar-fullscreen-button').css({'display':'none'});
+	}
+	$(document).bind('fullscreeneventchange fullscreenchange mozfullscreenchange webkitfullscreenchange',function(e) { 
+		if (fullScreenApi.isFullScreen()) { 
+			$('.esqoo-ui-menubar-fullscreen-button').find('span').removeClass('ui-icon-maximize').addClass('ui-icon-carat-1-s');
+			esqoo_ui.fullscreen=true;
+		} else { 
+			$('.esqoo-ui-menubar-fullscreen-button').find('span').removeClass('ui-icon-carat-1-s').addClass('ui-icon-maximize');
+			esqoo_ui.fullscreen=false;
+		}
+	});
 });
 esqoo_ui.create_message = function(message,severity) { 
 	$.ajax({url: '/message/create/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', Message: message, Severity: severity}, success: function(data) { 
@@ -344,4 +356,12 @@ esqoo_ui.flick_light_switch = function() {
 		esqoo_ui.switch_theme(esqoo_ui.daytime_theme);
 	}
 	$.ajax({url: '/account/update-day-state/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', DayState: esqoo_ui.daystate}});
+}
+esqoo_ui.fullscreen=false;
+esqoo_ui.toggle_fullscreen = function() { 
+	if (!esqoo_ui.fullscreen) { 
+		$('body:eq(0)').requestFullScreen();
+	} else { 
+		fullScreenApi.cancelFullScreen();
+	}
 }

@@ -6,6 +6,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 		minsize: 100,
 		maxsize: null,
 		selecttype: 'single', // also supports 'multi'
+		selectmode: 'add', // 'add' adds to the selection when you click on a thumb, 'normal' only adds to the selection if you hold down ctrl
 		esqoo_xml_data: null,
 		esqoo_xml_ajax: null,
 		atom_xml_data: null,

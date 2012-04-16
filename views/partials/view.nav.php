@@ -130,7 +130,7 @@ foreach($nav as $heading => $menu) {
 		$first=' ui-corner-top';
 	}
 }
-
 ?>
+<li class="ui-menubar-heading-default ui-corner-all esqoo-ui-menubar-fullscreen-button" onclick="esqoo_ui.toggle_fullscreen(); return false;" style="float: right;"><span class="ui-icon ui-icon-maximize"></span></li>
 </ul>
 </nav>
