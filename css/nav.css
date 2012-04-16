@@ -1,7 +1,11 @@
 ul#nav-one { 
 	margin-top: 0em;
 	padding-left: 0em;
-	padding-right: 1%;
+	padding-right: 0px;
+}
+ul#nav-one li.esqoo-ui-menubar-fullscreen-button { 
+	margin-right:0.1em;
+	margin-top: 1px;
 }
 ul#nav-one ul {
 	position: absolute;

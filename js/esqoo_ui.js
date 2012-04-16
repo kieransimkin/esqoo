@@ -364,4 +364,5 @@ esqoo_ui.toggle_fullscreen = function() {
 	} else { 
 		fullScreenApi.cancelFullScreen();
 	}
+	$('li.esqoo-ui-menubar-fullscreen-button').qtip('hide');
 }

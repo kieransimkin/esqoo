@@ -131,6 +131,6 @@ foreach($nav as $heading => $menu) {
 	}
 }
 ?>
-<li class="ui-menubar-heading-default ui-corner-all esqoo-ui-menubar-fullscreen-button" onclick="esqoo_ui.toggle_fullscreen(); return false;" style="float: right;"><span class="ui-icon ui-icon-maximize"></span></li>
+<li class="ui-menubar-heading-default ui-corner-all esqoo-ui-menubar-fullscreen-button esqoo-qtip" data-qtip-content="Click to toggle fullscreen mode" data-qtip-position-my="top right" data-qtip-position-at="bottom left" onclick="esqoo_ui.toggle_fullscreen(); return false;" style="float: right;"><span class="ui-icon ui-icon-maximize"></span></li>
 </ul>
 </nav>
