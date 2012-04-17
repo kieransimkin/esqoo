@@ -311,6 +311,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 			me.thumbnail_list[this.id]={object: this, li: $('<li></li>')
 						.css({display: 'block',float: 'left', margin:'0.5em',padding: '0.5em','border':'1px solid transparent','cursor':'pointer'})
 						.addClass('ui-corner-all')
+						.addClass('sqtip') // sqtip seems to break it atm
+						.attr('data-pictureid',this.id)
 						.hover(me._thumb_mouseover(this.id), me._thumb_mouseout(this.id))
 						.mousedown(me._thumb_mousedown(this.id))
 						.mouseup(me._thumb_mouseup(this.id))
