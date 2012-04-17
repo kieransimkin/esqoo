@@ -6,7 +6,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 		minsize: 100,
 		maxsize: null,
 		selecttype: 'single', // also supports 'multi'
-		selectmode: 'add', // 'add' adds to the selection when you click on a thumb, 'normal' only adds to the selection if you hold down ctrl
+		selectmode: 'add', // this option only applies if selecttype is 'multi' - 'add' adds to the selection when you click on a thumb, 'normal' only adds to the selection if you hold down ctrl
 		esqoo_xml_data: null,
 		esqoo_xml_ajax: null,
 		atom_xml_data: null,
@@ -311,11 +311,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 			me.thumbnail_list[this.id]={object: this, li: $('<li></li>')
 						.css({display: 'block',float: 'left', margin:'0.5em',padding: '0.5em','border':'1px solid transparent','cursor':'pointer'})
 						.addClass('ui-corner-all')
-						.hover(function() { 
-							$(this).addClass('ui-widget-content ui-state-hover').css({'border':''});
-						}, function() { 
-							$(this).removeClass('ui-widget-content ui-state-hover').css({'border':'1px solid transparent'});
-						})
+						.hover(me._thumb_mouseover(this.id), me._thumb_mouseout(this.id))
 						.mousedown(me._thumb_mousedown(this.id))
 						.mouseup(me._thumb_mouseup(this.id))
 						.appendTo(me.thumbnail_container_list)};
@@ -328,13 +324,41 @@ $.widget( "esqoo.thumbnailbrowse", {
 		});
 		this.header_controls_size_slider.slider('value',this.options.initialsize);
 	},
+	_clear_selection: function() { 
+		$.each(this.selected_thumbs,function(i,o) { 
+			o.li.removeClass('ui-widget-content').css({'border':'1px solid transparent'});
+		});
+		this.selected_thumbs=[];
+	},
+	_thumb_mouseover: function(id) { 
+		return function() { 
+			$(this).addClass('ui-widget-content ui-state-hover').css({'border':''});
+		}
+	},
+	_thumb_mouseout: function(id) { 
+		var me = this;
+		return function() { 
+			console.log(me.selected_thumbs);
+			var found=false;
+			var t=this;
+			$.each(me.selected_thumbs,function(i,o) { 
+					console.log([o.li.get()[0],t]);
+				if (o.li.get()[0]==t) { 
+					found=true;
+					return false;
+				}
+			});
+			if (!found) { 
+				$(this).removeClass('ui-widget-content').css({'border':'1px solid transparent'}); 
+			}
+			$(this).removeClass('ui-state-hover ui-state-active');
+		}
+	},
 	_thumb_mousedown: function(id) { 
 		var me = this;
 		return function() { 
 			var thumb = me.thumbnail_list[id];
 			thumb.li.removeClass('ui-state-hover').addClass('ui-state-active');
-			console.log('down');
-			console.log(thumb);
 		}
 	},
 	_thumb_mouseup: function(id) { 
@@ -342,8 +366,18 @@ $.widget( "esqoo.thumbnailbrowse", {
 		return function() { 
 			var thumb = me.thumbnail_list[id];
 			thumb.li.removeClass('ui-state-active').addClass('ui-state-hover');
-			console.log('up');
-			console.log(thumb);
+			if (me.options.selecttype=='single') { 
+				me._clear_selection();
+				me.selected_thumbs=[thumb];
+			} else { 
+				if (me.options.selectmode=='add') { 
+					me.selected_thumbs.push(thumb);	
+				} else { 
+					//TODO - support holding down CTRL to select multiple
+					me._clear_selection();
+					me.selected_thumbs=[thumb];
+				}
+			}
 		}
 
 	},
