@@ -338,11 +338,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 	_thumb_mouseout: function(id) { 
 		var me = this;
 		return function() { 
-			console.log(me.selected_thumbs);
 			var found=false;
 			var t=this;
 			$.each(me.selected_thumbs,function(i,o) { 
-					console.log([o.li.get()[0],t]);
 				if (o.li.get()[0]==t) { 
 					found=true;
 					return false;
@@ -368,14 +366,21 @@ $.widget( "esqoo.thumbnailbrowse", {
 			thumb.li.removeClass('ui-state-active').addClass('ui-state-hover');
 			if (me.options.selecttype=='single') { 
 				me._clear_selection();
-				me.selected_thumbs=[thumb];
+				me.selected_thumbs.push(thumb);
 			} else { 
-				if (me.options.selectmode=='add') { 
-					me.selected_thumbs.push(thumb);	
+				var found=false;
+				if (me.selected_thumbs.indexOf(thumb)!='-1') found=true;
+				if (found) { 
+					var idx=me.selected_thumbs.indexOf(thumb);
+					if (idx!=-1) me.selected_thumbs.splice(idx,1);
 				} else { 
-					//TODO - support holding down CTRL to select multiple
-					me._clear_selection();
-					me.selected_thumbs=[thumb];
+					if (me.options.selectmode=='add') { 
+						me.selected_thumbs.push(thumb);	
+					} else { 
+						//TODO - support holding down CTRL to select multiple
+						me._clear_selection();
+						me.selected_thumbs.push(thumb);
+					}
 				}
 			}
 		}
@@ -397,6 +402,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 			case "flickr_public_photos_data": 
 			case "flickr_favorites_data":
 			case "flickr_groups_data":
+				me._clear_selection();
 				this._init_data();
 				break;
 			case "disabled":
