@@ -113,6 +113,7 @@ footer.esqoo-ui-thumbnailbrowse-footer-controls,
 header.esqoo-ui-thumbnailbrowse-header-controls,
 div.flexigrid,
 ul.ui-autocomplete,
+ul.esqoo-ui-thumbnailbrowse-thumb-container-list li.ui-state-hover,
 div.ui-dialog div.ui-dialog-content iframe.form-iframe,
 section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);

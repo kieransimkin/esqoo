@@ -21,8 +21,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 	thumbnail_size: null,
 	thumbnails_loading: {},
 	thumbnails_loaded: {},
-	scroll_timeout:null,
-	size_slider_scroll_fraction:null,
+	scroll_timeout: null,
+	size_slider_scroll_fraction: null,
+	selected_thumbs: [],
 	_create: function() { 
 		if (this.options.maxsize==null) { 
 			this.options.maxsize=this.element.width();
@@ -311,10 +312,12 @@ $.widget( "esqoo.thumbnailbrowse", {
 						.css({display: 'block',float: 'left', margin:'0.5em',padding: '0.5em','border':'1px solid transparent','cursor':'pointer'})
 						.addClass('ui-corner-all')
 						.hover(function() { 
-							$(this).addClass('ui-widget-content ui-state-active');
+							$(this).addClass('ui-widget-content ui-state-hover').css({'border':''});
 						}, function() { 
-							$(this).removeClass('ui-widget-content ui-state-active');
+							$(this).removeClass('ui-widget-content ui-state-hover').css({'border':'1px solid transparent'});
 						})
+						.mousedown(me._thumb_mousedown(this.id))
+						.mouseup(me._thumb_mouseup(this.id))
 						.appendTo(me.thumbnail_container_list)};
 			$('<span></span>').html(this.title).css({'font-weight':'normal',height:'2em','word-wrap':'break-word', display: 'block',width: '100px','text-align':'center'}).appendTo(me.thumbnail_list[this.id].li);
 			var imagecontainer=$('<div></div>').css({'width':'100px', margin: 'auto','text-align':'center'}).prependTo(me.thumbnail_list[this.id].li);
@@ -324,6 +327,25 @@ $.widget( "esqoo.thumbnailbrowse", {
 			$('<img />').css({'width': '100%','max-height': '100%'}).appendTo(td);
 		});
 		this.header_controls_size_slider.slider('value',this.options.initialsize);
+	},
+	_thumb_mousedown: function(id) { 
+		var me = this;
+		return function() { 
+			var thumb = me.thumbnail_list[id];
+			thumb.li.removeClass('ui-state-hover').addClass('ui-state-active');
+			console.log('down');
+			console.log(thumb);
+		}
+	},
+	_thumb_mouseup: function(id) { 
+		var me = this;
+		return function() { 
+			var thumb = me.thumbnail_list[id];
+			thumb.li.removeClass('ui-state-active').addClass('ui-state-hover');
+			console.log('up');
+			console.log(thumb);
+		}
+
 	},
 	_do_no_selection_toolbar_set: function() { 
 		this.footer_controls_status.html(this.d.length+' Pictures');
