@@ -5,9 +5,10 @@ $.widget( "esqoo.thumbnailbrowse", {
 		initialsize: 150,
 		minsize: 100,
 		maxsize: null,
-		selecttype: 'multi', // supports 'multi' or 'single'
+		selecttype: 'single', // supports 'multi' or 'single'
 		selectmode: 'add', // this option only applies if selecttype is 'multi' - 'add' adds to the selection when you click on a thumb, 'normal' only adds to the selection if you hold down ctrl
-		format_leftbar: function(selection) { return 'Left bar'; },
+		leftbar_formatter: function(selection,element) { element.html(selection.length+' items selected'); },
+		doubleclick_handler: function(thumb) { alert('double clicked on '+thumb.id);},
 		esqoo_xml_data: null,
 		esqoo_xml_ajax: null,
 		atom_xml_data: null,
@@ -136,7 +137,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 						.css({display: 'none'})
 						.click(this._left_bar_maximize_button_click());
 		this.content_left_bar_body_text=$('<span></span>').appendTo(this.content_left_bar_body_content);
-		this.content_left_bar_body_text.html('Left Bar');
+		this.content_left_bar_body_text.html('Loading...');
 	},
 	_left_bar_minimize_button_click: function() { 
 		var me = this;
@@ -382,7 +383,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 	_thumb_dblclick: function(id) { 
 		var me = this;
 		return function() { 
-			console.log('double clicked');
+			if (typeof(me.options.doubleclick_handler)=='function') { 
+				return me.options.doubleclick_handler(me.thumbnail_list[id].object);
+			}
 		}
 	},
 	_thumb_mousedown: function(id) { 
@@ -430,6 +433,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 			this._do_no_selection_toolbar_set();
 		} else { 
 			this.footer_controls_status.html(this.d.length+' Pictures, '+this.selected_thumbs.length+' selected.');
+		}
+		if (typeof(this.options.leftbar_formatter)=='function') { 
+			this.options.leftbar_formatter(this.selected_thumbs,this.content_left_bar_body_text);
 		}
 	},
 	_do_no_selection_toolbar_set: function() { 
@@ -631,7 +637,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 			throw new Error('ThumbnailBrowse: unknown data type: '+this.dataType);
 		}
 		this._do_thumbnail_html_setup();
-		this._do_no_selection_toolbar_set();
+		this._do_toolbar_set();
 	},
 	destroy: function() {
 		$.Widget.prototype.destroy.call( this );

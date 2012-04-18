@@ -151,7 +151,7 @@ esqoo_picture_index.load_mediaslide = function(frame,loadcallback) {
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
 	$(frame).show();
-	$(frame).mediaslide({esqoo_xml_ajax: {url: url, options: params}, ready:loadcallback });
+	$(frame).mediaslide({responsive: true, esqoo_xml_ajax: {url: url, options: params}, ready:loadcallback });
 	$(frame).hide();
 }
 esqoo_picture_index.update_mediaslide = function(frame,loadcallback) { 
