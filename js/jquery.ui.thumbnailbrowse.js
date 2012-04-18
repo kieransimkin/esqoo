@@ -5,8 +5,9 @@ $.widget( "esqoo.thumbnailbrowse", {
 		initialsize: 150,
 		minsize: 100,
 		maxsize: null,
-		selecttype: 'single', // also supports 'multi'
+		selecttype: 'multi', // supports 'multi' or 'single'
 		selectmode: 'add', // this option only applies if selecttype is 'multi' - 'add' adds to the selection when you click on a thumb, 'normal' only adds to the selection if you hold down ctrl
+		format_leftbar: function(selection) { return 'Left bar'; },
 		esqoo_xml_data: null,
 		esqoo_xml_ajax: null,
 		atom_xml_data: null,
@@ -318,6 +319,8 @@ $.widget( "esqoo.thumbnailbrowse", {
 						.mousedown(me._thumb_mousedown(this.id))
 						.mouseup(me._thumb_mouseup(this.id))
 						.click(me._thumb_click(this.id))
+						.dblclick(me._thumb_dblclick(this.id))
+						.bind('contextmenu',me._thumb_right_click(this.id))
 						.appendTo(me.thumbnail_container_list)};
 			$('<span></span>').html(this.title).css({'font-weight':'normal',height:'2em','word-wrap':'break-word', display: 'block',width: '100px','text-align':'center'}).appendTo(me.thumbnail_list[this.id].li);
 			var imagecontainer=$('<div></div>').css({'width':'100px', margin: 'auto','text-align':'center'}).prependTo(me.thumbnail_list[this.id].li);
@@ -360,12 +363,26 @@ $.widget( "esqoo.thumbnailbrowse", {
 		var me = this;
 		return function() { 
 			me._clear_selection();
+			me._do_toolbar_set();
 		}
 	},
 	_thumb_click: function (id) { 
 		var me = this;
 		return function() { 
 			return false;
+		}
+	},
+	_thumb_right_click: function (id) { 
+		var me = this;
+		return function() { 
+			console.log('right clicked');
+			return false;
+		}
+	},
+	_thumb_dblclick: function(id) { 
+		var me = this;
+		return function() { 
+			console.log('double clicked');
 		}
 	},
 	_thumb_mousedown: function(id) { 
@@ -384,6 +401,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 				if (me.selected_thumbs[0]!=thumb) { 
 					me._clear_selection();
 					me.selected_thumbs.push(thumb);
+					me._do_toolbar_set();
 				}
 			} else { 
 				var found=false;
@@ -391,19 +409,28 @@ $.widget( "esqoo.thumbnailbrowse", {
 				if (found) { 
 					var idx=me.selected_thumbs.indexOf(thumb);
 					if (idx!=-1) me.selected_thumbs.splice(idx,1);
-					console.log(me.selected_thumbs);
+					me._do_toolbar_set();
 				} else { 
 					if (me.options.selectmode=='add') { 
 						me.selected_thumbs.push(thumb);	
+						me._do_toolbar_set();
 					} else { 
 						//TODO - support holding down CTRL to select multiple
 						me._clear_selection();
 						me.selected_thumbs.push(thumb);
+						me._do_toolbar_set();
 					}
 				}
 			}
 		}
 
+	},
+	_do_toolbar_set: function() { 
+		if (this.selected_thumbs.length<1) { 
+			this._do_no_selection_toolbar_set();
+		} else { 
+			this.footer_controls_status.html(this.d.length+' Pictures, '+this.selected_thumbs.length+' selected.');
+		}
 	},
 	_do_no_selection_toolbar_set: function() { 
 		this.footer_controls_status.html(this.d.length+' Pictures');
