@@ -89,6 +89,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 				.appendTo(this.content_left_bar_body);
 		this.thumb_container=$('<div></div>')
 				.addClass('esqoo-ui-thumbnailbrowse-thumb-container')
+				.click(this._thumb_container_click())
 				.css({ height: '100%', float: 'left', 'overflow-y': 'auto'}) // TODO fix this width
 				.scroll(this._scroll_thumb_container())
 				.appendTo(this.content_body);
@@ -311,11 +312,12 @@ $.widget( "esqoo.thumbnailbrowse", {
 			me.thumbnail_list[this.id]={object: this, li: $('<li></li>')
 						.css({display: 'block',float: 'left', margin:'0.5em',padding: '0.5em','border':'1px solid transparent','cursor':'pointer'})
 						.addClass('ui-corner-all')
-						.addClass('sqtip') // sqtip seems to break it atm
-						.attr('data-pictureid',this.id)
+//						.addClass('sqtip') // sqtip seems to break it atm
+//						.attr('data-pictureid',this.id)
 						.hover(me._thumb_mouseover(this.id), me._thumb_mouseout(this.id))
 						.mousedown(me._thumb_mousedown(this.id))
 						.mouseup(me._thumb_mouseup(this.id))
+						.click(me._thumb_click(this.id))
 						.appendTo(me.thumbnail_container_list)};
 			$('<span></span>').html(this.title).css({'font-weight':'normal',height:'2em','word-wrap':'break-word', display: 'block',width: '100px','text-align':'center'}).appendTo(me.thumbnail_list[this.id].li);
 			var imagecontainer=$('<div></div>').css({'width':'100px', margin: 'auto','text-align':'center'}).prependTo(me.thumbnail_list[this.id].li);
@@ -354,6 +356,18 @@ $.widget( "esqoo.thumbnailbrowse", {
 			$(this).removeClass('ui-state-hover ui-state-active');
 		}
 	},
+	_thumb_container_click: function() { 
+		var me = this;
+		return function() { 
+			me._clear_selection();
+		}
+	},
+	_thumb_click: function (id) { 
+		var me = this;
+		return function() { 
+			return false;
+		}
+	},
 	_thumb_mousedown: function(id) { 
 		var me = this;
 		return function() { 
@@ -367,14 +381,17 @@ $.widget( "esqoo.thumbnailbrowse", {
 			var thumb = me.thumbnail_list[id];
 			thumb.li.removeClass('ui-state-active').addClass('ui-state-hover');
 			if (me.options.selecttype=='single') { 
-				me._clear_selection();
-				me.selected_thumbs.push(thumb);
+				if (me.selected_thumbs[0]!=thumb) { 
+					me._clear_selection();
+					me.selected_thumbs.push(thumb);
+				}
 			} else { 
 				var found=false;
 				if (me.selected_thumbs.indexOf(thumb)!='-1') found=true;
 				if (found) { 
 					var idx=me.selected_thumbs.indexOf(thumb);
 					if (idx!=-1) me.selected_thumbs.splice(idx,1);
+					console.log(me.selected_thumbs);
 				} else { 
 					if (me.options.selectmode=='add') { 
 						me.selected_thumbs.push(thumb);	
@@ -404,7 +421,7 @@ $.widget( "esqoo.thumbnailbrowse", {
 			case "flickr_public_photos_data": 
 			case "flickr_favorites_data":
 			case "flickr_groups_data":
-				me._clear_selection();
+				this._clear_selection();
 				this._init_data();
 				break;
 			case "disabled":
