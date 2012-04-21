@@ -104,7 +104,7 @@ function render_nav_element($url,$item,$user) {
 		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" target=\"_blank\">$item... </a><div class=\"nav-float-right\"><span class=\"ui-icon ui-icon-extlink\"></span></div></li>";
 
 	} else {
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$url\" onclick=\"create_page_loading_overlay();\">$item</a></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$url\" onclick=\"return esqoo_ui.browse_to_new_url($(this).attr('href'));\">$item</a></li>";
 	}
 	return $content;
 }

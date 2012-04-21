@@ -17,6 +17,10 @@ $(document).ready(function() {
 		}
 	});
 });
+esqoo_ui.browse_to_new_url = function(url) { 
+	console.log(url);
+	return false;
+}
 esqoo_ui.create_message = function(message,severity) { 
 	$.ajax({url: '/message/create/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', Message: message, Severity: severity}, success: function(data) { 
 		esqoo_ui.get_messages();
