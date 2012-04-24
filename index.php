@@ -1,10 +1,9 @@
 <?php
 
 date_default_timezone_set('UTC');
-
 ini_set('include_path',dirname(__FILE__)."/libraries/");
 
-function __autoload($class_name) {
+spl_autoload_register(function($class_name) {
 	$files = Array(
 		dirname(__FILE__)."/models/model.{$class_name}.php",
 		dirname(__FILE__)."/classes/class.{$class_name}.php"
@@ -18,7 +17,7 @@ function __autoload($class_name) {
 			return include_once($file);
 
 	throw new Exception('Class "'.$class_name.'" could not be autoloaded');
-}
+});
 
 
 function shutdown_function () {

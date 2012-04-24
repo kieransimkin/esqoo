@@ -17,7 +17,8 @@ class DBSQL extends DBSQ {
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
 			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
 			if ($ret instanceof CacheError) {
-				Site::loadAndConnect();
+				Site::connect();
+				Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key),parent::__get($key));
 				return parent::__get($key);
 			} else { 
 				$this->$key=$ret;
@@ -30,7 +31,8 @@ class DBSQL extends DBSQ {
 			if (in_array($newkey,static::$_cachedfields)) { 
 				$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey));
 				if ($ret instanceof CacheError) {
-					Site::loadAndConnect();
+					Site::connect();
+					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey),parent::__get($key));
 					return parent::__get($key);
 				} else { 
 					$this->$newkey=$ret;

@@ -1,5 +1,6 @@
 <?php
 class User extends DBSQL { 
+	public static $_cachedfields=array('ThemeIdentifier');
 	public function format_date() { 
 		return date('Y-m-d');
 	}
