@@ -2,35 +2,35 @@
 class MVC { 
 	static public $controller=null;
 	public static function dispatch($uri) { 
-		if ($uri=='/' || $uri=='') { 
-			$controller='dashboard';
-			$action='index';
-			$arg=null;
-		} else { 
-			if (substr($uri,0,1)=='/') { 
-				$uri=substr($uri,1);
-			}
-			$bits=explode('/',$uri);
-			$controller=$bits[0];
-			$action=$bits[1];
-			if ($bits[2]=='api') { 
-				$api=true;
-				$arg=$bits[3];
-			} else { 
-				$api=false;
-				$arg=$bits[2];
-			}
-		}
-		if (strpos($action,'?')!==FALSE) { 
-			$action=substr($action,0,strpos($action,'?'));
-		}
-		if (strlen($action)<1) { 
-			$action='index';
-		}
 		Site::loadINI();
 		if ($_SERVER['HTTP_HOST']!=Site::$config['cp_hostname']) { 
 			$controller_class = 'PublicController';
 		} else { 
+			if ($uri=='/' || $uri=='') { 
+				$controller='dashboard';
+				$action='index';
+				$arg=null;
+			} else { 
+				if (substr($uri,0,1)=='/') { 
+					$uri=substr($uri,1);
+				}
+				$bits=explode('/',$uri);
+				$controller=$bits[0];
+				$action=$bits[1];
+				if ($bits[2]=='api') { 
+					$api=true;
+					$arg=$bits[3];
+				} else { 
+					$api=false;
+					$arg=$bits[2];
+				}
+			}
+			if (strpos($action,'?')!==FALSE) { 
+				$action=substr($action,0,strpos($action,'?'));
+			}
+			if (strlen($action)<1) { 
+				$action='index';
+			}
 			$controller_class = ucwords($controller).'Controller';
 		}
 		if ($api) { 
@@ -43,13 +43,14 @@ class MVC {
 				$funcname = strtolower(str_replace('-','',$action)).'UI';
 			}
 		}
-		if (!class_exists($controller_class)) { 
+		try { 
+			if (!is_subclass_of($controller_class,'DetachedController')) { 
+				Site::connect();
+			}
+			self::$controller = $new_controller = new $controller_class($controller, $action);
+		} catch (Exception $e) { 
 			self::throw404($controller_class,$funcname);
 		}
-		if (!is_subclass_of($controller_class,'DetachedController')) { 
-			Site::connect();
-		}	
-		self::$controller = $new_controller = new $controller_class($controller, $action);
 		if (method_exists($new_controller,'remap')) { 
 			$res=$new_controller->remap(substr($uri,strlen($controller)),array_merge($_GET,$_POST));
 		} else { 

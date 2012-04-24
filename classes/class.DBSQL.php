@@ -59,14 +59,13 @@ class DBSQL extends DBSQ {
 			foreach (static::$_cachedfields as $cachedfield) { 
 				try { 
 					$data=$this->$cachedfield;
-					if (is_object($data) && substr($cachedfield,-3,3)=='_id') { 
-						Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data->id);
-					} else { 
-						Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data);
-					}
 				} catch (DBSQ_Exception $e) { 
-					var_dump($e);
-					//noop
+					$data=null;
+				}
+				if (is_object($data) && substr($cachedfield,-3,3)=='_id') { 
+					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data->id);
+				} else { 
+					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data);
 				}
 			}
 		}
