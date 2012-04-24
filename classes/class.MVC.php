@@ -47,6 +47,9 @@ class MVC {
 			if (!is_subclass_of($controller_class,'DetachedController')) { 
 				Site::connect();
 			}
+			if (!class_exists($controller_class)) { 
+				self::throw404($controller_class,$funcname);
+			}
 			self::$controller = $new_controller = new $controller_class($controller, $action);
 		} catch (Exception $e) { 
 			self::throw404($controller_class,$funcname);

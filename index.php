@@ -16,7 +16,7 @@ spl_autoload_register(function($class_name) {
 		if (file_exists($file))
 			return include_once($file);
 
-	throw new Exception('Class "'.$class_name.'" could not be autoloaded');
+	//throw new Exception('Class "'.$class_name.'" could not be autoloaded');
 });
 
 

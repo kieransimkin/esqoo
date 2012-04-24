@@ -17,7 +17,8 @@ create table `user` (
 	visual__rich_editor_id int not null default 1,
 	code__rich_editor_id int not null default 4,
 	DayState enum('Daytime','Nighttime') not null default 'Daytime',
-	ThemeIdentifier varchar(255) not null default 'default',
+	ThemeIdentifier varchar(255) not null default 'simple-blog',
+	default__page_id int not null default 1,
 	CreateDate TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	ModifyDate datetime default null,
 	DeleteDate datetime default null,
@@ -468,4 +469,34 @@ create table post_tag (
 	index (tag_id),
 	index (post_id),
 	unique key (tag_id,post_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `page`;
+create table `page` (
+	id int not null auto_increment,
+	GUID varchar(255) not null default '',
+	user_id int not null,
+	Title text not null,
+	TemplateIdentifier varchar(255) NOT NULL default '2col',
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	PublishDate datetime default null,
+	DeleteDate datetime default null,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (user_id,DeleteDate),
+	index (user_id,DeleteDate,PublishDate),
+	index (user_id),
+	index (guid)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `page_uri`;
+create table `page_uri` (
+	id int not null auto_increment,
+	user_id int not null,
+	page_id int not null,
+	URITag varchar(512) not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (page_id),
+	index (user_id),
+	index (URITag)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
