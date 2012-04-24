@@ -27,7 +27,12 @@ class MVC {
 		if (strlen($action)<1) { 
 			$action='index';
 		}
-		$controller_class = ucwords($controller).'Controller';
+		Site::loadINI();
+		if ($_SERVER['HTTP_HOST']!=Site::$config['cp_hostname']) { 
+			$controller_class = 'PublicController';
+		} else { 
+			$controller_class = ucwords($controller).'Controller';
+		}
 		if ($api) { 
 			$funcname = strtolower(str_replace('-','',$action)).'API';
 		} else { 
@@ -42,7 +47,7 @@ class MVC {
 			self::throw404($controller_class,$funcname);
 		}
 		if (!is_subclass_of($controller_class,'DetachedController')) { 
-			Site::loadAndConnect();
+			Site::connect();
 		}	
 		self::$controller = $new_controller = new $controller_class($controller, $action);
 		if (method_exists($new_controller,'remap')) { 
