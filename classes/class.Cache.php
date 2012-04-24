@@ -29,19 +29,17 @@ class Cache {
 		if (!file_exists($name)) { 
 			return new CacheError('miss');
 		}
-		$fp=fopen($name,"rb");
-		if ($fp===false) { 
+		$data=file_get_contents($name);
+		if ($data==false) { 
 			return new CacheError('miss');
 		}
-		$data=unserialize(fgets($fp));
-		fclose($fp);
 		return $data;
 	}
 	static private function setFileKey($namespace,$key,$value) { 
 		$name=self::get_file_storage_name($namespace,$key);
 		self::make_cache_directory($name);
 		$fp=fopen($name,"wb");
-		fputs($fp,serialize($value));
+		fputs($fp,$value);
 		fclose($fp);
 	}
 	static private function make_cache_directory($filename) { 

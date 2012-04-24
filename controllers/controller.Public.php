@@ -4,10 +4,36 @@ class PublicController extends DetachedController {
 		include('Smarty/Smarty.class.php');
 		$username=substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
 		$user=User::get($username,'Username',true);
+		if ($uri=='/') { 
+			$page=Page::get($user->default__page_id);
+		} else { 
+			try { 
+				$pageuri=Page_uri::get($username.$uri,'URITag',true);
+				$page=Page::get($pageuri->page_id);
+			} catch (DBSQ_Exception $e) { 
+				MVC::throw404();
+			}
+		}
 		$this->displayPage($user,$page);
-		die;	
 	}
 	private function displayPage($user,$page) { 
+		try { 
+			$pagecacheid=$page->page_cache_id;
+			if (is_null($pagecacheid)) { 
+				$this->generatePage($user,$page);
+			} else { 
+				$this->sendPageCache($pagecacheid);
+			}
+		} catch (Exception $e) { 
+			$this->generatePage($user,$page);
+		}
+	}
+	private function sendPageCache($cacheid) { 
+		$cache=Page_cache::get($cacheid);
+		$cache->output();
+	}
+	private function generatePage($user,$page) { 
+		Site::connect();
 		$smarty=new Smarty();
 		$smarty->left_delimiter='{!';
 		$smarty->right_delimiter='}';
@@ -20,7 +46,14 @@ class PublicController extends DetachedController {
 		//** un-comment the following line to show the debug console
 		$smarty->debugging = true;
 
-		$smarty->display('template.page.html');
-
+		$cache=Page_cache::get();
+		$cache->Content=$smarty->fetch('template.page.html');
+		$cache->Size=strlen($cache->Content);
+		$cache->HashType='MD5';
+		$cache->CacheHash=md5($cache->Content);
+		$cacheid=$cache->save();
+		$page->page_cache_id=$cacheid;
+		$page->save();
+		$this->sendPageCache($cacheid);
 	}
 } 

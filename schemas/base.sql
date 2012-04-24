@@ -475,6 +475,7 @@ create table `page` (
 	id int not null auto_increment,
 	GUID varchar(255) not null default '',
 	user_id int not null,
+	page_cache_id int default null,
 	Title text not null,
 	TemplateIdentifier varchar(255) NOT NULL default '2col',
 	CreateDate timestamp not null default CURRENT_TIMESTAMP,
@@ -485,7 +486,8 @@ create table `page` (
 	index (user_id,DeleteDate),
 	index (user_id,DeleteDate,PublishDate),
 	index (user_id),
-	index (guid)
+	index (guid),
+	index (page_cache_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 drop table if exists `page_uri`;
 create table `page_uri` (
@@ -499,4 +501,17 @@ create table `page_uri` (
 	index (page_id),
 	index (user_id),
 	index (URITag)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into page set user_id=1, GUID='home',Title='Home',TemplateIdentifier='2col';
+insert into page set user_id=1, GUID='blog',Title='Blog',TemplateIdentifier='2col';
+insert into page_uri set user_id=1, page_id=2, URITAG='slinq/blog';
+drop table if exists `page_cache`;
+create table `page_cache` ( 
+	id int not null auto_increment,
+	Content longblob,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	HashType varchar(10) default null,
+	CacheHash varchar(255) default null,
+	`Size` bigint not null,
+	primary key (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
