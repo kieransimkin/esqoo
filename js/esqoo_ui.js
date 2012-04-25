@@ -1,7 +1,7 @@
 var esqoo_ui = {};
 esqoo_ui.dialog_singletons = [];
 esqoo_ui.message_queue = [];
-$(document).ready(function() { 
+esqoo_ui.document_ready = function() { 
 	esqoo_ui.dialog_singletons.length=0;
 	esqoo_ui.get_messages();
 	if (!fullScreenApi.supportsFullScreen) { 
@@ -16,9 +16,42 @@ $(document).ready(function() {
 			esqoo_ui.fullscreen=false;
 		}
 	});
-});
+	$("#nav-one").supersubs({ 
+            minWidth:    12,   // minimum width of sub-menus in em units 
+            maxWidth:    15,   // maximum width of sub-menus in em units 
+            extraWidth:  1     // extra width can ensure lines don't sometimes turn over 
+                               // due to slight rounding differences and font-family 
+        }).superfish({ hidingspeed: 250, animation:   {opacity:'show',height:'show'}, hoverClass: 'ui-state-hover',  // fade-in and slide-down animation 
+                 speed:       150, delay: 500}).find('ul');
+
+};
+$(document).ready(esqoo_ui.document_ready);
 esqoo_ui.browse_to_new_url = function(url) { 
 	console.log(url);
+	var d=window.document;
+	if (window.parent.document) { 
+		d=window.parent.document;
+	}
+	var item=$('body:eq(0)',d);
+	$('html',d).css({'overflow':'auto'});
+	item.html($('<iframe></iframe>').css({display: 'block',width: '100%', border: 'none', 'overflow-y':'auto','overflow-x':'hidden'}).attr('height','100%').attr('frameborder','0').attr('marginheight','0').attr('marginwidth','0').attr('width','100%').attr('scrolling','auto').attr('src',url));
+	$('html,body,div,iframe',d).css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
+
+	/*
+	$.ajax({url: url, type: 'post', data: {suppress_headers: 'true',suppress_footers:'true'}, success: function(data) { 
+		var oldclass='fullpage';
+		if ($('body').hasClass('template-normal')) { 
+			oldclass='normal';
+		}
+		$('body').html(data);
+		if ($('body').find('section.normal-template-body').length && oldclass!='normal') { 
+			console.log('changed to normal');
+		} else if ($('body').find('section-fullpage-template-body').length && oldclass!='fullpage') { 
+			console.log('changed to fullpage');
+		}
+		esqoo_ui.document_ready();
+	}});
+	*/
 	return false;
 }
 esqoo_ui.create_message = function(message,severity) { 

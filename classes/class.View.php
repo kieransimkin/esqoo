@@ -37,11 +37,15 @@ class View {
 	}
 	function header($title) {
 		$this->title = $title;
-		$this->partial("partials/view.header.php");
+		if ($_REQUEST['suppress_headers']!=='true') { 
+			$this->partial("partials/view.header.php");
+		}
 		$this->partial("partials/templates/template.".$this->template.".header.php");
 	}
 	function footer() {
 		$this->partial("partials/templates/template.".$this->template.".footer.php");
-		$this->partial("partials/view.footer.php");
+		if ($_REQUEST['suppress_footers']!=='true') { 
+			$this->partial("partials/view.footer.php");
+		}
 	}
 } 
