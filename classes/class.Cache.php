@@ -33,13 +33,13 @@ class Cache {
 		if ($data==false) { 
 			return new CacheError('miss');
 		}
-		return $data;
+		return json_decode($data);
 	}
 	static private function setFileKey($namespace,$key,$value) { 
 		$name=self::get_file_storage_name($namespace,$key);
 		self::make_cache_directory($name);
 		$fp=fopen($name,"wb");
-		fputs($fp,$value);
+		fputs($fp,json_encode($value));
 		fclose($fp);
 	}
 	static private function make_cache_directory($filename) { 
