@@ -1,7 +1,6 @@
 <?php
 class PublicController extends DetachedController { 
 	function remap($uri,$input=array()) { 
-		include('Smarty/Smarty.class.php');
 		$username=substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
 		$user=User::get($username,'Username',true);
 		if ($uri=='/') { 
@@ -35,7 +34,8 @@ class PublicController extends DetachedController {
 	private function generatePage($user,$page) { 
 		Site::connect();
 		$cache=Page_cache::get();
-		$cache->Content=$this->renderPage($user,$page);
+		$theme=new Theme($user->ThemeIdentifier);
+		$cache->Content=$theme->renderPage($page);
 		$cache->Size=strlen($cache->Content);
 		$cache->HashType='MD5';
 		$cache->CacheHash=md5($cache->Content);
@@ -43,19 +43,5 @@ class PublicController extends DetachedController {
 		$page->page_cache_id=$cacheid;
 		$page->save();
 		$this->sendPageCache($cacheid);
-	}
-	private function renderPage($user,$page) { 
-		$smarty=new Smarty();
-		$smarty->left_delimiter='{!';
-		$smarty->right_delimiter='}';
-		$smarty->setTemplateDir(dirname(__FILE__).'/../themes/'.$user->ThemeIdentifier.'/');
-		$smarty->setCompileDir(dirname(__FILE__).'/../cache/compiled-templates/');
-		$smarty->setCacheDir(dirname(__FILE__).'/../cache/template-cache/');
-
-		$smarty->assign('PageTitle','Ned');
-
-		//** un-comment the following line to show the debug console
-		$smarty->debugging = true;
-		return $smarty->fetch('template.page.html');
 	}
 } 

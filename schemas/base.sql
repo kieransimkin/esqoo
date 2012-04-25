@@ -477,7 +477,8 @@ create table `page` (
 	user_id int not null,
 	page_cache_id int default null,
 	Title text not null,
-	TemplateIdentifier varchar(255) NOT NULL default '2col',
+	TemplateIdentifier varchar(255) NOT NULL default 'default',
+	LayoutIdentifier varchar(255) NOT NULL default '1col',
 	CreateDate timestamp not null default CURRENT_TIMESTAMP,
 	PublishDate datetime default null,
 	DeleteDate datetime default null,
@@ -502,8 +503,8 @@ create table `page_uri` (
 	index (user_id),
 	index (URITag)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-insert into page set user_id=1, GUID='home',Title='Home',TemplateIdentifier='2col';
-insert into page set user_id=1, GUID='blog',Title='Blog',TemplateIdentifier='2col';
+insert into page set user_id=1, GUID='home',Title='Home';
+insert into page set user_id=1, GUID='blog',Title='Blog';
 insert into page_uri set user_id=1, page_id=2, URITAG='slinq/blog';
 drop table if exists `page_cache`;
 create table `page_cache` ( 
