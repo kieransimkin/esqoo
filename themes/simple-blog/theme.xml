@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Theme>
+	<Layouts>
+		<Item>
+			<Name>1 Column</Name>
+			<Identifier>1col</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>content</Identifier>
+					<Name>Content</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+		<Item>
+			<Name>2 Column 1:1</Name>
+			<Identifier>2col1-1</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>leftcol</Identifier>
+					<Name>Left Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>	
+				</Item>
+				<Item>
+					<Identifier>rightcol</Identifier>
+					<Name>Right Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+		<Item>
+			<Name>2 Column 2:1</Name>
+			<Identifier>2col2-1</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>leftcol</Identifier>
+					<Name>Left Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>	
+				</Item>
+				<Item>
+					<Identifier>rightcol</Identifier>
+					<Name>Right Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+		<Item>
+			<Name>2 Column 3:1</Name>
+			<Identifier>2col3-1</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>leftcol</Identifier>
+					<Name>Left Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>	
+				</Item>
+				<Item>
+					<Identifier>rightcol</Identifier>
+					<Name>Right Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+		<Item>
+			<Name>2 Column 1:2</Name>
+			<Identifier>2col1-2</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>leftcol</Identifier>
+					<Name>Left Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>	
+				</Item>
+				<Item>
+					<Identifier>rightcol</Identifier>
+					<Name>Right Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+		<Item>
+			<Name>2 Column 1:3</Name>
+			<Identifier>2col1-3</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>leftcol</Identifier>
+					<Name>Left Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>	
+				</Item>
+				<Item>
+					<Identifier>rightcol</Identifier>
+					<Name>Right Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+		<Item>
+			<Name>3 Column 1:1:1</Name>
+			<Identifier>3col1-1-1</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>leftcol</Identifier>
+					<Name>Left Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>	
+				</Item>
+				<Item>
+					<Identifier>centercol</Identifier>
+					<Name>Center Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+				<Item>
+					<Identifier>rightcol</Identifier>
+					<Name>Right Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+		<Item>
+			<Name>3 Column 1:2:1</Name>
+			<Identifier>3col1-2-1</Identifier>
+			<Sections>
+				<Item>
+					<Identifier>leftcol</Identifier>
+					<Name>Left Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>	
+				</Item>
+				<Item>
+					<Identifier>centercol</Identifier>
+					<Name>Center Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+				<Item>
+					<Identifier>rightcol</Identifier>
+					<Name>Right Column</Name>
+					<MaxWidgets>0</MaxWidgets>
+					<MinWidgets>1</MinWidgets>
+				</Item>
+			</Sections>
+		</Item>
+	</Layouts>
+</Theme>

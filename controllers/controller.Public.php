@@ -34,6 +34,17 @@ class PublicController extends DetachedController {
 	}
 	private function generatePage($user,$page) { 
 		Site::connect();
+		$cache=Page_cache::get();
+		$cache->Content=$this->renderPage($user,$page);
+		$cache->Size=strlen($cache->Content);
+		$cache->HashType='MD5';
+		$cache->CacheHash=md5($cache->Content);
+		$cacheid=$cache->save();
+		$page->page_cache_id=$cacheid;
+		$page->save();
+		$this->sendPageCache($cacheid);
+	}
+	private function renderPage($user,$page) { 
 		$smarty=new Smarty();
 		$smarty->left_delimiter='{!';
 		$smarty->right_delimiter='}';
@@ -45,15 +56,6 @@ class PublicController extends DetachedController {
 
 		//** un-comment the following line to show the debug console
 		$smarty->debugging = true;
-
-		$cache=Page_cache::get();
-		$cache->Content=$smarty->fetch('template.page.html');
-		$cache->Size=strlen($cache->Content);
-		$cache->HashType='MD5';
-		$cache->CacheHash=md5($cache->Content);
-		$cacheid=$cache->save();
-		$page->page_cache_id=$cacheid;
-		$page->save();
-		$this->sendPageCache($cacheid);
+		return $smarty->fetch('template.page.html');
 	}
 } 
