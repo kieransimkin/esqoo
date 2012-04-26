@@ -31,14 +31,17 @@
     if (fullScreenApi.supportsFullScreen) {
         fullScreenApi.fullScreenEventName = fullScreenApi.prefix + 'fullscreenchange';
  
-        fullScreenApi.isFullScreen = function() {
+        fullScreenApi.isFullScreen = function(doc) {
+		if (typeof(doc)=='undefined') { 
+		doc=document;
+		}
             switch (this.prefix) {
                 case '':
-                    return document.fullScreen;
+                    return doc.fullScreen;
                 case 'webkit':
-                    return document.webkitIsFullScreen;
+                    return doc.webkitIsFullScreen;
                 default:
-                    return document[this.prefix + 'FullScreen'];
+                    return doc[this.prefix + 'FullScreen'];
             }
         }
         fullScreenApi.requestFullScreen = function(el) {

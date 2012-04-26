@@ -7,12 +7,12 @@ esqoo_ui.document_ready = function() {
 	if (!fullScreenApi.supportsFullScreen) { 
 		$('.esqoo-ui-menubar-fullscreen-button').css({'display':'none'});
 	}
-	var doc = $(document);
+	var doc = document;
 	if ((window.location != window.parent.location) ? true : false) { 
-		// we need to bind to something different here
+		doc=window.parent;
 	}
-	doc.bind('fullscreeneventchange fullscreenchange mozfullscreenchange webkitfullscreenchange',function(e) { 
-		if (fullScreenApi.isFullScreen()) { 
+	$(doc).bind('fullscreeneventchange fullscreenchange mozfullscreenchange webkitfullscreenchange',function(e) { 
+		if (fullScreenApi.isFullScreen(doc)) { 
 			$('.esqoo-ui-menubar-fullscreen-button').find('span').removeClass('ui-icon-maximize').addClass('ui-icon-carat-1-s');
 			esqoo_ui.fullscreen=true;
 		} else { 
