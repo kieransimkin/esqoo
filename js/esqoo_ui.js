@@ -27,34 +27,15 @@ esqoo_ui.document_ready = function() {
 };
 $(document).ready(esqoo_ui.document_ready);
 esqoo_ui.browse_to_new_url = function(url) { 
-	console.log(url);
 	var d=window.document;
 	if ((window.location != window.parent.location) ? true : false) { 
-//		$('iframe',window.parent.document).attr('src',url);
 		$('iframe',window.parent.document)[0].contentWindow.location=url;
-//		$('iframe',window.parent.document)[0].contentWindow.location.reload(true);
 		return false;
 	}
 	var item=$('body:eq(0)',d);
 	$('html',d).css({'overflow':'auto'});
 	item.html($('<iframe></iframe>').css({display: 'block',width: '100%', border: 'none', 'overflow-y':'auto','overflow-x':'hidden'}).attr('height','100%').attr('frameborder','0').attr('marginheight','0').attr('marginwidth','0').attr('width','100%').attr('scrolling','auto').attr('src',url));
 	$('html,body,div,iframe',d).css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
-
-	/*
-	$.ajax({url: url, type: 'post', data: {suppress_headers: 'true',suppress_footers:'true'}, success: function(data) { 
-		var oldclass='fullpage';
-		if ($('body').hasClass('template-normal')) { 
-			oldclass='normal';
-		}
-		$('body').html(data);
-		if ($('body').find('section.normal-template-body').length && oldclass!='normal') { 
-			console.log('changed to normal');
-		} else if ($('body').find('section-fullpage-template-body').length && oldclass!='fullpage') { 
-			console.log('changed to fullpage');
-		}
-		esqoo_ui.document_ready();
-	}});
-	*/
 	return false;
 }
 esqoo_ui.create_message = function(message,severity) { 
