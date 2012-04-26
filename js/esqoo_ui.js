@@ -29,8 +29,11 @@ $(document).ready(esqoo_ui.document_ready);
 esqoo_ui.browse_to_new_url = function(url) { 
 	console.log(url);
 	var d=window.document;
-	if (window.parent.document) { 
-		d=window.parent.document;
+	if ((window.location != window.parent.location) ? true : false) { 
+//		$('iframe',window.parent.document).attr('src',url);
+		$('iframe',window.parent.document)[0].contentWindow.location=url;
+//		$('iframe',window.parent.document)[0].contentWindow.location.reload(true);
+		return false;
 	}
 	var item=$('body:eq(0)',d);
 	$('html',d).css({'overflow':'auto'});
