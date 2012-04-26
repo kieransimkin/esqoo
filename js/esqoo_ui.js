@@ -32,13 +32,24 @@ esqoo_ui.document_ready = function() {
 $(document).ready(esqoo_ui.document_ready);
 esqoo_ui.browse_to_new_url = function(url) { 
 	if ((window.location != window.parent.location) ? true : false) { 
-		$('iframe',window.parent.document)[0].contentWindow.location=url;
+		$('body:eq(0)',window.parent.document).fadeTo('fast',0.0, function() { 
+			$('iframe',window.parent.document)[0].contentWindow.location=url;
+		});
 		return false;
 	}
 	var item=$('body:eq(0)');
 	$('html').css({'overflow':'auto'});
-	item.html($('<iframe></iframe>').css({display: 'block',width: '100%', border: 'none', 'overflow-y':'auto','overflow-x':'hidden'}).attr('height','100%').attr('frameborder','0').attr('marginheight','0').attr('marginwidth','0').attr('width','100%').attr('scrolling','auto').attr('allowFullScreen','true').attr('mozAllowFullScreen','true').attr('webkitAllowFullScreen','true').attr('oAllowFullScreen','true').attr('msAllowFullScren','true').attr('khtmlAllowFullScreen','true').attr('src',url));
-	$('html,body,div,iframe').css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
+	item.fadeTo('fast',0.0,function() { 
+		item.html($('<iframe></iframe>').css({display: 'block',width: '100%', border: 'none', 'overflow-y':'auto','overflow-x':'hidden'}).attr('height','100%').attr('frameborder','0').attr('marginheight','0').attr('marginwidth','0').attr('width','100%').attr('scrolling','auto').attr('allowFullScreen','true').attr('mozAllowFullScreen','true').attr('webkitAllowFullScreen','true').attr('oAllowFullScreen','true').attr('msAllowFullScren','true').attr('khtmlAllowFullScreen','true').bind('load',function() { 
+			console.log('iframe loaded');
+			if ((window.location != window.parent.location) ? true : false) { 
+				$('body:eq(0)',window.parent.document).fadeTo(100,1.0);
+			} else { 
+				item.fadeTo(100,1.0);
+			}
+		}).attr('src',url));
+		$('html,body,div,iframe').css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
+	});
 	return false;
 }
 esqoo_ui.create_message = function(message,severity) { 
