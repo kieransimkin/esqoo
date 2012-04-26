@@ -406,7 +406,11 @@ esqoo_ui.toggle_fullscreen = function() {
 			$('body:eq(0)').requestFullScreen();
 		}
 	} else { 
-		fullScreenApi.cancelFullScreen();
+		if ((window.location != window.parent.location) ? true : false) { 
+			fullScreenApi.cancelFullScreen(window.parent.document);
+		} else {
+			fullScreenApi.cancelFullScreen(document);
+		}
 	}
 	$('li.esqoo-ui-menubar-fullscreen-button').qtip('hide');
 }
