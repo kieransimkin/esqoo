@@ -7,7 +7,11 @@ esqoo_ui.document_ready = function() {
 	if (!fullScreenApi.supportsFullScreen) { 
 		$('.esqoo-ui-menubar-fullscreen-button').css({'display':'none'});
 	}
-	$(document).bind('fullscreeneventchange fullscreenchange mozfullscreenchange webkitfullscreenchange',function(e) { 
+	var doc = $(document);
+	if ((window.location != window.parent.location) ? true : false) { 
+		// we need to bind to something different here
+	}
+	doc.bind('fullscreeneventchange fullscreenchange mozfullscreenchange webkitfullscreenchange',function(e) { 
 		if (fullScreenApi.isFullScreen()) { 
 			$('.esqoo-ui-menubar-fullscreen-button').find('span').removeClass('ui-icon-maximize').addClass('ui-icon-carat-1-s');
 			esqoo_ui.fullscreen=true;
@@ -380,7 +384,11 @@ esqoo_ui.flick_light_switch = function() {
 esqoo_ui.fullscreen=false;
 esqoo_ui.toggle_fullscreen = function() { 
 	if (!esqoo_ui.fullscreen) { 
-		$('body:eq(0)').requestFullScreen();
+		if ((window.location != window.parent.location) ? true : false) { 
+			$('body:eq(0)',window.parent.document).requestFullScreen();
+		} else { 
+			$('body:eq(0)').requestFullScreen();
+		}
 	} else { 
 		fullScreenApi.cancelFullScreen();
 	}
