@@ -8,11 +8,17 @@ esqoo_ui.document_ready = function() {
 		$('.esqoo-ui-menubar-fullscreen-button').css({'display':'none'});
 	}
 	var doc = document;
+	var fsdoc= document;
 	if ((window.location != window.parent.location) ? true : false) { 
 		doc=window.parent;
+		fsdoc=window.parent.document;
+	}
+	if (fullScreenApi.isFullScreen(fsdoc)) { 
+		$('.esqoo-ui-menubar-fullscreen-button').find('span').removeClass('ui-icon-maximize').addClass('ui-icon-carat-1-s');
+		esqoo_ui.fullscreen=true;
 	}
 	$(doc).bind('fullscreeneventchange fullscreenchange mozfullscreenchange webkitfullscreenchange',function(e) { 
-		if (fullScreenApi.isFullScreen(doc)) { 
+		if (fullScreenApi.isFullScreen(fsdoc)) { 
 			$('.esqoo-ui-menubar-fullscreen-button').find('span').removeClass('ui-icon-maximize').addClass('ui-icon-carat-1-s');
 			esqoo_ui.fullscreen=true;
 		} else { 
@@ -32,20 +38,19 @@ esqoo_ui.document_ready = function() {
 $(document).ready(esqoo_ui.document_ready);
 esqoo_ui.browse_to_new_url = function(url) { 
 	if ((window.location != window.parent.location) ? true : false) { 
-		$('body:eq(0)',window.parent.document).fadeTo('fast',0.0, function() { 
+		$('body:eq(0)',window.parent.document).fadeTo(170,0.0, function() { 
 			$('iframe',window.parent.document)[0].contentWindow.location=url;
 		});
 		return false;
 	}
 	var item=$('body:eq(0)');
 	$('html').css({'overflow':'auto'});
-	item.fadeTo('fast',0.0,function() { 
+	item.fadeTo(170,0.0,function() { 
 		item.html($('<iframe></iframe>').css({display: 'block',width: '100%', border: 'none', 'overflow-y':'auto','overflow-x':'hidden'}).attr('height','100%').attr('frameborder','0').attr('marginheight','0').attr('marginwidth','0').attr('width','100%').attr('scrolling','auto').attr('allowFullScreen','true').attr('mozAllowFullScreen','true').attr('webkitAllowFullScreen','true').attr('oAllowFullScreen','true').attr('msAllowFullScren','true').attr('khtmlAllowFullScreen','true').bind('load',function() { 
-			console.log('iframe loaded');
 			if ((window.location != window.parent.location) ? true : false) { 
-				$('body:eq(0)',window.parent.document).fadeTo(100,1.0);
+				$('body:eq(0)',window.parent.document).fadeTo(150,1.0);
 			} else { 
-				item.fadeTo(100,1.0);
+				item.fadeTo(150,1.0);
 			}
 		}).attr('src',url));
 		$('html,body,div,iframe').css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
