@@ -52,7 +52,7 @@ esqoo_ui.browse_to_new_url = function(url) {
 			} else { 
 				item.fadeTo(150,1.0);
 			}
-		}).attr('src',url));
+		}).attr('src',url)).css({'width':'100%'});
 		$('html,body,div,iframe').css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
 	});
 	return false;
