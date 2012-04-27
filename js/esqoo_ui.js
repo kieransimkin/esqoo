@@ -40,7 +40,7 @@ esqoo_ui.browse_to_new_url = function(url) {
 	if ((window.location != window.parent.location) ? true : false) { 
 		$('body:eq(0)',window.parent.document).fadeTo(170,0.0, function() { 
 			$('iframe',window.parent.document)[0].contentWindow.location=url;
-			window.parent.history.pushState({}, "page 2", url);
+			window.parent.History.pushState({}, "", url);
 		});
 		return false;
 	}
@@ -56,7 +56,7 @@ esqoo_ui.browse_to_new_url = function(url) {
 	//		}
 		}).attr('src',url)).css({'width':'100%'});
 		$('html,body,div,iframe').css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
-		history.pushState({}, "page 2", url);
+		History.pushState({}, "", url);
 	});
 	return false;
 }
