@@ -48,12 +48,8 @@ esqoo_ui.browse_to_new_url = function(url) {
 	$('html').css({'overflow':'auto'});
 	item.fadeTo(170,0.0,function() { 
 		item.html($('<iframe></iframe>').css({display: 'block',width: '100%', border: 'none', 'overflow-y':'auto','overflow-x':'hidden'}).attr('height','100%').attr('frameborder','0').attr('marginheight','0').attr('marginwidth','0').attr('width','100%').attr('scrolling','auto').attr('allowFullScreen','true').attr('mozAllowFullScreen','true').attr('webkitAllowFullScreen','true').attr('oAllowFullScreen','true').attr('msAllowFullScren','true').attr('khtmlAllowFullScreen','true').bind('load',function() { 
-	//		if ((window.location != window.parent.location) ? true : false) { 
-	//			$('body:eq(0)',window.parent.document).fadeTo(150,1.0);
-	//		} else { 
-				$(document).find('title').html($('iframe')[0].contentWindow.document.title);
-				item.fadeTo(150,1.0);
-	//		}
+			$(document).find('title').html($('iframe')[0].contentWindow.document.title);
+			item.fadeTo(150,1.0);
 		}).attr('src',url)).css({'width':'100%'});
 		$('html,body,div,iframe').css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
 		History.pushState({}, "", url);
@@ -393,10 +389,16 @@ esqoo_ui.flick_light_switch = function() {
 		esqoo_ui.daystate='Nighttime';
 		$('body').removeClass('daytime').addClass('nighttime');
 		esqoo_ui.switch_theme(esqoo_ui.nighttime_theme);
+		if ((window.location != window.parent.location) ? true : false) { 
+			$('body',window.parent.document).removeClass('daytime').addClass('nighttime');
+		}
 	} else { 
 		esqoo_ui.daystate='Daytime';
 		$('body').removeClass('nighttime').addClass('daytime');
 		esqoo_ui.switch_theme(esqoo_ui.daytime_theme);
+		if ((window.location != window.parent.location) ? true : false) { 
+			$('body',window.parent.document).removeClass('nighttime').addClass('daytime');
+		}
 	}
 	$.ajax({url: '/account/update-day-state/api', dataType: 'json', type: 'post', data: {ResponseFormat: 'json', DayState: esqoo_ui.daystate}});
 }
