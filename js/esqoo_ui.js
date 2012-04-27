@@ -40,6 +40,7 @@ esqoo_ui.browse_to_new_url = function(url) {
 	if ((window.location != window.parent.location) ? true : false) { 
 		$('body:eq(0)',window.parent.document).fadeTo(170,0.0, function() { 
 			$('iframe',window.parent.document)[0].contentWindow.location=url;
+			window.parent.history.pushState({}, "page 2", url);
 		});
 		return false;
 	}
@@ -47,13 +48,15 @@ esqoo_ui.browse_to_new_url = function(url) {
 	$('html').css({'overflow':'auto'});
 	item.fadeTo(170,0.0,function() { 
 		item.html($('<iframe></iframe>').css({display: 'block',width: '100%', border: 'none', 'overflow-y':'auto','overflow-x':'hidden'}).attr('height','100%').attr('frameborder','0').attr('marginheight','0').attr('marginwidth','0').attr('width','100%').attr('scrolling','auto').attr('allowFullScreen','true').attr('mozAllowFullScreen','true').attr('webkitAllowFullScreen','true').attr('oAllowFullScreen','true').attr('msAllowFullScren','true').attr('khtmlAllowFullScreen','true').bind('load',function() { 
-			if ((window.location != window.parent.location) ? true : false) { 
-				$('body:eq(0)',window.parent.document).fadeTo(150,1.0);
-			} else { 
+	//		if ((window.location != window.parent.location) ? true : false) { 
+	//			$('body:eq(0)',window.parent.document).fadeTo(150,1.0);
+	//		} else { 
+				$(document).find('title').html($('iframe')[0].contentWindow.document.title);
 				item.fadeTo(150,1.0);
-			}
+	//		}
 		}).attr('src',url)).css({'width':'100%'});
 		$('html,body,div,iframe').css({'margin':'0px','padding':'0px','height':'100%','border':'none'});
+		history.pushState({}, "page 2", url);
 	});
 	return false;
 }
