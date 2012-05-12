@@ -15,6 +15,14 @@ class PictureController extends LockedController {
 		$picturesizes=User_picture_size::getAll('user_id=?',array($this->user->id));
 		$this->view->picturesizes=$picturesizes;
 	}
+	function editUI($arg='',$input=array()) { 
+		$form=$this->get_edit_form($input);
+		if ($form->validate()) { 
+
+		}
+		$this->view->setTemplate('fullpage');
+		$this->view->form=$form;
+	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
@@ -58,6 +66,10 @@ class PictureController extends LockedController {
 		$tagcontainer->addElement('select','TagID',array('data-width'=>'65%'),array('options'=>$tagmenu))->setLabel(_('Tag'))->setValue($tagid);
 		$viewcontainer=$container->addElement('div','viewcontainer',array('class'=>'esqoo-picture-browse-top-heading-view-container'));
 		$viewcontainer->addElement('select','View',array('data-width'=>'65%'),array('options'=>array('flexigrid'=>_('List'),'thumbnailbrowse'=>_('Thumbnails'),'mediaslide'=>_('MediaSlide'))))->setLabel(_('View'))->setValue($view);
+		return $form;
+	}
+	private function get_edit_form($input=array()) { 
+		$form=new Form('edit');
 		return $form;
 	}
 	/*****************************************

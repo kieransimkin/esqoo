@@ -137,9 +137,12 @@ esqoo_picture_index.load_thumbnailbrowse = function(frame,loadcallback) {
 	var params=esqoo_picture_index.get_list_params();
 	var url=esqoo_picture_index.get_list_url();
 	$(frame).show();
-	$(frame).thumbnailbrowse({initialsize: esqoo_picture_index.picturesizes['thumbnail-small'], picturesizes: esqoo_picture_index.picturesizes, esqoo_xml_ajax: {url: url, options: params}, ready: loadcallback});
+	$(frame).thumbnailbrowse({doubleclick_handler: esqoo_picture_index.edit_picture, initialsize: esqoo_picture_index.picturesizes['thumbnail-small'], picturesizes: esqoo_picture_index.picturesizes, esqoo_xml_ajax: {url: url, options: params}, ready: loadcallback});
 	$(frame).hide();
 	loadcallback(); // TODO - disable this once thumbnailbrowse triggers ready
+}
+esqoo_picture_index.edit_picture = function(thumb) { 
+	esqoo_ui.browse_to_new_url('/picture/edit/'+thumb.id);
 }
 esqoo_picture_index.update_thumbnailbrowse = function(frame,loadcallback) { 
 	var params=esqoo_picture_index.get_list_params();
