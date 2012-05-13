@@ -1,9 +1,9 @@
 var esqoo_login = {};
 esqoo_login.login = function (c) { 
-	// Prevent infinite loops:
 	if (typeof(c)=='undefined') { 
 		c=1;
 	}
+	// Prevent infinite loops:
 	if (c>10) { 
 		return;
 	}
