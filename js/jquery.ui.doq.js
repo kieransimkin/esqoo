@@ -6,6 +6,29 @@ $.widget( "esqoo.doq", {
 	_create: function() { 
 		this._do_html_setup();
 	},
+	bind_dialog: function(d) { 
+		d.uiDialog.bind('dialogdragstart.ui-dialog',this._dialog_dragstart(d));
+		d.uiDialog.bind('dialogdragstop.ui-dialog',this._dialog_dragstop(d));
+		d.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(d));
+	},
+	_dialog_dragstart: function(d) { 
+		var me = this;
+		return function() { 
+			console.log('dragstart');
+		}
+	},
+	_dialog_dragstop: function(d) { 
+		var me = this;
+		return function() { 
+			console.log('dragstop');
+		}
+	},
+	_dialog_drag: function(d) { 
+		var me = this;
+		return function() { 
+			console.log('drag');
+		}
+	},
 	_do_html_setup: function() { 
 		$(window).resize(this._resize());
 		this.container = $('<div></div>')
@@ -28,27 +51,12 @@ $.widget( "esqoo.doq", {
 				.css({'position':'absolute','bottom':'0px', 'width':'100%','height':'0.8em'})
 				.addClass('esqoo-ui-doq-bottombar ui-widget-content ui-state-active')
 				.appendTo(this.container);
-		this._setup_droppables();
 		this._size_bars();
 	},
 	_resize: function() { 
 		var me = this;
 		return function() { 
 			me._size_bars();
-		}
-	},
-	_setup_droppables: function() { 
-		this.leftbar.droppable({drop: this._do_drop(this.leftbar)});
-		this.rightbar.droppable({drop: this._do_drop(this.rightbar)});
-		this.topbar.droppable({drop: this._do_drop(this.topbar)});
-		this.bottombar.droppable({drop: this._do_drop(this.bottombar)});
-	},
-	_do_drop: function(bar) { 
-		return function (event,ui) { 
-			console.log('got drop');
-			console.log(bar);
-			console.log(event);
-			console.log(ui);
 		}
 	},
 	_get_topbar_height: function() { 

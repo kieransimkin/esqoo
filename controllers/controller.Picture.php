@@ -23,11 +23,28 @@ class PictureController extends LockedController {
 		$this->view->setTemplate('fullpage');
 		$this->view->form=$form;
 	}
+	/*************************
+	 *  ╺┳┓╻┏━┓╻  ┏━┓┏━╸┏━┓  *
+	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
+	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
+	 *************************/
+	function navigatorDialog($arg='',$input=array()) { 
+		$form=$this->get_navigator_form($input);
+		if ($form->validate()) { 
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'90%','550');
+		}	
+	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
+	private function get_navigator_form($input=array()) { 
+		$form=new Form('navigator');
+		return $form;
+	}
 	private function get_index_browse_form($input=array()) { 
 		$form=new Form('indexbrowse');
 		$selectedstate=null;
