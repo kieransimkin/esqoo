@@ -1228,7 +1228,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 		if (!noPropagation) {
 			var ui = this._uiHash();
 			if(this._trigger('drag', event, ui) === false) {
-				//this._mouseUp({}); Esqoo hack!!! XXX - silly jQuery, returning false shouldn't cancel the drag event, it should just not allow the drag to go any further
+				//this._mouseUp({}); Esqoo hack!!! XXX - silly jQuery, returning false shouldn't cancel the drag event, it should just not allow the drag to go any further, I hope this doesn't break anything.
 				return false;
 			}
 			this.position = ui.position;

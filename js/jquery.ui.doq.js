@@ -27,14 +27,49 @@ $.widget( "esqoo.doq", {
 		var me = this;
 		return function(event,ui) { 
 			if (ui.position.top<me.container.offset().top) { 
-				//console.log(d.element.parent());
+				// Make the dialog not exceed the top of the doq
 				d.element.parent().css({'top':me.container.offset().top});
+				me._mouse_in_dropzone(d,me.topbar);
 				return false;
 			}
-			console.log(ui.position.top);
-			console.log(me.container.offset());
-			console.log('drag');
+			if (ui.position.left<me.container.offset().left) { 
+				// Make the dialog not exceed the left of the doq
+				d.element.parent().css({'left':me.container.offset().left});
+				me._mouse_in_dropzone(d,me.leftbar);
+				return false;
+			}
+			if (ui.position.left+d.element.parent().outerWidth()>me.container.offset().left+me.container.width()) { 
+				// Make the dialog not exceed the right of the doq
+				d.element.parent().css({'left':(me.container.offset().left+me.container.width())-d.element.parent.outerWidth()});
+				me._mouse_in_dropzone(d,me.rightbar);
+				return false;
+			}
+			if (ui.position.top+d.element.parent().outerHeight()>me.container.offset().top+me.container.height()) { 
+				// Make the dialog not exceed the bottom of the doq
+				d.element.parent().css({'top':(me.container.offset().top+me.container.height())-d.element.parent().outerHeight()});
+				me._mouse_in_dropzone(d,me.bottombar);
+				return false;
+			}
+			if (ui.position.top<me.container.offset().top+me._get_topbar_height()) { 
+				// Dialog is within the topbar dropzone
+				me._mouse_in_dropzone(d,me.topbar);
+			}
+			if (ui.position.left<me.container.offset().left+me._get_leftbar_width()) { 
+				// Dialog is within the leftbar dropzone
+				me._mouse_in_dropzone(d,me.leftbar);
+			}
+			if (ui.position.left+d.element.parent().outerWidth()>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
+				// Dialog is within the rightbar dropzone
+				me._mouse_in_dropzone(d,me.rightbar);
+			}
+			if (ui.position.top+d.element.parent().outerHeight()>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
+				// Dialog is within the bottombar dropzone
+				me._mouse_in_dropzone(d,me.bottombar);
+			}
 		}
+	},
+	_mouse_in_dropzone: function(dialog,dropzone) { 
+		console.log(dropzone);
 	},
 	_do_html_setup: function() { 
 		$(window).resize(this._resize());
