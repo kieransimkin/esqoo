@@ -3,6 +3,10 @@ $.widget( "esqoo.doq", {
 	options: {
 		sides_bigger:true
 	},
+	leftbar_docked_items: [],
+	rightbar_docked_items: [],
+	topbar_docked_items: [],
+	bottombar_docked_items: [],
 	_create: function() { 
 		this._do_html_setup();
 	},
@@ -79,19 +83,19 @@ $.widget( "esqoo.doq", {
 				.insertBefore(this.element);
 		this.leftbar=$('<div></div>')
 				.css({'position':'absolute','left':'0px','width':'0.8em','height':'100%','top':'0px'})
-				.addClass('esqoo-ui-doq-leftbar ui-widget-content ui-state-active')
+				.addClass('esqoo-ui-doq-leftbar ui-widget-content ui-state-active esqoo-ui-dockbar')
 				.appendTo(this.container);
 		this.rightbar=$('<div></div>')
 				.css({'position':'absolute','right':'0px','width':'0.8em','height':'100%'})
-				.addClass('esqoo-ui-doq-rightbar ui-widget-content ui-state-active')
+				.addClass('esqoo-ui-doq-rightbar ui-widget-content ui-state-active esqoo-ui-dockbar')
 				.appendTo(this.container);
 		this.topbar=$('<div></div>')
 				.css({'position':'absolute','top':'0px', 'width':'100%', 'height':'0.8em'})
-				.addClass('esqoo-ui-doq-topbar ui-widget-content ui-state-active')
+				.addClass('esqoo-ui-doq-topbar ui-widget-content ui-state-active esqoo-ui-dockbar')
 				.appendTo(this.container);
 		this.bottombar=$('<div></div>')
 				.css({'position':'absolute','bottom':'0px', 'width':'100%','height':'0.8em'})
-				.addClass('esqoo-ui-doq-bottombar ui-widget-content ui-state-active')
+				.addClass('esqoo-ui-doq-bottombar ui-widget-content ui-state-active esqoo-ui-dockbar')
 				.appendTo(this.container);
 		this._size_bars();
 	},
@@ -115,13 +119,15 @@ $.widget( "esqoo.doq", {
 	},
 	_size_bars: function() { 
 		if (!this.options.sides_bigger) { 
-			this.topbar.css({'width':this.element.width()-2});
-			this.bottombar.css({'width':this.element.width()-2});
+			this.topbar.css({'width':this.element.width()-2,'z-index':'2'});
+			this.bottombar.css({'width':this.element.width()-2,'z-index':'2'});
 			this.leftbar.css({'top':this._get_topbar_height()+1,'height':this.element.height()-(this._get_topbar_height()+this._get_bottombar_height()+7)});
 			this.rightbar.css({'top':this._get_topbar_height()+1,'height':this.element.height()-(this._get_topbar_height()+this._get_bottombar_height()+7)});
 		} else { 
 			this.topbar.css({'left':this._get_leftbar_width()+1,'width':this.element.width()-(this._get_leftbar_width()+this._get_rightbar_width()+4)});
 			this.bottombar.css({'left':this._get_leftbar_width()+1,'width':this.element.width()-(this._get_leftbar_width()+this._get_rightbar_width()+4)});
+			this.rightbar.css({'z-index':'2'});
+			this.leftbar.css({'z-index':'2'});
 		}
 	},
 	_setOption: function( key, value ) {

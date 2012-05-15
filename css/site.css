@@ -115,6 +115,7 @@ div.flexigrid,
 ul.ui-autocomplete,
 ul.esqoo-ui-thumbnailbrowse-thumb-container-list li.ui-widget-content,
 div.ui-dialog div.ui-dialog-content iframe.form-iframe,
+div.esqoo-ui-dockbar,
 section.esqoo-dialog-tabs { 
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
