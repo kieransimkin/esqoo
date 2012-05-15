@@ -13,19 +13,26 @@ $.widget( "esqoo.doq", {
 	},
 	_dialog_dragstart: function(d) { 
 		var me = this;
-		return function() { 
+		return function(event,ui) { 
 			console.log('dragstart');
 		}
 	},
 	_dialog_dragstop: function(d) { 
 		var me = this;
-		return function() { 
+		return function(event,ui) { 
 			console.log('dragstop');
 		}
 	},
 	_dialog_drag: function(d) { 
 		var me = this;
-		return function() { 
+		return function(event,ui) { 
+			if (ui.position.top<me.container.offset().top) { 
+				//console.log(d.element.parent());
+				d.element.parent().css({'top':me.container.offset().top});
+				return false;
+			}
+			console.log(ui.position.top);
+			console.log(me.container.offset());
 			console.log('drag');
 		}
 	},
