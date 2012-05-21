@@ -354,8 +354,6 @@ $.widget( "esqoo.doq", {
 				}
 				break;
 		}
-		console.log(width);
-		console.log(height);
 		dialog.oldwidth=this._get_dialog_width(dialog);
 		dialog.oldheight=this._get_dialog_height(dialog);
 		dialog.temp_docked=true;
@@ -371,6 +369,7 @@ $.widget( "esqoo.doq", {
 		dialog.option('minHeight',height);
 		dialog.option('width',width);
 		dialog.option('height',height);
+		this._dialog_drag_inner(dialog);
 	},
 	_restore_dialog_size: function(dialog) { 
 		dialog.uiDialog.unbind('dialogdrag.ui-dialog');
