@@ -17,6 +17,7 @@ $.widget( "esqoo.doq", {
 	bottombar_height: null,
 	hover_dialog: null,
 	hover_suspended: false,
+	in_dropzone: null,
 	_create: function() { 
 		this._do_html_setup();
 	},
@@ -52,29 +53,29 @@ $.widget( "esqoo.doq", {
 				me._mouse_in_dropzone(d,me.bottombar);
 				return false;
 			}
-			var indropzone=false;
+			me.in_dropzone=null;
 			// TODO - only one of these should be executed, they need to be prioritized correctly depending on where the mouse is
 			if (ui.position.top<me.container.offset().top+me._get_topbar_height()) { 
 				// Dialog is within the topbar dropzone
 				me._mouse_in_dropzone(d,me.topbar);
-				indropzone=true;
+				me.in_dropzone=me.topbar;
 			}
 			if (ui.position.left<me.container.offset().left+me._get_leftbar_width()) { 
 				// Dialog is within the leftbar dropzone
 				me._mouse_in_dropzone(d,me.leftbar);
-				indropzone=true;
+				me.in_dropzone=me.leftbar;
 			}
 			if (ui.position.left+me._get_dialog_width(d)>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
 				// Dialog is within the rightbar dropzone
 				me._mouse_in_dropzone(d,me.rightbar);
-				indropzone=true;
+				me.in_dropzone=me.rightbar;
 			}
 			if (ui.position.top+me._get_dialog_height(d)>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
 				// Dialog is within the bottombar dropzone
 				me._mouse_in_dropzone(d,me.bottombar);
-				indropzone=true;
+				me.in_dropzone=me.bottombar;
 			}
-			if (!indropzone && me.hover_dialog!==null) { 
+			if (me.in_dropzone===null && me.hover_dialog!==null) { 
 				me._mouse_leave_dropzone(d);	
 				me.hover_dialog=null;
 			}
@@ -87,32 +88,38 @@ $.widget( "esqoo.doq", {
 			var leftoff=0;
 			var indropzone=false;
 			// TODO - only one of these should be executed, they need to be prioritized correctly depending on where the mouse is
-			if (ui.position.top<me.container.offset().top+me._get_topbar_height()) { 
+			switch (me.in_dropzone) { 
+				case me.leftbar:
+					leftoff=me.leftbar.offset().left;
+					topoff=me.leftbar.offset().top;
+					break;
+				case me.rightbar:
+					leftoff=me.rightbar.offset().left;
+					topoff=me.rightbar.offset().top;
+					break;
+				case me.topbar:
+					leftoff=me.topbar.offset().left;
+					topoff=me.topbar.offset().top;
+					break;
+				case me.bottombar:
+					leftoff=me.bottombar.offset().left;
+					topoff=me.bottombar.offset().top;
+					break;
+			}
+			if (me.in_dropzone==me.topbar && ui.position.top<me.container.offset().top+me._get_topbar_height()) { 
 				// Dialog is within the topbar dropzone
-				me._mouse_in_dropzone(d,me.topbar);
-				leftoff=me.topbar.offset().left;
-				topoff=me.topbar.offset().top;
 				indropzone=true;
 			}
-			if (ui.position.left<me.container.offset().left+me._get_leftbar_width()) { 
+			if (me.in_dropzone==me.leftbar && ui.position.left<me.container.offset().left+me._get_leftbar_width()) { 
 				// Dialog is within the leftbar dropzone
-				me._mouse_in_dropzone(d,me.leftbar);
-				leftoff=me.leftbar.offset().left;
-				topoff=me.leftbar.offset().top;
 				indropzone=true;
 			}
-			if (ui.position.left+me._get_dialog_width(d)>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
+			if (me.in_dropzone==me.rightbar && ui.position.left+me._get_dialog_width(d)>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
 				// Dialog is within the rightbar dropzone
-				me._mouse_in_dropzone(d,me.rightbar);
-				leftoff=me.rightbar.offset().left;
-				topoff=me.rightbar.offset().top;
 				indropzone=true;
 			}
-			if (ui.position.top+me._get_dialog_height(d)>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
+			if (me.in_dropzone==me.bottombar && ui.position.top+me._get_dialog_height(d)>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
 				// Dialog is within the bottombar dropzone
-				me._mouse_in_dropzone(d,me.bottombar);
-				leftoff=me.bottombar.offset().left;
-				topoff=me.bottombar.offset().top;
 				indropzone=true;
 			}
 			if (!indropzone && me.hover_dialog!==null) { 
@@ -127,9 +134,12 @@ $.widget( "esqoo.doq", {
 		}
 	},
 	_mouse_in_dropzone: function(dialog,dropzone) { 
+		var me = this;
 		if (!this.hover_suspended) { 
 			if (this.hover_dialog===null) { 
-				this._mouse_enter_dropzone(dialog,dropzone);
+				this._mouse_enter_dropzone(dialog,dropzone,function() { 
+					me._size_dialog_to_bar(dialog,dropzone);
+				});
 				this.hover_dialog=dropzone;
 			} else if (this.hover_dialog==dropzone) { 
 				this._mouse_move_dropzone(dialog,dropzone);
@@ -145,7 +155,6 @@ $.widget( "esqoo.doq", {
 		} else { 
 
 		}
-		this._size_dialog_to_bar(dialog,dropzone);
 	},
 	_mouse_move_dropzone: function(dialog,dropzone) { 
 
@@ -155,6 +164,7 @@ $.widget( "esqoo.doq", {
 		this.hover_suspended=true;
 		this._mouse_leave_dropzone(dialog,function() { 
 			me._mouse_enter_dropzone(dialog,dropzone,function() { 
+				me._size_dialog_to_bar(dialog,dropzone);
 				me.hover_suspended=false;
 			});
 		});
