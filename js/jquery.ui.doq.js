@@ -16,6 +16,7 @@ $.widget( "esqoo.doq", {
 	topbar_height: null,
 	bottombar_height: null,
 	hover_dialog: null,
+	hover_suspended: false,
 	_create: function() { 
 		this._do_html_setup();
 	},
@@ -80,19 +81,21 @@ $.widget( "esqoo.doq", {
 		}
 	},
 	_mouse_in_dropzone: function(dialog,dropzone) { 
-		if (this.hover_dialog===null) { 
-			this._mouse_enter_dropzone(dialog,dropzone);
-			this.hover_dialog=dropzone;
-		} else if (this.hover_dialog==dropzone) { 
-			this._mouse_move_dropzone(dialog,dropzone);
-		} else { 
-			this._mouse_change_dropzone(dialog,dropzone);
-			this.hover_dialog=dropzone;
+		if (!this.hover_suspended) { 
+			if (this.hover_dialog===null) { 
+				this._mouse_enter_dropzone(dialog,dropzone);
+				this.hover_dialog=dropzone;
+			} else if (this.hover_dialog==dropzone) { 
+				this._mouse_move_dropzone(dialog,dropzone);
+			} else { 
+				this._mouse_change_dropzone(dialog,dropzone);
+				this.hover_dialog=dropzone;
+			}
 		}
 	},
-	_mouse_enter_dropzone: function(dialog,dropzone) { 
+	_mouse_enter_dropzone: function(dialog,dropzone,callback) { 
 		if (this._get_docked_items(dropzone)<1) { 
-			this._expand_bar(dropzone);
+			this._expand_bar(dropzone,callback);
 		} else { 
 
 		}
@@ -101,36 +104,39 @@ $.widget( "esqoo.doq", {
 
 	},
 	_mouse_change_dropzone: function(dialog,dropzone) { 
-		// XXX some work still to do on this
-		return;
-		this._mouse_leave_dropzone(dialog);
-		this._mouse_enter_dropzone(dialog,dropzone);
+		var me = this;
+		this.hover_suspended=true;
+		this._mouse_leave_dropzone(dialog,function() { 
+			me._mouse_enter_dropzone(dialog,dropzone,function() { 
+				me.hover_suspended=false;
+			});
+		});
 	},
-	_mouse_leave_dropzone: function(dialog) { 
+	_mouse_leave_dropzone: function(dialog,callback) { 
 		if (this._get_docked_items(this.hover_dialog)<1) { 
-			this._collapse_bar(this.hover_dialog);
+			this._collapse_bar(this.hover_dialog,callback);
 		} else { 
 
 		}
 	},
-	_expand_bar: function(bar) { 
+	_expand_bar: function(bar,callback) { 
 		var size=this._get_bar_size(bar);
-		this._resize_slide_bar(bar,size);
+		this._resize_slide_bar(bar,size,callback);
 	},
-	_resize_slide_bar: function(bar,size) { 
+	_resize_slide_bar: function(bar,size,callback) { 
 		switch (bar) { 
 			case this.topbar:
 			case this.bottombar:
-				bar.animate({height: size},'fast');
+				bar.animate({height: size},'fast','swing',callback);
 				break;
 			case this.leftbar:
 			case this.rightbar:
-				bar.animate({width: size},'fast');
+				bar.animate({width: size},'fast','swing',callback);
 				break;
 		}
 	},
-	_collapse_bar: function(bar) { 
-		this._resize_slide_bar(bar,'1em');
+	_collapse_bar: function(bar,callback) { 
+		this._resize_slide_bar(bar,'1em',callback);
 	},
 	_dialog_dragstart: function(d) { 
 		var me = this;
