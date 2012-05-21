@@ -2,10 +2,10 @@
 $.widget( "esqoo.doq", {
 	options: {
 		sides_bigger:true,
-		default_leftbar_width: '200',
-		default_rightbar_width: '200',
-		default_topbar_height: '200',
-		default_bottombar_height: '200'
+		default_leftbar_width: '20%',
+		default_rightbar_width: '20%',
+		default_topbar_height: '20%',
+		default_bottombar_height: '20%'
 	},
 	leftbar_docked_items: [],
 	rightbar_docked_items: [],
@@ -40,15 +40,15 @@ $.widget( "esqoo.doq", {
 				me._mouse_in_dropzone(d,me.leftbar);
 				return false;
 			}
-			if (ui.position.left+d.element.parent().outerWidth()>me.container.offset().left+me.container.width()) { 
+			if (ui.position.left+me._get_dialog_width(d)>me.container.offset().left+me.container.width()) { 
 				// Make the dialog not exceed the right of the doq
-				d.element.parent().css({'left':(me.container.offset().left+me.container.width())-d.element.parent.outerWidth()});
+				d.element.parent().css({'left':(me.container.offset().left+me.container.width())-me._get_dialog_width(d)});
 				me._mouse_in_dropzone(d,me.rightbar);
 				return false;
 			}
-			if (ui.position.top+d.element.parent().outerHeight()>me.container.offset().top+me.container.height()) { 
+			if (ui.position.top+me._get_dialog_height(d)>me.container.offset().top+me.container.height()) { 
 				// Make the dialog not exceed the bottom of the doq
-				d.element.parent().css({'top':(me.container.offset().top+me.container.height())-d.element.parent().outerHeight()});
+				d.element.parent().css({'top':(me.container.offset().top+me.container.height())-me._get_dialog_height(d)});
 				me._mouse_in_dropzone(d,me.bottombar);
 				return false;
 			}
@@ -64,12 +64,12 @@ $.widget( "esqoo.doq", {
 				me._mouse_in_dropzone(d,me.leftbar);
 				indropzone=true;
 			}
-			if (ui.position.left+d.element.parent().outerWidth()>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
+			if (ui.position.left+me._get_dialog_width(d)>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
 				// Dialog is within the rightbar dropzone
 				me._mouse_in_dropzone(d,me.rightbar);
 				indropzone=true;
 			}
-			if (ui.position.top+d.element.parent().outerHeight()>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
+			if (ui.position.top+me._get_dialog_height(d)>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
 				// Dialog is within the bottombar dropzone
 				me._mouse_in_dropzone(d,me.bottombar);
 				indropzone=true;
@@ -99,6 +99,7 @@ $.widget( "esqoo.doq", {
 		} else { 
 
 		}
+		this._size_dialog_to_bar(dialog,dropzone);
 	},
 	_mouse_move_dropzone: function(dialog,dropzone) { 
 
@@ -118,6 +119,7 @@ $.widget( "esqoo.doq", {
 		} else { 
 
 		}
+		this._restore_dialog_size(dialog);
 	},
 	_expand_bar: function(bar,callback) { 
 		var size=this._get_bar_size(bar);
@@ -231,6 +233,47 @@ $.widget( "esqoo.doq", {
 	},
 	_get_rightbar_width: function() { 
 		return this.rightbar.width();
+	},
+	_get_dialog_width: function(dialog) { 
+		if (typeof(dialog.temp_docked)!='undefined' && dialog.temp_docked===true) { 
+			return dialog.oldwidth;
+		} else { 
+			return dialog.element.parent().outerWidth();
+		}
+	},
+	_get_dialog_height: function(dialog) { 
+		if (typeof(dialog.temp_docked)!='undefined' && dialog.temp_docked===true) { 
+			return dialog.oldheight;
+		} else { 
+			return dialog.element.parent().outerHeight();
+		}
+	},
+	_size_dialog_to_bar: function(dialog,bar) { 
+		var width=50;
+		var height=50;
+		dialog.oldwidth=this._get_dialog_width(dialog);
+		dialog.oldheight=this._get_dialog_height(dialog);
+		dialog.temp_docked=true;
+		dialog.stored_minwidth=dialog.option('minWidth');
+		dialog.stored_minheight=dialog.option('minHeight');
+		dialog.stored_maxwidth=dialog.option('maxWidth');
+		dialog.stored_maxheight=dialog.option('maxHeight');
+		dialog.stored_width=dialog.option('width');
+		dialog.stored_height=dialog.option('height');
+		dialog.option('maxWidth',width);
+		dialog.option('maxHeight',height);
+		dialog.option('minWidth',width);
+		dialog.option('minHeight',height);
+		dialog.option('width',width);
+		dialog.option('height',height);
+	},
+	_restore_dialog_size: function(dialog) { 
+		dialog.option('maxWidth',dialog.stored_maxwidth);
+		dialog.option('maxHeight',dialog.stored_maxheight);	
+		dialog.option('minWidth',dialog.stored_minwidth);
+		dialog.option('minHeight',dialog.stored_minheight);
+		dialog.option('width',dialog.stored_width);
+		dialog.option('height',dialog.stored_height);
 	},
 	_size_bars: function() { 
 		if (!this.options.sides_bigger) { 
