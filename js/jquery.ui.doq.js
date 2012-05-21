@@ -25,11 +25,8 @@ $.widget( "esqoo.doq", {
 		d.uiDialog.bind('dialogdragstop.ui-dialog',this._dialog_dragstop(d));
 		d.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(d));
 	},
-	_dialog_drag: function(d,inbar) { 
+	_dialog_drag: function(d) { 
 		var me = this;
-		if (typeof(inbar)=='undefined') { 
-			inbar=false;
-		}
 		return function(event,ui) { 
 			if (ui.position.top<me.container.offset().top) { 
 				// Make the dialog not exceed the top of the doq
@@ -81,6 +78,12 @@ $.widget( "esqoo.doq", {
 				me._mouse_leave_dropzone(d);	
 				me.hover_dialog=null;
 			}
+		}
+	},
+	_dialog_drag_inner: function(d) { 
+		var me = this;
+		return function(event,ui) { 
+
 		}
 	},
 	_mouse_in_dropzone: function(dialog,dropzone) { 
@@ -265,7 +268,7 @@ $.widget( "esqoo.doq", {
 		var width=null;
 		var height=null;
 		dialog.uiDialog.unbind('dialogdrag.ui-dialog');
-		dialog.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(dialog,true));
+		dialog.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag_inner(dialog));
 		switch (bar) { 
 			case this.leftbar:
 				width=this._get_bar_size(bar)-20;
@@ -319,6 +322,8 @@ $.widget( "esqoo.doq", {
 		dialog.option('height',height);
 	},
 	_restore_dialog_size: function(dialog) { 
+		dialog.uiDialog.unbind('dialogdrag.ui-dialog');
+		dialog.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(dialog));
 		dialog.temp_docked=false;
 		dialog.option('maxWidth',dialog.stored_maxwidth);
 		dialog.option('maxHeight',dialog.stored_maxheight);	
