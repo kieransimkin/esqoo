@@ -1,12 +1,21 @@
 (function( $ ) {
 $.widget( "esqoo.doq", {
 	options: {
-		sides_bigger:true
+		sides_bigger:true,
+		leftbar_default_width: '200',
+		rightbar_default_width: '200',
+		topbar_default_height: '200',
+		bottombar_default_height: '200'
 	},
 	leftbar_docked_items: [],
 	rightbar_docked_items: [],
 	topbar_docked_items: [],
 	bottombar_docked_items: [],
+	leftbar_width: null,
+	rightbar_width: null,
+	topbar_height: null,
+	bottombar_height: null,
+	hover_dialog: null,
 	_create: function() { 
 		this._do_html_setup();
 	},
@@ -14,18 +23,6 @@ $.widget( "esqoo.doq", {
 		d.uiDialog.bind('dialogdragstart.ui-dialog',this._dialog_dragstart(d));
 		d.uiDialog.bind('dialogdragstop.ui-dialog',this._dialog_dragstop(d));
 		d.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(d));
-	},
-	_dialog_dragstart: function(d) { 
-		var me = this;
-		return function(event,ui) { 
-			console.log('dragstart');
-		}
-	},
-	_dialog_dragstop: function(d) { 
-		var me = this;
-		return function(event,ui) { 
-			console.log('dragstop');
-		}
 	},
 	_dialog_drag: function(d) { 
 		var me = this;
@@ -54,26 +51,95 @@ $.widget( "esqoo.doq", {
 				me._mouse_in_dropzone(d,me.bottombar);
 				return false;
 			}
+			var indropzone=false;
+			// TODO - only one of these should be executed, they need to be prioritized correctly depending on where the mouse is
 			if (ui.position.top<me.container.offset().top+me._get_topbar_height()) { 
 				// Dialog is within the topbar dropzone
 				me._mouse_in_dropzone(d,me.topbar);
+				indropzone=true;
 			}
 			if (ui.position.left<me.container.offset().left+me._get_leftbar_width()) { 
 				// Dialog is within the leftbar dropzone
 				me._mouse_in_dropzone(d,me.leftbar);
+				indropzone=true;
 			}
 			if (ui.position.left+d.element.parent().outerWidth()>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
 				// Dialog is within the rightbar dropzone
 				me._mouse_in_dropzone(d,me.rightbar);
+				indropzone=true;
 			}
 			if (ui.position.top+d.element.parent().outerHeight()>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
 				// Dialog is within the bottombar dropzone
 				me._mouse_in_dropzone(d,me.bottombar);
+				indropzone=true;
+			}
+			if (!indropzone && me.hover_dialog!==null) { 
+				me._mouse_leave_dropzone(d);	
+				me.hover_dialog=null;
 			}
 		}
 	},
 	_mouse_in_dropzone: function(dialog,dropzone) { 
+		if (this.hover_dialog===null) { 
+			this._mouse_enter_dropzone(dialog,dropzone);
+			this.hover_dialog=dropzone;
+		} else if (this.hover_dialog==dropzone) { 
+			this._mouse_move_dropzone(dialog,dropzone);
+		} else { 
+			this._mouse_change_dropzone(dialog,dropzone);
+			this.hover_dialog=dropzone;
+		}
+	},
+	_mouse_enter_dropzone: function(dialog,dropzone) { 
+		if (this._get_docked_items(dropzone)<1) { 
+			this._expand_bar(dropzone);
+		} else { 
+
+		}
+	},
+	_mouse_move_dropzone: function(dialog,dropzone) { 
+
+	},
+	_mouse_change_dropzone: function(dialog,dropzone) { 
+		console.log('mouse changed dropzone');
 		console.log(dropzone);
+	},
+	_mouse_leave_dropzone: function(dialog) { 
+		if (this._get_docked_items(this.hover_dialog)<1) { 
+			this._collapse_bar(this.hover_dialog);
+		} else { 
+
+		}
+	},
+	_expand_bar: function(bar) { 
+
+	},
+	_collapse_bar: function(bar) { 
+
+	},
+	_dialog_dragstart: function(d) { 
+		var me = this;
+		return function(event,ui) { 
+			console.log('dragstart');
+		}
+	},
+	_dialog_dragstop: function(d) { 
+		var me = this;
+		return function(event,ui) { 
+			console.log('dragstop');
+		}
+	},
+	_get_docked_items: function(bar) { 
+		switch (bar) { 
+			case this.leftbar:
+				return this.leftbar_docked_items;
+			case this.rightbar:
+				return this.rightbar_docked_items;
+			case this.topbar:
+				return this.topbar_docked_items;
+			case this.bottombar:
+				return this.bottombar_docked_items;
+		}
 	},
 	_do_html_setup: function() { 
 		$(window).resize(this._resize());
