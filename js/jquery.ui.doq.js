@@ -268,6 +268,7 @@ $.widget( "esqoo.doq", {
 		dialog.option('height',height);
 	},
 	_restore_dialog_size: function(dialog) { 
+		dialog.temp_docked=false;
 		dialog.option('maxWidth',dialog.stored_maxwidth);
 		dialog.option('maxHeight',dialog.stored_maxheight);	
 		dialog.option('minWidth',dialog.stored_minwidth);
