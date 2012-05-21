@@ -125,11 +125,12 @@ $.widget( "esqoo.doq", {
 			if (!indropzone && me.hover_dialog!==null) { 
 				me._mouse_leave_dropzone(d);	
 				me.hover_dialog=null;
+			} else { 
+				leftoff=leftoff+6;
+				topoff=topoff+6;
+				d.element.parent().css({'top':topoff});
+				d.element.parent().css({'left':leftoff});
 			}
-			leftoff=leftoff+6;
-			topoff=topoff+6;
-			d.element.parent().css({'top':topoff});
-			d.element.parent().css({'left':leftoff});
 			return false;
 		}
 	},
