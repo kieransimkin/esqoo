@@ -2,10 +2,10 @@
 $.widget( "esqoo.doq", {
 	options: {
 		sides_bigger:true,
-		leftbar_default_width: '200',
-		rightbar_default_width: '200',
-		topbar_default_height: '200',
-		bottombar_default_height: '200'
+		default_leftbar_width: '200',
+		default_rightbar_width: '200',
+		default_topbar_height: '200',
+		default_bottombar_height: '200'
 	},
 	leftbar_docked_items: [],
 	rightbar_docked_items: [],
@@ -101,8 +101,10 @@ $.widget( "esqoo.doq", {
 
 	},
 	_mouse_change_dropzone: function(dialog,dropzone) { 
-		console.log('mouse changed dropzone');
-		console.log(dropzone);
+		// XXX some work still to do on this
+		return;
+		this._mouse_leave_dropzone(dialog);
+		this._mouse_enter_dropzone(dialog,dropzone);
 	},
 	_mouse_leave_dropzone: function(dialog) { 
 		if (this._get_docked_items(this.hover_dialog)<1) { 
@@ -112,10 +114,23 @@ $.widget( "esqoo.doq", {
 		}
 	},
 	_expand_bar: function(bar) { 
-
+		var size=this._get_bar_size(bar);
+		this._resize_slide_bar(bar,size);
+	},
+	_resize_slide_bar: function(bar,size) { 
+		switch (bar) { 
+			case this.topbar:
+			case this.bottombar:
+				bar.animate({height: size},'fast');
+				break;
+			case this.leftbar:
+			case this.rightbar:
+				bar.animate({width: size},'fast');
+				break;
+		}
 	},
 	_collapse_bar: function(bar) { 
-
+		this._resize_slide_bar(bar,'1em');
 	},
 	_dialog_dragstart: function(d) { 
 		var me = this;
@@ -127,6 +142,34 @@ $.widget( "esqoo.doq", {
 		var me = this;
 		return function(event,ui) { 
 			console.log('dragstop');
+		}
+	},
+	_get_bar_size: function(bar) { 
+		switch (bar) { 
+			case this.leftbar:
+				if (this.leftbar_width!==null) { 
+					return this.leftbar_width;
+				} else { 
+					return (this.leftbar_width=this.options.default_leftbar_width);
+				}
+			case this.rightbar:
+				if (this.rightbar_width!==null) { 
+					return this.rightbar_width;
+				} else { 
+					return (this.rightbar_width=this.options.default_rightbar_width);
+				}
+			case this.topbar:
+				if (this.topbar_height!==null) { 
+					return this.topbar_height;
+				} else { 
+					return (this.topbar_height=this.options.default_topbar_height);
+				}
+			case this.bottombar:
+				if (this.bottombar_height!==null) { 
+					return this.bottombar_height;
+				} else { 
+					return (this.bottombar_height=this.options.default_bottombar_height);
+				}
 		}
 	},
 	_get_docked_items: function(bar) { 
