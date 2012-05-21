@@ -25,8 +25,11 @@ $.widget( "esqoo.doq", {
 		d.uiDialog.bind('dialogdragstop.ui-dialog',this._dialog_dragstop(d));
 		d.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(d));
 	},
-	_dialog_drag: function(d) { 
+	_dialog_drag: function(d,inbar) { 
 		var me = this;
+		if (typeof(inbar)=='undefined') { 
+			inbar=false;
+		}
 		return function(event,ui) { 
 			if (ui.position.top<me.container.offset().top) { 
 				// Make the dialog not exceed the top of the doq
@@ -158,25 +161,29 @@ $.widget( "esqoo.doq", {
 				if (this.leftbar_width!==null) { 
 					return this.leftbar_width;
 				} else { 
-					return (this.leftbar_width=this.options.default_leftbar_width);
+					// XXX External esqoo_ui call
+					return (this.leftbar_width=esqoo_ui.convert_percentages_to_viewport_width_pixels(this.options.default_leftbar_width));
 				}
 			case this.rightbar:
 				if (this.rightbar_width!==null) { 
 					return this.rightbar_width;
 				} else { 
-					return (this.rightbar_width=this.options.default_rightbar_width);
+					// XXX External esqoo_ui call
+					return (this.rightbar_width=esqoo_ui.convert_percentages_to_viewport_width_pixels(this.options.default_rightbar_width));
 				}
 			case this.topbar:
 				if (this.topbar_height!==null) { 
 					return this.topbar_height;
 				} else { 
-					return (this.topbar_height=this.options.default_topbar_height);
+					// XXX External esqoo_ui call
+					return (this.topbar_height=esqoo_ui.convert_percentages_to_viewport_height_pixels(this.options.default_topbar_height));
 				}
 			case this.bottombar:
 				if (this.bottombar_height!==null) { 
 					return this.bottombar_height;
 				} else { 
-					return (this.bottombar_height=this.options.default_bottombar_height);
+					// XXX External esqoo_ui call
+					return (this.bottombar_height=esqoo_ui.convert_percentages_to_viewport_height_pixels(this.options.default_bottombar_height));
 				}
 		}
 	},
@@ -234,6 +241,12 @@ $.widget( "esqoo.doq", {
 	_get_rightbar_width: function() { 
 		return this.rightbar.width();
 	},
+	_get_sidebar_height: function() { 
+		return this.leftbar.height();
+	},
+	_get_endbar_width: function() { 
+		return this.topbar.width();
+	},
 	_get_dialog_width: function(dialog) { 
 		if (typeof(dialog.temp_docked)!='undefined' && dialog.temp_docked===true) { 
 			return dialog.oldwidth;
@@ -249,8 +262,46 @@ $.widget( "esqoo.doq", {
 		}
 	},
 	_size_dialog_to_bar: function(dialog,bar) { 
-		var width=50;
-		var height=50;
+		var width=null;
+		var height=null;
+		dialog.uiDialog.unbind('dialogdrag.ui-dialog');
+		dialog.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(dialog,true));
+		switch (bar) { 
+			case this.leftbar:
+				width=this._get_bar_size(bar)-20;
+				if (this.leftbar_docked_items.length<1) { 
+					height=this._get_sidebar_height()-20;
+				} else { 
+					height=this._get_sidebar_height()/this.leftbar_docked_items.length;
+				}
+				break;
+			case this.rightbar:
+				width=this._get_bar_size(bar)-20;
+				if (this.rightbar_docked_items.length<1) { 
+					height=this._get_sidebar_height()-20;
+ 				} else { 
+					height=this._get_sidebar_height()/this.rightbar_docked_items.length;
+				}
+				break;	
+			case this.topbar:
+				height=this._get_bar_size(bar)-20;	
+				if (this.topbar_docked_items.length<1) { 
+					width=this._get_endbar_width()-20;
+				} else { 
+					width=this._get_endbar_width()/this.topbar_docked_items.length;
+				}
+				break;	
+			case this.bottombar:
+				height=this._get_bar_size(bar)-20;
+				if (this.bottombar_docked_items.length<1) { 
+					width=this._get_endbar_width()-20;	
+				} else { 
+					width=this._get_endbar_width()/this.bottombar_docked_items.length;
+				}
+				break;
+		}
+		console.log(width);
+		console.log(height);
 		dialog.oldwidth=this._get_dialog_width(dialog);
 		dialog.oldheight=this._get_dialog_height(dialog);
 		dialog.temp_docked=true;
