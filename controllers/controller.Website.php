@@ -14,6 +14,9 @@ class WebsiteController extends LockedController {
 	function menusUI($arg='',$input=array()) { 
 
 	}
+	function picturesizesUI($arg='',$input=array()) { 
+
+	}
 	/*************************
 	 *  ╺┳┓╻┏━┓╻  ┏━┓┏━╸┏━┓  *
 	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
