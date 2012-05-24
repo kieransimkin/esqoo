@@ -6,8 +6,8 @@ class BlogController extends LockedController {
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function postUI($arg='',$input=array()) { 
-		$form=$this->get_post_form($input,$post);
 		$post=$this->get_post($arg);
+		$form=$this->get_post_form($input,$post);
 		if ($form->validate()) { 
 			$this->postAPI($arg,$input);
 			$this->showMessage(_('Blog entry posted'));
