@@ -51,8 +51,20 @@ class BlogController extends LockedController {
 	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
 	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
 	 *****************************************/
-	public function postAPI ($arg='',$input=array()) {
-
+	public function postAPI($arg='',$input=array()) {
+		$oldpost=$this->get_post($input['PostID']);
+		$form=$this->get_post_form($input,$oldpost,true);
+		if (!$form->validate()) { 
+			$this->api_form_validation_error($form);
+		}
+		if ($this->api_validation_success()) { 
+			$post=Post::get();
+			$post->user_id=$this->user->id;
+			$post->Title=$input['Title'];
+			$post->Content=$input['Content'];
+			$post->save();
+			return $post;
+		}
 	}
 	public function listAPI($arg='',$input=array()) { 
 		$suffix=DBSQL::getSqlSuffix($input);
@@ -66,7 +78,7 @@ class BlogController extends LockedController {
 		return $this->flexigridResponse($posts,$input['Page'],$numrows);
 	}
 	public function getAPI($arg='',$input=array()) { 
-		$post=$this->get_post($arg);
+		$post=$this->get_post($input['PostID']);
 		if ($post!=null) { 
 			$post->set_visible_api_fields($this->get_post_fields());
 		}
