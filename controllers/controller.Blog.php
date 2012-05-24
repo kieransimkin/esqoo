@@ -6,19 +6,10 @@ class BlogController extends LockedController {
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function postUI($arg='',$input=array()) { 
-		if (strlen($arg)>0) { 
-			try {
-				$post=Post::get($arg,'id','row',true);
-			} catch (DBSQ_Exception $e) { 
-				// Post not found
-				$post=null;
-			}
-		} else {
-			$post=null;
-		}
 		$form=$this->get_post_form($input,$post);
+		$post=$this->get_post($arg);
 		if ($form->validate()) { 
-			$this->postAPI($arg='',$input);
+			$this->postAPI($arg,$input);
 			$this->showMessage(_('Blog entry posted'));
 			// Redirect to the new blog entry
 		}
@@ -35,7 +26,7 @@ class BlogController extends LockedController {
 	function quickpostDialog($arg='',$input=array()) { 
 		$form=$this->get_post_form($input,null);
 		if ($form->validate()) { 
-			$this->postAPI($arg='',$input);
+			$this->postAPI($arg,$input);
 			$this->showMessage(_('Blog entry posted'));
 			return $this->formSuccess();
 		} else { 
@@ -73,5 +64,37 @@ class BlogController extends LockedController {
 		DBSQL::set_all_visible_api_fields($posts,$this->get_post_fields());
 		$numrows=DBSQL::foundRows();
 		return $this->flexigridResponse($posts,$input['Page'],$numrows);
+	}
+	public function getAPI($arg='',$input=array()) { 
+		$post=$this->get_post($arg);
+		if ($post!=null) { 
+			$post->set_visible_api_fields($this->get_post_fields());
+		}
+		return $post;
+	}
+	/****************************
+	 *  ┏━┓┏━┓╻╻ ╻┏━┓╺┳╸┏━╸┏━┓  *
+	 *  ┣━┛┣┳┛┃┃┏┛┣━┫ ┃ ┣╸ ┗━┓  *
+	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
+	 ****************************/
+	private function get_post_fields() { 
+		return array("Title","id","Content","CreateDate","PublishDate","ModifyDate","DeleteDate");
+	}
+	private function get_post($arg) { 
+		if (strlen($arg)>0) { 
+			try {
+				$post=Post::get($arg,'id','row',true);
+				if ($post->user_id!=$this->user->id) { 
+					$post=null;
+				}
+			} catch (DBSQ_Exception $e) { 
+				// Post not found
+				$post=null;
+			}
+			
+		} else {
+			$post=null;
+		}
+		return $post;
 	}
 }
