@@ -64,6 +64,14 @@ class BlogController extends LockedController {
 
 	}
 	public function listAPI($arg='',$input=array()) { 
-
+		$suffix=DBSQL::getSqlSuffix($input);
+		if ($input['SearchField']=='Title' && strlen($input['SearchQuery'])>0) { 
+			$posts=Post::getAll('user_id=? and AND DeleteDate is null and Title like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+		} else { 
+			$posts=Post::getAll('user_id=? AND DeleteDate is null',array($this->user->id),null,$suffix);
+		}
+		DBSQL::set_all_visible_api_fields($posts,$this->get_post_fields());
+		$numrows=DBSQL::foundRows();
+		return $this->flexigridResponse($posts,$input['Page'],$numrows);
 	}
 }
