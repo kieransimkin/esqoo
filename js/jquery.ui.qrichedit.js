@@ -10,6 +10,22 @@ $.widget('esqoo.qrichedit', {
 		this.current_tab=this.options.defaulttab;
 		this._do_html_setup();
 		this._do_javascript_loads();
+		this._attach_form_submit_event_handler();
+	},
+	_attach_form_submit_event_handler: function() { 
+		var me = this;
+		this.element.closest("form").bind('submit',function(e,o) { 
+			me._read_value();
+			if (me.element.is('input')) { 
+				me.element.val(me.current_value);
+			} else if (me.element.is('textarea')) { 
+				me.element.html(me.current_value);
+			}
+		});
+	},
+	get_value: function() { 
+		this._read_value();
+		return this.current_value;
 	},
 	_get_unique_id: function(initial) { 
 		if (this.unique_id===null) { 
