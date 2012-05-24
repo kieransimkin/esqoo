@@ -8,6 +8,7 @@ class BlogController extends LockedController {
 	function postUI($arg='',$input=array()) { 
 		$post=$this->get_post($arg);
 		$form=$this->get_post_form($input,$post);
+		$form->addElement('submit','submit',array('data-blog-publish-button'=>'true'))->setValue('Publish');
 		if ($form->validate()) { 
 			$this->postAPI($arg,$input);
 			$this->showMessage(_('Blog entry posted'));
@@ -32,7 +33,6 @@ class BlogController extends LockedController {
 		} else { 
 			return $this->formFail($form,'30%','550');
 		}
-
 	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *

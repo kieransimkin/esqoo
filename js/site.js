@@ -1,5 +1,5 @@
 $(document).ready(function() { 
-	$('button:not(.ui-button)').livequery(function() { 
+	$('button:not(.ui-button),input[type="submit"],input[type="reset"]').livequery(function() { 
 		var primary = null;
 		var secondary = null;
 		if ($(this).attr('data-icon-primary')) { 
