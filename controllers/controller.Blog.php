@@ -24,6 +24,9 @@ class BlogController extends LockedController {
 		}
 		$this->view->form=$form;
 	}
+	function indexUI($arg='',$input=array()) { 
+		return;
+	}
 	/*************************
 	 *  ╺┳┓╻┏━┓╻  ┏━┓┏━╸┏━┓  *
 	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
@@ -58,6 +61,9 @@ class BlogController extends LockedController {
 	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
 	 *****************************************/
 	public function postAPI ($arg='',$input=array()) {
+
+	}
+	public function listAPI($arg='',$input=array()) { 
 
 	}
 }
