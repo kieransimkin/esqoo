@@ -114,7 +114,6 @@ $.widget('esqoo.qrichedit', {
 			break;
 			case 'Ace':
 				this._load_javascript('/js/acewidget/contrib/jquery.acewidget/jquery.acewidget.js',function() { 
-					$(me.codetextbox).acewidget();
 				});
 			break;
 			case 'markItUp':
@@ -330,6 +329,12 @@ $.widget('esqoo.qrichedit', {
 			if (me.current_tab!='code' && tab=='code' && esqoo_ui.code_editor=='EditArea') { 
 				me._show_editarea();
 			}
+			if (me.current_tab=='code' && tab !='code' && esqoo_ui.code_editor=='Ace') { 
+				me._hide_ace();
+			}
+			if (me.current_tab!='code' && tab=='code' && esqoo_ui.code_editor=='Ace') { 
+				me._show_ace();
+			}
 			me.current_tab=tab;
 		}
 	},
@@ -338,6 +343,12 @@ $.widget('esqoo.qrichedit', {
 	},
 	_show_editarea: function() { 
 		editAreaLoader.init({id:$(this.codetextbox).attr('id'),allow_toggle:false, syntax: "html", start_highlight: true });
+	},
+	_show_ace: function() { 
+		$(this.codetextbox).acewidget();
+	},
+	_hide_ace: function() { 
+
 	},
 	_setOption: function (key, value) { 
 		switch(key) { 
