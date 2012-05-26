@@ -33,24 +33,28 @@ $.widget( "esqoo.doq", {
 				// Make the dialog not exceed the top of the doq
 				d.element.parent().css({'top':me.container.offset().top});
 				me._mouse_in_dropzone(d,me.topbar);
+				me.dzpos=ui.position.top;
 				return false;
 			}
 			if (ui.position.left<me.container.offset().left) { 
 				// Make the dialog not exceed the left of the doq
 				d.element.parent().css({'left':me.container.offset().left});
 				me._mouse_in_dropzone(d,me.leftbar);
+				me.dzpos=ui.position.left;
 				return false;
 			}
 			if (ui.position.left+me._get_dialog_width(d)>me.container.offset().left+me.container.width()) { 
 				// Make the dialog not exceed the right of the doq
 				d.element.parent().css({'left':(me.container.offset().left+me.container.width())-me._get_dialog_width(d)});
 				me._mouse_in_dropzone(d,me.rightbar);
+				me.dzpos=ui.position.left;
 				return false;
 			}
 			if (ui.position.top+me._get_dialog_height(d)>me.container.offset().top+me.container.height()) { 
 				// Make the dialog not exceed the bottom of the doq
 				d.element.parent().css({'top':(me.container.offset().top+me.container.height())-me._get_dialog_height(d)});
 				me._mouse_in_dropzone(d,me.bottombar);
+				me.dzpos=ui.position.top;
 				return false;
 			}
 			me.in_dropzone=null;
@@ -59,21 +63,25 @@ $.widget( "esqoo.doq", {
 				// Dialog is within the topbar dropzone
 				me._mouse_in_dropzone(d,me.topbar);
 				me.in_dropzone=me.topbar;
+				me.dzpos=ui.position.top;
 			}
 			if (ui.position.left<me.container.offset().left+me._get_leftbar_width()) { 
 				// Dialog is within the leftbar dropzone
 				me._mouse_in_dropzone(d,me.leftbar);
 				me.in_dropzone=me.leftbar;
+				me.dzpos=ui.position.left;
 			}
 			if (ui.position.left+me._get_dialog_width(d)>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
 				// Dialog is within the rightbar dropzone
 				me._mouse_in_dropzone(d,me.rightbar);
 				me.in_dropzone=me.rightbar;
+				me.dzpos=ui.position.left;
 			}
 			if (ui.position.top+me._get_dialog_height(d)>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
 				// Dialog is within the bottombar dropzone
 				me._mouse_in_dropzone(d,me.bottombar);
 				me.in_dropzone=me.bottombar;
+				me.dzpos=ui.position.top;
 			}
 			if (me.in_dropzone===null && me.hover_dialog!==null) { 
 				me._mouse_leave_dropzone(d);	
@@ -106,19 +114,19 @@ $.widget( "esqoo.doq", {
 					topoff=me.bottombar.offset().top;
 					break;
 			}
-			if (me.in_dropzone==me.topbar && ui.position.top<me.container.offset().top+me._get_topbar_height()) { 
+			if (me.in_dropzone==me.topbar && ui.position.top<=me.dzpos) { 
 				// Dialog is within the topbar dropzone
 				indropzone=true;
 			}
-			if (me.in_dropzone==me.leftbar && ui.position.left<me.container.offset().left+me._get_leftbar_width()) { 
+			if (me.in_dropzone==me.leftbar && ui.position.left<=me.dzpos) { 
 				// Dialog is within the leftbar dropzone
 				indropzone=true;
 			}
-			if (me.in_dropzone==me.rightbar && ui.position.left+me._get_dialog_width(d)>(me.container.offset().left+me.container.width())-me._get_rightbar_width()) { 
+			if (me.in_dropzone==me.rightbar && ui.position.left>=me.dzpos) { 
 				// Dialog is within the rightbar dropzone
 				indropzone=true;
 			}
-			if (me.in_dropzone==me.bottombar && ui.position.top+me._get_dialog_height(d)>(me.container.offset().top+me.container.height())-me._get_bottombar_height()) { 
+			if (me.in_dropzone==me.bottombar && ui.position.top>=me.dzpos) { 
 				// Dialog is within the bottombar dropzone
 				indropzone=true;
 			}
@@ -136,6 +144,7 @@ $.widget( "esqoo.doq", {
 	},
 	_mouse_in_dropzone: function(dialog,dropzone) { 
 		var me = this;
+		console.log(this.hover_suspended);
 		if (!this.hover_suspended) { 
 			if (this.hover_dialog===null) { 
 				this._mouse_enter_dropzone(dialog,dropzone,function() { 
@@ -151,8 +160,15 @@ $.widget( "esqoo.doq", {
 		}
 	},
 	_mouse_enter_dropzone: function(dialog,dropzone,callback) { 
+		var me = this;
+		me.hover_suspended=true;
 		if (this._get_docked_items(dropzone)<1) { 
-			this._expand_bar(dropzone,callback);
+			this._expand_bar(dropzone,function() { 
+				me.hover_suspended=false;
+				if (typeof(callback)=='function') { 
+					callback();
+				}
+			});
 		} else { 
 
 		}
@@ -162,17 +178,22 @@ $.widget( "esqoo.doq", {
 	},
 	_mouse_change_dropzone: function(dialog,dropzone) { 
 		var me = this;
-		this.hover_suspended=true;
 		this._mouse_leave_dropzone(dialog,function() { 
 			me._mouse_enter_dropzone(dialog,dropzone,function() { 
 				me._size_dialog_to_bar(dialog,dropzone);
-				me.hover_suspended=false;
 			});
 		});
 	},
 	_mouse_leave_dropzone: function(dialog,callback) { 
+		var me = this;
+		me.hover_suspended=true;
 		if (this._get_docked_items(this.hover_dialog)<1) { 
-			this._collapse_bar(this.hover_dialog,callback);
+			this._collapse_bar(this.hover_dialog,function() { 
+				me.hover_suspended=false;		
+				if (typeof(callback)=='function') { 
+					callback();
+				}
+			});
 		} else { 
 
 		}
