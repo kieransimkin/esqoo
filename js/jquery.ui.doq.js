@@ -95,7 +95,6 @@ $.widget( "esqoo.doq", {
 			var topoff=0;
 			var leftoff=0;
 			var indropzone=false;
-			// TODO - only one of these should be executed, they need to be prioritized correctly depending on where the mouse is
 			switch (me.in_dropzone) { 
 				case me.leftbar:
 					leftoff=me.leftbar.offset().left;

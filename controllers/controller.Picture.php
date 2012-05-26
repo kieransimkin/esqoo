@@ -33,7 +33,7 @@ class PictureController extends LockedController {
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
-			return $this->formFail($form,'90%','550');
+			return $this->formFail($form,'30%','250');
 		}	
 	}
 	/*********************
