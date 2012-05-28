@@ -237,7 +237,8 @@ $.widget( "esqoo.doq", {
 		}
 	},
 	_dock_dialog: function (d,bar) { 
-		this._add_docked_item(bar,d);
+		//this._add_docked_item(bar,d);
+		//return;
 		this._hover_dialog=null;
 		d.temp_docked=false;
 		d.fully_docked=true;
@@ -249,9 +250,11 @@ $.widget( "esqoo.doq", {
 		d.uiDialog.bind('dialogdragstart.ui-dialog',this._dialog_dragstart(d));
 		d.uiDialog.unbind('dialogdrag.ui-dialog');
 		d.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(d));
+		d.fully_docked=false;
+		d.temp_docked=true;
+		this._mouse_leave_dropzone(d);	
+		this._dialog_drag(d);
 		//me._restore_dialog_size(d);
-		d.temp_docked=false;
-		d.fully_docked=true;
 	},
 	_get_bar_size: function(bar) { 
 		switch (bar) { 
@@ -422,13 +425,19 @@ $.widget( "esqoo.doq", {
 		dialog.stored_maxwidth=dialog.option('maxWidth');
 		dialog.stored_maxheight=dialog.option('maxHeight');
 		dialog.stored_width=dialog.option('width');
-		dialog.stored_height=dialog.option('height');
+		if (dialog.option('height')==='auto') { 
+			dialog.stored_height=dialog.oldheight;
+		} else { 
+			dialog.stored_height=dialog.option('height');
+		}
 		dialog.option('maxWidth',width);
 		dialog.option('maxHeight',height);
 		dialog.option('minWidth',width);
 		dialog.option('minHeight',height);
 		dialog.option('width',width);
 		dialog.option('height',height);
+		console.log('setting width to: '+width);
+		console.log('setting height to: '+height);
 		this._dialog_drag_inner(dialog);
 	},
 	_restore_dialog_size: function(dialog) { 
