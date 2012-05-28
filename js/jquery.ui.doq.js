@@ -141,9 +141,14 @@ $.widget( "esqoo.doq", {
 			return false;
 		}
 	},
+	_dialog_dragstart_docked: function(d) { 
+		var me = this;
+		return function(event,ui) { 
+			me._undock_dialog(d);
+		}
+	},
 	_mouse_in_dropzone: function(dialog,dropzone) { 
 		var me = this;
-		console.log(this.hover_suspended);
 		if (!this.hover_suspended) { 
 			if (this.hover_dialog===null) { 
 				this._mouse_enter_dropzone(dialog,dropzone,function() { 
@@ -226,8 +231,27 @@ $.widget( "esqoo.doq", {
 	_dialog_dragstop: function(d) { 
 		var me = this;
 		return function(event,ui) { 
-			console.log('dragstop');
+			if (me.hover_dialog!==null) { 
+				me._dock_dialog(d,me.hover_dialog);	
+			}
 		}
+	},
+	_dock_dialog: function (d,bar) { 
+		this._add_docked_item(bar,d);
+		this._hover_dialog=null;
+		d.temp_docked=false;
+		d.fully_docked=true;
+		d.uiDialog.unbind('dialogdragstart.ui-dialog');
+		d.uiDialog.bind('dialogdragstart.ui-dialog',this._dialog_dragstart_docked(d));
+	},
+	_undock_dialog: function(d) { 
+		d.uiDialog.unbind('dialogdragstart.ui-dialog');
+		d.uiDialog.bind('dialogdragstart.ui-dialog',this._dialog_dragstart(d));
+		d.uiDialog.unbind('dialogdrag.ui-dialog');
+		d.uiDialog.bind('dialogdrag.ui-dialog',this._dialog_drag(d));
+		//me._restore_dialog_size(d);
+		d.temp_docked=false;
+		d.fully_docked=true;
 	},
 	_get_bar_size: function(bar) { 
 		switch (bar) { 
@@ -271,6 +295,22 @@ $.widget( "esqoo.doq", {
 				return this.topbar_docked_items;
 			case this.bottombar:
 				return this.bottombar_docked_items;
+		}
+	},
+	_add_docked_item: function (bar,dialog) { 
+		switch (bar) { 
+			case this.topbar:
+				this.topbar_docked_items.push(dialog);
+				break;
+			case this.bottombar:
+				this.bottombar_docked_items.push(dialog);
+				break;
+			case this.leftbar:
+				this.leftbar_docked_items.push(dialog);
+				break;
+			case this.rightbar:
+				this.rightbar_docked_items.push(dialog);
+				break;
 		}
 	},
 	_do_html_setup: function() { 
