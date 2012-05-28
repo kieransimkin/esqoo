@@ -225,7 +225,7 @@ $.widget( "esqoo.doq", {
 	_dialog_dragstart: function(d) { 
 		var me = this;
 		return function(event,ui) { 
-			console.log('dragstart');
+			//console.log('dragstart');
 		}
 	},
 	_dialog_dragstop: function(d) { 
@@ -436,8 +436,6 @@ $.widget( "esqoo.doq", {
 		dialog.option('minHeight',height);
 		dialog.option('width',width);
 		dialog.option('height',height);
-		console.log('setting width to: '+width);
-		console.log('setting height to: '+height);
 		this._dialog_drag_inner(dialog);
 	},
 	_restore_dialog_size: function(dialog) { 
