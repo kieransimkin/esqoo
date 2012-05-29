@@ -7,10 +7,102 @@ class MenuLeafNode {
 		$this->tooltip=$tooltip;
 	}
 }
-class MenuLeafNode_Popup extends MenuLeafNode{ 
-	
-	function __toString($url,$popuptitle,$buttons,$properties,$title,$tooltip='') { 
-		parent::__construct	
+class MenuLeafNode_Popup_Buttons { 
+	private $buttons=array();
+	private $_availablebuttons=array('save','close','ok','continue','post','done','cancel');
+	function __construct() { 
+		$args=func_get_args();
+		if (func_num_args()==1 && is_array($args[0])) { 
+			foreach ($args[0] as $b) { 
+				if (in_array(strtolower($b),$this->_availablebuttons)) { 
+					$this->buttons[]=strtolower($b);
+				}
+			}
+		} else if (func_num_args()==1 && is_string($args[0])) { 
+			$args[0]=str_replace(" ","",$args[0]);
+			$bits=explode(',',$args[0]);
+			foreach ($bits as $b) { 
+				if (in_array(strtolower($b),$this->_availablebuttons)) { 
+					$this->buttons[]=strtolower($b);
+				}
+			}
+		} else { 
+			$this->buttons=array('save','close');
+		}
+	}
+	function hasButton($button) { 
+		if (in_array(strtolower($button),$this->buttons)) { 
+			return true;
+		} else { 
+			return false;
+		}
+	}
+}
+class MenuLeafNode_Popup extends MenuLeafNode { 
+	private $url=null;
+	private $popuptitle=null;
+	private $buttons=null;
+	private $properties=null;
+	function __construct($url,$popuptitle,$buttons,$properties,$title,$tooltip='') { 
+		parent::__construct($title,$tooltip);
+		$this->url=$url;
+		$this->popuptitle=$popuptitle;
+		if (!$buttons instanceof MenuLeafNode_Popup_Buttons) { 
+			throw new Exception('$buttons argument to MenuLeafNode_Popup::__construct not an instance of MenuLeafNode_Popup_Buttons');
+		}
+		$this->buttons=$buttons;
+		if (!is_array($properties)) { 
+			throw new Exception('$properties argument to MenuLeafNode_Popup::__construct not an array');
+		}
+		$this->properties=$properties;
+	}
+	private function getButtonString() { 
+		$buttonstring='';
+		if (!$this->buttons->hasButton('save')) {
+			$buttonstring.="savebutton: 0, ";
+		}
+		if (!$this->buttons->hasButton('close')) { 
+			$buttonstring.="closebutton: 0, ";
+		}
+		if ($this->buttons->hasButton('ok')) { 
+			$buttonstring.="okbutton: 1, ";
+		}
+		if ($this->buttons->hasButton('continue')) { 
+			$buttonstring.="continuebutton: 1, ";
+		} 
+		if ($this->buttons->hasButton('post')) { 
+			$buttonstring.="postbutton: 1, ";
+		} 
+		if ($this->buttons->hasButton('done')) { 
+			$buttonstring.="donebutton: 1, ";
+		}
+		if ($this->buttons->hasButton('cancel')) { 
+			$buttonstring.="cancelbutton: 1, ";
+		}
+		return $buttonstring;	
+	}
+	private function getOptionString() { 
+		$optionstring='';
+		if (in_array('singleton',$this->properties) && $this->properties['singleton']!==false) { 
+			$optionstring="singleton: true, ";
+		}
+		return $optionstring;
+	}
+	function __toString() { 
+		$buttonstring=$this->getButtonString();
+		$optionstring=$this->getOptionString();
+		$ret = <<<HTML
+		<li><a href="{$this->url}" onclick="esqoo_ui.make_dialog({ {$buttonstring} {$optionstring} title: '{$this->title}' },'{$this->url}'); return false;">{$this->title}...</a></li>
+HTML;
+		return $ret;
+	}
+	function toHTML5String() { 
+		$buttonstring=$this->getButtonString();
+		$optionstring=$this->getOptionString();
+		$ret = <<<HTML
+		<a href="{$this->url}" onclick="esqoo_ui.make_dialog({ {$buttonstring} {$optionstring} title: '{$this->title}' },'{$this->url}'); return false;">{$this->title}...</a>
+HTML;
+		return $ret;
 	}
 }
 class MenuLeafNode_TargetBlank extends MenuLeafNode { 
@@ -20,7 +112,16 @@ class MenuLeafNode_TargetBlank extends MenuLeafNode {
 		$this->url=$url;
 	}
 	function __toString() { 
-
+		$ret=<<<HTML
+		<li><a href="{$this->url}" target="_blank">{$this->title}... </a><div class="nav-float-right"><span class="ui-icon ui-icon-extlink"></span></div></li>
+HTML;
+		return $ret;
+	}
+	function toHTML5String() { 
+		$ret=<<<HTML
+		<a href="{$this->url}" target="_blank">{$this->title}... </a><div class="nav-float-right"><span class="ui-icon ui-icon-extlink"></span></div>
+HTML;
+		return $ret;
 	}
 }
 class MenuLeafNode_JSAction extends MenuLeafNode {
@@ -30,7 +131,16 @@ class MenuLeafNode_JSAction extends MenuLeafNode {
 		$this->$action=$action;
 	}
 	function __toString() { 
-
+		$ret=<<<HTML
+		<li><a href="#" onclick="{$this->action}; return false;">{$this->title}</a></li>
+HTML;
+		return $ret;
+	}
+	function toHTML5String() { 
+		$ret=<<<HTML
+		<a href="#" onclick="{$this->action}; return false;">{$this->title}</a>
+HTML;
+		return $ret;
 	}
 }
 class MenuLeafNode_Go extends MenuLeafNode { 
@@ -40,7 +150,16 @@ class MenuLeafNode_Go extends MenuLeafNode {
 		$this->url=$url;
 	}
 	function __toString() { 
-
+		$ret=<<<HTML
+		<li><a href="{$this->$url}" onclick="return esqoo_ui.browse_to_new_url($(this).attr('href'));">{$this->title}</a></li>
+HTML;
+		return $ret;
+	}
+	function toHTML5String() { 
+		$ret=<<<HTML
+		<a href="{$this->$url}" onclick="return esqoo_ui.browse_to_new_url($(this).attr('href'));">{$this->title}</a>
+HTML;
+		return $ret;
 	}
 }
 class Menu { 
@@ -79,7 +198,28 @@ class Menu {
 		}
 	}
 	function __toString() { 
-
+		$ret=<<<HTML
+			<ul>
+HTML;
+		foreach ($this->menuitems as $item) { 
+			$ret.=$item;
+		}
+		$ret.=<<<HTML
+			</ul>
+HTML;
+		return $ret;
+	}
+	function toHTML5String() { 
+		$ret=<<<HTML
+			<nav>
+HTML;
+		foreach ($this->menuitems as $item) { 
+			$ret.=$item->toHTML5String();
+		}
+		$ret.=<<<HTML
+			</nav>
+HTML;
+		return $ret;
 	}
 	public function createSubmenu($title,$tooltip=null,$items=array()) { 
 		$sub=new Menu($items);
