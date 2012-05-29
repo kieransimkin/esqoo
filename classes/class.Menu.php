@@ -202,7 +202,13 @@ class Menu {
 			<ul>
 HTML;
 		foreach ($this->menuitems as $item) { 
-			$ret.=$item;
+			if ($item instanceof Menu) { 
+				$ret.='<li>';
+				$ret.=$item;
+				$ret.='</li>';
+			} else { 
+				$ret.=$item;
+			}
 		}
 		$ret.=<<<HTML
 			</ul>
@@ -214,7 +220,13 @@ HTML;
 			<nav>
 HTML;
 		foreach ($this->menuitems as $item) { 
-			$ret.=$item->toHTML5String();
+			if ($item instanceof Menu) { 
+				$ret.='<nav>';
+				$ret.=$item->toHTML5String();
+				$ret.='</nav>';
+			} else { 
+				$ret.=$item->toHTML5String();
+			}
 		}
 		$ret.=<<<HTML
 			</nav>
