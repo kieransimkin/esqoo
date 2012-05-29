@@ -1,4 +1,34 @@
 <?php
+$nav2=new Menu(array(
+	new Menu('&Lambda',array(
+		new MenuLeafNode_Go('/',_('Dashboard')),
+		new MenuLeafNode_Popup(
+			'/content/quick-upload', 					// URL
+			_('Quick Media Upload'), 					// Dialog Title
+			new MenuLeafNode_Popup_Buttons(''),				// Buttons
+			array('singleton'=>'true')					// Options
+			,_('Quick Upload')						// Menu item label
+		),
+		new MenuLeafNode_Popup(
+			'/blog/quick-post',						// URL
+			_('Quick Post'),						// Dialog Title	
+			new MenuLeafNode_Popup_Buttons('save,cancel'),			// Buttons
+			array('singleton'=>'true'),					// Options
+			_('Quick Post')							// Menu item label
+		),
+		new MenuLeafNode_TargetBlank('/website/',_('Visit My Website')),
+		new MenuLeafNode_JSAction('esqoo_ui.flick_light_switch();',_('Flick Light Switch'))
+	)),
+	new Menu(_('Content'),array(
+	)),
+	new Menu(_('Website'),array(
+		
+	)),
+	new Menu(_('Account'),array(
+
+	))
+));
+print $nav2;
 $nav=array(
 	'&lambda;' => array(
 		"/" => _('Dashboard'),

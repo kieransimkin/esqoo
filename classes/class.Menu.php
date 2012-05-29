@@ -1,7 +1,7 @@
 <?php
 class MenuLeafNode { 
-	private $title=null;
-	private $tooltip=null;
+	protected $title=null;
+	protected $tooltip=null;
 	function __construct($title,$tooltip='') { 
 		$this->title=$title;
 		$this->tooltip=$tooltip;
@@ -83,7 +83,7 @@ class MenuLeafNode_Popup extends MenuLeafNode {
 	}
 	private function getOptionString() { 
 		$optionstring='';
-		if (in_array('singleton',$this->properties) && $this->properties['singleton']!==false) { 
+		if (array_key_exists('singleton',$this->properties) && $this->properties['singleton']!==false) { 
 			$optionstring="singleton: true, ";
 		}
 		return $optionstring;
@@ -151,13 +151,13 @@ class MenuLeafNode_Go extends MenuLeafNode {
 	}
 	function __toString() { 
 		$ret=<<<HTML
-		<li><a href="{$this->$url}" onclick="return esqoo_ui.browse_to_new_url($(this).attr('href'));">{$this->title}</a></li>
+		<li><a href="{$this->url}" onclick="return esqoo_ui.browse_to_new_url($(this).attr('href'));">{$this->title}</a></li>
 HTML;
 		return $ret;
 	}
 	function toHTML5String() { 
 		$ret=<<<HTML
-		<a href="{$this->$url}" onclick="return esqoo_ui.browse_to_new_url($(this).attr('href'));">{$this->title}</a>
+		<a href="{$this->url}" onclick="return esqoo_ui.browse_to_new_url($(this).attr('href'));">{$this->title}</a>
 HTML;
 		return $ret;
 	}
@@ -186,11 +186,11 @@ class Menu {
 			$this->menuitemcount=max(array_keys($this->menuitems))+1;
 		} else if (func_num_args()==2 && is_string($args[0]) && is_array($args[1])) { 
 			$this->menuitems=$args[1];
-			$this->menuitemcount=max(array_keys($this->menuitems))+1;
+			$this->menuitemcount=@max(array_keys($this->menuitems))+1;
 			$this->title=$args[0];
 		} else if (func_num_args()==3 && is_string($args[0]) && is_string($args[1]) && is_array($args[2])) { 
 			$this->menuitems=$args[2];
-			$this->menuitemcount=max(array_keys($this->menuitems))+1;
+			$this->menuitemcount=@max(array_keys($this->menuitems))+1;
 			$this->title=$args[0];
 			$this->tooltip=$args[1];
 		} else { 
