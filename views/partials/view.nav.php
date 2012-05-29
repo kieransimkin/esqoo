@@ -28,7 +28,7 @@ $nav2=new Menu(array(
 
 	))
 ));
-print $nav2;
+//print $nav2;
 $nav=array(
 	'&lambda;' => array(
 		"/" => _('Dashboard'),
