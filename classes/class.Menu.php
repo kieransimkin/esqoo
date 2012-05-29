@@ -196,6 +196,9 @@ class Menu {
 		} else { 
 			throw new Exception('Invalid arguments passed to Menu::__construct()');
 		}
+		if (!is_int($this->menuitemcount)) { 
+			$this->menuitemcount=0;
+		}
 	}
 	function __toString() { 
 		$ret=<<<HTML
