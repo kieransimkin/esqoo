@@ -1,6 +1,6 @@
 <?php
 $nav2=new Menu(array(
-	new Menu('&Lambda',array(
+	new Menu('&lambda;',array(
 		new MenuLeafNode_Go('/',_('Dashboard')),
 		new MenuLeafNode_Popup(
 			'/content/quick-upload', 					// URL
@@ -78,7 +78,7 @@ $nav2=new Menu(array(
 		new MenuLeafNode_Go('/account/logout',_('Logout'))
 	))
 ));
-//print $nav2;
+var_dump( $nav2->json_export());
 $nav=array(
 	'&lambda;' => array(
 		"/" => _('Dashboard'),

@@ -1,14 +1,14 @@
 <?php
 class MenuLeafNode { 
-	protected $title=null;
-	protected $tooltip=null;
+	public $title=null;
+	public $tooltip=null;
 	function __construct($title,$tooltip='') { 
 		$this->title=$title;
 		$this->tooltip=$tooltip;
 	}
 }
 class MenuLeafNode_Popup_Buttons { 
-	private $buttons=array();
+	public $buttons=array();
 	private $_availablebuttons=array('save','close','ok','continue','post','done','cancel');
 	function __construct() { 
 		$args=func_get_args();
@@ -39,10 +39,10 @@ class MenuLeafNode_Popup_Buttons {
 	}
 }
 class MenuLeafNode_Popup extends MenuLeafNode { 
-	private $url=null;
-	private $popuptitle=null;
-	private $buttons=null;
-	private $properties=null;
+	public $url=null;
+	public $popuptitle=null;
+	public $buttons=null;
+	public $properties=null;
 	function __construct($url,$popuptitle,$buttons,$properties,$title,$tooltip='') { 
 		parent::__construct($title,$tooltip);
 		$this->url=$url;
@@ -106,7 +106,7 @@ HTML;
 	}
 }
 class MenuLeafNode_TargetBlank extends MenuLeafNode { 
-	private $url=null;
+	public $url=null;
 	function __construct($url,$title,$tooltip='') {
 		parent::__construct($title,$tooltip);
 		$this->url=$url;
@@ -125,7 +125,7 @@ HTML;
 	}
 }
 class MenuLeafNode_JSAction extends MenuLeafNode {
-	private $action=null;
+	public $action=null;
 	function __construct($action,$title,$tooltip='') {
 		parent::__construct($title,$tooltip);
 		$this->$action=$action;
@@ -144,7 +144,7 @@ HTML;
 	}
 }
 class MenuLeafNode_Go extends MenuLeafNode { 
-	private $url=null;
+	public $url=null;
 	function __construct($url,$title,$tooltip='') {
 		parent::__construct($title,$tooltip);
 		$this->url=$url;
@@ -234,6 +234,43 @@ HTML;
 		$ret.=<<<HTML
 			</nav>
 HTML;
+		return $ret;
+	}
+	function json_export() { 
+		return json_encode($this->export());
+	}
+	function export() { 
+		$ret=array();
+		$ret['title']=$this->title;
+		$ret['tooltip']=$this->tooltip;
+		$ret['menuitems']=array();
+		foreach ($this->menuitems as $item) { 
+			$t=array();
+			if ($item instanceof Menu) { 
+				$t=$item->export();
+			} else if ($item instanceof MenuLeafNode_Go) { 
+				$t['leaftype']='go';
+				$t['url']=$item->url;
+				$t['tooltip']=$item->tooltip;
+				$t['title']=$item->title;
+			} else if ($item instanceof MenuLeafNode_JSAction) { 
+				$t['leaftype']='jsaction';
+				$t['action']=$item->action;
+				$t['tooltip']=$item->tooltip;
+				$t['title']=$item->title;
+			} else if ($item instanceof MenuLeafNode_TargetBlank) { 
+				$t['leaftype']='targetblank';
+				$t['url']=$item->url;
+				$t['tooltip']=$item->tooltip;
+				$t['title']=$item->title;
+			} else if ($item instanceof MenuLeafNode_Popup) { 
+				$t['leaftype']='popup';
+				$t['url']=$item->url;
+				$t['tooltip']=$item->tooltip;
+				$t['title']=$item->title;
+			}
+			$ret['menuitems'][]=$t;
+		}
 		return $ret;
 	}
 	public function createSubmenu($title,$tooltip=null,$items=array()) { 
