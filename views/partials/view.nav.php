@@ -20,12 +20,62 @@ $nav2=new Menu(array(
 		new MenuLeafNode_JSAction('esqoo_ui.flick_light_switch();',_('Flick Light Switch'))
 	)),
 	new Menu(_('Content'),array(
+		new Menu(_('Media'), array(
+			new MenuLeafNode_Go('/content/upload',_('Upload Media')),
+			new MenuLeafNode_Go('/album/',_('Albums')),
+			new MenuLeafNode_Go('/picture/',_('Pictures')),
+			new MenuLeafNode_Go('/video/',_('Video')),
+			new MenuLeafNode_Go('/audio/',_('Audio'))
+		)),
+		new Menu(_('Posts and Pages'),array(
+			new MenuLeafNode_Go('/blog/post',_('Write Blog Post')),
+			new MenuLeafNode_Go('/page/add',_('Add Page')),
+			new MenuLeafNode_Go('/blog/',_('Blog Posts')),
+			new MenuLeafNode_Go('/page/',_('Pages')),
+			new MenuLeafNode_Go('/link/',_('Links'))
+		)),
+		new Menu(_('Keyword Tags'),array(
+			new MenuLeafNode_Popup(
+				'/tag/add',							// URL
+				_('Add Keyword'),						// Dialog Title	
+				new MenuLeafNode_Popup_Buttons('save,cancel'),			// Buttons
+				array('singleton'=>'true'),					// Options
+				_('Add Keyword')						// Menu item label
+			),
+			new MenuLeafNode_Go('/tag/',_('Keywords'))
+		))
 	)),
 	new Menu(_('Website'),array(
-		
+		new MenuLeafNode_Go('/website/templates',_('Templates')),
+		new MenuLeafNode_Go('/website/menus',_('Menus')),
+		new Menu(_('Settings'),array(
+			new MenuLeafNode_Go('/website/picture-sizes',_('Picture Sizes')),
+			new MenuLeafNode_Go('/website/plugins',_('Plugins'))
+		))
 	)),
 	new Menu(_('Account'),array(
-
+		new MenuLeafNode_Popup(
+			'/account/details',	 					// URL
+			_('Account Details'),	 					// Dialog Title
+			new MenuLeafNode_Popup_Buttons('save,cancel'),			// Buttons
+			array('singleton'=>'true')					// Options
+			,_('Account Details')						// Menu item label
+		),
+		new MenuLeafNode_Popup(
+			'/account/settings',	 					// URL
+			_('Account Settings'),	 					// Dialog Title
+			new MenuLeafNode_Popup_Buttons('save,cancel'),			// Buttons
+			array('singleton'=>'true')					// Options
+			,_('Account Settings')						// Menu item label
+		),
+		new MenuLeafNode_Popup(
+			'/account/password',	 					// URL
+			_('Change Password'), 						// Dialog Title
+			new MenuLeafNode_Popup_Buttons('save,cancel'),			// Buttons
+			array('singleton'=>'true')					// Options
+			,_('Change Password')						// Menu item label
+		),
+		new MenuLeafNode_Go('/account/logout',_('Logout'))
 	))
 ));
 //print $nav2;
