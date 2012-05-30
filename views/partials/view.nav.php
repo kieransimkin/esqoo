@@ -93,10 +93,9 @@ function render_nav_element($item,$user) {
 	} else if ($item['leaftype']=='popup') {
 		$title=$item['title'];
 		$popuptitle=$item['popuptitle'];
-		$buttons=$item['buttons'];
+		$buttonlist=$item['buttons'];
 		$realurl=$item['url'];
 		list($controller, $action) = explode("/", substr($realurl, 1));
-		$buttonlist=explode(",",$buttons);
 		$buttonstring='';
 		if (!in_array('save',$buttonlist)) {
 			$buttonstring.="savebutton: 0, ";
@@ -119,7 +118,7 @@ function render_nav_element($item,$user) {
 		if (in_array('cancel',$buttonlist)) { 
 			$buttonstring.="cancelbutton: 1, ";
 		}
-		if (in_array('singleton',$buttonlist)) { 
+		if (array_key_exists('singleton',$item['properties']) && $item['properties']['singleton']!==false) { 
 			$buttonstring.="singleton: true, ";
 		}
 		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"esqoo_ui.make_dialog({ $buttonstring title: '$popuptitle' },'$realurl'); return false;\">$title...</a></li>";

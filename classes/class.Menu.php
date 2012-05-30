@@ -268,6 +268,8 @@ HTML;
 				$t['url']=$item->url;
 				$t['popuptitle']=$item->popuptitle;
 				$t['tooltip']=$item->tooltip;
+				$t['buttons']=$item->buttons->buttons;
+				$t['properties']=$item->properties;
 				$t['title']=$item->title;
 			}
 			$ret['menuitems'][]=$t;
