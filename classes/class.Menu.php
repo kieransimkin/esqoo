@@ -128,7 +128,7 @@ class MenuLeafNode_JSAction extends MenuLeafNode {
 	public $action=null;
 	function __construct($action,$title,$tooltip='') {
 		parent::__construct($title,$tooltip);
-		$this->$action=$action;
+		$this->action=$action;
 	}
 	function __toString() { 
 		$ret=<<<HTML
@@ -266,6 +266,7 @@ HTML;
 			} else if ($item instanceof MenuLeafNode_Popup) { 
 				$t['leaftype']='popup';
 				$t['url']=$item->url;
+				$t['popuptitle']=$item->popuptitle;
 				$t['tooltip']=$item->tooltip;
 				$t['title']=$item->title;
 			}
