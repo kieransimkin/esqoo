@@ -165,8 +165,8 @@ HTML;
 class Menu { 
 	private $menuitemcount=0;
 	private $menuitems=array();
-	private $title=null;
-	private $tooltip=null;
+	public $title=null;
+	public $tooltip=null;
 
 //	function __construct(array $items) --
 //	 one argument is an array of items

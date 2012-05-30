@@ -78,77 +78,23 @@ $nav2=new Menu(array(
 		new MenuLeafNode_Go('/account/logout',_('Logout'))
 	))
 ));
-var_dump( $nav2->json_export());
-$nav=array(
-	'&lambda;' => array(
-		"/" => _('Dashboard'),
-		"popup:"._('Quick Media Upload').":singleton:/content/quick-upload" => _('Quick Upload'),
-		"popup:"._('Quick Post').":save,cancel,singleton:/blog/quick-post" => _('Quick Post'),
-		"targetblank:/website/" => _('Visit My Website'),
-		"jsaction:esqoo_ui.flick_light_switch();" => ('Flick Light Switch')
-	),
-	_('Content') => array(
-		"submenu:"._('Media') => array(
-			"/content/upload" => _('Upload Media'),
-			"/album/" => _('Albums'),
-			"/picture/" => _('Pictures'),
-			"/video/" => _('Video'),
-			"/audio/" => _('Audio')
-		),
-		"submenu:"._('Posts and Pages') => array(
-			"/blog/post" => _('Write Blog Post'),
-			"/page/add" => _('Add Page'),
-			"/blog/" => _('Blog Posts'),
-			"/page/" => _('Pages'),
-			"/link/" => _('Links')
-		),
-		"submenu:"._('Keyword Tags') => array(
-			"popup:"._('Add Keyword').":save,cancel,singleton:/tag/add" => _('Add Keyword'),
-			"/tag/" => _('Keywords')
-		)
-	),
-	_('Website') => array(
-		"/website/templates" => _('Templates'),
-		"/website/menus" => _('Menus'),
-		"submenu:"._('Settings') => array(
-			"/website/picture-sizes" => _('Picture Sizes'),
-			"/website/plugins" => _('Plugins')
-		)
-	),
-	_('Account') => array(
-		"popup:"._('Account Details').":save,cancel,singleton:/account/details" => _('Account Details'),
-		"popup:"._('Account Settings').":save,cancel,singleton:/account/settings" => _('Settings'),
-		"popup:"._('Change Password').":save,cancel,singleton:/account/password" => _('Change Password'),
-		"/account/logout" => _('Logout')
-	)
-);?>
+$nav=$nav2->export();
+?>
 <nav>
 <ul id="nav-one" class="nav ui-tabs-nav ui-helper-clearfix ui-widget-header ui-corner-bottom inner-padded">
 <?php
-function render_nav_element($url,$item,$user) {
+function render_nav_element($item,$user) {
 	$content='';
-	if (strpos($url,"jsaction:")===0) { 
-		list($jsaction,$action)=explode(':',$url,2);
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"$action return false;\">$item</a></li>";
+	if ($item['leaftype']=='jsaction') { 
+		$action=$item['action'];
+		$title=$item['title'];
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"$action return false;\">$title</a></li>";
 		
-	} else if (strpos($url,'submenu:')===0) { 
-		list($submenu,$title)=explode(':',$url,2);
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"return false;\">$title <div class=\"nav-float-right\">&raquo;</div></a>";
-		$content .= "<ul class=\"ui-state-default ui-corner-all\">";
-		$count=0;
-		foreach($item as $turl => $titem) {
-			$thiscontent=render_nav_element($turl,$titem,$user);	
-			$content.=$thiscontent;
-			if (strlen($thiscontent)>0) { 
-				++$count;
-			}
-		}
-		$content .= "</ul></li>";
-		if ($count==0) { 
-			return '';
-		}
-	} else if (strpos($url,"popup:")===0) {
-		list($popup,$title,$buttons,$realurl)=explode(':',$url,5);
+	} else if ($item['leaftype']=='popup') {
+		$title=$item['title'];
+		$popuptitle=$item['popuptitle'];
+		$buttons=$item['buttons'];
+		$realurl=$item['url'];
 		list($controller, $action) = explode("/", substr($realurl, 1));
 		$buttonlist=explode(",",$buttons);
 		$buttonstring='';
@@ -176,24 +122,44 @@ function render_nav_element($url,$item,$user) {
 		if (in_array('singleton',$buttonlist)) { 
 			$buttonstring.="singleton: true, ";
 		}
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"esqoo_ui.make_dialog({ $buttonstring title: '$title' },'$realurl'); return false;\">$item...</a></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" onclick=\"esqoo_ui.make_dialog({ $buttonstring title: '$popuptitle' },'$realurl'); return false;\">$title...</a></li>";
 
-	} else if (strpos($url,"targetblank:")===0) {
-		list($tgtblank,$realurl)=explode(':',$url,2);
+	} else if ($item['leaftype']=='targetblank') {
+		$realurl=$item['url'];
+		$title=$item['title'];
 		list($controller, $action) = explode("/", substr($realurl, 1));
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" target=\"_blank\">$item... </a><div class=\"nav-float-right\"><span class=\"ui-icon ui-icon-extlink\"></span></div></li>";
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$realurl\" target=\"_blank\">$title... </a><div class=\"nav-float-right\"><span class=\"ui-icon ui-icon-extlink\"></span></div></li>";
 
-	} else {
-		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$url\" onclick=\"return esqoo_ui.browse_to_new_url($(this).attr('href'));\">$item</a></li>";
+	} else if ($item['leaftype']=='go') {
+		$title=$item['title'];
+		$url=$item['url'];
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"$url\" onclick=\"return esqoo_ui.browse_to_new_url($(this).attr('href'));\">$title</a></li>";
+	} else { 
+		$title=$item['title'];
+		$content .= "<li class=\"ui-menubar-default ui-corner-all\"><a href=\"#\" onclick=\"return false;\">$title <div class=\"nav-float-right\">&raquo;</div></a>";
+		$content .= "<ul class=\"ui-state-default ui-corner-all\">";
+		$count=0;
+		foreach($item['menuitems'] as $titem) {
+			$thiscontent=render_nav_element($titem,$user);	
+			$content.=$thiscontent;
+			if (strlen($thiscontent)>0) { 
+				++$count;
+			}
+		}
+		$content .= "</ul></li>";
+		if ($count==0) { 
+			return '';
+		}
 	}
 	return $content;
 }
 $first=' lambda ui-widget-header ui-corner-bottom';
-foreach($nav as $heading => $menu) {
+foreach($nav['menuitems'] as $val) {
     	$content = '';
-	foreach($menu as $url => $item) {
-		$content.=render_nav_element($url,$item,$this->user);	
+	foreach($val['menuitems'] as $item) {
+		$content.=render_nav_element($item,$this->user);	
 	}
+	$heading=$val['title'];
 	if($content) {
 		?>
 		<li class="ui-menubar-heading-default<?=$first;?>">
