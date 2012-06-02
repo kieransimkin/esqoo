@@ -169,6 +169,8 @@ $.widget( "esqoo.doq", {
 	_mouse_enter_dropzone: function(dialog,dropzone,callback) { 
 		var me = this;
 		me.hover_suspended=true;
+		console.log('mouse enter dropzone');
+		console.log(dropzone);
 		if (this._get_docked_items(dropzone)<1) { 
 			this._expand_bar(dropzone,function() { 
 				me.hover_suspended=false;
@@ -184,6 +186,7 @@ $.widget( "esqoo.doq", {
 
 	},
 	_mouse_change_dropzone: function(dialog,dropzone,ui) { 
+		console.log('change dropzone');
 		var me = this;
 		this._mouse_leave_dropzone(dialog,function() { 
 			me._mouse_enter_dropzone(dialog,dropzone,function() { 
@@ -194,6 +197,7 @@ $.widget( "esqoo.doq", {
 	_mouse_leave_dropzone: function(dialog,callback) { 
 		var me = this;
 		me.hover_suspended=true;
+		console.log('mouse leave dropzone');
 		if (this._get_docked_items(this.hover_dialog)<1) { 
 			this._collapse_bar(this.hover_dialog,function() { 
 				me.hover_suspended=false;		
