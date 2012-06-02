@@ -3,6 +3,7 @@ class MVC {
 	static public $controller=null;
 	public static function dispatch($uri) { 
 		Site::loadINI();
+		$plugin=null;
 		if ($_SERVER['HTTP_HOST']!=Site::$config['cp_hostname']) { 
 			$controller_class = 'PublicController';
 		} else { 
@@ -13,6 +14,12 @@ class MVC {
 			} else { 
 				if (substr($uri,0,1)=='/') { 
 					$uri=substr($uri,1);
+				}
+				if (substr(strtolower($uri),0,8)=="plugins/") { 
+					$uri=substr($uri,8);
+					$bits=explode('/',$uri,2);
+					$plugin=$bits[0];
+					$uri=$bits[1];
 				}
 				$bits=explode('/',$uri);
 				$controller=$bits[0];
@@ -32,6 +39,9 @@ class MVC {
 				$action='index';
 			}
 			$controller_class = ucwords($controller).'Controller';
+		}
+		if ($plugin!=null) { 
+			require_once("plugins/$plugin/controllers/controller.".ucwords($controller).".php");
 		}
 		if ($api) { 
 			$funcname = strtolower(str_replace('-','',$action)).'API';
@@ -95,7 +105,6 @@ class MVC {
 			$new_controller->api_response($res,$_REQUEST['ResponseFormat']);
 		}
 	}
-
 	function throw404($controller_class=null, $funcname=null) {
 		self::render404($controller_class, $funcname);
 		die;

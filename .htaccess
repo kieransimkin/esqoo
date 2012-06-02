@@ -1,6 +1,7 @@
 RewriteEngine on
 RewriteBase /
 RewriteRule ^(.*/)?\.git+ - [F,L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/css/ 
+RewriteCond %{REQUEST_URI} !^/js/ 
+RewriteCond %{REQUEST_URI} !^/compiled-resources/ 
 RewriteRule ^(.*)$ index.php [QSA,L]
