@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/dbsq/dbsq.class.php');
+DBSQ::setClassNamePrefix('SQ_');
 class DBSQL extends DBSQ { 
 	private $_visiblefields=array();
 	private $_computedfields=array();
