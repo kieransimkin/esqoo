@@ -42,6 +42,7 @@ class SQ_Class_MVC extends SQ_Class {
 		}
 		if ($plugin!=null) { 
 			require_once("plugins/$plugin/controllers/controller.".ucwords($controller).".php");
+			$controller_class = 'SQ_Plugin_Controller_'.ucwords($controller);
 		}
 		if ($api) { 
 			$funcname = strtolower(str_replace('-','',$action)).'API';
