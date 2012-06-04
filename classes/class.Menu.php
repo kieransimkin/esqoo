@@ -47,7 +47,7 @@ class SQ_Class_MenuLeafNode_Popup extends SQ_Class_MenuLeafNode {
 		parent::__construct($title,$tooltip);
 		$this->url=$url;
 		$this->popuptitle=$popuptitle;
-		if (!$buttons instanceof MenuLeafNode_Popup_Buttons) { 
+		if (!$buttons instanceof SQ_Class_MenuLeafNode_Popup_Buttons) { 
 			throw new Exception('$buttons argument to MenuLeafNode_Popup::__construct not an instance of MenuLeafNode_Popup_Buttons');
 		}
 		$this->buttons=$buttons;
@@ -205,7 +205,7 @@ class SQ_Class_Menu extends SQ_Class {
 			<ul>
 HTML;
 		foreach ($this->menuitems as $item) { 
-			if ($item instanceof Menu) { 
+			if ($item instanceof SQ_Class_Menu) { 
 				$ret.='<li>';
 				$ret.=$item;
 				$ret.='</li>';
@@ -223,7 +223,7 @@ HTML;
 			<nav>
 HTML;
 		foreach ($this->menuitems as $item) { 
-			if ($item instanceof Menu) { 
+			if ($item instanceof SQ_Class_Menu) { 
 				$ret.='<nav>';
 				$ret.=$item->toHTML5String();
 				$ret.='</nav>';
@@ -246,24 +246,24 @@ HTML;
 		$ret['menuitems']=array();
 		foreach ($this->menuitems as $item) { 
 			$t=array();
-			if ($item instanceof Menu) { 
+			if ($item instanceof SQ_Class_Menu) { 
 				$t=$item->export();
-			} else if ($item instanceof MenuLeafNode_Go) { 
+			} else if ($item instanceof SQ_Class_MenuLeafNode_Go) { 
 				$t['leaftype']='go';
 				$t['url']=$item->url;
 				$t['tooltip']=$item->tooltip;
 				$t['title']=$item->title;
-			} else if ($item instanceof MenuLeafNode_JSAction) { 
+			} else if ($item instanceof SQ_Class_MenuLeafNode_JSAction) { 
 				$t['leaftype']='jsaction';
 				$t['action']=$item->action;
 				$t['tooltip']=$item->tooltip;
 				$t['title']=$item->title;
-			} else if ($item instanceof MenuLeafNode_TargetBlank) { 
+			} else if ($item instanceof SQ_Class_MenuLeafNode_TargetBlank) { 
 				$t['leaftype']='targetblank';
 				$t['url']=$item->url;
 				$t['tooltip']=$item->tooltip;
 				$t['title']=$item->title;
-			} else if ($item instanceof MenuLeafNode_Popup) { 
+			} else if ($item instanceof SQ_Class_MenuLeafNode_Popup) { 
 				$t['leaftype']='popup';
 				$t['url']=$item->url;
 				$t['popuptitle']=$item->popuptitle;

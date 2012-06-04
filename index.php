@@ -2,18 +2,23 @@
 
 date_default_timezone_set('UTC');
 ini_set('include_path',dirname(__FILE__)."/libraries/");
-
+require_once(dirname(__FILE__)."/classes/class.SQ_Class.php");
 spl_autoload_register(function($class_name) {
-	$files = Array(
-		dirname(__FILE__)."/classes/class.{$class_name}.php"
-	);
+	$files=array();
 	if (substr($class_name,-10)=='Controller') { 
 		$controllerlessname=substr($class_name,0,strlen($class_name)-10);
 		$files[]=dirname(__FILE__)."/controllers/controller.{$controllerlessname}.php";
 	}
-	if (substr($class_name,0,3)=='SQ_') { 
-		$sqlessname=substr($class_name,3);
-		$files=array(dirname(__FILE__)."/models/model.{$sqlessname}.php");
+	if (substr($class_name,0,8)=='SQ_Class') { 
+		$classlessname=substr($class_name,9);
+		$files = Array(
+			dirname(__FILE__)."/classes/class.{$classlessname}.php"
+		);
+	} else { 
+		if (substr($class_name,0,3)=='SQ_') { 
+			$sqlessname=substr($class_name,3);
+			$files=array(dirname(__FILE__)."/models/model.{$sqlessname}.php");
+		}
 	}
 	foreach ($files as $file)
 		if (file_exists($file))
