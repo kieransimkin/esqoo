@@ -1,4 +1,4 @@
 <?php
-print "foo";
-echo __NAMESPACE__ ;
-die;
+class SQ_Plugin_Controller_Main extends SQ_Class_LockedPluginController { 
+
+}
