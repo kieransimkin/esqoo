@@ -15,10 +15,10 @@ class DBSQL extends DBSQ {
 			}
 		}
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
-			$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
+			$ret=Cache::getKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
 			if ($ret instanceof CacheError) {
 				Site::connect();
-				Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key),parent::__get($key));
+				Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key),parent::__get($key));
 				return parent::__get($key);
 			} else { 
 				$this->$key=$ret;
@@ -29,10 +29,10 @@ class DBSQL extends DBSQ {
 		if (substr($key,-3,3)!='_id') { 
 			$newkey=$key.'_id';
 			if (in_array($newkey,static::$_cachedfields)) { 
-				$ret=Cache::getKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey));
+				$ret=Cache::getKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey));
 				if ($ret instanceof CacheError) {
 					Site::connect();
-					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey),parent::__get($key));
+					Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey),parent::__get($key));
 					return parent::__get($key);
 				} else { 
 					$this->$newkey=$ret;
@@ -45,6 +45,13 @@ class DBSQL extends DBSQ {
 			}
 		}
 		return parent::__get($key);
+	}
+	private static function _strip_SQ($var) { 
+		if (substr($var,0,3)=='SQ_') { 
+			return substr($var,3);
+		} else { 
+			return $var;
+		}
 	}
 	function delete() { 
 		$this->DeleteDate=date("c");
@@ -63,9 +70,9 @@ class DBSQL extends DBSQ {
 					$data=null;
 				}
 				if (is_object($data) && substr($cachedfield,-3,3)=='_id') { 
-					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data->id);
+					Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data->id);
 				} else { 
-					Cache::setKey('DB-'.strtolower(get_called_class()).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data);
+					Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data);
 				}
 			}
 		}
