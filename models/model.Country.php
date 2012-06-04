@@ -1,4 +1,4 @@
 <?php
-class SQ_Country extends DBSQL { 
+class SQ_Country extends SQ_Class_DBSQ { 
 
 }

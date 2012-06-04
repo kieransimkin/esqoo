@@ -1,12 +1,12 @@
 <?php
-class WebsiteController extends LockedController { 
+class WebsiteController extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function indexUI ($arg='',$input=array()) { 
-		$this->redirect('http://'.$this->user->Username.'.'.Site::$config['cp_hostname']);
+		$this->redirect('http://'.$this->user->Username.'.'.SQ_Class_Site::$config['cp_hostname']);
 	}
 	function templatesUI($arg='',$input=array()) { 
 

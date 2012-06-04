@@ -3,7 +3,7 @@ function _($s) {
 	return $s;
 }
 
-class Site { 
+class SQ_Class_Site extends SQ_Class { 
    private static $instance;
    public static $approot=null;
    public static $config=null;
@@ -22,7 +22,7 @@ class Site {
 	}
    }
    static function connectDB() { 
-	DBSQL::setMySQLCredentials(self::$config['mysql_user'],self::$config['mysql_pass'],self::$config['mysql_db'],self::$config['mysql_host']);
+	SQ_Class_DBSQ::setMySQLCredentials(self::$config['mysql_user'],self::$config['mysql_pass'],self::$config['mysql_db'],self::$config['mysql_host']);
 	
    }
 

@@ -1,5 +1,5 @@
 <?php
-class SQ_Rich_editor extends DBSQL { 
+class SQ_Rich_editor extends SQ_Class_DBSQ { 
 	static function get_menu($type='Visual') { 
 		$type=ucfirst(strtolower(@$type));
 		if ($type!='Visual' && $type!='Code') { 

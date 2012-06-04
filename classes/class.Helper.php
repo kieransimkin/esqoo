@@ -1,5 +1,5 @@
 <?php
-class Helper { 
+class SQ_Class_Helper extends SQ_Class { 
 	static function randomAlphaNumString($length=8,$includecaps=true) { 
 		if ($includecaps) {
 			$characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

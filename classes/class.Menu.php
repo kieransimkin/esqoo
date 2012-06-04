@@ -1,5 +1,5 @@
 <?php
-class MenuLeafNode { 
+class SQ_Class_MenuLeafNode extends SQ_Class { 
 	public $title=null;
 	public $tooltip=null;
 	function __construct($title,$tooltip='') { 
@@ -7,7 +7,7 @@ class MenuLeafNode {
 		$this->tooltip=$tooltip;
 	}
 }
-class MenuLeafNode_Popup_Buttons { 
+class SQ_Class_MenuLeafNode_Popup_Buttons extends SQ_Class { 
 	public $buttons=array();
 	private $_availablebuttons=array('save','close','ok','continue','post','done','cancel');
 	function __construct() { 
@@ -38,7 +38,7 @@ class MenuLeafNode_Popup_Buttons {
 		}
 	}
 }
-class MenuLeafNode_Popup extends MenuLeafNode { 
+class SQ_Class_MenuLeafNode_Popup extends SQ_Class_MenuLeafNode { 
 	public $url=null;
 	public $popuptitle=null;
 	public $buttons=null;
@@ -105,7 +105,7 @@ HTML;
 		return $ret;
 	}
 }
-class MenuLeafNode_TargetBlank extends MenuLeafNode { 
+class SQ_Class_MenuLeafNode_TargetBlank extends SQ_Class_MenuLeafNode { 
 	public $url=null;
 	function __construct($url,$title,$tooltip='') {
 		parent::__construct($title,$tooltip);
@@ -124,7 +124,7 @@ HTML;
 		return $ret;
 	}
 }
-class MenuLeafNode_JSAction extends MenuLeafNode {
+class SQ_Class_MenuLeafNode_JSAction extends SQ_Class_MenuLeafNode {
 	public $action=null;
 	function __construct($action,$title,$tooltip='') {
 		parent::__construct($title,$tooltip);
@@ -143,7 +143,7 @@ HTML;
 		return $ret;
 	}
 }
-class MenuLeafNode_Go extends MenuLeafNode { 
+class SQ_Class_MenuLeafNode_Go extends SQ_Class_MenuLeafNode { 
 	public $url=null;
 	function __construct($url,$title,$tooltip='') {
 		parent::__construct($title,$tooltip);
@@ -162,7 +162,7 @@ HTML;
 		return $ret;
 	}
 }
-class Menu { 
+class SQ_Class_Menu extends SQ_Class { 
 	private $menuitemcount=0;
 	private $menuitems=array();
 	public $title=null;
@@ -277,7 +277,7 @@ HTML;
 		return $ret;
 	}
 	public function createSubmenu($title,$tooltip=null,$items=array()) { 
-		$sub=new Menu($items);
+		$sub=new SQ_Class_Menu($items);
 		$sub->title=$title;
 		$sub->tooltip=$tooltip;
 		$this->addItem($sub);

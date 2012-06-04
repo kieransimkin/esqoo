@@ -1,5 +1,5 @@
 <?php
-class PictureController extends LockedController { 
+class PictureController extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -42,11 +42,11 @@ class PictureController extends LockedController {
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
 	private function get_navigator_form($input=array()) { 
-		$form=new Form('navigator');
+		$form=new SQ_Class_Form('navigator');
 		return $form;
 	}
 	private function get_index_browse_form($input=array()) { 
-		$form=new Form('indexbrowse');
+		$form=new SQ_Class_Form('indexbrowse');
 		$selectedstate=null;
 		$albummenu=SQ_Album::get_menu($this->user->id);
 		$tagmenu=SQ_Tag::get_menu($this->user->id);
@@ -86,7 +86,7 @@ class PictureController extends LockedController {
 		return $form;
 	}
 	private function get_edit_form($input=array()) { 
-		$form=new Form('edit');
+		$form=new SQ_Class_Form('edit');
 		return $form;
 	}
 	/*****************************************

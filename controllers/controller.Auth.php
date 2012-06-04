@@ -1,5 +1,5 @@
 <?php
-class AuthController extends OpenController {
+class AuthController extends SQ_Class_OpenController {
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -22,7 +22,7 @@ class AuthController extends OpenController {
 	 */
 	function getchallengeAPI($arg='',$input=array()) { 
 		$ret=array();
-		$challenge=SQ_User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
+		$challenge=SQ_User_challenge::create(array('challenge'=>SQ_Class_Helper::randomAlphaNumString(64)));
 		$ret['Challenge']=$challenge->challenge;
 		$ret['ChallengeID']=$challenge->id;
 		return $ret;
@@ -42,7 +42,7 @@ class AuthController extends OpenController {
 			$challenge->delete();
 		}
 		if ($this->api_validation_success()) { 
-			$token=SQ_User_token::create(array('user'=>$user,'token'=>Helper::randomAlphaNumString(255)));
+			$token=SQ_User_token::create(array('user'=>$user,'token'=>SQ_Class_Helper::randomAlphaNumString(255)));
 			$ret['UserID']=$user->id;
 			$ret['TokenID']=$token->id;
 			$ret['Token']=$token->token;
@@ -51,7 +51,7 @@ class AuthController extends OpenController {
 			setcookie('Token',$token->token,time()+31556926,'/');
 		} else { 
 			// Auth failed, generate a new challenge
-			$challenge=SQ_User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
+			$challenge=SQ_User_challenge::create(array('challenge'=>SQ_Class_Helper::randomAlphaNumString(64)));
 			$ret['Challenge']=$challenge->challenge;
 			$ret['ChallengeID']=$challenge->id;
 		}

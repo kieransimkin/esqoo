@@ -1,5 +1,5 @@
 <?php
-class MessageController extends LockedController { 
+class MessageController extends SQ_Class_LockedController { 
 	/*****************************************
 	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
 	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
@@ -7,7 +7,7 @@ class MessageController extends LockedController {
 	 *****************************************/
 	public function getAPI($arg='',$input=array()) { 
 		$messages=SQ_Message::getAll('user_id=? and CompleteDate is null',array($this->user->id));
-		DBSQL::set_all_visible_api_fields($messages,$this->get_message_fields());
+		SQ_Class_DBSQ::set_all_visible_api_fields($messages,$this->get_message_fields());
 		return array('Messages'=>$messages,'MessageCount'=>count($messages));
 	}
 	public function createAPI($arg='',$input=array()) { 

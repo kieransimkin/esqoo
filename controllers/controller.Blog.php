@@ -1,5 +1,5 @@
 <?php
-class BlogController extends LockedController { 
+class BlogController extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -40,7 +40,7 @@ class BlogController extends LockedController {
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
 	 private function get_post_form($input,$post,$forcesubmit=false) { 
-		$form=new Form('post');
+		$form=new SQ_Class_Form('post');
 		$form->setAPIDataSources($input,$post,$forcesubmit);
 		$form->addElement('text','Title',array())->setLabel(_('Title'))->addRule('required',_('Required'));
 		$form->addElement('textarea','Content',array('class'=>'esqoo-qrichedit'))->setLabel(_('Content'))->addrule('required',_('Required'));
@@ -67,14 +67,14 @@ class BlogController extends LockedController {
 		}
 	}
 	public function listAPI($arg='',$input=array()) { 
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Title' && strlen($input['SearchQuery'])>0) { 
 			$posts=SQ_Post::getAll('user_id=? and AND DeleteDate is null and Title like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
 			$posts=SQ_Post::getAll('user_id=? AND DeleteDate is null',array($this->user->id),null,$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($posts,$this->get_post_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($posts,$this->get_post_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($posts,$input['Page'],$numrows);
 	}
 	public function getAPI($arg='',$input=array()) { 

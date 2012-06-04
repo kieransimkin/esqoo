@@ -1,5 +1,5 @@
 <?php
-class Controller { 
+class SQ_Class_Controller extends SQ_Class { 
 	public $api_errors=array();
 	private $flexigrid_reload_selectors=array();
 	function __construct($controller,$action) { 
@@ -7,7 +7,7 @@ class Controller {
 		$this->controller=$controller;
 	}
 	public function setView($view) {
-		$this->view = new View($view);
+		$this->view = new SQ_Class_View($view);
 		$this->view->controller = $this;
 		$this->view->user = @$this->user;
 	}
@@ -16,9 +16,9 @@ class Controller {
 		if (isset($this->user)) { 
 			$this->view->user = $this->user;
 		}
-		$this->view->jsManager = new JSManager;
+		$this->view->jsManager = new SQ_Class_JSManager;
 		$this->view->jsFiles = $this->jsFiles;
-		$this->view->cssManager = new CSSManager;
+		$this->view->cssManager = new SQ_Class_CSSManager;
 		$this->view->render();
 	}
 

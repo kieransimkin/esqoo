@@ -1,5 +1,5 @@
 <?php
-class LockedController extends Controller { 
+class SQ_Class_LockedController extends SQ_Class_Controller { 
 	function __construct($controller,$action) { 
 		parent::__construct($controller,$action);
 		$this->_verifyAuth(array_merge($_COOKIE,$_POST));

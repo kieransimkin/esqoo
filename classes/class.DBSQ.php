@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__).'/dbsq/dbsq.class.php');
 DBSQ::setClassNamePrefix('SQ_');
-class DBSQL extends DBSQ { 
+class SQ_Class_DBSQ extends DBSQ { 
 	private $_visiblefields=array();
 	private $_computedfields=array();
 	public static $_cachedfields=array();
@@ -16,10 +16,10 @@ class DBSQL extends DBSQ {
 			}
 		}
 		if (in_array($key,static::$_cachedfields) && !isset($this->$key)) {
-			$ret=Cache::getKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
+			$ret=SQ_Class_Cache::getKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key));
 			if ($ret instanceof CacheError) {
-				Site::connect();
-				Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key),parent::__get($key));
+				SQ_Class_Site::connect();
+				SQ_Class_Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($key),parent::__get($key));
 				return parent::__get($key);
 			} else { 
 				$this->$key=$ret;
@@ -30,10 +30,10 @@ class DBSQL extends DBSQ {
 		if (substr($key,-3,3)!='_id') { 
 			$newkey=$key.'_id';
 			if (in_array($newkey,static::$_cachedfields)) { 
-				$ret=Cache::getKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey));
+				$ret=SQ_Class_Cache::getKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey));
 				if ($ret instanceof CacheError) {
-					Site::connect();
-					Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey),parent::__get($key));
+					SQ_Class_Site::connect();
+					SQ_Class_Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()),$this->_get_lazyLoadId().'-'.strtolower($newkey),parent::__get($key));
 					return parent::__get($key);
 				} else { 
 					$this->$newkey=$ret;
@@ -71,9 +71,9 @@ class DBSQL extends DBSQ {
 					$data=null;
 				}
 				if (is_object($data) && substr($cachedfield,-3,3)=='_id') { 
-					Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data->id);
+					SQ_Class_Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data->id);
 				} else { 
-					Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data);
+					SQ_Class_Cache::setKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield),$data);
 				}
 			}
 		}

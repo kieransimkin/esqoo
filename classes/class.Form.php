@@ -1,6 +1,6 @@
 <?php
 require_once 'HTML/QuickForm2.php';
-class Form extends HTML_QuickForm2 { 
+class SQ_Class_Form extends HTML_QuickForm2 { 
 	private static $_setup=false;
 	public function __construct($id, $method = 'post', $attributes = null) {
 		if (!self::$_setup) { 

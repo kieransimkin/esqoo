@@ -1,5 +1,5 @@
 <?php
-class SQ_Tag extends DBSQL { 
+class SQ_Tag extends SQ_Class_DBSQ { 
 	static function get_menu($user_id) { 
 		$res=SQ_Tag::getAll('DeleteDate is null and user_id=?',array($user_id));
 		$ret=array();

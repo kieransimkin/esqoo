@@ -18,7 +18,7 @@
  * @license		http://opensource.org/licenses/mit-license.php MIT License
  * @version		2.0.2.2 (2011-03-28)
  */
-class CssMin
+class SQ_Class_CSSMin
 	{
 	/**
 	 * Null-Token.

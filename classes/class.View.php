@@ -1,5 +1,5 @@
 <?php
-class View { 
+class SQ_Class_View extends SQ_Class { 
 	public $template='normal';
 	function __construct($view_name) {
 		$this->view_name = $view_name;
@@ -25,7 +25,7 @@ class View {
 		$this->template=$template;
 	}
 	function partial($name) {
-		$file = Site::$approot . "/views/" . $name;
+		$file = SQ_Class_Site::$approot . "/views/" . $name;
 		if(file_exists($file)) {
 			include($file);
 		} else {
@@ -33,7 +33,7 @@ class View {
 		}
 	}
 	function action($controller,$action) {
-		MVC::dispatch($controller,$action);
+		SQ_Class_MVC::dispatch($controller,$action);
 	}
 	function header($title) {
 		$this->title = $title;

@@ -1,4 +1,4 @@
 <?php
-class SQ_Group extends DBSQL { 
+class SQ_Group extends SQ_Class_DBSQ { 
 
 }

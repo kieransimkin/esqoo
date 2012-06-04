@@ -38,4 +38,4 @@ function error_handler_function ($errno, $errstr, $errfile, $errline, $errcontex
 set_error_handler('error_handler_function', E_ALL);
 register_shutdown_function('shutdown_function'); 
 
-MVC::dispatch($_SERVER['REQUEST_URI']);
+SQ_Class_MVC::dispatch($_SERVER['REQUEST_URI']);

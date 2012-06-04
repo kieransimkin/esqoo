@@ -1,5 +1,5 @@
 <?php
-class CacheError {
+class SQ_Class_CacheError extends SQ_Class {
 	private $error=null;
 	function __construct($err) { 
 		$this->error=$err;	
@@ -8,7 +8,7 @@ class CacheError {
 		return $this->error;
 	}
 };
-class Cache { 
+class SQ_Class_Cache extends SQ_Class { 
 	static public $backend='flatfile';
 	static public function getKey($namespace,$key) { 
 		switch (self::$backend) { 
@@ -27,11 +27,11 @@ class Cache {
 	static private function getFileKey($namespace,$key) { 
 		$name=self::get_file_storage_name($namespace,$key);
 		if (!file_exists($name)) { 
-			return new CacheError('miss');
+			return new SQ_Class_CacheError('miss');
 		}
 		$data=file_get_contents($name);
 		if ($data==false) { 
-			return new CacheError('miss');
+			return new SQ_Class_CacheError('miss');
 		}
 		return json_decode($data);
 	}
@@ -46,6 +46,6 @@ class Cache {
 		@mkdir(dirname($filename),0777,true);
 	}
 	static private function get_file_storage_name($namespace,$key) { 
-		return dirname(__FILE__).'/../cache/'.Helper::sanitize_file_name($namespace).'/'.Helper::sanitize_file_name($key);
+		return dirname(__FILE__).'/../cache/'.SQ_Class_Helper::sanitize_file_name($namespace).'/'.SQ_Class_Helper::sanitize_file_name($key);
 	}
 }

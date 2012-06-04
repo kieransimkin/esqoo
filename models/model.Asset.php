@@ -1,5 +1,5 @@
 <?php
-class SQ_Asset extends DBSQL { 
+class SQ_Asset extends SQ_Class_DBSQ { 
 	public static $_cachedfields=array('MimeType','Size','AssetHash','HashType','ModifyDate');
 	static public function searchPartiallyUploaded($chunkhash,$hashtype,$name,$userid,$data) { 
 		return false;

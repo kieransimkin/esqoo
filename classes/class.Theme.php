@@ -1,5 +1,5 @@
 <?php
-class Theme { 
+class SQ_Class_Theme extends SQ_Class { 
 	private $identifier=null;
 	private $xmlconfig=null;
 	function __construct($identifier) { 

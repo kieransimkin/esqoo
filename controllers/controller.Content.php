@@ -1,5 +1,5 @@
 <?php
-class ContentController extends LockedController { 
+class ContentController extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -35,7 +35,7 @@ class ContentController extends LockedController {
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
 	 private function get_upload_form($input,$album,$defaultalbum,$forcesubmit=false) { 
-		$form=new Form('upload');
+		$form=new SQ_Class_Form('upload');
 		$form->addElement('hidden','new_album_id',array(),array())->setValue($album->id);
 		$form->addElement('hidden','albumlist',array(),array())->setValue(json_encode(SQ_Album::get_autocomplete_array($this->user->id)));
 		$form->addElement('hidden','new_album_name',array(),array())->setValue($album->Name);

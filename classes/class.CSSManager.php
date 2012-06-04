@@ -1,5 +1,5 @@
 <?php
-class CSSManager extends ResourceManager {
+class SQ_Class_CSSManager extends SQ_Class_ResourceManager {
 
 	protected $ext = "css";
 
@@ -42,6 +42,6 @@ class CSSManager extends ResourceManager {
 
 
 	function minify($file) {
-		return CssMin::minify($file);
+		return SQ_Class_CSSMin::minify($file);
 	}
 }

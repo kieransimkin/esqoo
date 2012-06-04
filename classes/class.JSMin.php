@@ -45,7 +45,7 @@
  * @link http://code.google.com/p/jsmin-php/
  */
 
-class JSMin {
+class SQ_Class_JSMin extends SQ_Class {
   const ORD_LF    = 10;
   const ORD_SPACE = 32;
 
@@ -60,7 +60,7 @@ class JSMin {
   // -- Public Static Methods --------------------------------------------------
 
   public static function minify($js) {
-    $jsmin = new JSMin($js);
+    $jsmin = new SQ_Class_JSMin($js);
     return $jsmin->min();
   }
 

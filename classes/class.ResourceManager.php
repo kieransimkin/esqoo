@@ -1,5 +1,5 @@
 <?php
-class ResourceManager {
+class SQ_Class_ResourceManager extends SQ_Class {
 
 	function __construct() {
 		$this->config = Array( // XXX FIXME make this part of the config
@@ -8,7 +8,7 @@ class ResourceManager {
 			"resources_version" => false, // XXX this should be part of the codebase
 			"parallelise_resources" => false,
 		);
-		$this->approot = Site::$approot;
+		$this->approot = SQ_Class_Site::$approot;
 
 		$this->dir = $this->approot . "/compiled-resources";
 		$this->webdir = "/compiled-resources";

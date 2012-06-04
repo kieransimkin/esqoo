@@ -1,5 +1,5 @@
 <?php
-class SQ_Picture extends DBSQL { 
+class SQ_Picture extends SQ_Class_DBSQ { 
 	public static $_cachedfields=array('digital_negative__asset_id','web_small__asset_id','web_medium__asset_id','web_large__asset_id','web_fullsize__asset_id','thumbnail_small__asset_id','thumbnail_large__asset_id','square__asset_id');
 	public static function assert_picture_size_type($type) { 
 		if ($type!='web-fullsize' && $type!='web-small' && $type!='web-medium' && $type!='web-large' && $type!='thumbnail-large' && $type!='thumbnail-small' && $type!='square') { 
@@ -414,12 +414,12 @@ class SQ_Picture extends DBSQL {
 	}
 	public function get_tag_array() { 
 		$tags=DBSQ::getAll('select tag.id,tag.Name from picture_tag inner join tag on tag.id=picture_tag.tag_id where picture_tag.picture_id=? and tag.DeleteDate is null',array($this->id),'SQ_Tag');
-		DBSQL::set_all_visible_api_fields($tags,array('id','Name')); // Hmm, should this really be in the model? these are supposed to go in the controller
+		SQ_Class_DBSQ::set_all_visible_api_fields($tags,array('id','Name')); // Hmm, should this really be in the model? these are supposed to go in the controller
 		return $tags;
 	}
 	public function get_url($size='web-small') { 
 		self::assert_picture_size_type($size);
-		return '/asset/picture/'.$size.'/'.$this->id.'-'.Helper::url_friendly_encode($this->Name);
+		return '/asset/picture/'.$size.'/'.$this->id.'-'.SQ_Class_Helper::url_friendly_encode($this->Name);
 	}
 	public function get_url_array() { 
 		$ret=array();

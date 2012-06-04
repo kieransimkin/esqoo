@@ -1,5 +1,5 @@
 <?php
-class AccountController extends LockedController { 
+class AccountController extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -60,7 +60,7 @@ class AccountController extends LockedController {
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
 	private function get_theme_settings_form($input,$settings,$forcesubmit=false) { 
-		$form=new Form('theme_settings');
+		$form=new SQ_Class_Form('theme_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
 		$form->addElement("select","daytime__ui_theme_id",array('onchange'=>'esqoo_ui.update_theme(\'daytime\',$(this));'),array('options'=>SQ_Ui_theme::get_menu('Daytime')))->setLabel(_('Lights-on Theme'))->addRule('required',_('Required'));
 		$form->addElement("select","nighttime__ui_theme_id",array('onchange'=>'esqoo_ui.update_theme(\'nighttime\',$(this));'),array('options'=>SQ_Ui_theme::get_menu('Nighttime')))->setLabel(_('Lights-off Theme'))->addRule('required',_('Required'));
@@ -68,14 +68,14 @@ class AccountController extends LockedController {
 		return $form;
 	}
 	private function get_editor_settings_form($input,$settings,$forcesubmit=false) { 
-		$form=new Form('editor_settings');
+		$form=new SQ_Class_Form('editor_settings');
 		$form->setAPIDataSources($input,$settings,$forcesubmit);
 		$form->addElement("select","visual__rich_editor_id",array(),array('options'=>SQ_Rich_editor::get_menu('Visual')))->setLabel(_('Visual Editor'))->addRule('required',_('Required'));
 		$form->addElement("select","code__rich_editor_id",array(),array('options'=>SQ_Rich_editor::get_menu('Code')))->setLabel(_('Code Editor'))->addRule('required',_('Required'));
 		return $form;
 	}
 	private function get_details_form($input,$user,$forcesubmit=false) { 
-		$form=new Form('details');
+		$form=new SQ_Class_Form('details');
 		$form->setAPIDataSources($input,$user,$forcesubmit);
 		$form->addElement('text','FirstName',array())->setLabel(_('First Name(s)'))->addRule('required',_('Required'));
 		$form->addElement('text','LastName',array())->setLabel(_('Last Name'))->addRule('required',_('Required'));
@@ -87,7 +87,7 @@ class AccountController extends LockedController {
 		return $form;
 	}
 	private function get_password_form($input,$forcesubmit=false) { 
-		$form=new Form('password');
+		$form=new SQ_Class_Form('password');
 		$form->setAPIDataSources($input,null,$forcesubmit);
 		$form->addElement('password','OldPassword',array())->setLabel(_('Old Password'))->addRule('required',_('Required'));
 		$form->addElement('password','NewPassword',array())->setLabel(_('New Password'))->addRule('required',_('Required'));

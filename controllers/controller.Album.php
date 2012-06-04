@@ -1,5 +1,5 @@
 <?php
-class AlbumController extends LockedController { 
+class AlbumController extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -43,7 +43,7 @@ class AlbumController extends LockedController {
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
 	private function get_album_form($input,$album,$forcesubmit=false) {
-		$form=new Form('editalbum');
+		$form=new SQ_Class_Form('editalbum');
 		$form->setAPIDataSources($input,$album,$forcesubmit);
 		$form->addElement("text","Name",array())->setLabel(_('Album Name'))->addRule('required',_('Required'));
 		$form->addElement("textarea","Description",array())->setLabel(_('Description'));
@@ -55,14 +55,14 @@ class AlbumController extends LockedController {
 	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
 	 *****************************************/
 	public function listAPI($arg='',$input=array()) { 
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$albums=SQ_Album::getAll('user_id=? and UserVisible=\'true\' AND DeleteDate is null and Name like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
 			$albums=SQ_Album::getAll('user_id=? and UserVisible=\'true\' AND DeleteDate is null',array($this->user->id),null,$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($albums,$this->get_album_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($albums,$this->get_album_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($albums,$input['Page'],$numrows);
 	}
 	public function listmediaAPI($arg='',$input=array()) { 
@@ -85,51 +85,51 @@ class AlbumController extends LockedController {
 	}
 	public function listpicturesAPI($arg='',$input=array()) { 
 		$album=$this->ensure_api_album($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$pictures=SQ_Picture::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
 			$pictures=SQ_Picture::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
 		}
-		DBSQL::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
-		DBSQL::set_all_visible_api_fields($pictures,$this->get_picture_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
+		SQ_Class_DBSQ::set_all_visible_api_fields($pictures,$this->get_picture_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($pictures,$input['Page'],$numrows);
 	}
 	public function listvideosAPI($arg='',$input=array()) { 
 		$album=$this->ensure_api_album($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$videos=SQ_Video::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
 			$videos=SQ_Video::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($videos,$this->get_video_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($videos,$this->get_video_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($videos,$input['Page'],$numrows);
 	}
 	public function listaudiosAPI($arg='',$input=array()) { 
 		$album=$this->ensure_api_album($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$audios=SQ_Audio::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
 			$audios=SQ_Audio::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($audios,$this->get_audio_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($audios,$this->get_audio_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($audios,$input['Page'],$numrows);
 	}
 	public function listfilesAPI($arg='',$input=array()) { 
 		$album=$this->ensure_api_album($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$files=SQ_File::getAll('album_id=? and DeleteDate is null and Name like ?',array($album->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
 			$files=SQ_File::getAll('album_id=? AND DeleteDate is null',array($album->id),null,$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($files,$this->get_file_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($files,$this->get_file_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($files,$input['Page'],$numrows);
 	}
 	public function listallAPI($arg='',$input=array()) { 

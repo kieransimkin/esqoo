@@ -1,5 +1,5 @@
 <?php
-class TagController extends LockedController { 
+class TagController extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
@@ -43,7 +43,7 @@ class TagController extends LockedController {
 	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
 	 *********************/
 	function get_tag_form($input,$tag,$forcesubmit=false) { 
-		$form=new Form('add');
+		$form=new SQ_Class_Form('add');
 		$form->setAPIDataSources($input,$tag,$forcesubmit);
 		$form->addElement('text','Name',array())->setLabel(_('Name'))->addRule('required',_('Required'));
 		$form->addElement('textarea','Description',array())->setLabel(_('Description'));
@@ -70,14 +70,14 @@ class TagController extends LockedController {
 		}
 	}
 	public function listAPI($arg='',$input=array()) { 
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$tags=SQ_Tag::getAll('user_id=? and DeleteDate is null and Name like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
 			$tags=SQ_Tag::getAll('user_id=? and DeleteDate is null',array($this->user->id),null,$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($tags,$this->get_tag_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($tags,$this->get_tag_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($tags,$input['Page'],$numrows);
 	}
 	public function getAPI($arg='',$input=array()) { 
@@ -120,51 +120,51 @@ class TagController extends LockedController {
 	}
 	public function listpicturesAPI($arg='',$input=array()) { 
 		$tag=$this->ensure_api_tag($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? and picture.DeleteDate is null and picture.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_Picture',$suffix);
 		} else { 
 			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? AND picture.DeleteDate is null',array($tag->id),'SQ_Picture',$suffix);
 		}
-		DBSQL::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
-		DBSQL::set_all_visible_api_fields($pictures,$this->get_picture_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
+		SQ_Class_DBSQ::set_all_visible_api_fields($pictures,$this->get_picture_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($pictures,$input['Page'],$numrows);
 	}
 	public function listvideosAPI($arg='',$input=array()) { 
 		$tag=$this->ensure_api_tag($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? and video.DeleteDate is null and video.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_Video',$suffix);
 		} else { 
 			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? AND video.DeleteDate is null',array($tag->id),'SQ_Video',$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($videos,$this->get_video_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($videos,$this->get_video_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($videos,$input['Page'],$numrows);
 	}
 	public function listaudiosAPI($arg='',$input=array()) { 
 		$tag=$this->ensure_api_tag($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? and audio.DeleteDate is null and audio.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_Audio',$suffix);
 		} else { 
 			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? AND audio.DeleteDate is null',array($tag->id),'SQ_Audio',$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($audios,$this->get_audio_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($audios,$this->get_audio_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($audios,$input['Page'],$numrows);
 	}
 	public function listfilesAPI($arg='',$input=array()) { 
 		$tag=$this->ensure_api_tag($input);
-		$suffix=DBSQL::getSqlSuffix($input);
+		$suffix=SQ_Class_DBSQ::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
 			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? and file.DeleteDate is null and file.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_File',$suffix);
 		} else { 
 			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? AND file.DeleteDate is null',array($tag->id),'SQ_File',$suffix);
 		}
-		DBSQL::set_all_visible_api_fields($files,$this->get_file_fields());
-		$numrows=DBSQL::foundRows();
+		SQ_Class_DBSQ::set_all_visible_api_fields($files,$this->get_file_fields());
+		$numrows=SQ_Class_DBSQ::foundRows();
 		return $this->flexigridResponse($files,$input['Page'],$numrows);
 	}
 	public function listallAPI($arg='',$input=array()) { 

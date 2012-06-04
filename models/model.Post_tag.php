@@ -1,5 +1,5 @@
 <?php
-class SQ_Post_tag extends DBSQL { 
+class SQ_Post_tag extends SQ_Class_DBSQ { 
 	public function save() { 
 		return parent::save(true);
 	}

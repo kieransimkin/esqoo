@@ -1,5 +1,5 @@
 <?php
-class SQ_Album extends DBSQL { 
+class SQ_Album extends SQ_Class_DBSQ { 
 	public function save() { 
 		$name=$this->Name;
 		$origname=$name;
@@ -20,7 +20,7 @@ class SQ_Album extends DBSQL {
 		return parent::save();
 	}
 	static function album_exists($user_id,$name) { 
-		$res=DBSQL::getOne('select id from album where user_id=? and UserVisible=\'true\' and DeleteDate is null and Name=?',array($user_id,$name));
+		$res=SQ_Class_DBSQ::getOne('select id from album where user_id=? and UserVisible=\'true\' and DeleteDate is null and Name=?',array($user_id,$name));
 		if (is_null($res)) { 
 			return false;
 		} else {

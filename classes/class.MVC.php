@@ -1,10 +1,10 @@
 <?php
-class MVC { 
+class SQ_Class_MVC extends SQ_Class { 
 	static public $controller=null;
 	public static function dispatch($uri) { 
-		Site::loadINI();
+		SQ_Class_Site::loadINI();
 		$plugin=null;
-		if ($_SERVER['HTTP_HOST']!=Site::$config['cp_hostname']) { 
+		if ($_SERVER['HTTP_HOST']!=SQ_Class_Site::$config['cp_hostname']) { 
 			$controller_class = 'PublicController';
 		} else { 
 			if ($uri=='/' || $uri=='') { 
@@ -54,8 +54,8 @@ class MVC {
 			}
 		}
 		try { 
-			if (!is_subclass_of($controller_class,'DetachedController')) { 
-				Site::connect();
+			if (!is_subclass_of($controller_class,'SQ_Class_DetachedController')) { 
+				SQ_Class_Site::connect();
 			}
 			if (!class_exists($controller_class)) { 
 				self::throw404($controller_class,$funcname);

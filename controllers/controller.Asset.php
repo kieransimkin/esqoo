@@ -1,5 +1,5 @@
 <?php
-class AssetController extends DetachedController { 
+class AssetController extends SQ_Class_DetachedController { 
 	/****************************************
 	 *  ╻ ╻┏━┓╻   ┏━┓┏━╸┏┳┓┏━┓┏━┓┏━┓┏━╸┏━┓  *
 	 *  ┃ ┃┣┳┛┃   ┣┳┛┣╸ ┃┃┃┣━┫┣━┛┣━┛┣╸ ┣┳┛  *
@@ -29,19 +29,19 @@ class AssetController extends DetachedController {
 		$picture=SQ_Picture::get($this->find_uri_id($uri));
 		if (substr($uri,0,11)=='/web-small/') { 
 			if (is_null($picture->web_small__asset_id)) { 
-				Site::connect();
+				SQ_Class_Site::connect();
 				$picture->generate_thumbnail('web-small');
 			}
 			$picture->web_small__asset->output();
 		} else if (substr($uri,0,12)=='/web-medium/') { 
 			if (is_null($picture->web_medium__asset_id)) { 
-				Site::connect();
+				SQ_Class_Site::connect();
 				$picture->generate_thumbnail('web-medium');
 			}
 			$picture->web_medium__asset->output();
 		} else if (substr($uri,0,11)=='/web-large/') { 
 			if (is_null($picture->web_large__asset_id)) { 
-				Site::connect();
+				SQ_Class_Site::connect();
 				$picture->generate_thumbnail('web-large');
 			}
 			$picture->web_large__asset->output();
@@ -49,19 +49,19 @@ class AssetController extends DetachedController {
 			$picture->web_fullsize__asset->output();
 		} else if (substr($uri,0,17)=='/thumbnail-large/') { 
 			if (is_null($picture->thumbnail_large__asset_id)) { 
-				Site::connect();
+				SQ_Class_Site::connect();
 				$picture->generate_thumbnail('thumbnail-large');
 			}
 			$picture->thumbnail_large__asset->output();
 		} else if (substr($uri,0,17)=='/thumbnail-small/') { 
 			if (is_null($picture->thumbnail_small__asset)) { 
-				Site::connect();
+				SQ_Class_Site::connect();
 				$picture->generate_thumbnail('thumbnail-small');
 			}
 			$picture->thumbnail_small__asset->output();
 		} else if (substr($uri,0,8)=='/square/') { 
 			if (is_null($picture->square__asset_id)) { 
-				Site::connect();
+				SQ_Class_Site::connect();
 				$picture->generate_thumbnail('square');
 			}
 			$picture->square__asset->output();
@@ -87,7 +87,7 @@ class AssetController extends DetachedController {
 	private function find_uri_id($uri) { 
 		$pos=strripos($uri,'/');
 		if (!is_numeric(substr($uri,$pos+1,1))) { 
-			MVC::throw404();
+			SQ_Class_MVC::throw404();
 		}
 		return intval(substr($uri,$pos+1));
 	}

@@ -1,5 +1,5 @@
 <?php
-class SQ_Page_cache extends DBSQL { 
+class SQ_Page_cache extends SQ_Class_DBSQ { 
 	public static $_cachedfields=array('Content','CreateDate','Size','CacheHash');
 	public function save() { 
 		return parent::save(true);

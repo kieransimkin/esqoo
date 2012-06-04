@@ -1,5 +1,5 @@
 <?php
-class JSManager extends ResourceManager {
+class SQ_Class_JSManager extends SQ_Class_ResourceManager {
 
 	protected $ext = "js";
 
@@ -12,6 +12,6 @@ class JSManager extends ResourceManager {
 	}
 
 	function minify($file) {
-		return JSMin::minify($file);
+		return SQ_Class_JSMin::minify($file);
 	}
 }

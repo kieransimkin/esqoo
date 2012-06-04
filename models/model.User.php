@@ -1,5 +1,5 @@
 <?php
-class SQ_User extends DBSQL { 
+class SQ_User extends SQ_Class_DBSQ { 
 	public static $_cachedfields=array('ThemeIdentifier','default__page_id');
 	public function format_date() { 
 		return date('Y-m-d');

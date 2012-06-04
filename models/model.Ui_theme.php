@@ -1,5 +1,5 @@
 <?php
-class SQ_Ui_theme extends DBSQL { 
+class SQ_Ui_theme extends SQ_Class_DBSQ { 
 	static function get_menu($daystate) { 
 		if ($daystate=='Nighttime') { 
 			$res=UI_theme::getAll('ui_state=\'night\' or ui_state=\'both\'');
