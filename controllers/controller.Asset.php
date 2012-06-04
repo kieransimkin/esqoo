@@ -26,7 +26,7 @@ class AssetController extends DetachedController {
 	 ****************************/
 
 	private function get_picture($uri) { 
-		$picture=Picture::get($this->find_uri_id($uri));
+		$picture=SQ_Picture::get($this->find_uri_id($uri));
 		if (substr($uri,0,11)=='/web-small/') { 
 			if (is_null($picture->web_small__asset_id)) { 
 				Site::connect();
@@ -71,17 +71,17 @@ class AssetController extends DetachedController {
 		}
 	}
 	private function get_video($uri) { 
-		$video=Video::get($this->find_uri_id($uri));
+		$video=SQ_Video::get($this->find_uri_id($uri));
 	}
 	private function get_audio($uri) { 
-		$audio=Audio::get($this->find_uri_id($uri));
+		$audio=SQ_Audio::get($this->find_uri_id($uri));
 	}
 	private function get_file($uri) { 
-		$file=File::get($this->find_uri_id($uri));
+		$file=SQ_File::get($this->find_uri_id($uri));
 		$file->digital_negative__asset->output();
 	}
 	private function get_asset($uri) {
-		$asset=Asset::get($this->find_uri_id($uri));
+		$asset=SQ_Asset::get($this->find_uri_id($uri));
 		$asset->output();
 	}
 	private function find_uri_id($uri) { 

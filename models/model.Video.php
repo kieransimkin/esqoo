@@ -1,4 +1,4 @@
 <?php
-class Video extends DBSQL { 
+class SQ_Video extends DBSQL { 
 
 } 

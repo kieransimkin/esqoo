@@ -37,7 +37,7 @@ class ContentController extends LockedController {
 	 private function get_upload_form($input,$album,$defaultalbum,$forcesubmit=false) { 
 		$form=new Form('upload');
 		$form->addElement('hidden','new_album_id',array(),array())->setValue($album->id);
-		$form->addElement('hidden','albumlist',array(),array())->setValue(json_encode(Album::get_autocomplete_array($this->user->id)));
+		$form->addElement('hidden','albumlist',array(),array())->setValue(json_encode(SQ_Album::get_autocomplete_array($this->user->id)));
 		$form->addElement('hidden','new_album_name',array(),array())->setValue($album->Name);
 		$af=$form->addElement('text','album',array('data-combobox-source-selector'=>'#albumlist-0','class'=>'esqoo-combobox esqoo-uploadq-album'));
 		if ($defaultalbum) { 
@@ -87,14 +87,14 @@ class ContentController extends LockedController {
 			$input['ChunkHash']=hash('sha256',$input['Data']);
 			$input['HashType']='SHA256';
 			if ($input['AssetID']==='null') { 
-				if (($asset=Asset::searchPartiallyUploaded($input['ChunkHash'],$input['HashType'],$input['Name'],$this->user->id,$input['Data']))) {  
+				if (($asset=SQ_Asset::searchPartiallyUploaded($input['ChunkHash'],$input['HashType'],$input['Name'],$this->user->id,$input['Data']))) {  
 					$chunkdone=true;
 				} else { 
-					$asset=Asset::get();
+					$asset=SQ_Asset::get();
 				}
 			} else { 
 				try { 
-					$asset=Asset::get($input['AssetID']);
+					$asset=SQ_Asset::get($input['AssetID']);
 					if ($asset->user_id!=$this->user->id) { 
 						$this->api_error(5,_("AssetID not found"));
 						return;
@@ -113,14 +113,14 @@ class ContentController extends LockedController {
 			$asset->set_visible_api_fields($this->get_asset_fields());
 
 			if (!$chunkdone) { 
-				$chunk=Asset_chunk::get();
+				$chunk=SQ_Asset_chunk::get();
 				$chunk->asset_id=$asset->id;
 				$chunk->Chunk=$input['Chunk'];
 				$chunk->ChunkSize=$input['ChunkSize'];
 				$chunk->HashType=$input['HashType'];
 				$chunk->ChunkHash=$input['ChunkHash'];
 				$chunk->save();
-				$chunkdata=Asset_chunk_data::get();
+				$chunkdata=SQ_Asset_chunk_data::get();
 				$chunkdata->asset_chunk_id=$chunk->id;
 				$chunkdata->Data=$input['Data'];
 				$chunkdata->save();
@@ -171,7 +171,7 @@ class ContentController extends LockedController {
 	}
 	private function validate_album_id($aid) { 
 		try { 
-			$album=Album::get($aid);
+			$album=SQ_Album::get($aid);
 			if ($album->user_id!=$this->user->id) { 
 				return false;
 			}

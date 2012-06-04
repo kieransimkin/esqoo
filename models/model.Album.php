@@ -1,5 +1,5 @@
 <?php
-class Album extends DBSQL { 
+class SQ_Album extends DBSQL { 
 	public function save() { 
 		$name=$this->Name;
 		$origname=$name;
@@ -9,7 +9,7 @@ class Album extends DBSQL {
 		} catch (DBSQ_Exception $e) { 
 			$thisid=-1;
 		}
-		while (($alb=Album::album_exists($this->user_id, $name))) { 
+		while (($alb=SQ_Album::album_exists($this->user_id, $name))) { 
 			if ($alb==$thisid) { 
 				break;
 			}
@@ -28,7 +28,7 @@ class Album extends DBSQL {
 		}
 	}
 	static function get_menu($user_id) { 
-		$res=Album::getAll('DeleteDate is null and user_id=? and UserVisible=\'true\'',array($user_id));
+		$res=SQ_Album::getAll('DeleteDate is null and user_id=? and UserVisible=\'true\'',array($user_id));
 		$ret=array();
 		if (is_array($res)) { 
 			foreach ($res as $item) { 
@@ -38,7 +38,7 @@ class Album extends DBSQL {
 		return $ret;
 	}
 	static function get_autocomplete_array($user_id) { 
-		$res=Album::getAll('DeleteDate is null and user_id=? AND UserVisible=\'true\'',array($user_id));
+		$res=SQ_Album::getAll('DeleteDate is null and user_id=? AND UserVisible=\'true\'',array($user_id));
 		$ret=array();
 		if (is_array($res)) { 
 			foreach ($res as $item) { 

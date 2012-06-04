@@ -1,5 +1,5 @@
 <?php
-class Message extends DBSQL { 
+class SQ_Message extends DBSQL { 
 	public function save() { 
 		return parent::save(true);
 	}

@@ -1,4 +1,4 @@
 <?php
-class Post extends DBSQL { 
+class SQ_Post extends DBSQL { 
 
 }

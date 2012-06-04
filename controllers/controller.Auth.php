@@ -22,7 +22,7 @@ class AuthController extends OpenController {
 	 */
 	function getchallengeAPI($arg='',$input=array()) { 
 		$ret=array();
-		$challenge=User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
+		$challenge=SQ_User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
 		$ret['Challenge']=$challenge->challenge;
 		$ret['ChallengeID']=$challenge->id;
 		return $ret;
@@ -42,7 +42,7 @@ class AuthController extends OpenController {
 			$challenge->delete();
 		}
 		if ($this->api_validation_success()) { 
-			$token=User_token::create(array('user'=>$user,'token'=>Helper::randomAlphaNumString(255)));
+			$token=SQ_User_token::create(array('user'=>$user,'token'=>Helper::randomAlphaNumString(255)));
 			$ret['UserID']=$user->id;
 			$ret['TokenID']=$token->id;
 			$ret['Token']=$token->token;
@@ -51,7 +51,7 @@ class AuthController extends OpenController {
 			setcookie('Token',$token->token,time()+31556926,'/');
 		} else { 
 			// Auth failed, generate a new challenge
-			$challenge=User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
+			$challenge=SQ_User_challenge::create(array('challenge'=>Helper::randomAlphaNumString(64)));
 			$ret['Challenge']=$challenge->challenge;
 			$ret['ChallengeID']=$challenge->id;
 		}
@@ -92,7 +92,7 @@ class AuthController extends OpenController {
 			return null;
 		}
 		try { 
-			$challenge=User_challenge::get($input['ChallengeID'],'id','col',true);
+			$challenge=SQ_User_challenge::get($input['ChallengeID'],'id','col',true);
 		} catch (DBSQ_Exception $e) { 
 			$challenge=null;
 		}
@@ -109,11 +109,11 @@ class AuthController extends OpenController {
 		} else { 
 			try {
 				if (strlen(@$input['Username'])>0) { 
-					$user=User::get($input['Username'],'Username','col',true);
+					$user=SQ_User::get($input['Username'],'Username','col',true);
 				} else if (strlen(@$input['Email'])>0) { 
-					$user=User::get($input['Email'],'Email','col',true);
+					$user=SQ_User::get($input['Email'],'Email','col',true);
 				} else if (strlen(@$input['UserID'])>0) { 
-					$user=User::get($input['UserID'],'id','col',true);
+					$user=SQ_User::get($input['UserID'],'id','col',true);
 				}
 			} catch (DBSQ_Exception $e) { 
 				$user=null;

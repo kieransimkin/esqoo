@@ -97,7 +97,7 @@ class Controller {
 		if ($severity!='Notice' && $severity!='Warning' && $severity!='Error') { 
 			$severity='Error';
 		}
-		$message=Message::get();
+		$message=SQ_Message::get();
 		$message->user_id=$this->user->id;
 		$message->Severity=$severity;
 		$message->Message=$string;

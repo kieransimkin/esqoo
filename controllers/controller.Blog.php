@@ -58,7 +58,7 @@ class BlogController extends LockedController {
 			$this->api_form_validation_error($form);
 		}
 		if ($this->api_validation_success()) { 
-			$post=Post::get();
+			$post=SQ_Post::get();
 			$post->user_id=$this->user->id;
 			$post->Title=$input['Title'];
 			$post->Content=$input['Content'];
@@ -69,9 +69,9 @@ class BlogController extends LockedController {
 	public function listAPI($arg='',$input=array()) { 
 		$suffix=DBSQL::getSqlSuffix($input);
 		if ($input['SearchField']=='Title' && strlen($input['SearchQuery'])>0) { 
-			$posts=Post::getAll('user_id=? and AND DeleteDate is null and Title like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+			$posts=SQ_Post::getAll('user_id=? and AND DeleteDate is null and Title like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
-			$posts=Post::getAll('user_id=? AND DeleteDate is null',array($this->user->id),null,$suffix);
+			$posts=SQ_Post::getAll('user_id=? AND DeleteDate is null',array($this->user->id),null,$suffix);
 		}
 		DBSQL::set_all_visible_api_fields($posts,$this->get_post_fields());
 		$numrows=DBSQL::foundRows();
@@ -95,7 +95,7 @@ class BlogController extends LockedController {
 	private function get_post($arg) { 
 		if (strlen($arg)>0) { 
 			try {
-				$post=Post::get($arg,'id','row',true);
+				$post=SQ_Post::get($arg,'id','row',true);
 				if ($post->user_id!=$this->user->id) { 
 					$post=null;
 				}

@@ -1,4 +1,4 @@
 <?php
-class Audio extends DBSQL { 
+class SQ_Audio extends DBSQL { 
 
 } 

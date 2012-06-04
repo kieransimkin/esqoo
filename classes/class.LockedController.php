@@ -9,8 +9,8 @@ class LockedController extends Controller {
 			$this->_redirectAuthFail();
 		}
 		try { 
-			$user=User::get($input['UserID'],'id','row',true);
-			$usertoken=User_token::get($input['TokenID']);
+			$user=SQ_User::get($input['UserID'],'id','row',true);
+			$usertoken=SQ_User_token::get($input['TokenID']);
 			if ($usertoken->user_id!=$user->id) { 
 				$this->_redirectAuthFail();
 			}

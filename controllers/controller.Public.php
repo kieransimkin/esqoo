@@ -2,13 +2,13 @@
 class PublicController extends DetachedController { 
 	function remap($uri,$input=array()) { 
 		$username=substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
-		$user=User::get($username,'Username',true);
+		$user=SQ_User::get($username,'Username',true);
 		if ($uri=='/') { 
-			$page=Page::get($user->default__page_id);
+			$page=SQ_Page::get($user->default__page_id);
 		} else { 
 			try { 
-				$pageuri=Page_uri::get($username.$uri,'URITag',true);
-				$page=Page::get($pageuri->page_id);
+				$pageuri=SQ_Page_uri::get($username.$uri,'URITag',true);
+				$page=SQ_Page::get($pageuri->page_id);
 			} catch (DBSQ_Exception $e) { 
 				MVC::throw404();
 			}
@@ -28,12 +28,12 @@ class PublicController extends DetachedController {
 		}
 	}
 	private function sendPageCache($cacheid) { 
-		$cache=Page_cache::get($cacheid);
+		$cache=SQ_Page_cache::get($cacheid);
 		$cache->output();
 	}
 	private function generatePage($user,$page) { 
 		Site::connect();
-		$cache=Page_cache::get();
+		$cache=SQ_Page_cache::get();
 		$theme=new Theme($user->ThemeIdentifier);
 		$cache->Content=$theme->renderPage($page);
 		$cache->Size=strlen($cache->Content);

@@ -12,7 +12,7 @@ class PictureController extends LockedController {
 		}
 		$this->view->setTemplate('fullpage');
 		$this->view->form=$form;
-		$picturesizes=User_picture_size::getAll('user_id=?',array($this->user->id));
+		$picturesizes=SQ_User_picture_size::getAll('user_id=?',array($this->user->id));
 		$this->view->picturesizes=$picturesizes;
 	}
 	function editUI($arg='',$input=array()) { 
@@ -48,8 +48,8 @@ class PictureController extends LockedController {
 	private function get_index_browse_form($input=array()) { 
 		$form=new Form('indexbrowse');
 		$selectedstate=null;
-		$albummenu=Album::get_menu($this->user->id);
-		$tagmenu=Tag::get_menu($this->user->id);
+		$albummenu=SQ_Album::get_menu($this->user->id);
+		$tagmenu=SQ_Tag::get_menu($this->user->id);
 		$tagcontainerclass='';
 		$albumcontainerclass='';
 		$albumid='';
@@ -151,7 +151,7 @@ class PictureController extends LockedController {
 			$this->api_error(1,_("PictureID field is required"));
 		} else { 
 			try { 
-				$picture=Picture::get($input['PictureID']);
+				$picture=SQ_Picture::get($input['PictureID']);
 				if ($picture->album->user_id!=$this->user->id) { 
 					$this->api_error(2,_("PictureID not found"));
 					$picture=null;

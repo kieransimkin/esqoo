@@ -1,5 +1,5 @@
 <?php
-class Picture extends DBSQL { 
+class SQ_Picture extends DBSQL { 
 	public static $_cachedfields=array('digital_negative__asset_id','web_small__asset_id','web_medium__asset_id','web_large__asset_id','web_fullsize__asset_id','thumbnail_small__asset_id','thumbnail_large__asset_id','square__asset_id');
 	public static function assert_picture_size_type($type) { 
 		if ($type!='web-fullsize' && $type!='web-small' && $type!='web-medium' && $type!='web-large' && $type!='thumbnail-large' && $type!='thumbnail-small' && $type!='square') { 
@@ -396,7 +396,7 @@ class Picture extends DBSQL {
 		$image->thumbnailImage($max,$max,true);
 		$image->setImageFormat('jpeg');
 	        $image->setImageCompressionQuality(90);
-		$asset=Asset::get();
+		$asset=SQ_Asset::get();
 		$data=(string)$image;
 		$image->destroy();
 		$asset->Size=strlen($data);
@@ -413,7 +413,7 @@ class Picture extends DBSQL {
 		return $this->save();
 	}
 	public function get_tag_array() { 
-		$tags=DBSQ::getAll('select tag.id,tag.Name from picture_tag inner join tag on tag.id=picture_tag.tag_id where picture_tag.picture_id=? and tag.DeleteDate is null',array($this->id),'Tag');
+		$tags=DBSQ::getAll('select tag.id,tag.Name from picture_tag inner join tag on tag.id=picture_tag.tag_id where picture_tag.picture_id=? and tag.DeleteDate is null',array($this->id),'SQ_Tag');
 		DBSQL::set_all_visible_api_fields($tags,array('id','Name')); // Hmm, should this really be in the model? these are supposed to go in the controller
 		return $tags;
 	}

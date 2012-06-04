@@ -1,11 +1,11 @@
 <?php
-class Asset extends DBSQL { 
+class SQ_Asset extends DBSQL { 
 	public static $_cachedfields=array('MimeType','Size','AssetHash','HashType','ModifyDate');
 	static public function searchPartiallyUploaded($chunkhash,$hashtype,$name,$userid,$data) { 
 		return false;
 	}
 	public function getRemainingChunks() { 
-		$chunks=DBSQ::getAll('select id, Chunk from asset_chunk where asset_id=?',array($this->id),'Asset_chunk');
+		$chunks=DBSQ::getAll('select id, Chunk from asset_chunk where asset_id=?',array($this->id),'SQ_Asset_chunk');
 		$total=ceil($this->Size/$this->ChunkSize);
 		$array=array();
 		for ($c=0;$c<$total;$c++) { 
@@ -175,7 +175,7 @@ class Asset extends DBSQL {
 	}
 	private function create_asset_picture($albumid) { 
 		$israw=$this->is_camera_raw();
-		$pic=Picture::get();
+		$pic=SQ_Picture::get();
 		$pic->album_id=$albumid;
 		$pic->Name=$this->Name;
 		$pic->Description='';
@@ -191,7 +191,7 @@ class Asset extends DBSQL {
 		return array('AssetType'=>'Picture','Picture'=>$pic);
 	}
 	private function create_asset_video($albumid) { 
-		$vid=Video::get();
+		$vid=SQ_Video::get();
 		$vid->album_id=$albumid;
 		$vid->Name=$this->Name;
 		$vid->Description='';
@@ -201,7 +201,7 @@ class Asset extends DBSQL {
 		return array('AssetType'=>'Video','Video'=>$vid);
 	}
 	private function create_asset_audio($albumid) { 
-		$audio=Audio::get();
+		$audio=SQ_Audio::get();
 		$audio->album_id=$albumid;
 		$audio->Name=$this->Name;
 		$audio->Description='';
@@ -211,7 +211,7 @@ class Asset extends DBSQL {
 		return array('AssetType'=>'Audio','Audio'=>$audio);
 	}
 	private function create_asset_file($albumid) { 
-		$file=File::get();
+		$file=SQ_File::get();
 		$file->album_id=$albumid;
 		$file->Name=$this->Name;
 		$file->Description='';

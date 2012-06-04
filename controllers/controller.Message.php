@@ -6,7 +6,7 @@ class MessageController extends LockedController {
 	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
 	 *****************************************/
 	public function getAPI($arg='',$input=array()) { 
-		$messages=Message::getAll('user_id=? and CompleteDate is null',array($this->user->id));
+		$messages=SQ_Message::getAll('user_id=? and CompleteDate is null',array($this->user->id));
 		DBSQL::set_all_visible_api_fields($messages,$this->get_message_fields());
 		return array('Messages'=>$messages,'MessageCount'=>count($messages));
 	}
@@ -23,7 +23,7 @@ class MessageController extends LockedController {
 		}
 		$message=null;
 		if ($this->api_validation_success()) { 
-			$message=Message::get();
+			$message=SQ_Message::get();
 			$message->Severity=$input['Severity'];
 			$message->Message=$input['Message'];
 			$message->user_id=$this->user->id;
@@ -37,7 +37,7 @@ class MessageController extends LockedController {
 		}
 		$message=null;
 		try { 
-			$message=Message::get($input['MessageID']);
+			$message=SQ_Message::get($input['MessageID']);
 			if ($message->user_id!=$this->user->id) { 
 				$this->api_error(2,_('MessageID not found'));
 				$message=null;

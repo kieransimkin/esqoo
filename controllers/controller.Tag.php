@@ -60,7 +60,7 @@ class TagController extends LockedController {
 			$this->api_form_validation_error($form);
 		}
 		if ($this->api_validation_success()) { 
-			$tag=Tag::get();
+			$tag=SQ_Tag::get();
 			$tag->Name=$input['Name'];
 			$tag->Description=$input['Description'];
 			$tag->user_id=$this->user->id;
@@ -72,9 +72,9 @@ class TagController extends LockedController {
 	public function listAPI($arg='',$input=array()) { 
 		$suffix=DBSQL::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
-			$tags=Tag::getAll('user_id=? and DeleteDate is null and Name like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
+			$tags=SQ_Tag::getAll('user_id=? and DeleteDate is null and Name like ?',array($this->user->id,'%'.$input['SearchQuery'].'%'),null,$suffix);
 		} else { 
-			$tags=Tag::getAll('user_id=? and DeleteDate is null',array($this->user->id),null,$suffix);
+			$tags=SQ_Tag::getAll('user_id=? and DeleteDate is null',array($this->user->id),null,$suffix);
 		}
 		DBSQL::set_all_visible_api_fields($tags,$this->get_tag_fields());
 		$numrows=DBSQL::foundRows();
@@ -122,9 +122,9 @@ class TagController extends LockedController {
 		$tag=$this->ensure_api_tag($input);
 		$suffix=DBSQL::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
-			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? and picture.DeleteDate is null and picture.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'Picture',$suffix);
+			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? and picture.DeleteDate is null and picture.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_Picture',$suffix);
 		} else { 
-			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? AND picture.DeleteDate is null',array($tag->id),'Picture',$suffix);
+			$pictures=DBSQ::getAll('select picture.* from picture inner join picture_tag on picture_tag.picture_id = picture.id where picture_tag.tag_id=? AND picture.DeleteDate is null',array($tag->id),'SQ_Picture',$suffix);
 		}
 		DBSQL::add_all_computed_field($pictures,'PictureURLs','get_url_array');	
 		DBSQL::set_all_visible_api_fields($pictures,$this->get_picture_fields());
@@ -135,9 +135,9 @@ class TagController extends LockedController {
 		$tag=$this->ensure_api_tag($input);
 		$suffix=DBSQL::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
-			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? and video.DeleteDate is null and video.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'Video',$suffix);
+			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? and video.DeleteDate is null and video.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_Video',$suffix);
 		} else { 
-			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? AND video.DeleteDate is null',array($tag->id),'Video',$suffix);
+			$videos=DBSQ::getAll('select video.* from video inner join video_tag on video_tag.video_id = video.id where video_tag.tag_id=? AND video.DeleteDate is null',array($tag->id),'SQ_Video',$suffix);
 		}
 		DBSQL::set_all_visible_api_fields($videos,$this->get_video_fields());
 		$numrows=DBSQL::foundRows();
@@ -147,9 +147,9 @@ class TagController extends LockedController {
 		$tag=$this->ensure_api_tag($input);
 		$suffix=DBSQL::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
-			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? and audio.DeleteDate is null and audio.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'Audio',$suffix);
+			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? and audio.DeleteDate is null and audio.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_Audio',$suffix);
 		} else { 
-			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? AND audio.DeleteDate is null',array($tag->id),'Audio',$suffix);
+			$audios=DBSQ::getAll('select audio.* from audio inner join audio_tag on audio_tag.audio_id = audio.id where audio_tag.tag_id=? AND audio.DeleteDate is null',array($tag->id),'SQ_Audio',$suffix);
 		}
 		DBSQL::set_all_visible_api_fields($audios,$this->get_audio_fields());
 		$numrows=DBSQL::foundRows();
@@ -159,9 +159,9 @@ class TagController extends LockedController {
 		$tag=$this->ensure_api_tag($input);
 		$suffix=DBSQL::getSqlSuffix($input);
 		if ($input['SearchField']=='Name' && strlen($input['SearchQuery'])>0) { 
-			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? and file.DeleteDate is null and file.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'File',$suffix);
+			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? and file.DeleteDate is null and file.Name like ?',array($tag->id,'%'.$input['SearchQuery'].'%'),'SQ_File',$suffix);
 		} else { 
-			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? AND file.DeleteDate is null',array($tag->id),'File',$suffix);
+			$files=DBSQ::getAll('select file.* from file inner join file_tag on file_tag.file_id = file.id where file_tag.tag_id=? AND file.DeleteDate is null',array($tag->id),'SQ_File',$suffix);
 		}
 		DBSQL::set_all_visible_api_fields($files,$this->get_file_fields());
 		$numrows=DBSQL::foundRows();
@@ -199,7 +199,7 @@ class TagController extends LockedController {
 			$this->api_error(1,_("TagID field is required"));
 		} else { 
 			try { 
-				$tag=Tag::get($input['TagID']);
+				$tag=SQ_Tag::get($input['TagID']);
 				if ($tag->user_id!=$this->user->id) { 
 					$this->api_error(2,_("TagID not found"));
 					$tag=null;
