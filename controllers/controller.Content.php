@@ -1,12 +1,12 @@
 <?php
-class ContentController extends SQ_Class_LockedController { 
+class SQ_Controller_Content extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *
 	 *  ┗━┛┗━┛┗━╸╹┗╸   ╹╹ ╹ ╹ ┗━╸╹┗╸╹  ╹ ╹┗━╸┗━╸  *
 	 **********************************************/
 	function uploadUI($arg='',$input=array()) { 
-		$album=$this->foreign_api_action('AlbumController','get-stub');
+		$album=$this->foreign_api_action('album','get-stub');
 		$form=$this->get_upload_form($input,$album,$this->validate_album_id($arg));
 		if ($form->validate()) { 
 	
@@ -20,7 +20,7 @@ class ContentController extends SQ_Class_LockedController {
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
 	function quickuploadDialog($arg='',$input=array()) { 
-		$album=$this->foreign_api_action('AlbumController','get-stub');
+		$album=$this->foreign_api_action('album','get-stub');
 		$form=$this->get_upload_form($input,$album,$this->validate_album_id($arg));
 		if ($form->validate()) { 
 			return $this->formSuccess();

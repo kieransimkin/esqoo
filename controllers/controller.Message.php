@@ -1,5 +1,5 @@
 <?php
-class MessageController extends SQ_Class_LockedController { 
+class SQ_Controller_Message extends SQ_Class_LockedController { 
 	/*****************************************
 	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
 	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *

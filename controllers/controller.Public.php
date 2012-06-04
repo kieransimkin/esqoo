@@ -1,5 +1,5 @@
 <?php
-class PublicController extends SQ_Class_DetachedController { 
+class SQ_Controller_Public extends SQ_Class_DetachedController { 
 	function remap($uri,$input=array()) { 
 		$username=substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
 		$user=SQ_User::get($username,'Username',true);

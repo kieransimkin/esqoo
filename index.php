@@ -5,20 +5,17 @@ ini_set('include_path',dirname(__FILE__)."/libraries/");
 require_once(dirname(__FILE__)."/classes/class.SQ_Class.php");
 spl_autoload_register(function($class_name) {
 	$files=array();
-	if (substr($class_name,-10)=='Controller') { 
-		$controllerlessname=substr($class_name,0,strlen($class_name)-10);
-		$files[]=dirname(__FILE__)."/controllers/controller.{$controllerlessname}.php";
-	}
-	if (substr($class_name,0,8)=='SQ_Class') { 
+	if (substr($class_name,0,9)=='SQ_Class_') { 
 		$classlessname=substr($class_name,9);
 		$files = Array(
 			dirname(__FILE__)."/classes/class.{$classlessname}.php"
 		);
-	} else { 
-		if (substr($class_name,0,3)=='SQ_') { 
-			$sqlessname=substr($class_name,3);
-			$files=array(dirname(__FILE__)."/models/model.{$sqlessname}.php");
-		}
+	} else if (substr($class_name,0,14)=='SQ_Controller_') { 
+		$controllerlessname=substr($class_name,14);
+		$files[]=dirname(__FILE__)."/controllers/controller.{$controllerlessname}.php";
+	} else if (substr($class_name,0,3)=='SQ_') { 
+		$sqlessname=substr($class_name,3);
+		$files=array(dirname(__FILE__)."/models/model.{$sqlessname}.php");
 	}
 	foreach ($files as $file)
 		if (file_exists($file))

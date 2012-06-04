@@ -1,5 +1,5 @@
 <?php
-class PictureController extends SQ_Class_LockedController { 
+class SQ_Controller_Picture extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *

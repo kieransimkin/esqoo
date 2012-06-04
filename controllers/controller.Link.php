@@ -1,5 +1,5 @@
 <?php
-class LinkController extends SQ_Class_LockedController { 
+class SQ_Controller_Link extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *

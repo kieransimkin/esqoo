@@ -1,5 +1,5 @@
 <?php
-class WebsiteController extends SQ_Class_LockedController { 
+class SQ_Controller_Website extends SQ_Class_LockedController { 
 	/**********************************************
 	 *  ╻ ╻┏━┓┏━╸┏━┓   ╻┏┓╻╺┳╸┏━╸┏━┓┏━╸┏━┓┏━╸┏━╸  *
 	 *  ┃ ┃┗━┓┣╸ ┣┳┛   ┃┃┗┫ ┃ ┣╸ ┣┳┛┣╸ ┣━┫┃  ┣╸   *

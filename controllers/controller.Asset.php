@@ -1,5 +1,5 @@
 <?php
-class AssetController extends SQ_Class_DetachedController { 
+class SQ_Controller_Asset extends SQ_Class_DetachedController { 
 	/****************************************
 	 *  ╻ ╻┏━┓╻   ┏━┓┏━╸┏┳┓┏━┓┏━┓┏━┓┏━╸┏━┓  *
 	 *  ┃ ┃┣┳┛┃   ┣┳┛┣╸ ┃┃┃┣━┫┣━┛┣━┛┣╸ ┣┳┛  *

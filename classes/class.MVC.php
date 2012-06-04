@@ -5,7 +5,7 @@ class SQ_Class_MVC extends SQ_Class {
 		SQ_Class_Site::loadINI();
 		$plugin=null;
 		if ($_SERVER['HTTP_HOST']!=SQ_Class_Site::$config['cp_hostname']) { 
-			$controller_class = 'PublicController';
+			$controller_class = 'SQ_Controller_Public';
 		} else { 
 			if ($uri=='/' || $uri=='') { 
 				$controller='dashboard';
@@ -38,7 +38,7 @@ class SQ_Class_MVC extends SQ_Class {
 			if (strlen($action)<1) { 
 				$action='index';
 			}
-			$controller_class = ucwords($controller).'Controller';
+			$controller_class = 'SQ_Controller_'.ucwords($controller);
 		}
 		if ($plugin!=null) { 
 			require_once("plugins/$plugin/controllers/controller.".ucwords($controller).".php");

@@ -213,8 +213,8 @@ class SQ_Class_Controller extends SQ_Class {
 		$ocontroller=$controller;
 		$action=str_replace(' ','',str_replace('-','',strtolower($action))).'API';
 		$controller=ucwords($controller);
-		if (substr($controller,-10)!='Controller') { 
-			$controller=$controller.'Controller';
+		if (substr($controller,0,14)!='SQ_Controller_') { 
+			$controller='SQ_Controller_'.$controller;
 		}
 		$new_controller=new $controller($ocontroller,$oaction);
 
