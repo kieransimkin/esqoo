@@ -25,7 +25,7 @@ spl_autoload_register(function($class_name) {
 });
 
 
-function shutdown_function () {
+function SQ_shutdown_function () {
 	if (is_null($e = error_get_last()) === false) {
 		if ($e['type']==E_ERROR || $e['type']==E_PARSE || $e['type']==E_CORE_ERROR || $e['type']==E_CORE_WARNING || $e['type']==E_COMPILE_ERROR || $e['type']==E_COMPILE_WARNING) { 
 			var_dump($e);
@@ -34,10 +34,10 @@ function shutdown_function () {
 		}
 	}
 }
-function error_handler_function ($errno, $errstr, $errfile, $errline, $errcontext) { 
+function SQ_error_handler_function ($errno, $errstr, $errfile, $errline, $errcontext) { 
 	return FALSE;
 }
-set_error_handler('error_handler_function', E_ALL);
-register_shutdown_function('shutdown_function'); 
+set_error_handler('SQ_error_handler_function', E_ALL);
+register_shutdown_function('SQ_shutdown_function'); 
 
 SQ_Class_MVC::dispatch($_SERVER['REQUEST_URI']);
