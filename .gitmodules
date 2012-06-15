@@ -22,3 +22,6 @@
 [submodule "js/codemirror"]
 	path = js/codemirror
 	url = git://github.com/marijnh/CodeMirror2.git
+[submodule "js/d3"]
+	path = js/d3
+	url = git://github.com/mbostock/d3.git
