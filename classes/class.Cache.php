@@ -14,14 +14,21 @@ class SQ_Class_Cache extends SQ_Class {
 		switch (self::$backend) { 
 			case 'flatfile':
 				return self::getFileKey($namespace,$key);
-			break;
+				break;
 		}
 	}
 	static public function setKey($namespace,$key,$value) { 
 		switch (self::$backend) { 
 			case 'flatfile':
 				return self::setFileKey($namespace,$key,$value);
-			break;
+				break;
+		}
+	}
+	static public function unsetKey($namespace,$key) { 
+		switch (self::$backend) { 
+			case 'flatfile':
+				return self::unsetFileKey($namespace,$key);
+				break;
 		}
 	}
 	static private function getFileKey($namespace,$key) { 
@@ -41,6 +48,10 @@ class SQ_Class_Cache extends SQ_Class {
 		$fp=fopen($name,"wb");
 		fputs($fp,json_encode($value));
 		fclose($fp);
+	}
+	static private function unsetFileKey($namespace,$key) { 
+		$name=self::get_file_storage_name($namespace,$key);
+		@unlink($name);
 	}
 	static private function make_cache_directory($filename) { 
 		@mkdir(dirname($filename),0777,true);

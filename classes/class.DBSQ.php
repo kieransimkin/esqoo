@@ -79,6 +79,20 @@ class SQ_Class_DBSQ extends DBSQ {
 		}
 		return $ret;
 	}
+	function purge_cache($field=null) { 
+		if (is_null($field)) { 
+			foreach (static::$_cachedfields as $cachedfield) { 
+				$this->purge_field_cache($field);
+			}
+		} else { 
+			$this->purge_field_cache($field);
+		}
+	}
+	private function purge_field_cache($field) { 
+		if (in_array($field,static::$_cachedfields)) {
+			SQ_Class_Cache::unsetKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield));	
+		}
+	}
 	function set_visible_api_fields($fields=array()) { 
 		if (!is_array($fields)) { 
 			throw new DBSQ_Exception('Fields array is empty');
@@ -136,7 +150,7 @@ class SQ_Class_DBSQ extends DBSQ {
 				$ret[$field]=$ldata[$field];
 			}
 		}
-		foreach ($this->_computedfields as $name => $func) { 
+		foreach ($this->_computedfields as $name => $func) { git://github.com/mbostock/d3.git
 			if (method_exists($this,$func)) { 
 				$ret[$name]=$this->$func();
 			}
