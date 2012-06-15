@@ -516,3 +516,16 @@ create table `page_cache` (
 	`Size` bigint not null,
 	primary key (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `user_plugin`;
+create table `user_plugin` (
+	id int not null auto_increment,
+	user_id int not null,
+	Identifier varchar(255),
+	primary key (id),
+	index (user_id),
+	unique key (user_id,Identifier)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into user_plugin set user_id=1, Identifier='esqoo-picture-navigator';
+insert into user_plugin set user_id=1, Identifier='esqoo-picture-toolbar';
+drop view if exists user_plugin_cache_list;
+create view user_plugin_cache_list as select user_id,group_concat(Identifier) as IdentifierList from user_plugin group by user_id;
