@@ -12,6 +12,15 @@ class SQ_User extends SQ_Class_DBSQ {
 		return $this->getOne('select `size` from user_picture_size where user_id=? and picture_size_type=?',array($this->id,$type));
 	}
 	public function plugin_enabled($plugin) { 
-		return true;
+		$plugins=$this->get_plugins();
+		if (in_array($plugin,$plugins)) { 
+			return true;
+		} else { 
+			return false;
+		}
+	}
+	public function get_plugins() { 
+		$plugins=SQ_User_plugin_cache_list::get($this->id,'user_id');
+		return explode(',',$plugins->IdentifierList);
 	}
 }
