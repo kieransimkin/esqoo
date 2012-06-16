@@ -528,4 +528,5 @@ create table `user_plugin` (
 insert into user_plugin set user_id=1, Identifier='esqoo-picture-navigator';
 insert into user_plugin set user_id=1, Identifier='esqoo-picture-toolbar';
 drop view if exists user_plugin_cache_list;
+# need to set http://dev.mysql.com/doc/refman/5.0/en/server-system-variables.html#sysvar_group_concat_max_len to a higher value when we connect to MySQL
 create view user_plugin_cache_list as select user_id,group_concat(Identifier) as IdentifierList from user_plugin group by user_id;

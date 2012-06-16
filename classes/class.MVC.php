@@ -62,6 +62,9 @@ class SQ_Class_MVC extends SQ_Class {
 				self::throw404($controller_class,$funcname);
 			}
 			self::$controller = $new_controller = new $controller_class($controller, $action);
+			if (is_subclass_of($controller_class,"SQ_Class_LockedPluginController") && !self::$controller->user->plugin_enabled($plugin)) { 
+				self::throw404($controller_class,$funcname);
+			}
 		} catch (Exception $e) { 
 			self::throw404($controller_class,$funcname);
 		}

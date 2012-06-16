@@ -11,4 +11,7 @@ class SQ_User extends SQ_Class_DBSQ {
 		SQ_Picture::assert_picture_size_type($type);
 		return $this->getOne('select `size` from user_picture_size where user_id=? and picture_size_type=?',array($this->id,$type));
 	}
+	public function plugin_enabled($plugin) { 
+		return true;
+	}
 }
