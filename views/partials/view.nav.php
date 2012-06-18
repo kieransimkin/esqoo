@@ -80,7 +80,9 @@ $nav2=new SQ_Class_Menu(array(
 ));
 $nav=$nav2->export();
 if (!is_null($this->custommenu)) { 
-	print "got here";
+	// TODO - right align these
+	$cmen=$this->custommenu->export();
+	$nav['menuitems']=array_merge($nav['menuitems'],$cmen['menuitems']);
 }
 ?>
 <nav>
