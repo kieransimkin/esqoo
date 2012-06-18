@@ -38,6 +38,23 @@ class SQ_Class_MenuLeafNode_Popup_Buttons extends SQ_Class {
 		}
 	}
 }
+class SQ_Class_MenuLeafNode_Spacer extends SQ_Class_MenuLeafNode { 
+	function __construct() { 
+		parent::__construct($title,$tooltip);
+	}
+	function __toString() { 
+		$ret = <<<HTML
+		<li><span class="spacer"></span></li>
+HTML;
+		return $ret;
+	}
+	function toHTML5String() { 
+		$ret = <<<HTML
+		<span class="spacer"></span>
+HTML;
+		return $ret;
+	}
+}
 class SQ_Class_MenuLeafNode_Popup extends SQ_Class_MenuLeafNode { 
 	public $url=null;
 	public $popuptitle=null;
@@ -271,6 +288,8 @@ HTML;
 				$t['buttons']=$item->buttons->buttons;
 				$t['properties']=$item->properties;
 				$t['title']=$item->title;
+			} else if ($item instanceof SQ_Class_MenuLeafNode_Spacer) { 
+				$t['leaftype']='spacer';
 			}
 			$ret['menuitems'][]=$t;
 		}
