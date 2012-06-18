@@ -1,6 +1,7 @@
 <?php
 class SQ_Class_View extends SQ_Class { 
 	public $template='normal';
+	public $custommenu=null;
 	function __construct($view_name) {
 		$this->view_name = $view_name;
 	}
@@ -23,6 +24,9 @@ class SQ_Class_View extends SQ_Class {
 	}
 	function setTemplate($template) { 
 		$this->template=$template;
+	}
+	function setCustomMenu($menu) { 
+		$this->custommenu=$menu;
 	}
 	function partial($name) {
 		$file = SQ_Class_Site::$approot . "/views/" . $name;

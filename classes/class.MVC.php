@@ -79,7 +79,7 @@ class SQ_Class_MVC extends SQ_Class {
 			}
 			$res=$new_controller->$funcname($arg,array_merge($_GET,$_POST));
 		}
-		if ($res instanceof DBSQL) { 
+		if ($res instanceof SQ_Class_DBSQ) { 
 			$res=$res->getFilteredDataArray();
 		}
 		if (!is_array($res)) {

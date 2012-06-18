@@ -53,7 +53,7 @@ class SQ_Class_Controller extends SQ_Class {
 	}
 	function api_expand_object_response($res) { 
 		foreach ($res as $key => &$val) { 
-			if ($val instanceof DBSQL) { 
+			if ($val instanceof SQ_Class_DBSQ) { 
 				$val=$val->getFilteredDataArray();
 			}
 			if (is_array($val)) { 

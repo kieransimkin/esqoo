@@ -79,6 +79,9 @@ $nav2=new SQ_Class_Menu(array(
 	))
 ));
 $nav=$nav2->export();
+if (!is_null($this->custommenu)) { 
+	print "got here";
+}
 ?>
 <nav>
 <ul id="nav-one" class="nav ui-tabs-nav ui-helper-clearfix ui-widget-header ui-corner-bottom inner-padded">

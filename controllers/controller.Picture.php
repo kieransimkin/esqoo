@@ -21,6 +21,11 @@ class SQ_Controller_Picture extends SQ_Class_LockedController {
 
 		}
 		$this->view->setTemplate('fullpage');
+		$this->view->setCustomMenu(new SQ_Class_Menu(array(
+			new SQ_Class_Menu('Hello',array(
+				new SQ_Class_MenuLeafNode_Go('/foo',_('Foo'))	
+			))
+		)));
 		$this->view->form=$form;
 	}
 	/*************************
