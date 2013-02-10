@@ -33,11 +33,22 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	 *****************************************/
 	public function pluginlistAPI($arg='',$input=array()) { 
 		$plugins=SQ_Class_Plugin::enumerate();
+		$userplugins=SQ_User_plugin::getAll('user_id=?',array($this->user->id));
+		$userplugina=array();
+		foreach ($userplugins as $userplugin) { 
+			$userplugina[]=$userplugin->Identifier;
+		}
 		$pluginres=array();
 		foreach ($plugins as $plugin) { 
+			if (in_array((string)$plugin->xml->Identifier,$userplugina)) { 
+				$enabled='True';
+			} else { 
+				$enabled='False';
+			}
 			$pluginres[]=array(	'Identifier'=>$plugin->identifier,
 					   	'XMLIdentifier'=>(string)$plugin->xml->Identifier,
-						'Name'=>(string)$plugin->xml->Name);
+						'Name'=>(string)$plugin->xml->Name,
+						'Enabled'=>$enabled);
 		}
 		return array("Page"=>1,"RowCount"=>count($pluginres),"Rows"=>$pluginres);
 	}

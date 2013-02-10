@@ -357,12 +357,12 @@
 								td.align = this.align;
 								// If the json elements aren't named (which is typical), use numeric order
 								if (typeof(p.colModel[idx].jsfilter) != 'undefined' && p.colModel[idx].jsfilter.indexOf('.')===-1 && typeof(window[p.colModel[idx].jsfilter])=='function') { 
-									$(td).html(window[p.colModel[idx].jsfilter](row[p.idfield],row[p.colModel[idx].name]));
+									$(td).html(window[p.colModel[idx].jsfilter](row[p.idfield],row[p.colModel[idx].name],row));
 								} else if (typeof(p.colModel[idx].jsfilter) != 'undefined' && p.colModel[idx].jsfilter.indexOf('.')!==-1) { 
 									// This is a slightly hacky way of supporting non-global functions, less hacky than using eval() though
 									var el=p.colModel[idx].jsfilter.split('.');
 									if (typeof(window[el[0]][el[1]])=='function') { 
-										$(td).html(window[el[0]][el[1]](row[p.idfield],row[p.colModel[idx].name]));
+										$(td).html(window[el[0]][el[1]](row[p.idfield],row[p.colModel[idx].name],row));
 									} else { 
 										td.innerHTML = row[p.colModel[idx].name];
 									}
