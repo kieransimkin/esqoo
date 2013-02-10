@@ -25,7 +25,47 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
-
+	public function activatepluginDialog($arg='',$input=array()) { 
+		$plugin=new SQ_Class_Plugin($arg);
+		$form=$this->get_activate_plugin_form($input,$plugin);
+		if ($form->validate()) { 
+			$this->activatepluginAPI($arg,$input);
+			$this->addFlexigridReloadSelector('#pluginlist');
+			$this->showMessage(_('Plugin Activated'));
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'30%','550');
+		}
+	}
+	public function deactivatepluginDialog($arg='',$input=array()) { 
+		$plugin=new SQ_Class_Plugin($arg);
+		$form=$this->get_deactivate_plugin_form($input,$plugin);
+		if ($form->validate()) { 
+			$this->deactivatepluginAPI($arg,$input);
+			$this->addFlexigridReloadSelector('#pluginlist');
+			$this->showMessage(_('Plugin Deactivated'));
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'30%','550');
+		}
+	}
+	/*********************
+	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
+	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
+	 *  ╹  ┗━┛╹┗╸╹ ╹┗━┛  *
+	 *********************/
+	private function get_activate_plugin_form($input,$plugin,$forcesubmit=false) {
+		$form=new SQ_Class_Form('activateplugin');
+		$form->setAPIDataSources($input,$plugin,$forcesubmit);
+		$form->addElement("static","contentarea",array())->setContent('<h3>'.$plugin->xml->Name.'</h3>'.$plugin->xml->Identifier.'<br />'._('Are you sure you wish to activate this plugin?'));
+		return $form;
+	}
+	private function get_deactivate_plugin_form($input,$plugin,$forcesubmit=false) {
+		$form=new SQ_Class_Form('deactivateplugin');
+		$form->setAPIDataSources($input,$plugin,$forcesubmit);
+		$form->addElement("static","contentarea",array())->setContent('<h3>'.$plugin->xml->Name.'</h3>'.$plugin->xml->Identifier.'<br />'._('Are you sure you wish to deactivate this plugin?'));
+		return $form;
+	}
 	/*****************************************
 	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
 	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
@@ -51,6 +91,12 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 						'Enabled'=>$enabled);
 		}
 		return array("Page"=>1,"RowCount"=>count($pluginres),"Rows"=>$pluginres);
+	}
+	public function activatepluginAPI($arg='',$input=array()) { 
+		
+	}
+	public function deactivatepluginAPI($arg='',$input=array()) { 
+		
 	}
 
 }

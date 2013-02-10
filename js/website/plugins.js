@@ -13,10 +13,10 @@ esqoo_website_plugins.actions= function (id,data,row) {
 	return ret;
 }
 esqoo_website_plugins.activate = function (id) { 
-
+	esqoo_ui.make_dialog({singleton: true, title:'Activate Plugin',closebutton:false,cancelbutton:true,savebutton:false,continuebutton:true},'/website/activate-plugin/'+id);
 }
 esqoo_website_plugins.deactivate = function (id) { 
-
+	esqoo_ui.make_dialog({singleton: true, title:'Deactivate Plugin',closebutton:false,cancelbutton:true,savebutton:false,continuebutton:true},'/website/deactivate-plugin/'+id);
 }
 esqoo_website_plugins.remove = function (id) { 
 
