@@ -17,6 +17,9 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	function picturesizesUI($arg='',$input=array()) { 
 
 	}
+	function pluginsUI($arg='',$input=array()) { 
+
+	}
 	/*************************
 	 *  ╺┳┓╻┏━┓╻  ┏━┓┏━╸┏━┓  *
 	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
