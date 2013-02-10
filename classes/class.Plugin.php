@@ -1,7 +1,7 @@
 <?php
 class SQ_Class_Plugin extends SQ_Class { 
-	private $identifier=null;
-	private $xml=null;
+	public $identifier=null;
+	public $xml=null;
 	private static $cache=[];
 	// ::get does a cached lookup
 	public static function get($identifier) { 

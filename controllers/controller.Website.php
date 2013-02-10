@@ -25,4 +25,21 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	 *   ┃┃┃┣━┫┃  ┃ ┃┃╺┓┗━┓  *
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
+
+	/*****************************************
+	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
+	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
+	 *  ╹ ╹╹  ╹   ╹  ┗━┛╹ ╹┗━╸ ╹ ╹┗━┛╹ ╹┗━┛  *
+	 *****************************************/
+	public function pluginlistAPI($arg='',$input=array()) { 
+		$plugins=SQ_Class_Plugin::enumerate();
+		$pluginres=array();
+		foreach ($plugins as $plugin) { 
+			$pluginres[]=array(	'Identifier'=>$plugin->identifier,
+					   	'XMLIdentifier'=>(string)$plugin->xml->Identifier,
+						'Name'=>(string)$plugin->xml->Name);
+		}
+		return array("Page"=>1,"RowCount"=>count($pluginres),"Rows"=>$pluginres);
+	}
+
 }
