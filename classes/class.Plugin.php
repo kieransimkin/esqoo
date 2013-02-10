@@ -10,6 +10,22 @@ class SQ_Class_Plugin extends SQ_Class {
 		}
 		return self::$cache[$identifier]=new SQ_Class_Plugin($identifier);
 	}
+	public static function enumerate() { 
+		$ret=array();
+		$dir="plugins/";
+		$plugindir=opendir($dir);
+		while (($file = readdir($plugindir)) !== false) {
+			if ($file=='.' || $file=='..') { 
+				continue;
+			}
+			$type=filetype($dir.$file);
+			if ($type=='dir') { 
+				$ret[]=SQ_Class_Plugin::get($file);
+			}
+		}
+		closedir($plugindir);
+		return $ret;
+	}
 	function __construct($identifier) { 
 		$this->identifier=$identifier;
 		$this->parseXML();
