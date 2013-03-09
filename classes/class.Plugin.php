@@ -37,10 +37,24 @@ class SQ_Class_Plugin extends SQ_Class {
 		return "plugins/".$this->identifier."/";
 	}
 	function activate($user) { 
-		SQ_User_plugin::create(array('user_id'=>$user->id,'Identifier'=>$this->identifier));	
+		SQ_User_plugin::create(array('user_id'=>$user->id,'Identifier'=>$this->identifier));
+		for ($c=0;$c<$this->xml->FrontEnd->URIs->URI->count();$c++) { 
+			$this->activate_plugin_uri($this->xml->FrontEnd->URIs->URI[$c]);
+		}
+		//die;
+	}
+	private function activate_plugin_uri($uri) { 
+		if (SQ_Class_URI::isURIAvailable($uri,$this->user_id)) { 
+
+		}
+		//var_dump($uri);
 	}
 	function deactivate($user) { 
 		$userplugin=SQ_User_plugin::getWhere('user_id=? and Identifier=?',array($user->id,$this->identifier));
 		$userplugin->delete();
+		$uris=SQ_Plugin_uri::getAll('user_id=? and PluginIdentifier=?',array($user->id,$this->identifier));
+		foreach ($uris as $uri) { 
+			$uri->delete();
+		}
 	}
 } 

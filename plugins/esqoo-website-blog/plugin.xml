@@ -2,16 +2,39 @@
 <Plugin>
 	<Identifier>esqoo-website-blog</Identifier>
 	<Name>Front-end - Blog pages</Name>
-	<FrontEndURIs>
-		<FrontEndURI>
-			<Code>blog</Code>
-			<Name>Blog Catalog</Name>
-			<Description>
-			<Controller>Main</Controller>
-			<DefaultURIs>
-				<DefaultURI>blog</DefaultURI>
-				<DefaultURI>weblog</DefaultURI>
-			</DefaultURIs>
-		</FrontEndURI>
-	</FrontEndURIs>
+	<Description>This plugin publishes a set of individual pages for each of your blog entries.</Description>
+	<FrontEnd>
+		<URIs>
+			<URI>
+				<Code>blog</Code>
+				<Name>Blog Catalog</Name>
+				<Description>Your blog entry pages will appear under this subfolder in the URL</Description>
+				<Controller>Frontend</Controller>
+				<DefaultURIs>
+					<DefaultURI>blog</DefaultURI>
+					<DefaultURI>weblog</DefaultURI>
+				</DefaultURIs>
+			</URI>
+		</URIs>
+		<Sections>
+			<Section>
+				<Identifier>archive</Identifier>
+				<Name>Archive page sidebar</Name>
+				<MaxWidgets>0</MaxWidgets>
+				<MinWidgets>1</MinWidgets>
+			</Section>
+			<Section>
+				<Identifier>recent</Identifier>
+				<Name>Recent entries sidebar</Name>
+				<MaxWidgets>0</MaxWidgets>
+				<MinWidgets>1</MinWidgets>
+			</Section>
+			<Section>
+				<Identifier>detail</Identifier>
+				<Name> sidebar</Name>
+				<MaxWidgets>0</MaxWidgets>
+				<MinWidgets>1</MinWidgets>
+			</Section>
+		</Sections>
+	</FrontEnd>
 </Plugin> 

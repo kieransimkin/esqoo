@@ -2,13 +2,15 @@
 <Plugin>
 	<Identifier>esqoo-picture-navigator</Identifier>
 	<Name>Picture Editor - Navigator Window</Name>
-	<PictureEditor>
-		<Dialog>
-			<Identifier>esqoo-picture-navigator</Identifier>
-			<Title>Navigator</Title>
-			<Controller>main</Controller>
-			<Method>index</Method>
-		</Dialog>
-		<LoadJS>index.js</LoadJS>
-	</PictureEditor>
+	<Backend>
+		<PictureEditor>
+			<Dialog>
+				<Identifier>esqoo-picture-navigator</Identifier>
+				<Title>Navigator</Title>
+				<Controller>main</Controller>
+				<Method>index</Method>
+			</Dialog>
+			<LoadJS>index.js</LoadJS>
+		</PictureEditor>
+	</Backend>
 </Plugin> 
