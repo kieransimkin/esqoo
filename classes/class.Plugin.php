@@ -37,7 +37,7 @@ class SQ_Class_Plugin extends SQ_Class {
 		return "plugins/".$this->identifier."/";
 	}
 	function activate($user) { 
-		
+		SQ_User_plugin::create(array('user_id'=>$user->id,'Identifier'=>$this->identifier));	
 	}
 	function deactivate($user) { 
 		$userplugin=SQ_User_plugin::getWhere('user_id=? and Identifier=?',array($user->id,$this->identifier));
