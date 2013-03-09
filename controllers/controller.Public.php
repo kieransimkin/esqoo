@@ -38,7 +38,7 @@ class SQ_Controller_Public extends SQ_Class_DetachedController {
 				die;
 			} catch (DBSQ_Exception $e) { }
 			try { 
-				$pluginuricache=SQ_Plugin_uri_cache::get($user->id,'id',true);
+				$pluginuricache=SQ_Plugin_uri_cache::get($user->id,'user_id',true);
 				$pluginuris=explode("\n",$pluginuricache->PluginURIs);
 				$found=false;
 				foreach ($pluginuris as $pluginuri) { 
