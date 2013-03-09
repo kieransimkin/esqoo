@@ -526,6 +526,7 @@ create table `plugin_uri` (
 	URITag varchar(2048) not null,
 	PluginIdentifier varchar(512) not null,
 	PluginController varchar(512) not null,
+	Code varchar(255) not null,
 	CreateDate timestamp not null default CURRENT_TIMESTAMP,
 	ModifyDate datetime default null,
 	primary key (id),

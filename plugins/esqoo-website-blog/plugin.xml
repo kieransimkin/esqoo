@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Plugin>
+	<Identifier>esqoo-website-blog</Identifier>
+	<Name>Front-end - Blog pages</Name>
+	<FrontEndURIs>
+		<FrontEndURI>
+			<Code>blog</Code>
+			<Name>Blog Catalog</Name>
+			<Description>
+			<Controller>Main</Controller>
+			<DefaultURIs>
+				<DefaultURI>blog</DefaultURI>
+				<DefaultURI>weblog</DefaultURI>
+			</DefaultURIs>
+		</FrontEndURI>
+	</FrontEndURIs>
+</Plugin> 
