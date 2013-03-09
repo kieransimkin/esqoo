@@ -96,7 +96,8 @@ class SQ_Controller_Public extends SQ_Class_DetachedController {
 		}
 	}
 	private function displayPlugin($user,$identifier,$controller,$uri) { 
-
+		print "Rendering plugin";
+		die;
 	}
 	private function displayPage($user,$page) { 
 		try { 
