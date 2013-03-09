@@ -1,15 +1,15 @@
 <?php
 class SQ_Class_Theme extends SQ_Class { 
-	private $identifier=null;
-	private $xmlconfig=null;
+	public $identifier=null;
+	public $xml=null;
 	function __construct($identifier) { 
 		$this->identifier=$identifier;	
 	}
 	private function loadXML() { 
-		if ($this->xmlconfig!=null) { 
+		if ($this->xml!=null) { 
 			return;	
 		}
-		$this->xmlconfig=new SimpleXMLElement(file_get_contents(dirname(__FILE__).'/../themes/'.$this->identifier.'/theme.xml'));
+		$this->xml=new SimpleXMLElement(file_get_contents(dirname(__FILE__).'/../themes/'.$this->identifier.'/theme.xml'));
 	}
 	public function renderPage($page) { 
 		$this->loadXML();
@@ -33,4 +33,23 @@ class SQ_Class_Theme extends SQ_Class {
 		//$templatesmarty->debugging = true;
 		return $templatesmarty->fetch('template.'.$page->TemplateIdentifier.'.html');
 	}	
+	public static function enumerate() { 
+		$ret=array();
+		$dir="themes/";
+		$themedir=opendir($dir);
+		while (($file = readdir($themedir)) !== false) {
+			if ($file=='.' || $file=='..') { 
+				continue;
+			}
+			$type=filetype($dir.$file);
+			if ($type=='dir') { 
+				$theme=new SQ_Class_Theme($file);
+				$theme->loadXML();
+				$ret[]=$theme;
+
+			}
+		}
+		closedir($themedir);
+		return $ret;
+	}
 } 

@@ -46,7 +46,7 @@ $nav2=new SQ_Class_Menu(array(
 		))
 	)),
 	new SQ_Class_Menu(_('Website'),array(
-		new SQ_Class_MenuLeafNode_Go('/website/templates',_('Templates')),
+		new SQ_Class_MenuLeafNode_Go('/website/themes',_('Themes')),
 		new SQ_Class_MenuLeafNode_Go('/website/menus',_('Menus')),
 		new SQ_Class_Menu(_('Settings'),array(
 			new SQ_Class_MenuLeafNode_Go('/website/picture-sizes',_('Picture Sizes')),

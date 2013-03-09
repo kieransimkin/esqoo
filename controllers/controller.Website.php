@@ -8,7 +8,7 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	function indexUI ($arg='',$input=array()) { 
 		$this->redirect('http://'.$this->user->Username.'.'.SQ_Class_Site::$config['cp_hostname']);
 	}
-	function templatesUI($arg='',$input=array()) { 
+	function themesUI($arg='',$input=array()) { 
 
 	}
 	function menusUI($arg='',$input=array()) { 
@@ -97,6 +97,22 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	}
 	public function deactivatepluginAPI($arg='',$input=array()) { 
 		
+	}
+	public function themelistAPI($arg='',$input=array()) { 
+		$themes=SQ_Class_Theme::enumerate();
+		$themeres=array();
+		foreach ($themes as $theme) { 
+			if ((string)$theme->xml->Identifier==$this->user->ThemeIdentifier) { 
+				$enabled='True';
+			} else { 
+				$enabled='False';
+			}
+			$themeres[]=array(	'Identifier'=>$theme->identifier,
+					   	'XMLIdentifier'=>(string)$theme->xml->Identifier,
+						'Name'=>(string)$theme->xml->Name,
+						'Enabled'=>$enabled);
+		}
+		return array("Page"=>1,"RowCount"=>count($themeres),"Rows"=>$themeres);
 	}
 
 }
