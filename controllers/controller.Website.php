@@ -49,6 +49,15 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 			return $this->formFail($form,'30%','550');
 		}
 	}
+	public function plugininfoDialog($arg='',$input=array()) { 
+		$plugin=new SQ_Class_Plugin($arg);
+		$form=$this->get_plugin_info_form($input,$plugin);
+		if ($form->validate()) { 
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'30%','550');
+		}
+	}
 	/*********************
 	 *  ┏━╸┏━┓┏━┓┏┳┓┏━┓  *
 	 *  ┣╸ ┃ ┃┣┳┛┃┃┃┗━┓  *
@@ -57,13 +66,19 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	private function get_activate_plugin_form($input,$plugin,$forcesubmit=false) {
 		$form=new SQ_Class_Form('activateplugin');
 		$form->setAPIDataSources($input,$plugin,$forcesubmit);
-		$form->addElement("static","contentarea",array())->setContent('<h3>'.$plugin->xml->Name.'</h3>'.$plugin->xml->Identifier.'<br />'._('Are you sure you wish to activate this plugin?'));
+		$form->addElement("static","contentarea",array())->setContent($plugin->getInfoBlockHTML().'<br />'._('Are you sure you wish to activate this plugin?'));
 		return $form;
 	}
 	private function get_deactivate_plugin_form($input,$plugin,$forcesubmit=false) {
 		$form=new SQ_Class_Form('deactivateplugin');
 		$form->setAPIDataSources($input,$plugin,$forcesubmit);
-		$form->addElement("static","contentarea",array())->setContent('<h3>'.$plugin->xml->Name.'</h3>'.$plugin->xml->Identifier.'<br />'._('Are you sure you wish to deactivate this plugin?'));
+		$form->addElement("static","contentarea",array())->setContent($plugin->getInfoBlockHTML().'<br />'._('Are you sure you wish to deactivate this plugin?'));
+		return $form;
+	}
+	private function get_plugin_info_form($input,$plugin,$forcesubmit=false) { 
+		$form=new SQ_Class_Form('plugininfo');
+		$form->setAPIDataSources($input,$plugin,$forcesubmit);
+		$form->addElement("static","plugininfo",array())->setContent($plugin->getInfoBlockHTML());
 		return $form;
 	}
 	/*****************************************

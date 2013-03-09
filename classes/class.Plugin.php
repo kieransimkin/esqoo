@@ -44,7 +44,7 @@ class SQ_Class_Plugin extends SQ_Class {
 		//die;
 	}
 	private function activate_plugin_uri($uri) { 
-		if (SQ_Class_URI::isURIAvailable($uri,$this->user_id)) { 
+		if (SQ_Class_URL::isURIAvailable($uri,$this->user_id)) { 
 
 		}
 		//var_dump($uri);
@@ -56,5 +56,35 @@ class SQ_Class_Plugin extends SQ_Class {
 		foreach ($uris as $uri) { 
 			$uri->delete();
 		}
+	}
+	function getInfoBlockHTML($notitle=false,$nodescription=false) {
+		$ret='<article class="plugin-infoblock">';
+		if (!$notitle) { 
+			$ret.='<h1>'.$this->xml->Name.'</h1>';
+			$ret.='<small><b>Identifier:</b> '.$this->identifier.'</small>';
+		}
+		if (!$nodescription && $this->xml->Description) { 
+			$ret.='<p>'.$this->xml->Description.'</p>';
+		}
+		if ($this->xml->FrontEnd->URIs->URI) { 
+			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-corner-all ui-state-default">';
+			if ($this->xml->FrontEnd->URIs->URI->count()>1) { 
+				$ret.=_('This plugin adds').' '.$this->xml->FrontEnd->URIs->URI->count().' '._('folders to your public website.');
+			} else { 
+				$ret.=_('This plugin adds 1 folder to your public website.');
+			}
+			$ret.='</div>';
+		}
+		if ($this->xml->FrontEnd->Sections->Section) { 
+			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-corner-all ui-state-default">';
+			if ($this->xml->FrontEnd->Sections->Section->count()>1) { 
+				$ret.=_('This plugin provides').' '.$this->xml->FrontEnd->Sections->Section->count().' '._('widget sections.');
+			} else {
+				$ret.=_('This plugin provides 1 widget section.');
+			}
+			$ret.='</div>';
+		}
+		$ret.="</artcle>";
+		return $ret;
 	}
 } 

@@ -25,5 +25,5 @@ esqoo_website_plugins.setup = function (id) {
 
 }
 esqoo_website_plugins.info = function (id) { 
-
+	esqoo_ui.make_dialog({title: 'Plugin Info', closebutton: false, savebutton: false, donebutton: true}, '/website/plugin-info/'+id);
 }
