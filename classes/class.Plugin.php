@@ -36,10 +36,11 @@ class SQ_Class_Plugin extends SQ_Class {
 	private function getPath() { 
 		return "plugins/".$this->identifier."/";
 	}
-	function activate() { 
-
+	function activate($user) { 
+		
 	}
-	function deactivate() { 
-
+	function deactivate($user) { 
+		$userplugin=SQ_User_plugin::getWhere('user_id=? and Identifier=?',array($user->id,$this->identifier));
+		$userplugin->delete();
 	}
 } 

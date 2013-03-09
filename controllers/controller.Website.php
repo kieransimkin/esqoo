@@ -94,12 +94,12 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	}
 	public function activatepluginAPI($arg='',$input=array()) { 
 		$plugin=SQ_Class_Plugin::get($input['Identifier']);
-		$plugin->activate();
+		$plugin->activate($this->user);
 		return $plugin;
 	}
 	public function deactivatepluginAPI($arg='',$input=array()) { 
 		$plugin=SQ_Class_Plugin::get($input['Identifier']);
-		$plugin->deactivate();
+		$plugin->deactivate($this->user);
 		return $plugin;
 	}
 	public function themelistAPI($arg='',$input=array()) { 
