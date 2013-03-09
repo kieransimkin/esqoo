@@ -495,17 +495,64 @@ create table `page_uri` (
 	id int not null auto_increment,
 	user_id int not null,
 	page_id int not null,
-	URITag varchar(512) not null,
+	URITag varchar(2048) not null,
 	CreateDate timestamp not null default CURRENT_TIMESTAMP,
 	ModifyDate datetime default null,
 	primary key (id),
 	index (page_id),
+	index (user_id,URITag(256)),
 	index (user_id),
-	index (URITag)
+	index (URITag(256))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 insert into page set user_id=1, GUID='home',Title='Home';
-insert into page set user_id=1, GUID='blog',Title='Blog';
-insert into page_uri set user_id=1, page_id=2, URITAG='slinq/blog';
+drop table if exists `uri_forward`;
+create table `uri_forward` (
+	id int not null auto_increment,
+	user_id int not null,
+	URITag varchar(2048) not null,
+	DestinationURI varchar(2048) not null,
+	Code enum('301','302','303','307','308') not null default '301',
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (user_id),
+	index (user_id,URITag(256)),
+	index (user_id,DestinationURI(256))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+drop table if exists `plugin_uri`;
+create table `plugin_uri` (
+	id int not null auto_increment,
+	user_id int not null,
+	URITag varchar(2048) not null,
+	PluginIdentifier varchar(512) not null,
+	PluginController varchar(512) not null,
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (user_id),
+	index (user_id,URITag(256))	
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into `plugin_uri` set user_id=1, URITag='slinq/blog', PluginIdentifier='blog-plugin', PluginController='Main';
+insert into `plugin_uri` set user_id=1, URITag='slinq/gallery', PluginIdentifier='gallery-plugin', PluginController='Main';
+drop view if exists `plugin_uri_cache`;
+create view `plugin_uri_cache` as select group_concat(concat(PluginIdentifier,',',PluginController,' ',URITag) separator '\n') as PluginURIs, user_id from plugin_uri group by user_id;
+drop table if exists `plugin_uri_forward`;
+create table `plugin_uri_forward` (
+	id int not null auto_increment,
+	user_id int not null,
+	URITag varchar(2048) not null,
+	DestinationURI varchar(2048) not null,
+	Code enum('301','302','303','307','308') not null default '301',
+	CreateDate timestamp not null default CURRENT_TIMESTAMP,
+	ModifyDate datetime default null,
+	primary key (id),
+	index (user_id),
+	index (user_id,URITag(256)),
+	index (user_id,DestinationURI(256))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+insert into `plugin_uri_forward` set user_id=1, URITag='slinq/oldblog', DestinationURI='blog', Code='301';
+drop view if exists `plugin_uri_forward_cache`;
+create view `plugin_uri_forward_cache` as select group_concat(concat(Code,' ',DestinationURI,' ',URITag) separator '\n') as PluginURIForwards, user_id from plugin_uri_forward group by user_id;
 drop table if exists `page_cache`;
 create table `page_cache` ( 
 	id int not null auto_increment,
