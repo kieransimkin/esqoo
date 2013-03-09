@@ -45,7 +45,7 @@ class SQ_Controller_Public extends SQ_Class_DetachedController {
 					$tmp=explode(' ',$pluginuri,2);
 					$uritag=$tmp[1];
 					list($identifier,$controller)=explode(',',$tmp[0]);
-					if (substr($username.$uri,0,strlen($uritag))==$uritag && strlen($username.$uri)>=strlen($uritag)) { 
+					if (substr($username.$uri,0,strlen($uritag))==$uritag && strlen($username.$uri)>=strlen($uritag) && $user->plugin_enabled($identifier)) { 
 						$found=true;
 						break;
 					}

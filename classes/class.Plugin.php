@@ -36,4 +36,10 @@ class SQ_Class_Plugin extends SQ_Class {
 	private function getPath() { 
 		return "plugins/".$this->identifier."/";
 	}
+	function activate() { 
+
+	}
+	function deactivate() { 
+
+	}
 } 

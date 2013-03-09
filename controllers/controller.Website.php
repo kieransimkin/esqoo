@@ -29,7 +29,7 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 		$plugin=new SQ_Class_Plugin($arg);
 		$form=$this->get_activate_plugin_form($input,$plugin);
 		if ($form->validate()) { 
-			$this->activatepluginAPI($arg,$input);
+			$this->activatepluginAPI($arg,array('Identifier'=>$plugin->identifier));
 			$this->addFlexigridReloadSelector('#pluginlist');
 			$this->showMessage(_('Plugin Activated'));
 			return $this->formSuccess();
@@ -41,7 +41,7 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 		$plugin=new SQ_Class_Plugin($arg);
 		$form=$this->get_deactivate_plugin_form($input,$plugin);
 		if ($form->validate()) { 
-			$this->deactivatepluginAPI($arg,$input);
+			$this->deactivatepluginAPI($arg,array('Identifier'=>$plugin->identifier));
 			$this->addFlexigridReloadSelector('#pluginlist');
 			$this->showMessage(_('Plugin Deactivated'));
 			return $this->formSuccess();
@@ -93,10 +93,14 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 		return array("Page"=>1,"RowCount"=>count($pluginres),"Rows"=>$pluginres);
 	}
 	public function activatepluginAPI($arg='',$input=array()) { 
-		
+		$plugin=SQ_Class_Plugin::get($input['Identifier']);
+		$plugin->activate();
+		return $plugin;
 	}
 	public function deactivatepluginAPI($arg='',$input=array()) { 
-		
+		$plugin=SQ_Class_Plugin::get($input['Identifier']);
+		$plugin->deactivate();
+		return $plugin;
 	}
 	public function themelistAPI($arg='',$input=array()) { 
 		$themes=SQ_Class_Theme::enumerate();
