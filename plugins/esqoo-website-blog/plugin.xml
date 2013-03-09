@@ -31,7 +31,7 @@
 			</Section>
 			<Section>
 				<Identifier>detail</Identifier>
-				<Name> sidebar</Name>
+				<Name>Entry detail page sidebar</Name>
 				<MaxWidgets>0</MaxWidgets>
 				<MinWidgets>1</MinWidgets>
 			</Section>
