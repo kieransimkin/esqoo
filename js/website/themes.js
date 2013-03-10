@@ -12,7 +12,7 @@ esqoo_website_themes.actions= function (id,data,row) {
 	return ret;
 }
 esqoo_website_themes.activate = function (id) { 
-	esqoo_ui.make_dialog({singleton: true, title:'Activate Plugin',closebutton:false,cancelbutton:true,savebutton:false,continuebutton:true},'/website/activate-theme/'+id);
+	esqoo_ui.make_dialog({singleton: true, title:'Activate Theme',closebutton:false,cancelbutton:true,savebutton:false,continuebutton:true},'/website/activate-theme/'+id);
 }
 esqoo_website_themes.remove = function (id) { 
 
@@ -21,5 +21,5 @@ esqoo_website_themes.setup = function (id) {
 
 }
 esqoo_website_themes.info = function (id) { 
-
+	esqoo_ui.make_dialog({title: 'Theme Info',closebutton:false,savebutton:false,donebutton:true},'/website/theme-info/'+id);
 }

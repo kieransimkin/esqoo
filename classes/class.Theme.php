@@ -2,17 +2,26 @@
 class SQ_Class_Theme extends SQ_Class { 
 	public $identifier=null;
 	public $xml=null;
+	private static $cache=[];
+	// ::get does a cached lookup
+	public static function get($identifier) { 
+		if (array_key_exists($identifier,self::$cache)) { 
+			return self::$cache[$identifier];
+		}
+		return self::$cache[$identifier]=new SQ_Class_Theme($identifier);
+	}
 	function __construct($identifier) { 
-		$this->identifier=$identifier;	
+		$this->identifier=$identifier;
+		$this->loadXML();
 	}
 	private function loadXML() { 
 		if ($this->xml!=null) { 
+	
 			return;	
 		}
 		$this->xml=new SimpleXMLElement(file_get_contents(dirname(__FILE__).'/../themes/'.$this->identifier.'/theme.xml'));
 	}
 	public function renderPage($page) { 
-		$this->loadXML();
 		include_once('Smarty/Smarty.class.php');
 		$templatesmarty=new Smarty();
 		$layoutsmarty=new Smarty();
@@ -44,12 +53,27 @@ class SQ_Class_Theme extends SQ_Class {
 			$type=filetype($dir.$file);
 			if ($type=='dir') { 
 				$theme=new SQ_Class_Theme($file);
-				$theme->loadXML();
 				$ret[]=$theme;
 
 			}
 		}
 		closedir($themedir);
 		return $ret;
+	}
+	public function getInfoBlockHTML($notitle=false,$nodescription=false) { 
+		$ret='<article class="theme-infoblock">';
+		if (!$notitle) { 
+			$ret.='<h1>'.$this->xml->Name.'</h1>';
+			$ret.='<small><b>Identifier:</b> '.$this->identifier.'</small>';
+		}
+		if (!$nodescription && $this->xml->Description) { 
+			$ret.='<p>'.$this->xml->Description.'</p>';
+		}
+		$ret.="</artcle>";
+		return $ret;
+
+	}
+	public function activate() { 
+
 	}
 } 

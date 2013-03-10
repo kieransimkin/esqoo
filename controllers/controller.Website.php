@@ -26,10 +26,10 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 	 *  ╺┻┛╹╹ ╹┗━╸┗━┛┗━┛┗━┛  *
 	 *************************/
 	public function activatepluginDialog($arg='',$input=array()) { 
-		$plugin=new SQ_Class_Plugin($arg);
+		$plugin=SQ_Class_Plugin::get($arg);
 		$form=$this->get_activate_plugin_form($input,$plugin);
 		if ($form->validate()) { 
-			$this->activatepluginAPI($arg,array('Identifier'=>$plugin->identifier));
+			$this->activatepluginAPI($arg);
 			$this->addFlexigridReloadSelector('#pluginlist');
 			$this->showMessage(_('Plugin Activated'));
 			return $this->formSuccess();
@@ -38,10 +38,10 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 		}
 	}
 	public function deactivatepluginDialog($arg='',$input=array()) { 
-		$plugin=new SQ_Class_Plugin($arg);
+		$plugin=SQ_Class_Plugin::get($arg);
 		$form=$this->get_deactivate_plugin_form($input,$plugin);
 		if ($form->validate()) { 
-			$this->deactivatepluginAPI($arg,array('Identifier'=>$plugin->identifier));
+			$this->deactivatepluginAPI($arg);
 			$this->addFlexigridReloadSelector('#pluginlist');
 			$this->showMessage(_('Plugin Deactivated'));
 			return $this->formSuccess();
@@ -50,8 +50,29 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 		}
 	}
 	public function plugininfoDialog($arg='',$input=array()) { 
-		$plugin=new SQ_Class_Plugin($arg);
+		$plugin=SQ_Class_Plugin::get($arg);
 		$form=$this->get_plugin_info_form($input,$plugin);
+		if ($form->validate()) { 
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'30%','550');
+		}
+	}
+	public function activatethemeDialog($arg='',$input=array()) { 
+		$theme=SQ_Class_Theme::get($arg);
+		$form=$this->get_activate_theme_form($input,$theme);
+		if ($form->validate()) { 
+			$this->activatethemeAPI($arg);
+			$this->addFlexigridReloadSelector('#themelist');
+			$this->showMessage(_('Theme activated'));
+			return $this->formSuccess();
+		} else { 
+			return $this->formFail($form,'30%','550');
+		}
+	}
+	public function themeinfoDialog($arg='',$input=array()) { 
+		$theme=SQ_Class_Theme::get($arg);
+		$form=$this->get_theme_info_form($input,$theme);
 		if ($form->validate()) { 
 			return $this->formSuccess();
 		} else { 
@@ -81,6 +102,18 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 		$form->addElement("static","plugininfo",array())->setContent($plugin->getInfoBlockHTML());
 		return $form;
 	}
+	private function get_activate_theme_form($input,$theme,$forcesubmit=false) { 
+		$form=new SQ_Class_Form('activatetheme');
+		$form->setAPIDataSources($input,$theme,$forcesubmit);
+		$form->addElement("static","contentarea",array())->setContent($theme->getInfoBlockHTML().'<br />'._('Are you sure you wish to switch theme?'));
+		return $form;
+	}
+	private function get_theme_info_form($input,$theme,$forcesubmit=false) { 
+		$form=new SQ_Class_Form('themeinfo');
+		$form->setAPIDataSources($input,$theme,$forcesubmit);
+		$form->addElement("static","themeinfo",array())->setContent($theme->getInfoBlockHTML());
+		return $form;
+	}
 	/*****************************************
 	 *  ┏━┓┏━┓╻   ┏━╸╻ ╻┏┓╻┏━╸╺┳╸╻┏━┓┏┓╻┏━┓  *
 	 *  ┣━┫┣━┛┃   ┣╸ ┃ ┃┃┗┫┃   ┃ ┃┃ ┃┃┗┫┗━┓  *
@@ -108,14 +141,19 @@ class SQ_Controller_Website extends SQ_Class_LockedController {
 		return array("Page"=>1,"RowCount"=>count($pluginres),"Rows"=>$pluginres);
 	}
 	public function activatepluginAPI($arg='',$input=array()) { 
-		$plugin=SQ_Class_Plugin::get($input['Identifier']);
+		$plugin=SQ_Class_Plugin::get($arg);
 		$plugin->activate($this->user);
 		return $plugin;
 	}
 	public function deactivatepluginAPI($arg='',$input=array()) { 
-		$plugin=SQ_Class_Plugin::get($input['Identifier']);
+		$plugin=SQ_Class_Plugin::get($arg);
 		$plugin->deactivate($this->user);
 		return $plugin;
+	}
+	public function activatethemeAPI($arg='',$input=array()) { 
+		$theme=SQ_Class_Theme::get($arg);
+		$theme->activate($this->user);
+		return $theme;
 	}
 	public function themelistAPI($arg='',$input=array()) { 
 		$themes=SQ_Class_Theme::enumerate();

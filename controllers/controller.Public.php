@@ -111,7 +111,7 @@ class SQ_Controller_Public extends SQ_Class_DetachedController {
 		} catch (Exception $e) { 
 			SQ_Class_MVC::throw404($controller_class,$funcname);
 		}
-		$theme=new SQ_Class_Theme($user->ThemeIdentifier);
+		$theme=SQ_Class_Theme::get($user->ThemeIdentifier);
 		if (method_exists($new_controller,'remap')) { 
 			$res=$new_controller->remap(substr($uri,strlen($uritag)-strlen($user->Username)),array_merge($_GET,$_POST),$theme,substr($uritag,strlen($user->Username)),$uri);
 		} else { 
@@ -190,7 +190,7 @@ class SQ_Controller_Public extends SQ_Class_DetachedController {
 	private function generatePage($user,$page) { 
 		SQ_Class_Site::connect();
 		$cache=SQ_Page_cache::get();
-		$theme=new SQ_Class_Theme($user->ThemeIdentifier);
+		$theme=SQ_Class_Theme::get($user->ThemeIdentifier);
 		$cache->Content=$theme->renderPage($page);
 		$cache->Size=strlen($cache->Content);
 		$cache->HashType='MD5';
