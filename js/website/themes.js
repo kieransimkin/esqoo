@@ -19,5 +19,5 @@ esqoo_website_themes.setup = function (id) {
 
 }
 esqoo_website_themes.info = function (id) { 
-	esqoo_ui.make_dialog({title: 'Theme Info',closebutton:false,savebutton:false,donebutton:true},'/website/theme-info/'+id);
+	esqoo_ui.make_dialog({singleton: true, title: 'Theme Info',closebutton:false,savebutton:false,donebutton:true},'/website/theme-info/'+id);
 }
