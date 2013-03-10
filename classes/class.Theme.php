@@ -73,7 +73,13 @@ class SQ_Class_Theme extends SQ_Class {
 		return $ret;
 
 	}
-	public function activate() { 
+	private function deactivate($user) { 
 
+	}
+	public function activate($user) { 
+		$oldtheme=SQ_Class_Theme::get($user->ThemeIdentifier);
+		$oldtheme->deactivate($user);
+		$user->ThemeIdentifier=$this->identifier;
+		$user->save();
 	}
 } 
