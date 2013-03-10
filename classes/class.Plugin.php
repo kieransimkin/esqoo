@@ -38,8 +38,10 @@ class SQ_Class_Plugin extends SQ_Class {
 	}
 	function activate($user) { 
 		SQ_User_plugin::create(array('user_id'=>$user->id,'Identifier'=>$this->identifier));
-		for ($c=0;$c<$this->xml->FrontEnd->URI->count();$c++) { 
-			$this->activate_plugin_uri($this->xml->FrontEnd->URI[$c],$user);
+		if ($this->xml->FrontEnd->URI) { 
+			for ($c=0;$c<$this->xml->FrontEnd->URI->count();$c++) { 
+				$this->activate_plugin_uri($this->xml->FrontEnd->URI[$c],$user);
+			}
 		}
 	}
 	private function activate_plugin_uri($urixml,$user) { 
