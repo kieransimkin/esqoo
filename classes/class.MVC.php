@@ -41,7 +41,7 @@ class SQ_Class_MVC extends SQ_Class {
 			$controller_class = 'SQ_Controller_'.ucwords($controller);
 		}
 		if ($plugin!=null) { 
-			require_once("plugins/$plugin/controllers/controller.".ucwords($controller).".php");
+			require_once(dirname(__FILE__)."/../plugins/$plugin/controllers/controller.".ucwords($controller).".php");
 			$controller_class = 'SQ_Plugin_Controller_'.ucwords($controller);
 		}
 		if ($api) { 

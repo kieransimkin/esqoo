@@ -12,7 +12,7 @@ class SQ_Class_Plugin extends SQ_Class {
 	}
 	public static function enumerate() { 
 		$ret=array();
-		$dir="plugins/";
+		$dir=dirname(__FILE__)."/../plugins/";
 		$plugindir=opendir($dir);
 		while (($file = readdir($plugindir)) !== false) {
 			if ($file=='.' || $file=='..') { 
@@ -34,7 +34,7 @@ class SQ_Class_Plugin extends SQ_Class {
 		$this->xml=simplexml_load_file($this->getPath().'plugin.xml');
 	}
 	private function getPath() { 
-		return "plugins/".$this->identifier."/";
+		return dirname(__FILE__)."/../plugins/".$this->identifier."/";
 	}
 	function activate($user) { 
 		SQ_User_plugin::create(array('user_id'=>$user->id,'Identifier'=>$this->identifier));
@@ -84,7 +84,7 @@ class SQ_Class_Plugin extends SQ_Class {
 			$ret.='<p>'.$this->xml->Description.'</p>';
 		}
 		if ($this->xml->FrontEnd->URIs->URI) { 
-			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-corner-all ui-state-default">';
+			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-widget-content ui-corner-all ui-state-default">';
 			if ($this->xml->FrontEnd->URIs->URI->count()>1) { 
 				$ret.=_('This plugin adds').' '.$this->xml->FrontEnd->URIs->URI->count().' '._('folders to your public website.');
 			} else { 
@@ -93,7 +93,7 @@ class SQ_Class_Plugin extends SQ_Class {
 			$ret.='</div>';
 		}
 		if ($this->xml->FrontEnd->Sections->Section) { 
-			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-corner-all ui-state-default">';
+			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-widget-content ui-corner-all ui-state-default">';
 			if ($this->xml->FrontEnd->Sections->Section->count()>1) { 
 				$ret.=_('This plugin provides').' '.$this->xml->FrontEnd->Sections->Section->count().' '._('widget sections.');
 			} else {

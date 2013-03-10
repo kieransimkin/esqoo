@@ -51,7 +51,7 @@ class SQ_Controller_Public extends SQ_Class_DetachedController {
 					}
 				}	
 				if ($found) { 
-					$this->displayPlugin($user,$identifier,$controller,$uri);
+					$this->displayPluginPage($user,$identifier,$controller,$uri,$uritag);
 					return;
 				}
 			} catch (DBSQ_Exception $e) { }
@@ -95,8 +95,80 @@ class SQ_Controller_Public extends SQ_Class_DetachedController {
 			SQ_Class_MVC::throw404();
 		}
 	}
-	private function displayPlugin($user,$identifier,$controller,$uri) { 
-		print "Rendering plugin";
+	private function displayPluginPage($user,$identifier,$controller,$uri,$uritag) { 
+		$this->generatePluginPage($user,$identifier,$controller,$uri,$uritag);	
+	}
+	private function generatePluginPage($user,$identifier,$controller,$uri,$uritag) { 
+		SQ_Class_Site::connect();
+		require_once(dirname(__FILE__)."/../plugins/$identifier/controllers/controller.".ucwords($controller).".php");
+		$controller_class = 'SQ_Plugin_Controller_'.ucwords($controller);
+		$new_controller=null;
+		try { 
+			if (!class_exists($controller_class)) { 
+				SQ_Class_MVC::throw404($controller_class,$uri);
+			}
+			$new_controller = new $controller_class($controller, $action);
+		} catch (Exception $e) { 
+			SQ_Class_MVC::throw404($controller_class,$funcname);
+		}
+		$theme=new SQ_Class_Theme($user->ThemeIdentifier);
+		if (method_exists($new_controller,'remap')) { 
+			$res=$new_controller->remap(substr($uri,strlen($uritag)-strlen($user->Username)),array_merge($_GET,$_POST),$theme,substr($uritag,strlen($user->Username)),$uri);
+		} else { 
+			$turl=substr($uri,strlen($uritag)-strlen($user->Username));
+			if (substr($turl,0,1)=='/') { 
+				$turl=substr($turl,1);
+			}
+			$bits=explode('/',$turl);
+			$action=$bits[0];
+			if ($bits[1]=='api') { 
+				$api=true;
+				$arg=$bits[2];
+			} else { 
+				$api=false;
+				$arg=$bits[1];
+			}
+			if (strpos($action,'?')!==FALSE) { 
+				$action=substr($action,0,strpos($action,'?'));
+			}
+			if (strlen($action)<1) { 
+				$action='index';
+			}
+			if ($api) { 
+				$funcname = strtolower(str_replace('-','',$action)).'API';
+			} else { 
+				if ($_POST['source']==='dialog') { 
+					ob_start();
+					$funcname = strtolower(str_replace('-','',$action)).'Dialog';
+				} else { 
+					$funcname = strtolower(str_replace('-','',$action)).'UI';
+				}
+			}
+
+			if (!method_exists($new_controller, $funcname)) { 
+				SQ_Class_MVC::throw404($controller_class, $funcname);
+			}
+			$res=$new_controller->$funcname($arg,array_merge($_GET,$_POST),$theme);
+		}
+		if ($res instanceof SQ_Class_DBSQ) { 
+			$res=$res->getFilteredDataArray();
+		}
+		if (!is_array($res)) {
+			$res=(array)@$res;
+		}
+		if ($api) { 
+			if (!$new_controller->api_validation_success()) { 
+				$res['ErrorCount']=count($new_controller->api_errors);
+				$res['Errors']=$new_controller->api_error_array();
+			} else {
+				$res['ErrorCount']=0;
+			}
+			if (strlen($_REQUEST['ResponseFormat'])<1) { 
+				$_REQUEST['ResponseFormat']='xml';
+			}
+			$res=$new_controller->api_expand_object_response($res);
+			$new_controller->api_response($res,$_REQUEST['ResponseFormat']);
+		}
 		die;
 	}
 	private function displayPage($user,$page) { 
