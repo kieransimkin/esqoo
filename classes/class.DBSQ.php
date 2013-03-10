@@ -82,7 +82,7 @@ class SQ_Class_DBSQ extends DBSQ {
 	function purge_cache($field=null) { 
 		if (is_null($field)) { 
 			foreach (static::$_cachedfields as $cachedfield) { 
-				$this->purge_field_cache($field);
+				$this->purge_field_cache($cachedfield);
 			}
 		} else { 
 			$this->purge_field_cache($field);
@@ -90,7 +90,7 @@ class SQ_Class_DBSQ extends DBSQ {
 	}
 	private function purge_field_cache($field) { 
 		if (in_array($field,static::$_cachedfields)) {
-			SQ_Class_Cache::unsetKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($cachedfield));	
+			SQ_Class_Cache::unsetKey('DB-'.strtolower(self::_strip_SQ(get_called_class())).'-'.strtolower($this->_get_lazyLoadIndexName()), $this->_get_lazyLoadId().'-'.strtolower($field));	
 		}
 	}
 	function set_visible_api_fields($fields=array()) { 
