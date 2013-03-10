@@ -73,10 +73,34 @@ class SQ_Class_Theme extends SQ_Class {
 		return $ret;
 	}
 	public function getTemplateList() { 
-
+		$ret=array();
+		for($a=0;$a<$this->xml->Template->count();$a++) { 
+			$item=$this->xml->Template[$a];
+			$ret['Name']=(string)$item->Name;
+			$ret['Identifier']=(string)$item->Identifier;
+			$ret['Description']=(string)$item->Description;
+			$ret['Default']=(string)$item->Default;
+		}
+		return $ret;
 	}
 	public function getLayoutList() { 
-
+		$ret=array();
+		for($a=0;$a<$this->xml->Template->count();$a++) { 
+			$ret['Name']=(string)$item->Name;
+			$ret['Identifier']=(string)$item->Identifier;
+			$ret['Description']=(string)$item->Description;
+			$ret['Sections']=array();
+			for($b=0;$b<$item->Section->count();$b++) { 
+				$sitem=$item->Section[$b];
+				$nsitem=array();	
+				$nsitem['Identifier']=(string)$sitem->Identifier;
+				$nsitem['Name']=(string)$sitem->Name;
+				$nsitem['MinWidgets']=(string)$sitem->MinWidgets;
+				$nsitem['MaxWidgets']=(string)$sitem->MaxWidgets;
+				$ret['Sections'][]=$nsitem;
+			}
+		}
+		return $ret;
 	}
 	private function deactivate($user) { 
 
