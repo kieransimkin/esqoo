@@ -5,8 +5,6 @@ esqoo_website_themes.actions= function (id,data,row) {
 		$('<button></button>').attr('data-icon-primary','ui-icon-gear').html('Setup').attr('onclick','esqoo_website_themes.setup(\''+id+'\'); return false;').appendTo(ret);
 	} else { 
 		$('<button></button>').attr('data-icon-primary','ui-icon-power').html('Activate').attr('onclick','esqoo_website_themes.activate(\''+id+'\'); return false;').appendTo(ret);
-		$('<button></button>').attr('data-icon-primary','ui-icon-trash').html('Remove').attr('onclick','esqoo_website_themes.remove(\''+id+'\'); return false;').appendTo(ret);
-
 	}
 	$('<button></button>').attr('data-icon-primary','ui-icon-info').html('Info').attr('onclick','esqoo_website_themes.info(\''+id+'\'); return false;').appendTo(ret);
 	return ret;
