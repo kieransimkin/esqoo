@@ -39,15 +39,32 @@ class SQ_Class_Plugin extends SQ_Class {
 	function activate($user) { 
 		SQ_User_plugin::create(array('user_id'=>$user->id,'Identifier'=>$this->identifier));
 		for ($c=0;$c<$this->xml->FrontEnd->URIs->URI->count();$c++) { 
-			$this->activate_plugin_uri($this->xml->FrontEnd->URIs->URI[$c]);
+			$this->activate_plugin_uri($this->xml->FrontEnd->URIs->URI[$c],$user);
 		}
-		//die;
 	}
-	private function activate_plugin_uri($uri) { 
-		if (SQ_Class_URL::isURIAvailable($uri,$this->user_id)) { 
-
+	private function activate_plugin_uri($urixml,$user) { 
+		$uris=array();
+		$found=false;
+		for ($n=1;$n<100;$n++) { 
+			for ($c=0;$c<$urixml->DefaultURIs->DefaultURI->count();$c++) { 
+				if ($n==1) { 
+					$uri=$urixml->DefaultURIs->DefaultURI[$c];
+				} else { 
+					$uri=$urixml->DefaultURIs->DefaultURI[$c].$n;
+				}
+				if (SQ_Class_URL::isURIAvailable($uri,$user)) { 
+					$found=true;
+					break 2;			
+				}
+			}
+			$n++;
 		}
-		//var_dump($uri);
+		if (!$found) { 
+			throw new Exception('Unable to find a suitable URL for this plugin to use!');
+			return;
+		}
+		SQ_Class_URL::deleteForwardsForURI($uri,$user);
+		SQ_Plugin_uri::create(array('user_id'=>$user->id,'URITag'=>$user->Username.'/'.$uri,'PluginIdentifier'=>$this->identifier,'PluginController'=>(string)$urixml->Controller,'Code'=>(string)$urixml->Code));
 	}
 	function deactivate($user) { 
 		$userplugin=SQ_User_plugin::getWhere('user_id=? and Identifier=?',array($user->id,$this->identifier));
