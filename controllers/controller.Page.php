@@ -43,7 +43,6 @@ class SQ_Controller_Page extends SQ_Class_LockedController {
 		$form=new SQ_Class_Form('page');
 		$form->setAPIDataSources($input,$post,$forcesubmit);
 		$form->addElement('text','Title',array())->setLabel(_('Title'))->addRule('required',_('Required'));
-		$form->addElement('textarea','Content',array('class'=>'esqoo-qrichedit'))->setLabel(_('Content'))->addrule('required',_('Required'));
 		return $form;
 	 }
 	/*****************************************
@@ -61,7 +60,6 @@ class SQ_Controller_Page extends SQ_Class_LockedController {
 			$page=SQ_Page::get();
 			$page->user_id=$this->user->id;
 			$page->Title=$input['Title'];
-			$page->Content=$input['Content'];
 			if ($oldpage) { 
 				$page->parent__page=$oldpage->id;
 			}
@@ -93,7 +91,7 @@ class SQ_Controller_Page extends SQ_Class_LockedController {
 	 *  ╹  ╹┗╸╹┗┛ ╹ ╹ ╹ ┗━╸┗━┛  *
 	 ****************************/
 	private function get_page_fields() { 
-		return array("Title","id","Content","CreateDate","PublishDate","ModifyDate","DeleteDate");
+		return array("Title","id","TemplateIdentifier","LayoutIdentifier","CreateDate","PublishDate","ModifyDate","DeleteDate");
 	}
 	private function get_page($arg) { 
 		if (strlen($arg)>0) { 

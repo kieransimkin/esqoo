@@ -4,37 +4,31 @@
 	<Name>Front-end - Blog pages</Name>
 	<Description>This plugin publishes a set of individual pages for each of your blog entries.</Description>
 	<FrontEnd>
-		<URIs>
-			<URI>
-				<Code>blog</Code>
-				<Name>Blog Catalog</Name>
-				<Description>Your blog entry pages will appear under this subfolder in the URL</Description>
-				<Controller>Frontend</Controller>
-				<DefaultURIs>
-					<DefaultURI>blog</DefaultURI>
-					<DefaultURI>weblog</DefaultURI>
-				</DefaultURIs>
-			</URI>
-		</URIs>
-		<Sections>
-			<Section>
-				<Identifier>archive</Identifier>
-				<Name>Archive page sidebar</Name>
-				<MaxWidgets>0</MaxWidgets>
-				<MinWidgets>1</MinWidgets>
-			</Section>
-			<Section>
-				<Identifier>recent</Identifier>
-				<Name>Recent entries sidebar</Name>
-				<MaxWidgets>0</MaxWidgets>
-				<MinWidgets>1</MinWidgets>
-			</Section>
-			<Section>
-				<Identifier>detail</Identifier>
-				<Name>Entry detail page sidebar</Name>
-				<MaxWidgets>0</MaxWidgets>
-				<MinWidgets>1</MinWidgets>
-			</Section>
-		</Sections>
+		<URI>
+			<Code>blog</Code>
+			<Name>Blog Catalog</Name>
+			<Description>Your blog entry pages will appear under this subfolder in the URL</Description>
+			<Controller>Frontend</Controller>
+			<DefaultURI>blog</DefaultURI>
+			<DefaultURI>weblog</DefaultURI>
+		</URI>
+		<Section>
+			<Identifier>archive</Identifier>
+			<Name>Archive page sidebar</Name>
+			<MaxWidgets>0</MaxWidgets>
+			<MinWidgets>1</MinWidgets>
+		</Section>
+		<Section>
+			<Identifier>recent</Identifier>
+			<Name>Recent entries sidebar</Name>
+			<MaxWidgets>0</MaxWidgets>
+			<MinWidgets>1</MinWidgets>
+		</Section>
+		<Section>
+			<Identifier>detail</Identifier>
+			<Name>Entry detail page sidebar</Name>
+			<MaxWidgets>0</MaxWidgets>
+			<MinWidgets>1</MinWidgets>
+		</Section>
 	</FrontEnd>
 </Plugin> 

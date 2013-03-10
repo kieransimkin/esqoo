@@ -38,19 +38,19 @@ class SQ_Class_Plugin extends SQ_Class {
 	}
 	function activate($user) { 
 		SQ_User_plugin::create(array('user_id'=>$user->id,'Identifier'=>$this->identifier));
-		for ($c=0;$c<$this->xml->FrontEnd->URIs->URI->count();$c++) { 
-			$this->activate_plugin_uri($this->xml->FrontEnd->URIs->URI[$c],$user);
+		for ($c=0;$c<$this->xml->FrontEnd->URI->count();$c++) { 
+			$this->activate_plugin_uri($this->xml->FrontEnd->URI[$c],$user);
 		}
 	}
 	private function activate_plugin_uri($urixml,$user) { 
 		$uris=array();
 		$found=false;
 		for ($n=1;$n<100;$n++) { 
-			for ($c=0;$c<$urixml->DefaultURIs->DefaultURI->count();$c++) { 
+			for ($c=0;$c<$urixml->DefaultURI->count();$c++) { 
 				if ($n==1) { 
-					$uri=$urixml->DefaultURIs->DefaultURI[$c];
+					$uri=$urixml->DefaultURI[$c];
 				} else { 
-					$uri=$urixml->DefaultURIs->DefaultURI[$c].$n;
+					$uri=$urixml->DefaultURI[$c].$n;
 				}
 				if (SQ_Class_URL::isURIAvailable($uri,$user)) { 
 					$found=true;
@@ -83,19 +83,19 @@ class SQ_Class_Plugin extends SQ_Class {
 		if (!$nodescription && $this->xml->Description) { 
 			$ret.='<p>'.$this->xml->Description.'</p>';
 		}
-		if ($this->xml->FrontEnd->URIs->URI) { 
+		if ($this->xml->FrontEnd->URI) { 
 			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-widget-content ui-corner-all ui-state-default">';
-			if ($this->xml->FrontEnd->URIs->URI->count()>1) { 
-				$ret.=_('This plugin adds').' '.$this->xml->FrontEnd->URIs->URI->count().' '._('folders to your public website.');
+			if ($this->xml->FrontEnd->URI->count()>1) { 
+				$ret.=_('This plugin adds').' '.$this->xml->FrontEnd->URI->count().' '._('folders to your public website.');
 			} else { 
 				$ret.=_('This plugin adds 1 folder to your public website.');
 			}
 			$ret.='</div>';
 		}
-		if ($this->xml->FrontEnd->Sections->Section) { 
+		if ($this->xml->FrontEnd->Section) { 
 			$ret.='<div class="plugin-infoblock-provides-block ui-widget ui-widget-content ui-corner-all ui-state-default">';
-			if ($this->xml->FrontEnd->Sections->Section->count()>1) { 
-				$ret.=_('This plugin provides').' '.$this->xml->FrontEnd->Sections->Section->count().' '._('widget sections.');
+			if ($this->xml->FrontEnd->Section->count()>1) { 
+				$ret.=_('This plugin provides').' '.$this->xml->FrontEnd->Section->count().' '._('widget sections.');
 			} else {
 				$ret.=_('This plugin provides 1 widget section.');
 			}

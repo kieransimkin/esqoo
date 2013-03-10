@@ -71,6 +71,11 @@ class SQ_Class_Theme extends SQ_Class {
 		}
 		$ret.="</artcle>";
 		return $ret;
+	}
+	public function getTemplateList() { 
+
+	}
+	public function getLayoutList() { 
 
 	}
 	private function deactivate($user) { 
