@@ -41,8 +41,17 @@ class SQ_Controller_Page extends SQ_Class_LockedController {
 	 *********************/
 	 private function get_page_form($input,$post,$forcesubmit=false) { 
 		$form=new SQ_Class_Form('page');
+		$theme=SQ_Class_Theme::get($this->user->ThemeIdentifier);
 		$form->setAPIDataSources($input,$post,$forcesubmit);
 		$form->addElement('text','Title',array())->setLabel(_('Title'))->addRule('required',_('Required'));
+		$form->addElement('text','URL',array())->setLabel(_('URL'))->addRule('required',_('Required'));
+		$form->addSelect('TemplateIdentifier')
+			->setLabel("Template")
+			->loadOptions($theme->getKeyValueTemplateList())
+			->addRule('required',_('Required'));
+		$form->addSelect('LayoutIdentifier')
+		     ->setLabel("Layout")
+		     ->loadOptions($theme->getKeyValueLayoutList());
 		return $form;
 	 }
 	/*****************************************

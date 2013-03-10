@@ -76,20 +76,32 @@ class SQ_Class_Theme extends SQ_Class {
 		$ret=array();
 		for($a=0;$a<$this->xml->Template->count();$a++) { 
 			$item=$this->xml->Template[$a];
-			$ret['Name']=(string)$item->Name;
-			$ret['Identifier']=(string)$item->Identifier;
-			$ret['Description']=(string)$item->Description;
-			$ret['Default']=(string)$item->Default;
+			$r=array();
+			$r['Name']=(string)$item->Name;
+			$r['Identifier']=(string)$item->Identifier;
+			$r['Description']=(string)$item->Description;
+			$r['Default']=(string)$item->Default;
+			$ret[]=$r;
+		}
+		return $ret;
+	}
+	public function getKeyValueTemplateList() { 
+		$list=$this->getTemplateList();
+		$ret=array();
+		foreach ($list as $item) { 
+			$ret[$item['Identifier']]=$item['Name'];
 		}
 		return $ret;
 	}
 	public function getLayoutList() { 
 		$ret=array();
-		for($a=0;$a<$this->xml->Template->count();$a++) { 
-			$ret['Name']=(string)$item->Name;
-			$ret['Identifier']=(string)$item->Identifier;
-			$ret['Description']=(string)$item->Description;
-			$ret['Sections']=array();
+		for($a=0;$a<$this->xml->Layout->count();$a++) { 
+			$item=$this->xml->Layout[$a];
+			$r=array();
+			$r['Name']=(string)$item->Name;
+			$r['Identifier']=(string)$item->Identifier;
+			$r['Description']=(string)$item->Description;
+			$r['Sections']=array();
 			for($b=0;$b<$item->Section->count();$b++) { 
 				$sitem=$item->Section[$b];
 				$nsitem=array();	
@@ -97,8 +109,17 @@ class SQ_Class_Theme extends SQ_Class {
 				$nsitem['Name']=(string)$sitem->Name;
 				$nsitem['MinWidgets']=(string)$sitem->MinWidgets;
 				$nsitem['MaxWidgets']=(string)$sitem->MaxWidgets;
-				$ret['Sections'][]=$nsitem;
+				$r['Sections'][]=$nsitem;
 			}
+			$ret[]=$r;
+		}
+		return $ret;
+	}
+	public function getKeyValueLayoutList() { 
+		$list=$this->getLayoutList();
+		$ret=array();
+		foreach ($list as $item) { 
+			$ret[$item['Identifier']]=$item['Name'];
 		}
 		return $ret;
 	}
