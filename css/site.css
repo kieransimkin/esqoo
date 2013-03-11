@@ -95,6 +95,11 @@ div.ui-dialog div.ui-dialog-content iframe.form-iframe {
 	height: 85%;
 	border: 1px solid black; 
 }
+div.esqoo-dialog-fixed { 
+	top: 0px;
+	left: 0px;
+	position: fixed !important;
+}
 section.login-box div#login-errors { 
 	color: #FF0000;
 }

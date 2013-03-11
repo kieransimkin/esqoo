@@ -1,0 +1,9 @@
+header.fullpage-fixed-template-header { 
+	position: fixed;
+	width: 100%;
+	z-index: 2;
+}
+section.fullpage-template-body { 
+	position: relative; top: 50px;
+	z-index: 1;
+}

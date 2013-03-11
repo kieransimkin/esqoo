@@ -215,6 +215,9 @@ esqoo_ui.make_dialog = function(options,url,params) {
 			if (options.singleton) { 
 				esqoo_ui.dialog_singletons[url]=$(this);
 			}
+			if (options.fixed) { 
+				$(this).parent().wrap('<div class="esqoo-dialog-fixed"></div>');
+			}
 			esqoo_ui.setup_dialog_html($(this),url,parameters);
 		},
 		close: function() { 

@@ -18,6 +18,7 @@ $.widget( "esqoo.doq", {
 	hover_dialog: null,
 	hover_suspended: false,
 	in_dropzone: null,
+	fixed: false,
 	_create: function() { 
 		this._do_html_setup();
 	},
@@ -329,6 +330,9 @@ $.widget( "esqoo.doq", {
 				.css({'position':'relative','top':'0px','left':'0px','width':'100%','height':'100%'})
 				.addClass('esqoo-ui-doq-container ui-widget')
 				.insertBefore(this.element);
+		if (this.options.fixed) { 
+			this.container.css({'position': 'fixed', 'top': '0px', 'left': '0px'});
+		}
 		this.leftbar=$('<div></div>')
 				.css({'position':'absolute','left':'0px','width':'0.8em','height':'100%','top':'0px'})
 				.addClass('esqoo-ui-doq-leftbar ui-widget-content ui-state-active esqoo-ui-dockbar')
