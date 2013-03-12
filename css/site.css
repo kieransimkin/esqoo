@@ -99,6 +99,7 @@ div.esqoo-dialog-fixed {
 	top: 0px;
 	left: 0px;
 	position: fixed !important;
+	z-index: 6;
 }
 section.login-box div#login-errors { 
 	color: #FF0000;

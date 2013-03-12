@@ -327,11 +327,11 @@ $.widget( "esqoo.doq", {
 	_do_html_setup: function() { 
 		$(window).resize(this._resize());
 		this.container = $('<div></div>')
-				.css({'position':'relative','top':'0px','left':'0px','width':'100%','height':'100%'})
+				.css({'position':'relative','top':'0px','left':'0px','width':'100%','height':'100%','z-index':'50'})
 				.addClass('esqoo-ui-doq-container ui-widget')
 				.insertBefore(this.element);
 		if (this.options.fixed) { 
-			this.container.css({'position': 'fixed', 'top': '0px', 'left': '0px'});
+			this.container.css({'position': 'fixed'});
 		}
 		this.leftbar=$('<div></div>')
 				.css({'position':'absolute','left':'0px','width':'0.8em','height':'100%','top':'0px'})
