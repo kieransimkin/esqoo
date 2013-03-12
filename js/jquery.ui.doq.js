@@ -30,7 +30,6 @@ $.widget( "esqoo.doq", {
 	_dialog_drag: function(d) { 
 		var me = this;
 		return function(event,ui) { 
-			console.log(ui.position);
 			if (ui.position.top<me.container.offset().top) { 
 				// Make the dialog not exceed the top of the doq
 				d.element.parent().css({'top':me.container.offset().top});
